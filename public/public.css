@@ -1,0 +1,149 @@
+/*reset public-css start*/
+body, ol, ul, h1, h2, h3, h4, h5, h6, p, th, td, dl, dd, form, fieldset, legend, input, textarea, select {
+  margin: 0;
+  padding: 0;
+  font-weight:normal;
+}
+
+body {
+  line-height: 1;
+  -webkit-tap-highlight-color: transparent;
+  background: #f4f4f4;
+  padding-bottom: 0.46875rem;
+  font-size: medium;
+}
+
+a {
+  color: #808285;
+  text-decoration: none; }
+
+em {
+  font-style: normal; }
+
+li {
+  list-style: none; }
+
+img {
+  border: 0;
+  display: block; }
+
+input:focus{
+  outline:none;
+}
+/*reset public-css over*/
+/*public-css start*/
+.container{
+  width:1190px;
+  margin:0 auto;
+  overflow: hidden;
+}
+.a-link-active{
+  display:block;
+  width:100%;
+  height:100%;
+}
+.media-list{
+  width:986px;
+  line-height: 42px;
+  border:1px solid #f0f0f0;;
+  text-align:center;
+  border-collapse: collapse;
+  margin-left:15px;
+  margin-bottom:16px;
+  font-size:14px;
+}
+.media-list tr:nth-child(2n+1){
+  background:#fafafa;
+}
+.media-list tr:first-child{
+  background:#faf9fd;
+}
+.media-list td{
+  border:1px solid #f0f0f0;
+}
+.editor-button-all{
+  overflow: hidden;
+  width: 210px;
+  margin:0 auto;
+}
+.editor-button-all li{
+  float:left;
+  margin:0 10px;
+}
+.editor-button-all li:first-child{
+  color:#76cbe5;
+}
+.editor-button-all li:nth-child(2){
+  color:#fe6434;
+}
+.editor-button-all li:nth-child(3){
+  color:#50ca71;
+}
+.editor-button-all li:nth-child(4){
+  color:#76cbe5;
+}
+.editor-button-part span{
+  float:left;
+  margin:0 10px;
+  color:#76cbe5;
+}
+.editor-button-part{
+  text-align: right;
+}
+.editor-button-part input{
+  margin-right:20px;
+}
+.batch-process{
+  position:relative;
+}
+.batch-process>ul{
+  overflow: hidden;
+  margin-bottom:26px;
+}
+.batch-process>ul>li{
+  float:right;
+  font-size:16px;
+  line-height: 30px;
+  text-align:center;
+  margin-right:16px;
+  border:1px solid;
+  border-radius:5px;
+  padding:0 24px;
+}
+.batch-process li:nth-child(1){
+  color:#8ad3e8;
+}
+.batch-process li:nth-child(2){
+  color:#ff855e;
+}
+.batch-process li:nth-child(3){
+  color:#56cc76;
+}
+.batch-process li:nth-child(4){
+  color:#c4d1c8;
+}
+.batch-process>p{
+  width:340px;
+  height:50px;
+  color:white;
+  text-align:center;
+  font-size:18px;
+  background:#5cc1df;
+  margin:0 auto;
+  line-height: 50px;
+  border-radius:10px;
+}
+.batch-process>h1{
+  position:absolute;
+  right:16px;
+  bottom:22px;
+  color:#5cc1df;
+  border:1px solid;
+  font-size:16px;
+  text-align:center;
+  line-height:30px;
+  width:98px;
+  height:30px;
+  border-radius:5px;
+}
+/*public-css over*/
