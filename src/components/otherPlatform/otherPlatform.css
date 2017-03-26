@@ -1,0 +1,33 @@
+.otherPlatform {
+  padding-left: 16px; }
+  .otherPlatform > h1 {
+    line-height: 44px;
+    border-bottom: 1px dashed #c1c1c1;
+    font-size: 12px; }
+  .otherPlatform > p {
+    padding-top: 22px;
+    line-height: 40px; }
+    .otherPlatform > p span, .otherPlatform > p select, .otherPlatform > p input {
+      height: 40px;
+      color: #c1c1c1; }
+    .otherPlatform > p span {
+      width: 120px;
+      display: inline-block; }
+    .otherPlatform > p input {
+      padding-left: 14px;
+      width: 340px; }
+  .otherPlatform > input[type='button'] {
+    width: 338px;
+    height: 42px;
+    background: #5dd1cf;
+    color: white;
+    border: none;
+    font-size: 20px;
+    display: block;
+    margin: 26px auto 6px; }
+  .otherPlatform > h2 {
+    font-size: 12px;
+    margin: 0 auto;
+    width: 338px;
+    line-height: 20px;
+    color: #c1c1c1; }

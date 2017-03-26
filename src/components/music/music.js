@@ -1,7 +1,9 @@
 import React, {Component} from 'react'
 import './music.css'
+import AddTo from '../addTo/addTo.js'
 import {connect} from 'react-redux'
 import {getMusicList} from '../../redux/actions.js'
+import {Link} from 'react-router'
 const formTime = time => {
   const m = parseInt(time/1000/60, 10);
   const s = time/1000%60;
@@ -20,13 +22,13 @@ class Music extends Component{
       </ul>
     )
     const editorButtonPart = val => {
-      obj = Object.assign({},this.state.checkbox, {[val.id]: false})
+      Object.assign(obj, {[val.id]: false})
       return (
               <p className='editor-button-part'>
                 <span>编辑</span>
                 <input type='checkbox'
                   onChange={this.checkbox.bind(this,val.id)}
-                  checked={this.state.checkbox}
+                  checked={this.state.checkbox[val.id] === undefined ? false : this.state.checkbox[val.id]}
                   />
               </p>
       )
@@ -44,9 +46,14 @@ class Music extends Component{
     const {musicList} = this.props
     return (
       <div className='music-list'>
-        <p><span>已选歌曲列表</span></p>
-        <p><input type='text' placeholder='请输入歌曲id,或歌名'/><input type='button' value='搜索已选歌曲'/></p>
-        <ul className='choose-scope'>
+        <div className='media-search'>
+          <p><span>已选歌曲列表</span></p>
+          <p>
+            <input type='text' placeholder='请输入歌曲id,或歌名'/>
+            <input type='button' value='搜索已选歌曲'/>
+          </p>
+        </div>
+        <ul className='media-scope'>
           <li>
             <span>类型</span>
             <select>
@@ -105,12 +112,13 @@ class Music extends Component{
             <li>批量删除</li>
             <li onClick={this.chooseAll.bind(this)}>全选</li>
           </ul>
-          <p>新增歌曲</p>
+          <p><Link to='/addMusic'>新增歌曲</Link></p>
           <h1
             onClick={this.toggleButton.bind(this)}
             style={!this.state.showAllButton? {display:'none'}: null}
           >批量处理</h1>
         </div>
+        <AddTo/>
       </div>
     )
   }
@@ -125,20 +133,17 @@ class Music extends Component{
     this.setState({showAllButton: false})
   }
   checkbox(id,e){
-    var obj=this.state.checkbox
+    const obj=this.state.checkbox
     Object.assign(obj, {[id]: e.target.checked})
     this.setState({checkbox:obj})
-    console.log(this.state.checkbox)
   }
   chooseAll(){
-    var obj=Object.assign({}, this.state.checkbox)
+    const obj=Object.assign({}, this.state.checkbox)
     const keys = Object.keys(obj)
     for(let i of keys){
       obj[i] = true
     }
     this.setState({checkbox: obj})
-    console.log(this.state.checkbox)
-
   }
 }
 function mapStateToProps(state){

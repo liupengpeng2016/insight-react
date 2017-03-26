@@ -1,5 +1,4 @@
 import React, {Component} from 'react'
-import '../../../public/public.css'
 import './app.css'
 import Header from '../header/header.js'
 import Aside from '../aside/aside.js'

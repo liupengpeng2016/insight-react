@@ -1,0 +1,55 @@
+.otherPlatform{
+  padding:{
+    left:16px;
+  }
+  &>h1{
+    line-height: 44px;
+    border:{
+      bottom:1px dashed #c1c1c1;
+    }
+    font:{
+      size:12px;
+    }
+  }
+  &>p{
+    padding:{
+      top:22px;
+    }
+    line-height: 40px;
+    span,select,input{
+      height:40px;
+      color:#c1c1c1;
+    }
+    span{
+      width:120px;
+      display:inline-block;
+    }
+    input{
+      padding:{
+        left:14px;
+      }
+      width:340px;
+    }
+  }
+  &>input[type='button']{
+    width:338px;
+    height:42px;
+    background:#5dd1cf;
+    color:white;
+    border:none;
+    font:{
+      size:20px;
+    }
+    display: block;
+    margin:26px auto 6px;
+  }
+  &>h2{
+    font:{
+      size:12px;
+    }
+    margin:0 auto;
+    width:338px;
+    line-height: 20px;
+    color:#c1c1c1;
+  }
+}

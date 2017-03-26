@@ -26,8 +26,8 @@ class Media extends Component{
     }
     return (
       <div className='content'>
-        <h1>title</h1>
-        <h2>title2</h2>
+        <h1>葡萄听听</h1>
+        <h2>葡萄听听</h2>
         <ul className='sub-tab'>
           <li><Link to='/media/music' activeClassName='a-link-active' activeStyle={activeCSS}>我的歌曲</Link></li>
           <li><Link to='/media/album' activeClassName='a-link-active' activeStyle={activeCSS}>专辑列表</Link></li>
