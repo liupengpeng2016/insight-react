@@ -14,8 +14,7 @@ class EditorMusic extends Component{
       musicAblum:'',
       musicImg:'',
       musicSort:'0',
-      musicStatusShow:true,
-      musicStatusHide:false,
+      musicStatus:true,
       imgUrl:''
     }
   }
@@ -100,14 +99,11 @@ class EditorMusic extends Component{
           <li>
             <span>状态</span>
               <input type='radio' id='banner-show' name='editor'
-                onChange={this.changeStatusShow.bind(this)}
-                checked={this.state.musicStatusShow}
+                onChange={this.changeStatus.bind(this)}
+                checked={this.state.musicStatus}
                 />
               <label htmlFor='banner-show'>显示</label>
-              <input type='radio' id='banner-hide' name='editor'
-                onChange={this.changeStatusHide.bind(this)}
-                checked={this.state.musicStatusHide}
-                />
+              <input type='radio' id='banner-hide' name='editor'/>
               <label htmlFor='banner-hide'>隐藏</label>
           </li>
           <li  className='input-img'>
@@ -159,18 +155,9 @@ class EditorMusic extends Component{
       this.setState({imgUrl: imgReader2.result})
     }
   }
-  changeStatusShow(e){
+  changeStatus(e){
     this.setState({
-      musicStatusShow: e.target.checked,
-      musicStatusHide: !e.target.checked,
-
-    })
-  }
-  changeStatusHide(e){
-    this.setState({
-      musicStatusHide: e.target.checked,
-      musicStatusShow: !e.target.checked,
-
+      musicStatus: e.target.checked
     })
   }
 
@@ -194,7 +181,7 @@ class EditorMusic extends Component{
       icon: this.state.musicImg,
       desc: this.state.musicDesc,
       sort: this.state.musicSort,
-      status: this.state.musicStatusShow ? 1 : 0
+      status: this.state.musicStatus ? 1 : 0
     }))
   }
 }
