@@ -4,6 +4,10 @@ import AddTo from '../addTo/addTo.js'
 import {connect} from 'react-redux'
 import {getMusicList} from '../../redux/actions.js'
 import {Link} from 'react-router'
+import {
+  delMusicItem, toggleMusicState,
+  getLinkAlbumList, linkToAlbum
+} from '../../redux/actions.js'
 const formTime = time => {
   const m = parseInt(time/1000/60, 10);
   const s = time/1000%60;
@@ -15,10 +19,14 @@ class Music extends Component{
     super(props)
     const editorButtonAll= val => (
       <ul className='editor-button-all'>
-        <li>编辑</li>
-        <li>删除</li>
-        <li>上架</li>
-        <li>添加</li>
+        <li><Link to={{
+          pathname: '/media/editorMusic',
+          state: {id:val.id, duration:val.duration}
+        }}
+        >编辑</Link></li>
+        <li onClick={this.handleDel.bind(this,[val.id])}>删除</li>
+        <li onClick={this.handleStatus.bind(this, parseInt(val.status), [val.id])}>{parseInt(val.status) === 1? '下架' : '上架'}</li>
+        <li onClick={this.handleAdd.bind(this, val.id)}>添加</li>
       </ul>
     )
     const editorButtonPart = val => {
@@ -39,11 +47,14 @@ class Music extends Component{
       editorButtonAll,
       editorButtonPart,
       showAllButton,
-      checkbox
+      checkbox,
+      showPanel:false,
+      addId:''
     }
   }
   render(){
     const {musicList} = this.props
+    console.log(this.props)
     return (
       <div className='music-list'>
         <div className='media-search'>
@@ -118,7 +129,13 @@ class Music extends Component{
             style={!this.state.showAllButton? {display:'none'}: null}
           >批量处理</h1>
         </div>
-        <AddTo/>
+        <AddTo
+          isShow={this.state.showPanel}
+          hidePanle={this.hidePanle.bind(this)}
+          addId={this.state.addId}
+          options={this.props.linkAlbumList}
+          linkToAlbum={this.dispatchLinkToAlbum.bind(this)}
+          />
       </div>
     )
   }
@@ -145,10 +162,28 @@ class Music extends Component{
     }
     this.setState({checkbox: obj})
   }
+  handleAdd(id){
+    this.props.dispatch(getLinkAlbumList({id}))
+    this.setState({showPanel:true, addId: id})
+  }
+  hidePanle(){
+    this.setState({showPanel:false})
+  }
+  handleDel(ids){
+    this.props.dispatch(delMusicItem({ids}))
+  }
+  handleStatus(status, ids){
+    status = status === 1 ? 0 : 1
+    return this.props.dispatch(toggleMusicState({ids,status}))
+  }
+  dispatchLinkToAlbum(params){
+    this.props.dispatch(linkToAlbum(params))
+  }
 }
 function mapStateToProps(state){
   return {
-    musicList: state.mediaData.musicList.list
+    musicList: state.mediaData.musicList.list,
+    linkAlbumList: state.mediaData.linkAlbumList
   }
 }
 export default connect(mapStateToProps)(Music)

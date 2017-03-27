@@ -1,1 +1,1 @@
-export const baseUrl = 'http://dev-admin-insight.ptdev.cn/'
+export const baseUrl = 'http://dev-admin-insight.ptdev.cn'

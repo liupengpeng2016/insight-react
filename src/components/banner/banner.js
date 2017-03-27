@@ -6,7 +6,8 @@ class Banner extends Component{
   constructor(props){
     super(props)
     this.state={
-      showAllButton:true
+      showAllButton:true,
+      showPanel:false
     }
   }
   render(){
@@ -53,7 +54,7 @@ class Banner extends Component{
             style={!this.state.showAllButton? {display:'none'}: null}
           >批量处理</h1>
         </div>
-        <AddTo/>
+        <AddTo isShow={this.state.showPanel} hidePanel={this.hidePanel.bind(this)}/>
       </div>
     )
   }
@@ -63,5 +64,9 @@ class Banner extends Component{
   toggleButton(){
     this.setState({showAllButton:false})
   }
+  hidePanel(){
+    this.setState({showPanel:false})
+  }
+
 }
 export default Banner

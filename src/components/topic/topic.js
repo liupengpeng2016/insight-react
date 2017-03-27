@@ -6,7 +6,8 @@ class Topic extends Component{
   constructor(props){
     super(props)
     this.state={
-      showAllButton:true
+      showAllButton:true,
+      showPanel:false
     }
   }
   render(){
@@ -59,7 +60,7 @@ class Topic extends Component{
             style={!this.state.showAllButton? {display:'none'}: null}
           >批量处理</h1>
         </div>
-        <AddTo/>
+        <AddTo isShow={this.state.showPanel} hidePanle={this.hidePanel.bind(this)}/>
       </div>
     )
   }
@@ -69,5 +70,9 @@ class Topic extends Component{
   toggleButton(){
     this.setState({showAllButton:false})
   }
+  hidePanel(){
+    this.setState({showPanel:false})
+  }
+
 }
 export default Topic

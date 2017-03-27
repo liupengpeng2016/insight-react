@@ -1,15 +1,18 @@
 import React,{Component} from 'react'
 import {Link} from 'react-router'
 import AddTo from '../addTo/addTo.js'
-
+import {getAlbumList} from '../../redux/actions.js'
+import { connect } from 'react-redux'
 class Album extends Component{
   constructor(props){
     super(props)
     this.state={
-      showAllButton:true
+      showAllButton:true,
+      showPanel:false
     }
   }
   render(){
+    const {albumList} = this.props
     return (
       <div className='album'>
         <div className='media-search'>
@@ -48,6 +51,9 @@ class Album extends Component{
               <td>上传时间</td>
               <td>操作</td>
             </tr>
+            {(albumList||[]).map((val, i) => {
+                return <tr key='i'></tr>
+            })}
           </tbody>
         </table>
         <div className='batch-process'>
@@ -63,7 +69,7 @@ class Album extends Component{
             style={!this.state.showAllButton? {display:'none'}: null}
           >批量处理</h1>
         </div>
-        <AddTo/>
+        <AddTo isShow={this.state.showPanel} hidePanle={this.hidePanel.bind(this)}/>
       </div>
     )
   }
@@ -73,5 +79,16 @@ class Album extends Component{
   toggleButton(){
     this.setState({showAllButton:false})
   }
+  hidePanel(){
+    this.setState({showPanel:false})
+  }
+  componentWillMount(){
+    this.props.dispatch(getAlbumList({category:'', page:1}))
+  }
 }
-export default Album
+function mapStateToProps(state){
+  return {
+    albumList:state.mediaData.albumList.list
+  }
+}
+export default connect(mapStateToProps)(Album)

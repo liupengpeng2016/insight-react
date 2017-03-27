@@ -7,66 +7,57 @@
   top: 0;
   left: 0;
   color: #b6b6b6; }
-
-.add-to .add-to-panel {
-  width: 426px;
-  height: 326px;
-  background: white;
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  margin: auto; }
-
-.add-to .add-to-panel > span {
-  position: absolute;
-  width: 56px;
-  height: 56px;
-  text-align: center;
-  transform: rotate(45deg);
-  top: 0;
-  right: 0;
-  line-height: 56px; }
-
-.add-to .add-to-panel > span:after {
-  content: '+';
-  display: block;
-  font-size: 42px;
-  text-align: center; }
-
-.add-to .add-to-panel > h1 {
-  line-height: 60px;
-  margin-bottom: 14px;
-  font-size: 16px;
-  color: black;
-  text-align: center; }
-
-.add-to .add-to-panel > p {
-  margin-left: 25px; }
-
-.add-to .add-to-panel > p span {
-  display: inline-block;
-  width: 70px;
-  height: 38px; }
-
-.add-to .add-to-panel > p select, .add-to .add-to-panel > p input {
-  color: #b6b6b6;
-  width: 304px;
-  height: 38px;
-  margin-bottom: 21px;
-  padding-left: 16px; }
-
-.add-to .add-to-panel > p input {
-  width: 286px; }
-
-.add-to .add-to-panel > h2 {
-  width: 202px;
-  line-height: 40px;
-  background: #5cc1df;
-  color: white;
-  font-size: 18px;
-  text-align: center;
-  margin: 0 auto;
-  border-radius: 5px;
-  margin-top: 20px; }
+  .add-to .add-to-panel {
+    width: 426px;
+    height: 326px;
+    background: white;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto; }
+    .add-to .add-to-panel > span {
+      position: absolute;
+      width: 56px;
+      height: 56px;
+      text-align: center;
+      transform: rotate(45deg);
+      top: 0;
+      right: 0;
+      line-height: 56px; }
+    .add-to .add-to-panel > span:after {
+      content: '+';
+      display: block;
+      font-size: 42px;
+      text-align: center; }
+    .add-to .add-to-panel > h1 {
+      line-height: 60px;
+      margin-bottom: 14px;
+      font-size: 16px;
+      color: black;
+      text-align: center; }
+    .add-to .add-to-panel > p {
+      margin-left: 25px; }
+      .add-to .add-to-panel > p span {
+        display: inline-block;
+        width: 70px;
+        height: 38px; }
+      .add-to .add-to-panel > p select, .add-to .add-to-panel > p input {
+        color: #b6b6b6;
+        width: 304px;
+        height: 38px;
+        margin-bottom: 21px;
+        padding-left: 16px; }
+      .add-to .add-to-panel > p input {
+        width: 286px; }
+    .add-to .add-to-panel > h2 {
+      width: 202px;
+      line-height: 40px;
+      background: #5cc1df;
+      color: white;
+      font-size: 18px;
+      text-align: center;
+      margin: 0 auto;
+      border-radius: 5px;
+      margin-top: 20px; }

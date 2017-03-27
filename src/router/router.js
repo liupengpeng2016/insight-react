@@ -16,6 +16,7 @@ import OtherPlatform from '../components/otherPlatform/otherPlatform.js'
 import AddAlbum from '../components/addAlbum/addAlbum.js'
 import AddBanner from '../components/addBanner/addBanner.js'
 import AddTopic from '../components/addTopic/addTopic.js'
+import EditorMusic from '../components/editorMusic/editorMusic.js'
 const router = (
   <Router history={browserHistory}>
     <Route path='/' component={App}>
@@ -27,6 +28,7 @@ const router = (
         <Route path='album' component={Album}></Route>
         <Route path='topic' component={Topic}></Route>
         <Route path='banner' component={Banner}></Route>
+        <Route path='editorMusic' component={EditorMusic}></Route>
       </Route>
       <Route path='habit' component={Habit}></Route>
       <Route path='product' component={Product}></Route>

@@ -122,7 +122,7 @@ input:focus {
   float: left;
   margin: 0 10px; }
 
-.editor-button-all li:first-child {
+.editor-button-all li:first-child a {
   color: #76cbe5; }
 
 .editor-button-all li:nth-child(2) {

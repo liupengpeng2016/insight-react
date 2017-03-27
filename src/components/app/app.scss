@@ -147,7 +147,9 @@ input:focus{
   margin:0 10px;
 }
 .editor-button-all li:first-child{
-  color:#76cbe5;
+  a{
+    color:#76cbe5;
+  }
 }
 .editor-button-all li:nth-child(2){
   color:#fe6434;
