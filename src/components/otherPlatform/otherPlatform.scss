@@ -2,6 +2,7 @@
   padding:{
     left:16px;
   }
+  line-height: 40px;
   &>h1{
     line-height: 44px;
     border:{
@@ -51,5 +52,17 @@
     width:338px;
     line-height: 20px;
     color:#c1c1c1;
+  }
+  .platform-status{
+    input{
+      width:auto;
+      vertical-align: middle;
+    }
+    label{
+      margin:{
+        left:6px;
+        right:16px;
+      }
+    }
   }
 }

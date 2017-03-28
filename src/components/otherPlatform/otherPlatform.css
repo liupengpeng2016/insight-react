@@ -1,5 +1,6 @@
 .otherPlatform {
-  padding-left: 16px; }
+  padding-left: 16px;
+  line-height: 40px; }
   .otherPlatform > h1 {
     line-height: 44px;
     border-bottom: 1px dashed #c1c1c1;
@@ -31,3 +32,9 @@
     width: 338px;
     line-height: 20px;
     color: #c1c1c1; }
+  .otherPlatform .platform-status input {
+    width: auto;
+    vertical-align: middle; }
+  .otherPlatform .platform-status label {
+    margin-left: 6px;
+    margin-right: 16px; }

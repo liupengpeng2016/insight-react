@@ -4,57 +4,26 @@ import AddTo from '../addTo/addTo.js'
 import {connect} from 'react-redux'
 import {getMusicList} from '../../redux/actions.js'
 import {Link} from 'react-router'
+import {formTime} from '../../plugs/plugs.js'
 import {
   delMusicItem, toggleMusicState,
   getLinkAlbumList, linkToAlbum
 } from '../../redux/actions.js'
-const formTime = time => {
-  const m = parseInt(time/1000/60, 10);
-  const s = time/1000%60;
-  return m + '分' + s + '秒';
-}
+import OperateButtons from '../operateButtons/operateButtons.js'
 const obj={}
 class Music extends Component{
   constructor(props){
     super(props)
-    const editorButtonAll= val => (
-      <ul className='editor-button-all'>
-        <li><Link to={{
-          pathname: '/media/editorMusic',
-          state: {id:val.id, duration:val.duration}
-        }}
-        >编辑</Link></li>
-        <li onClick={this.handleDel.bind(this,[val.id])}>删除</li>
-        <li onClick={this.handleStatus.bind(this, parseInt(val.status), [val.id])}>{parseInt(val.status) === 1? '下架' : '上架'}</li>
-        <li onClick={this.handleAdd.bind(this, val.id)}>添加</li>
-      </ul>
-    )
-    const editorButtonPart = val => {
-      Object.assign(obj, {[val.id]: false})
-      return (
-              <p className='editor-button-part'>
-                <span>编辑</span>
-                <input type='checkbox'
-                  onChange={this.checkbox.bind(this,val.id)}
-                  checked={this.state.checkbox[val.id] === undefined ? false : this.state.checkbox[val.id]}
-                  />
-              </p>
-      )
-    }
-    const showAllButton = true;
-    const checkbox = {}
     this.state={
-      editorButtonAll,
-      editorButtonPart,
-      showAllButton,
-      checkbox,
+      checkbox:{},
       showPanel:false,
-      addId:''
+      addId:'',
+      category:'0',
+      page:1
     }
   }
   render(){
     const {musicList} = this.props
-    console.log(this.props)
     return (
       <div className='music-list'>
         <div className='media-search'>
@@ -67,27 +36,35 @@ class Music extends Component{
         <ul className='media-scope'>
           <li>
             <span>类型</span>
-            <select>
+            <select
+              onChange={this.handleCategory.bind(this)}
+              value={this.state.category}
+              >
+              <option value='0'>全部</option>
               <option value='1'>儿童</option>
               <option value='2'>音乐</option>
               <option value='3'>教育</option>
             </select>
           </li>
-          <li>
-            <span>来源</span>
-            <select>
-              <option value='1'>葡萄</option>
-              <option value='2'>蜻蜓</option>
-              <option value='3'>喜马拉雅</option>
-              <option value='4'>自营</option>
-            </select>
-          </li>
+          {
+            /*
+            <li>
+              <span>来源</span>
+              <select>
+                <option value='1'>葡萄</option>
+                <option value='2'>蜻蜓</option>
+                <option value='3'>喜马拉雅</option>
+                <option value='4'>自营</option>
+              </select>
+            </li>
+
+            */
+          }
         </ul>
         <table className='media-list'>
           <tbody>
             <tr>
               <td>编号</td>
-              <td>故事</td>
               <td>歌曲名称</td>
               <td>歌曲时长</td>
               <td>播放次数</td>
@@ -101,16 +78,23 @@ class Music extends Component{
             {(musicList||[]).map((val, i) => (
               <tr key={i}>
                 <td>{val.id}</td>
-                <td>{val.type}</td>
                 <td>{val.name}</td>
                 <td>{formTime(val.duration)}</td>
                 <td>{val.play_times}</td>
                 <td>{val.lyric}</td>
                 <td>{val.age}</td>
-                <td>{val.status === 1 ? '是'  : '否'}</td>
+                <td>{parseInt(val.status) === 1 ? '是'  : '否'}</td>
                 <td>{val.origin}</td>
                 <td>{val.created_at.slice(0,10)}</td>
-                <td>{this.state.showAllButton ? this.state.editorButtonAll(val) : this.state.editorButtonPart(val)}</td>
+                <td><OperateButtons
+                  mode='1'
+                  editorTo={{pathname:'/media/editorMusic',state:{id: val.id}}}
+                  handleDel={this.handleDel.bind(this,[val.id])}
+                  handleStatus={this.handleStatus.bind(this,val.status,[val.id])}
+                  handleAdd={this.handleAdd.bind(this,val.id)}
+                  status={val.status}
+                  />
+                </td>
               </tr>
               )
             )}
@@ -130,11 +114,12 @@ class Music extends Component{
           >批量处理</h1>
         </div>
         <AddTo
+          target='专辑'
           isShow={this.state.showPanel}
           hidePanle={this.hidePanle.bind(this)}
           addId={this.state.addId}
           options={this.props.linkAlbumList}
-          linkToAlbum={this.dispatchLinkToAlbum.bind(this)}
+          addTo={this.dispatchLinkToAlbum.bind(this)}
           />
       </div>
     )
@@ -162,12 +147,14 @@ class Music extends Component{
     }
     this.setState({checkbox: obj})
   }
+  hidePanle(){
+    this.setState({showPanel:false})
+  }
+
+  //编辑按钮操作
   handleAdd(id){
     this.props.dispatch(getLinkAlbumList({id}))
     this.setState({showPanel:true, addId: id})
-  }
-  hidePanle(){
-    this.setState({showPanel:false})
   }
   handleDel(ids){
     this.props.dispatch(delMusicItem({ids}))
@@ -176,8 +163,12 @@ class Music extends Component{
     status = status === 1 ? 0 : 1
     return this.props.dispatch(toggleMusicState({ids,status}))
   }
-  dispatchLinkToAlbum(params){
-    this.props.dispatch(linkToAlbum(params))
+
+  dispatchLinkToAlbum(id, album_id){
+    this.props.dispatch(linkToAlbum({id, album_id}))
+  }
+  handleCategory(e){
+    this.setState({category: e.target.value})
   }
 }
 function mapStateToProps(state){

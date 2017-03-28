@@ -1,21 +1,19 @@
 import React, {Component} from 'react'
-import './editorMusic.css'
 import {connect} from 'react-redux'
-import {editorMusic} from '../../redux/actions.js'
-class EditorMusic extends Component{
+import {editorAlbum} from '../../redux/actions.js'
+class EditorAlbum extends Component{
   constructor(props){
     super(props)
     this.state={
-      musicName:'',
-      musicDesc:'',
-      musicType:'1',
-      musicAuthor:'',
-      musicAge:'1',
-      musicAblum:'',
-      musicImg:'',
-      musicSort:'0',
-      musicStatusShow:true,
-      musicStatusHide:false,
+      category:'1',
+      name:'',
+      age:'1',
+      tags:'',
+      cover:'',
+      desc:'',
+      sort:'0',
+      statusShow:true,
+      statusHide:false,
       imgUrl:''
     }
   }
@@ -27,21 +25,21 @@ class EditorMusic extends Component{
             <span>歌曲名称</span>
             <input type='text' placeholder='请输入歌曲名称'
               onChange={this.changeName.bind(this)}
-              value={this.state.musicName}
+              value={this.state.name}
               />
           </li>
           <li>
             <span>歌曲描述</span>
             <input type='text' placeholder='请输入描述信息'
               onChange={this.changeDesc.bind(this)}
-              value={this.state.musicDesc}
+              value={this.state.desc}
               />
           </li>
           <li>
             <span>选择类型</span>
             <select
-              onChange={this.changeType.bind(this)}
-              value={this.state.musicType}
+              onChange={this.changeCategory.bind(this)}
+              value={this.state.category}
               >
               <option value='1'>儿童</option>
               <option value='2'>音乐</option>
@@ -49,17 +47,17 @@ class EditorMusic extends Component{
             </select>
           </li>
           <li>
-            <span>作者名称</span>
-            <input type='text' placeholder='请输入作者名称'
-              onChange={this.changeAuthor.bind(this)}
-              value={this.state.musicAuthor}
-              />
+            <span>专辑标签</span>
+            <input type='text' placeholder='请输入专辑标签多个用竖线分隔'
+              onChange={this.changeTags.bind(this)}
+              value={this.state.tags}
+            />
           </li>
           <li>
             <span>年龄段</span>
             <select
               onChange={this.changeAge.bind(this)}
-              value={this.state.musicAge}
+              value={this.state.age}
               >
               <option value='1'>1</option>
               <option value='2'>2</option>
@@ -80,7 +78,7 @@ class EditorMusic extends Component{
             <span>权重</span>
             <select
               onChange={this.changeSort.bind(this)}
-              value={this.state.musicSort}
+              value={this.state.sort}
               >
               <option value='0'> 0 </option>
               <option value='1'> 1 </option>
@@ -92,12 +90,12 @@ class EditorMusic extends Component{
             <span>状态</span>
               <input type='checkbox' id='banner-show' name='editor'
                 onChange={this.changeStatusShow.bind(this)}
-                checked={this.state.musicStatusShow}
+                checked={this.state.statusShow}
                 />
               <label htmlFor='banner-show'>显示</label>
               <input type='checkbox' id='banner-hide' name='editor'
                 onChange={this.changeStatusHide.bind(this)}
-                checked={this.state.musicStatusHide}
+                checked={this.state.statusHide}
                 />
               <label htmlFor='banner-hide'>隐藏</label>
           </li>
@@ -117,29 +115,29 @@ class EditorMusic extends Component{
     )
   }
   changeName(e){
-    this.setState({musicName: e.target.value})
+    this.setState({name: e.target.value})
   }
   changeDesc(e){
-    this.setState({musicDesc: e.target.value})
+    this.setState({desc: e.target.value})
   }
-  changeType(e){
-    this.setState({musicType: e.target.value})
-
+  changeCategory(e){
+    this.setState({category: e.target.value})
   }
-  changeOrigin(e){
-    this.setState({musicOrigin: e.target.value})
-
+  changeSort(e){
+    this.setState({sort: e.target.value})
   }
   changeAge(e){
-    this.setState({musicAge: e.target.value})
-
+    this.setState({age: e.target.value})
+  }
+  changeTags(e){
+    this.setState({tags: e.target.value})
   }
   changeImg(e){
     const imgReader1 = new FileReader()
     const imgReader2 = new FileReader()
     imgReader1.readAsBinaryString(e.target.files[0])
     imgReader1.onload=() =>{
-      this.setState({musicImg: imgReader1.result})
+      this.setState({cover: imgReader1.result})
     }
     imgReader2.readAsDataURL(e.target.files[0])
     imgReader2.onload=()=>{
@@ -148,37 +146,29 @@ class EditorMusic extends Component{
   }
   changeStatusShow(e){
     this.setState({
-      musicStatusShow: e.target.checked,
-      musicStatusHide: !e.target.checked
+      statusShow: e.target.checked,
+      statusHide: !e.target.checked
     })
   }
   changeStatusHide(e){
     this.setState({
-      musicStatusHide: e.target.checked,
-      musicStatusShow: !e.target.checked
+      statusHide: e.target.checked,
+      statusShow: !e.target.checked
     })
   }
-  changeAuthor(e){
-    this.setState({musicAuthor: e.target.value})
-  }
-  changeSort(e){
-    this.setState({musicSort: e.target.value})
-  }
   handleClick(){
-    this.props.dispatch(editorMusic({
+    const {category,name,age,tags,cover,desc,sort,statusShow} = this.state
+    this.props.dispatch(editorAlbum({
+      category,
+      name,
+      age,
+      tags,
+      cover,
+      desc,
+      sort,
       id: this.props.location.state.id,
-      category: this.state.musicType,
-      name: this.state.musicName,
-      singer: this.state.musicAuthor,
-      url: '',
-      duration: this.props.location.state.duration,
-      age: this.state.musicAge,
-      tags: '',
-      icon: this.state.musicImg,
-      desc: this.state.musicDesc,
-      sort: this.state.musicSort,
-      status: this.state.musicStatusShow ? 1 : 0
+      status: statusShow ? 1 : 0
     }))
   }
 }
-export default connect()(EditorMusic)
+export default connect()(EditorAlbum)

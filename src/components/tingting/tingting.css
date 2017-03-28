@@ -25,3 +25,6 @@
       height: 32px; }
     .tingting-scope li input {
       padding-left: 22px; }
+  .tingting-scope .search-button {
+    background: #76cbe5;
+    color: white; }

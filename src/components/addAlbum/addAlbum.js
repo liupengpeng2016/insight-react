@@ -6,10 +6,13 @@ class AddAlbum extends Component{
     this.state={
       type:'',
       name:'',
-      label:'',
+      tags:'',
       icon:'',
       sort:'0',
-      status:'1'
+      statusShow:true,
+      statusHide:false,
+      musicImg:'',
+      imageUrl:''
     }
   }
   render(){
@@ -37,17 +40,16 @@ class AddAlbum extends Component{
           <li>
             <span>专辑标签</span>
             <input type='text' placeholder='请输入专辑标签'
-              onChange={this.handleLabel.bind(this)}
-              value={this.state.label}
+              onChange={this.handleTags.bind(this)}
+              value={this.state.tags}
             />
             <p><span></span>专辑标签有助于语音检索歌曲</p>
           </li>
           <li className='input-img'>
             <span>专辑封面</span>
-            <img alt=''/>
+            <img  src={this.state.imageUrl} alt=''/>
             <input type='file'
-              onChange={this.handleIcon.bind(this)}
-              value={this.state.icon}
+              onChange={this.handleFile.bind(this)}
             />
             <h1>选择文件</h1>
             <p>图片格式为JPG或PNG,大小为2M以内。</p>
@@ -58,17 +60,23 @@ class AddAlbum extends Component{
               onChange={this.handleSort.bind(this)}
               value={this.state.sort}
             >
-              <option value=''>0</option>
+              <option value='0'>0</option>
+              <option value='1'>1</option>
+              <option value='2'>2</option>
+              <option value='3'>3</option>
             </select>
           </li>
           <li>
             <span>状态</span>
               <input type='checkbox' id='banner-show'
-                onChange={this.handleStatus.bind(this)}
-                value={this.state.status}
+                onChange={this.handleStatusShow.bind(this)}
+                checked={this.state.statusShow}
               />
               <label htmlFor='banner-show'>显示</label>
-              <input type='checkbox' id='banner-hide'/>
+              <input type='checkbox' id='banner-hide'
+                onChange={this.handleStatusHide.bind(this)}
+                checked={this.state.statusHide}
+                />
               <label htmlFor='banner-hide'>隐藏</label>
           </li>
         </ul>
@@ -82,17 +90,35 @@ class AddAlbum extends Component{
   handleName(e){
     this.setState({name:e.target.value})
   }
-  handleLabel(e){
-    this.setState({label:e.target.value})
+  handleTags(e){
+    this.setState({tags:e.target.value})
   }
   handleSort(e){
     this.setState({sort:e.target.value})
   }
-  handleIcon(e){
-    this.setState({icon:e.target.value})
+  handleFile(e){
+    const imgReader1 = new FileReader()
+    const imgReader2 = new FileReader()
+    imgReader1.readAsBinaryString(e.target.files[0])
+    imgReader1.onload=() =>{
+      this.setState({musicImg: imgReader1.result})
+    }
+    imgReader2.readAsDataURL(e.target.files[0])
+    imgReader2.onload=()=>{
+      this.setState({imageUrl: imgReader2.result})
+    }
   }
-  handleStauts(e){
-    this.setState({status:e.target.checked})
+  handleStatusShow(e){
+    this.setState({
+      statusShow:e.target.checked,
+      statusHide:!e.target.checked
+    })
+  }
+  handleStatusHide(e){
+    this.setState({
+      statusShow:!e.target.checked,
+      statusHide:e.target.checked
+    })
   }
   handleClick(){
   }

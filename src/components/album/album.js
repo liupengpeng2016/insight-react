@@ -3,12 +3,19 @@ import {Link} from 'react-router'
 import AddTo from '../addTo/addTo.js'
 import {getAlbumList} from '../../redux/actions.js'
 import { connect } from 'react-redux'
+import OperateButtons from '../operateButtons/operateButtons.js'
+import {
+  getLinkTopicList, delAlbumItem,
+  toggleAlbumState, linkToTopic
+ } from '../../redux/actions.js'
 class Album extends Component{
   constructor(props){
     super(props)
     this.state={
-      showAllButton:true,
-      showPanel:false
+      showPanel:false,
+      checkbox:{},
+      page:1,
+      category:0
     }
   }
   render(){
@@ -25,16 +32,24 @@ class Album extends Component{
         <ul className='media-scope'>
           <li>
             <span>类型</span>
-            <select>
-              <option value=''>全部</option>
+            <select
+              onChange={this.handleCategory.bind(this)}
+              value={this.state.category}
+              >
+              <option value='0'>全部</option>
+              <option value='1'>儿童</option>
+              <option value='2'>音乐</option>
+              <option value='3'>教育</option>
             </select>
           </li>
-          <li>
-            <span>来源</span>
-            <select>
-              <option value=''>全部</option>
-            </select>
-          </li>
+          {/*
+            <li>
+              <span>来源</span>
+              <select>
+                <option value=''>全部</option>
+              </select>
+            </li>
+            */}
         </ul>
         <table className='media-list'>
           <tbody>
@@ -42,17 +57,36 @@ class Album extends Component{
               <td>编号</td>
               <td>类型</td>
               <td>专辑名称</td>
-              <td>所属专题</td>
-              <td>数量</td>
+              <td>歌曲数量</td>
               <td>权重</td>
               <td>适合年龄</td>
               <td>上架</td>
-              <td>来源</td>
               <td>上传时间</td>
               <td>操作</td>
             </tr>
             {(albumList||[]).map((val, i) => {
-                return <tr key='i'></tr>
+                return (
+                  <tr key={i}>
+                    <td>{val.id}</td>
+                    <td>{val.category === '1'? '儿童':(val.category ==='2' ? '音乐': '教育')}</td>
+                    <td>{val.name}</td>
+                    <td>{val.music_count}</td>
+                    <td>{val.sort}</td>
+                    <td>{val.age}</td>
+                    <td>{val.status === 1 ? '是'  : '否'}</td>
+                    <td>{val.created_at.slice(0,10)}</td>
+                    <td>
+                      <OperateButtons
+                        mode='1'
+                        editorTo={{pathname:'/media/editorAlbum',state:{id:val.id}}}
+                        handleDel={this.handleDel.bind(this,[val.id])}
+                        handleStatus={this.handleStatus.bind(this,val.status,[val.id])}
+                        handleAdd={this.handleAdd.bind(this, val.id)}
+                        status={val.status}
+                        />
+                    </td>
+                  </tr>
+                )
             })}
           </tbody>
         </table>
@@ -69,7 +103,14 @@ class Album extends Component{
             style={!this.state.showAllButton? {display:'none'}: null}
           >批量处理</h1>
         </div>
-        <AddTo isShow={this.state.showPanel} hidePanle={this.hidePanel.bind(this)}/>
+        <AddTo
+          target='专题'
+          isShow={this.state.showPanel}
+          hidePanle={this.hidePanel.bind(this)}
+          addId={this.state.addId}
+          options={this.props.linkTopicList}
+          addTo={this.dispatchLinkToTopic.bind(this)}
+          />
       </div>
     )
   }
@@ -77,18 +118,40 @@ class Album extends Component{
 
   }
   toggleButton(){
-    this.setState({showAllButton:false})
+
   }
+  //可控表单
+  handleCategory(e){
+    this.setState({category: e.target.value})
+  }
+//addto面板
   hidePanel(){
     this.setState({showPanel:false})
   }
+  dispatchLinkToTopic(id, subject_id){
+    this.props.dispatch(linkToTopic({id, subject_id}))
+  }
+  //初始数据
   componentWillMount(){
-    this.props.dispatch(getAlbumList({category:'', page:1}))
+    this.props.dispatch(getAlbumList({category:this.state.category, page:this.state.page}))
+  }
+  //编辑按钮
+  handleAdd(id){
+    this.props.dispatch(getLinkTopicList({id}))
+    this.setState({showPanel:true, addId: id})
+  }
+  handleDel(ids){
+    this.props.dispatch(delAlbumItem({ids}))
+  }
+  handleStatus(status, ids){
+    status = status === 1 ? 0 : 1
+    return this.props.dispatch(toggleAlbumState({ids,status}))
   }
 }
 function mapStateToProps(state){
   return {
-    albumList:state.mediaData.albumList.list
+    albumList:state.mediaData.albumList.list,
+    linkTopicList: state.mediaData.linkTopicList
   }
 }
 export default connect(mapStateToProps)(Album)

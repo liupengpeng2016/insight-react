@@ -1,16 +1,20 @@
 import React,{Component} from 'react'
 import {Link} from 'react-router'
 import AddTo from '../addTo/addTo.js'
+import {connect} from 'react-redux'
+import {getTopicList, toggleTopicStatus, delTopicItem} from '../../redux/actions.js'
+import OperateButtons from '../operateButtons/operateButtons.js'
 
 class Topic extends Component{
   constructor(props){
     super(props)
     this.state={
-      showAllButton:true,
-      showPanel:false
+      showPanel:false,
+      page:1
     }
   }
   render(){
+    const {topicList} = this.props
     return (
       <div className='topic'>
         <div className='media-search'>
@@ -45,6 +49,29 @@ class Topic extends Component{
               <td>上传时间</td>
               <td>操作</td>
             </tr>
+            {
+              (topicList||[]).map((val, i) => {
+                return (
+                  <tr key={i}>
+                    <td>{val.id}</td>
+                    <td>{val.name}</td>
+                    <td>{val.location}</td>
+                    <td>{val.sort}</td>
+                    <td>{parseInt(val.status, 10) === 1 ? '是'  : '否'}</td>
+                    <td>{val.created_at.slice(0,10)}</td>
+                    <td>
+                      <OperateButtons
+                        mode='3'
+                        editorTo={{pathname:'/media/editorTopic',state:{id: val.id}}}
+                        handleDel={this.handleDel.bind(this,[val.id])}
+                        handleStatus={this.handleStatus.bind(this,val.status,[val.id])}
+                        status={val.status}
+                      />
+                    </td>
+                  </tr>
+                )
+              })
+            }
           </tbody>
         </table>
         <div className='batch-process'>
@@ -73,6 +100,23 @@ class Topic extends Component{
   hidePanel(){
     this.setState({showPanel:false})
   }
+//初始化数据
+  componentWillMount(){
+    this.props.dispatch(getTopicList({page:this.state.page}))
+  }
+//button按钮事件
+  handleDel(ids){
+    this.props.dispatch(delTopicItem({ids}))
+  }
+  handleStatus(status, ids){
+    status = status === 1 ? 0 : 1
+    return this.props.dispatch(toggleTopicStatus({ids,status}))
+  }
 
 }
-export default Topic
+function mapStateToProps(state){
+  return {
+    topicList: state.mediaData.topicList.list
+  }
+}
+export default connect(mapStateToProps)(Topic)

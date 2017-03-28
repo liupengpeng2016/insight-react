@@ -17,6 +17,7 @@ import AddAlbum from '../components/addAlbum/addAlbum.js'
 import AddBanner from '../components/addBanner/addBanner.js'
 import AddTopic from '../components/addTopic/addTopic.js'
 import EditorMusic from '../components/editorMusic/editorMusic.js'
+import EditorAlbum from '../components/editorAlbum/editorAlbum.js'
 const router = (
   <Router history={browserHistory}>
     <Route path='/' component={App}>
@@ -29,6 +30,7 @@ const router = (
         <Route path='topic' component={Topic}></Route>
         <Route path='banner' component={Banner}></Route>
         <Route path='editorMusic' component={EditorMusic}></Route>
+        <Route path='editorAlbum' component={EditorAlbum}></Route>
       </Route>
       <Route path='habit' component={Habit}></Route>
       <Route path='product' component={Product}></Route>
