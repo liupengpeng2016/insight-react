@@ -19,7 +19,8 @@ class Music extends Component{
       showPanel:false,
       addId:'',
       category:'0',
-      page:1
+      page:1,
+      showAllButton:false
     }
   }
   render(){
@@ -101,7 +102,7 @@ class Music extends Component{
           </tbody>
         </table>
         <div className='batch-process'>
-          <ul style={this.state.showAllButton? {display:'none'}: null}>
+          <ul style={!this.state.showAllButton? {display:'none'}: null}>
             <li>批量下架</li>
             <li>批量上架</li>
             <li>批量删除</li>
@@ -110,7 +111,7 @@ class Music extends Component{
           <p><Link to='/addMusic'>新增歌曲</Link></p>
           <h1
             onClick={this.toggleButton.bind(this)}
-            style={!this.state.showAllButton? {display:'none'}: null}
+            style={this.state.showAllButton? {display:'none'}: null}
           >批量处理</h1>
         </div>
         <AddTo
@@ -132,7 +133,7 @@ class Music extends Component{
     this.setState({checkbox:obj})
   }
   toggleButton(){
-    this.setState({showAllButton: false})
+    this.setState({showAllButton: true})
   }
   checkbox(id,e){
     const obj=this.state.checkbox

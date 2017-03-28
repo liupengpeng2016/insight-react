@@ -10,7 +10,13 @@ class AddBanner extends Component{
       desc:'',
       sort:'0',
       icon:'',
-      status:'1'
+      status:'1',
+      statusShow:true,
+      statusHide:false,
+      musicAlubm:true,
+      htmlUrl:false,
+      musicImg:'',
+      imageUrl:''
     }
   }
   render(){
@@ -30,14 +36,17 @@ class AddBanner extends Component{
           </li>
           <li>
             <span>Banner内容</span>
-            <input type='radio' id='album' name='banner'
-              onChange={this.handleContent.bind(this)}
-              value={this.state.content}
+            <input type='checkbox' id='album' name='banner'
+              onChange={this.handleMusicAlbum.bind(this)}
+              checked={this.state.musicAlubm}
             />
             <label htmlFor='album'>
               歌曲专辑
             </label>
-            <input type='radio' id='url' name='banner'/>
+            <input type='checkbox' id='url' name='banner'
+              onChange={this.handleHtmlUrl.bind(this)}
+              checked={this.state.htmlUrl}
+            />
             <label htmlFor='url'>
               网页URL
             </label>
@@ -67,22 +76,24 @@ class AddBanner extends Component{
           </li>
           <li className='input-img'>
             <span>上传图片</span>
-            <img alt=''/>
+            <img src={this.state.imageUrl} alt=''/>
             <input type='file'
-              onChange={this.handleIcon.bind(this)}
-              value={this.state.icon}
+              onChange={this.handleFile.bind(this)}
             />
             <h1>选择文件</h1>
             <p>图片格式为JPG或PNG,大小为2M以内。</p>
           </li>
           <li>
             <span>状态</span>
-              <input type='radio' id='banner-show' name='status'
-                onChange={this.handleStatus.bind(this)}
-                value={this.state.status}
+              <input type='checkbox' id='banner-show' name='status'
+                onChange={this.handleStatusShow.bind(this)}
+                checked={this.state.statusShow}
               />
               <label htmlFor='banner-show'>显示</label>
-              <input type='radio' id='banner-hide' name='status'/>
+              <input type='checkbox' id='banner-hide' name='status'
+                onChange={this.handleStatusHide.bind(this)}
+                checked={this.state.statusHide}
+              />
               <label htmlFor='banner-hide'>隐藏</label>
           </li>
         </ul>
@@ -108,9 +119,44 @@ class AddBanner extends Component{
   handleIcon(e){
     this.setState({icon:e.target.value})
   }
-  handleStauts(e){
-    this.setState({status:e.target.checked})
+  handleMusicAlbum(e){
+    this.setState({
+      musicAlubm:e.target.checked,
+      htmlUrl:!e.target.checked
+    })
   }
+  handleHtmlUrl(e){
+    this.setState({
+      musicAlubm:!e.target.checked,
+      htmlUrl:e.target.checked
+    })
+  }
+
+  handleStatusShow(e){
+    this.setState({
+      statusShow:e.target.checked,
+      statusHide:!e.target.checked
+    })
+  }
+  handleStatusHide(e){
+    this.setState({
+      statusShow:!e.target.checked,
+      statusHide:e.target.checked
+    })
+  }
+  handleFile(e){
+    const imgReader1 = new FileReader()
+    const imgReader2 = new FileReader()
+    imgReader1.readAsBinaryString(e.target.files[0])
+    imgReader1.onload=() =>{
+      this.setState({musicImg: imgReader1.result})
+    }
+    imgReader2.readAsDataURL(e.target.files[0])
+    imgReader2.onload=()=>{
+      this.setState({imageUrl: imgReader2.result})
+    }
+  }
+
   handleClick(){
   }
 }

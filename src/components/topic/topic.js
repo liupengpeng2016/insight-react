@@ -10,6 +10,7 @@ class Topic extends Component{
     super(props)
     this.state={
       showPanel:false,
+      showAllButton:false,
       page:1
     }
   }
@@ -75,7 +76,7 @@ class Topic extends Component{
           </tbody>
         </table>
         <div className='batch-process'>
-          <ul style={this.state.showAllButton? {display:'none'}: null}>
+          <ul style={!this.state.showAllButton? {display:'none'}: null}>
             <li>批量下架</li>
             <li>批量上架</li>
             <li>批量删除</li>
@@ -84,7 +85,7 @@ class Topic extends Component{
           <p><Link to='/addTopic'>新增专题</Link></p>
           <h1
             onClick={this.toggleButton.bind(this)}
-            style={!this.state.showAllButton? {display:'none'}: null}
+            style={this.state.showAllButton? {display:'none'}: null}
           >批量处理</h1>
         </div>
         <AddTo isShow={this.state.showPanel} hidePanle={this.hidePanel.bind(this)}/>
@@ -95,7 +96,7 @@ class Topic extends Component{
 
   }
   toggleButton(){
-    this.setState({showAllButton:false})
+    this.setState({showAllButton:true})
   }
   hidePanel(){
     this.setState({showPanel:false})

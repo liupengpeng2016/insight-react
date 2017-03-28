@@ -8,7 +8,8 @@ class AddTopic extends Component{
       name:'',
       desc:'',
       sort:'0',
-      status:'1'
+      statusShow:true,
+      statusHide:false
     }
   }
 
@@ -24,6 +25,8 @@ class AddTopic extends Component{
               onChange={this.handleType.bind(this)}
               value={this.state.type}
             >
+              <option value=''>故事类型</option>
+              <option value=''>故事类型</option>
               <option value=''>故事类型</option>
             </select>
           </li>
@@ -48,16 +51,22 @@ class AddTopic extends Component{
               value={this.state.sort}
             >
               <option value='0'>0</option>
+              <option value='1'>1</option>
+              <option value='2'>2</option>
+              <option value='3'>3</option>
             </select>
           </li>
           <li>
             <span>状态</span>
               <input type='checkbox' id='banner-show'
-                onChange={this.handleStatus.bind(this)}
-                value={this.state.status}
+                onChange={this.handleStatusShow.bind(this)}
+                checked={this.state.statusShow}
               />
               <label htmlFor='banner-show'>显示</label>
-              <input type='checkbox' id='banner-hide'/>
+              <input type='checkbox' id='banner-hide'
+                onChange={this.handleStatusHide.bind(this)}
+                checked={this.state.statusHide}
+              />
               <label htmlFor='banner-hide'>隐藏</label>
           </li>
         </ul>
@@ -74,8 +83,17 @@ class AddTopic extends Component{
   handleSort(e){
     this.setState({sort:e.target.value})
   }
-  handleStauts(e){
-    this.setState({status:e.target.checked})
+  handleStatusShow(e){
+    this.setState({
+      statusShow:e.target.checked,
+      statusHide:!e.target.checked
+    })
+  }
+  handleStatusHide(e){
+    this.setState({
+      statusShow:!e.target.checked,
+      statusHide:e.target.checked
+    })
   }
   handleDesc(e){
     this.setState({desc:e.target.value})

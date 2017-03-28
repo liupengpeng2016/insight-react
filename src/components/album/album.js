@@ -13,6 +13,7 @@ class Album extends Component{
     super(props)
     this.state={
       showPanel:false,
+      showAllButton:false,
       checkbox:{},
       page:1,
       category:0
@@ -91,7 +92,7 @@ class Album extends Component{
           </tbody>
         </table>
         <div className='batch-process'>
-          <ul style={this.state.showAllButton? {display:'none'}: null}>
+          <ul style={!this.state.showAllButton? {display:'none'}: null}>
             <li>批量下架</li>
             <li>批量上架</li>
             <li>批量删除</li>
@@ -100,7 +101,7 @@ class Album extends Component{
           <p><Link to='/addAlbum'>新增专辑</Link></p>
           <h1
             onClick={this.toggleButton.bind(this)}
-            style={!this.state.showAllButton? {display:'none'}: null}
+            style={this.state.showAllButton? {display:'none'}: null}
           >批量处理</h1>
         </div>
         <AddTo
@@ -118,7 +119,7 @@ class Album extends Component{
 
   }
   toggleButton(){
-
+    this.setState({showAllButton: true})
   }
   //可控表单
   handleCategory(e){
