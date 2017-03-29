@@ -145,4 +145,4 @@ function mapStateToProps (state) {
     searchMusicList: state.mediaData.searchMusicList
   }
 }
-export default connect()(Tingting)
+export default connect(mapStateToProps)(Tingting)

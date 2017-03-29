@@ -2,12 +2,11 @@ import React, {Component} from 'react'
 import './music.css'
 import AddTo from '../addTo/addTo.js'
 import {connect} from 'react-redux'
-import {getMusicList} from '../../redux/actions.js'
 import {Link} from 'react-router'
 import {formTime} from '../../plugs/plugs.js'
 import {
-  delMusicItem, toggleMusicState,
-  getLinkAlbumList, linkToAlbum
+  delMusicItem, toggleMusicStatus,
+  getLinkAlbumList, linkToAlbum,getMusicList
 } from '../../redux/actions.js'
 import OperateButtons from '../operateButtons/operateButtons.js'
 const obj={}
@@ -20,8 +19,11 @@ class Music extends Component{
       addId:'',
       category:'0',
       page:1,
-      showAllButton:false
+      showAllButton:false,
+      buttonMode:'1',
+      userInput:''
     }
+    this.checkbox={}
   }
   render(){
     const {musicList} = this.props
@@ -30,8 +32,13 @@ class Music extends Component{
         <div className='media-search'>
           <p><span>已选歌曲列表</span></p>
           <p>
-            <input type='text' placeholder='请输入歌曲id,或歌名'/>
-            <input type='button' value='搜索已选歌曲'/>
+            <input type='text' placeholder='请输入专题名或歌曲名'
+              onChange={this.handleUserInput.bind(this)}
+              value={this.state.userInput}
+              />
+            <input type='button' value='搜索已选歌曲'
+              onClick={this.searchMusic.bind(this)}
+              />
           </p>
         </div>
         <ul className='media-scope'>
@@ -84,16 +91,18 @@ class Music extends Component{
                 <td>{val.play_times}</td>
                 <td>{val.lyric}</td>
                 <td>{val.age}</td>
-                <td>{parseInt(val.status) === 1 ? '是'  : '否'}</td>
+                <td>{parseInt(val.status, 10) === 1 ? '是'  : '否'}</td>
                 <td>{val.origin}</td>
                 <td>{val.created_at.slice(0,10)}</td>
                 <td><OperateButtons
-                  mode='1'
+                  mode={this.state.buttonMode}
                   editorTo={{pathname:'/media/editorMusic',state:{id: val.id}}}
                   handleDel={this.handleDel.bind(this,[val.id])}
                   handleStatus={this.handleStatus.bind(this,val.status,[val.id])}
                   handleAdd={this.handleAdd.bind(this,val.id)}
                   status={val.status}
+                  checked={this.state.checkbox[val.id]}
+                  toggleChecked={this.toggleChecked.bind(this,val.id)}
                   />
                 </td>
               </tr>
@@ -103,9 +112,9 @@ class Music extends Component{
         </table>
         <div className='batch-process'>
           <ul style={!this.state.showAllButton? {display:'none'}: null}>
-            <li>批量下架</li>
-            <li>批量上架</li>
-            <li>批量删除</li>
+            <li onClick={this.offAll.bind(this)}>批量下架</li>
+            <li onClick={this.onAll.bind(this)}>批量上架</li>
+            <li onClick={this.delAll.bind(this)}>批量删除</li>
             <li onClick={this.chooseAll.bind(this)}>全选</li>
           </ul>
           <p><Link to='/addMusic'>新增歌曲</Link></p>
@@ -133,25 +142,47 @@ class Music extends Component{
     this.setState({checkbox:obj})
   }
   toggleButton(){
-    this.setState({showAllButton: true})
+    this.setState({showAllButton: true, buttonMode: 2})
   }
-  checkbox(id,e){
-    const obj=this.state.checkbox
-    Object.assign(obj, {[id]: e.target.checked})
-    this.setState({checkbox:obj})
+  //用户搜索
+  searchMusic(){
+    this.props.dispatch(getMusicList({keywords:this.state.userInput}))
+  }
+  //批量处理按钮
+  filterIds(obj){
+    const keys=Object.keys(obj)
+    const ids=[]
+    for(let i of keys){
+      obj[i]? ids.push(i) : undefined
+    }
+    return ids
+  }
+  delAll(){
+    this.props.dispatch(delMusicItem({ids: this.filterIds(this.checkbox)}))
+  }
+  onAll(){
+    this.props.dispatch(toggleMusicStatus({ids: this.filterIds(this.checkbox), status: 1}))
+  }
+  offAll(){
+    this.props.dispatch(toggleMusicStatus({ids: this.filterIds(this.checkbox), status: 0}))
   }
   chooseAll(){
-    const obj=Object.assign({}, this.state.checkbox)
-    const keys = Object.keys(obj)
+    const checkbox=this.checkbox
+    const keys=Object.keys(checkbox)
+    let checked = undefined
     for(let i of keys){
-      obj[i] = true
+      checked === undefined ? (checked = !checkbox[i]) : ''
+      checkbox[i]= checked
     }
-    this.setState({checkbox: obj})
+    this.setState({checkbox})
   }
   hidePanle(){
     this.setState({showPanel:false})
   }
-
+  //处理用户输入
+  handleUserInput(e){
+    this.setState({userInput: e.target.value})
+  }
   //编辑按钮操作
   handleAdd(id){
     this.props.dispatch(getLinkAlbumList({id}))
@@ -162,7 +193,11 @@ class Music extends Component{
   }
   handleStatus(status, ids){
     status = status === 1 ? 0 : 1
-    return this.props.dispatch(toggleMusicState({ids,status}))
+    return this.props.dispatch(toggleMusicStatus({ids,status}))
+  }
+  toggleChecked(id, checked){
+    const checkbox=Object.assign(this.checkbox,{[id]: checked})
+    this.setState({checkbox})
   }
 
   dispatchLinkToAlbum(id, album_id){
@@ -170,6 +205,7 @@ class Music extends Component{
   }
   handleCategory(e){
     this.setState({category: e.target.value})
+    this.props.dispatch(getMusicList({category: e.target.value}))
   }
 }
 function mapStateToProps(state){

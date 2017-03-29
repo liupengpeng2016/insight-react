@@ -4,11 +4,12 @@ class AddTo extends Component{
   constructor(props){
     super(props)
     this.state={
-      selectValue: '-100'
+      selectValue: '-1',
+      userInput: ''
     }
   }
   render(){
-    const {isShow, options, addId, target} = this.props
+    const {isShow, options, addId} = this.props
     return (
       <div className='add-to' style={{display:(isShow?'block':'none')}}>
         <div className='add-to-panel'>
@@ -25,7 +26,10 @@ class AddTo extends Component{
           </p>
           <p>
             <span>{this.props.target}ID</span>
-            <input type='text' placeholder={`请输入${this.props.target}ID`}/>
+            <input type='text' placeholder={`请输入${this.props.target}ID`}
+              onChange={this.handleUserInput.bind(this)}
+              value={this.state.userInput}
+              />
           </p>
           <h2 onClick={this.handleClick.bind(this, addId, this.state.selectValue)}>确定</h2>
         </div>
@@ -36,7 +40,10 @@ class AddTo extends Component{
     this.props.hidePanle()
   }
   handleChange(e){
-    this.setState({selectValue: e.target.value})
+    this.setState({userInput:e.target.value, selectValue: e.target.value})
+  }
+  handleUserInput(e){
+    this.setState({userInput:e.target.value, selectValue: e.target.value || -1})
   }
   handleClick(id, target_id){
     this.props.addTo(id, target_id)

@@ -1,12 +1,13 @@
 import React, {Component} from 'react'
 import './addTopic.css'
+import {addTopicItem} from '../../redux/actions.js'
+import {connect} from 'react-redux'
 class AddTopic extends Component{
   constructor(props){
     super(props)
     this.state={
-      type:'',
+      location:'1',
       name:'',
-      desc:'',
       sort:'0',
       statusShow:true,
       statusHide:false
@@ -22,12 +23,13 @@ class AddTopic extends Component{
           <li>
             <span>选择位置</span>
             <select
-              onChange={this.handleType.bind(this)}
-              value={this.state.type}
+              onChange={this.handleLocation.bind(this)}
+              value={this.state.location}
             >
-              <option value=''>故事类型</option>
-              <option value=''>故事类型</option>
-              <option value=''>故事类型</option>
+              <option value='1'>首页</option>
+              <option value='2'>故事</option>
+              <option value='3'>儿歌</option>
+              <option value='4'>音乐</option>
             </select>
           </li>
           <li>
@@ -38,23 +40,11 @@ class AddTopic extends Component{
             />
           </li>
           <li>
-            <span>专题简介</span>
-            <input type='text' placeholder='请输入专题简介'
-              onChange={this.handleDesc.bind(this)}
-              value={this.state.desc}
-            />
-          </li>
-          <li>
             <span>权重</span>
-            <select
+            <input type='text'
               onChange={this.handleSort.bind(this)}
               value={this.state.sort}
-            >
-              <option value='0'>0</option>
-              <option value='1'>1</option>
-              <option value='2'>2</option>
-              <option value='3'>3</option>
-            </select>
+              />
           </li>
           <li>
             <span>状态</span>
@@ -74,7 +64,7 @@ class AddTopic extends Component{
       </div>
     )
   }
-  handleType(e){
+  handleLocation(e){
     this.setState({type:e.target.value})
   }
   handleName(e){
@@ -95,10 +85,14 @@ class AddTopic extends Component{
       statusHide:e.target.checked
     })
   }
-  handleDesc(e){
-    this.setState({desc:e.target.value})
-  }
   handleClick(){
+    const  {location, name, sort} = this.state
+    this.props.dispatch(addTopicItem({
+      location,
+      name,
+      sort,
+      status:this.state.statusShow? 1 : 0
+    }))
   }
 }
-export default AddTopic
+export default connect()(AddTopic)

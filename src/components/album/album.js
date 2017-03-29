@@ -6,7 +6,7 @@ import { connect } from 'react-redux'
 import OperateButtons from '../operateButtons/operateButtons.js'
 import {
   getLinkTopicList, delAlbumItem,
-  toggleAlbumState, linkToTopic
+  toggleAlbumStatus, linkToTopic
  } from '../../redux/actions.js'
 class Album extends Component{
   constructor(props){
@@ -16,8 +16,10 @@ class Album extends Component{
       showAllButton:false,
       checkbox:{},
       page:1,
-      category:0
+      category:0,
+      buttonMode:'1'
     }
+    this.checkbox={}
   }
   render(){
     const {albumList} = this.props
@@ -43,14 +45,6 @@ class Album extends Component{
               <option value='3'>教育</option>
             </select>
           </li>
-          {/*
-            <li>
-              <span>来源</span>
-              <select>
-                <option value=''>全部</option>
-              </select>
-            </li>
-            */}
         </ul>
         <table className='media-list'>
           <tbody>
@@ -78,12 +72,14 @@ class Album extends Component{
                     <td>{val.created_at.slice(0,10)}</td>
                     <td>
                       <OperateButtons
-                        mode='1'
+                        mode={this.state.buttonMode}
                         editorTo={{pathname:'/media/editorAlbum',state:{id:val.id}}}
                         handleDel={this.handleDel.bind(this,[val.id])}
                         handleStatus={this.handleStatus.bind(this,val.status,[val.id])}
                         handleAdd={this.handleAdd.bind(this, val.id)}
                         status={val.status}
+                        checked={this.state.checkbox[val.id]}
+                        toggleChecked={this.toggleChecked.bind(this,val.id)}
                         />
                     </td>
                   </tr>
@@ -93,9 +89,9 @@ class Album extends Component{
         </table>
         <div className='batch-process'>
           <ul style={!this.state.showAllButton? {display:'none'}: null}>
-            <li>批量下架</li>
-            <li>批量上架</li>
-            <li>批量删除</li>
+            <li onClick={this.offAll.bind(this)}>批量下架</li>
+            <li onClick={this.onAll.bind(this)}>批量上架</li>
+            <li onClick={this.delAll.bind(this)}>批量删除</li>
             <li onClick={this.chooseAll.bind(this)}>全选</li>
           </ul>
           <p><Link to='/addAlbum'>新增专辑</Link></p>
@@ -115,17 +111,14 @@ class Album extends Component{
       </div>
     )
   }
-  chooseAll(){
-
-  }
   toggleButton(){
-    this.setState({showAllButton: true})
+    this.setState({showAllButton: true, buttonMode: 2})
   }
   //可控表单
   handleCategory(e){
     this.setState({category: e.target.value})
   }
-//addto面板
+  //addto面板
   hidePanel(){
     this.setState({showPanel:false})
   }
@@ -146,7 +139,39 @@ class Album extends Component{
   }
   handleStatus(status, ids){
     status = status === 1 ? 0 : 1
-    return this.props.dispatch(toggleAlbumState({ids,status}))
+    return this.props.dispatch(toggleAlbumStatus({ids,status}))
+  }
+  //批量处理按钮
+  filterIds(obj){
+    const keys=Object.keys(obj)
+    const ids=[]
+    for(let i of keys){
+      obj[i]? ids.push(i): undefined
+    }
+    return ids
+  }
+  delAll(){
+    this.props.dispatch(delAlbumItem({ids: this.filterIds(this.checkbox)}))
+  }
+  onAll(){
+    this.props.dispatch(toggleAlbumStatus({ids: this.filterIds(this.checkbox), status: 1}))
+  }
+  offAll(){
+    this.props.dispatch(toggleAlbumStatus({ids: this.filterIds(this.checkbox), status: 0}))
+  }
+  chooseAll(){
+    const checkbox=this.checkbox
+    const keys=Object.keys(checkbox)
+    let checked = undefined
+    for(let i of keys){
+      checked === undefined ? (checked = !checkbox[i]) : null
+      checkbox[i]= checked
+    }
+    this.setState({checkbox})
+  }
+  toggleChecked(id, checked){
+    const checkbox=Object.assign(this.checkbox,{[id]: checked})
+    this.setState({checkbox})
   }
 }
 function mapStateToProps(state){

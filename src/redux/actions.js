@@ -42,16 +42,15 @@ function fetchData(url, params, dispatch, action){
     mode: 'cors'
   }).then(res => res.json())
   .then(json => {
-      const result = action === getMusicList||action === getAlbumList || action === getTopicList||action === getBannerList
-      return action ? dispatch(action(result ? undefined : json.data)) : ''
+      return dispatch(action(json.data))
   }).catch(error => console.log(error))
 }
 //获取media列表
 export const getMusicList =
-  (params={category: 0,page:1}) =>
+  params =>
     dispatch => fetchData('/tingting/music/lists', params, dispatch, saveMusicList)
 export const getAlbumList =
-  (params={category: 0,page:1}) =>
+  params =>
     dispatch => fetchData('/tingting/album/lists', params, dispatch, saveAlbumList)
 export const getTopicList =
   params =>
@@ -66,11 +65,11 @@ export const getLinkAlbumList =
 //删除media列表项
 export const delMusicItem =
   params =>
-    dispatch => fetchData('/tingting/music/delete', params, dispatch, getMusicList)
+    dispatch => fetchData('/tingting/music/delete', params, dispatch, null)
 //修改media列表项状态
-export const toggleMusicState =
+export const toggleMusicStatus =
   params =>
-    dispatch => fetchData('/tingting/music/modifyStatus',params, dispatch, getMusicList)
+    dispatch => fetchData('/tingting/music/modifyStatus',params, dispatch, null)
 //歌曲关联专辑
 export const linkToAlbum =
   params =>
@@ -90,11 +89,15 @@ export const addOtherPlatformMusic =
 //删除专辑
 export const delAlbumItem =
   params =>
-    dispatch => fetchData('/tingting/album/delete', params, dispatch, getAlbumList)
-//切换编辑状态
-export const toggleAlbumState =
+    dispatch => fetchData('/tingting/album/delete', params, dispatch, null)
+//新增专辑
+export const addAlbumItem =
   params =>
-    dispatch => fetchData('/tingting/album/modifyStatus', params, dispatch, getAlbumList)
+    dispatch => fetchData('/tingting/album/create', params, dispatch, null)
+//切换编辑状态
+export const toggleAlbumStatus =
+  params =>
+    dispatch => fetchData('/tingting/album/modifyStatus', params, dispatch, null)
 //获取专辑关联专题
 export const getLinkTopicList =
   params =>
@@ -102,7 +105,7 @@ export const getLinkTopicList =
 //编辑专辑
 export const editorAlbum =
   params =>
-    dispatch => fetchData('/tingting/album/edit', params, dispatch, getAlbumList)
+    dispatch => fetchData('/tingting/album/edit', params, dispatch, null)
 //关联专辑到专题
 export const linkToTopic =
   params =>
@@ -110,23 +113,31 @@ export const linkToTopic =
 //删除专题项
 export const delTopicItem =
   params =>
-    dispatch => fetchData('/tingting/subject/delete', params, dispatch, getTopicList)
+    dispatch => fetchData('/tingting/subject/delete', params, dispatch, null)
+//添加专题项
+export const addTopicItem =
+  params =>
+    dispatch => fetchData('/tingting/subject/create', params, dispatch, null)
 //修改专题status
 export const toggleTopicStatus =
   params =>
-    dispatch => fetchData('/tingting/subject/modifyStatus', params, dispatch, getTopicList)
+    dispatch => fetchData('/tingting/subject/modifyStatus', params, dispatch, null)
 //编辑专题
 export const editorTopic =
   params =>
-    dispatch => fetchData('/tingting/subject/edit', params, dispatch, getTopicList)
+    dispatch => fetchData('/tingting/subject/edit', params, dispatch, null)
 //banner删除
 export const delBannerItem =
   params =>
-    dispatch => fetchData('/tingting/banner/delete', params, dispatch, getBannerList)
+    dispatch => fetchData('/tingting/banner/delete', params, dispatch, null)
+//banner添加
+export const addBannerItem =
+  params =>
+    dispatch => fetchData('/tingting/banner/create', params, dispatch, null)
 //banner status
 export const toggleBannerStatus =
   params =>
-    dispatch => fetchData('/tingting/banner/modifyStatus', params, dispatch, getBannerList)
+    dispatch => fetchData('/tingting/banner/modifyStatus', params, dispatch, null)
 //banner编辑
 export const editorBanner =
   params =>

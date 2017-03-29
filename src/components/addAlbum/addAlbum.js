@@ -1,14 +1,17 @@
 import React, {Component} from 'react'
 import './addAlbum.css'
+import {addAlbumItem} from '../../redux/actions.js'
+import {connect} from 'react-redux'
 class AddAlbum extends Component{
   constructor(props){
     super(props)
     this.state={
-      type:'',
+      category:'1',
       name:'',
       tags:'',
-      icon:'',
       sort:'0',
+      desc:'',
+      age:'',
       statusShow:true,
       statusHide:false,
       musicImg:'',
@@ -24,10 +27,12 @@ class AddAlbum extends Component{
           <li>
             <span>选择分类</span>
             <select
-              onChange={this.handleType.bind(this)}
-              value={this.state.type}
+              onChange={this.handleCategory.bind(this)}
+              value={this.state.category}
             >
-              <option value=''>故事类型</option>
+              <option value='1'>儿童</option>
+              <option value='2'>音乐</option>
+              <option value='3'>教育</option>
             </select>
           </li>
           <li>
@@ -44,6 +49,20 @@ class AddAlbum extends Component{
               value={this.state.tags}
             />
             <p><span></span>专辑标签有助于语音检索歌曲</p>
+          </li>
+          <li>
+            <span>专辑描述</span>
+            <input type='text' placeholder='请输入专辑描述'
+              onChange={this.handleDesc.bind(this)}
+              value={this.state.desc}
+            />
+          </li>
+          <li>
+            <span>年龄</span>
+            <input type='text' placeholder='请输入年龄'
+              onChange={this.handleAge.bind(this)}
+              value={this.state.age}
+            />
           </li>
           <li className='input-img'>
             <span>专辑封面</span>
@@ -84,14 +103,20 @@ class AddAlbum extends Component{
       </div>
     )
   }
-  handleType(e){
-    this.setState({type:e.target.value})
+  handleCategory(e){
+    this.setState({category:e.target.value})
   }
   handleName(e){
     this.setState({name:e.target.value})
   }
+  handleAge(e){
+    this.setState({age:e.target.value})
+  }
   handleTags(e){
     this.setState({tags:e.target.value})
+  }
+  handleDesc(e){
+    this.setState({desc:e.target.value})
   }
   handleSort(e){
     this.setState({sort:e.target.value})
@@ -121,6 +146,17 @@ class AddAlbum extends Component{
     })
   }
   handleClick(){
+    const {category,name,age,tags,desc,sort} = this.state
+    this.props.dispatch(addAlbumItem({
+      category,
+      name,
+      age,
+      tags,
+      desc,
+      sort,
+      cover:this.state.musicImg,
+      status:this.state.statusShow ? 1 : 0
+    }))
   }
 }
-export default AddAlbum
+export default connect()(AddAlbum)

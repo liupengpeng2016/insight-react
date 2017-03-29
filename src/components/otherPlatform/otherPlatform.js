@@ -180,7 +180,7 @@ class OtherPlatform extends Component{
     })
   }
   handleClick(){
-    const {category,name,singer,age,tags,musicImg,label,duration,desc,sort,url,statusShow} = this.state
+    const {category,name,singer,age,tags,musicImg,duration,desc,sort,url,statusShow} = this.state
     this.props.dispatch(addOtherPlatformMusic({
       category,
       name,

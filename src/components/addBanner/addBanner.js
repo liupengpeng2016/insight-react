@@ -1,21 +1,20 @@
 import React, {Component} from 'react'
 import './addBanner.css'
+import {addBannerItem} from '../../redux/actions.js'
+import {connect} from 'react-redux'
 class AddBanner extends Component{
   constructor(props){
     super(props)
     this.state={
-      type:'',
-      content:'',
-      album:'',
+      location:'1',
+      content_album:true,
+      content_url:false,
       desc:'',
+      pic:'',
       sort:'0',
-      icon:'',
-      status:'1',
+      url:'',
       statusShow:true,
       statusHide:false,
-      musicAlubm:true,
-      htmlUrl:false,
-      musicImg:'',
       imageUrl:''
     }
   }
@@ -28,34 +27,37 @@ class AddBanner extends Component{
           <li>
             <span>选择位置</span>
             <select
-              onChange={this.handleType.bind(this)}
-              value={this.state.type}
+              onChange={this.handleLocation.bind(this)}
+              value={this.state.location}
             >
-              <option value=''>故事类型</option>
+              <option value='1'>首页</option>
+              <option value='2'>故事</option>
+              <option value='3'>儿歌</option>
+              <option value='4'>音乐</option>
             </select>
           </li>
           <li>
             <span>Banner内容</span>
             <input type='checkbox' id='album' name='banner'
-              onChange={this.handleMusicAlbum.bind(this)}
-              checked={this.state.musicAlubm}
+              onChange={this.handleContent_album.bind(this)}
+              checked={this.state.content_album}
             />
             <label htmlFor='album'>
               歌曲专辑
             </label>
             <input type='checkbox' id='url' name='banner'
-              onChange={this.handleHtmlUrl.bind(this)}
-              checked={this.state.htmlUrl}
+              onChange={this.handleContent_url.bind(this)}
+              checked={this.state.content_url}
             />
             <label htmlFor='url'>
               网页URL
             </label>
             <p>
               <span></span>
-              <input type='text' placeholder='请输入歌曲专辑/网络URL'
-                onChange={this.handleAlbum.bind(this)}
-                value={this.state.album}
-              />
+              <input type='text' placeholder='请输入歌曲专辑或网络url'
+                onChange={this.handleUrl.bind(this)}
+                value={this.state.url}
+                />
             </p>
           </li>
           <li>
@@ -101,14 +103,11 @@ class AddBanner extends Component{
       </div>
     )
   }
-  handleType(e){
-    this.setState({type:e.target.value})
+  handleLocation(e){
+    this.setState({location:e.target.value})
   }
-  handleContent(e){
-    this.setState({content:e.target.checked})
-  }
-  handleAlbum(e){
-    this.setState({album:e.target.value})
+  handleUrl(e){
+    this.setState({url:e.target.value})
   }
   handleDesc(e){
     this.setState({desc:e.target.value})
@@ -116,19 +115,16 @@ class AddBanner extends Component{
   handleSort(e){
     this.setState({sort:e.target.value})
   }
-  handleIcon(e){
-    this.setState({icon:e.target.value})
-  }
-  handleMusicAlbum(e){
+  handleContent_url(e){
     this.setState({
-      musicAlubm:e.target.checked,
-      htmlUrl:!e.target.checked
+      content_url:e.target.checked,
+      content_album:!e.target.checked
     })
   }
-  handleHtmlUrl(e){
+  handleContent_album(e){
     this.setState({
-      musicAlubm:!e.target.checked,
-      htmlUrl:e.target.checked
+      content_album:e.target.checked,
+      content_url:!e.target.checked
     })
   }
 
@@ -149,7 +145,7 @@ class AddBanner extends Component{
     const imgReader2 = new FileReader()
     imgReader1.readAsBinaryString(e.target.files[0])
     imgReader1.onload=() =>{
-      this.setState({musicImg: imgReader1.result})
+      this.setState({pic: imgReader1.result})
     }
     imgReader2.readAsDataURL(e.target.files[0])
     imgReader2.onload=()=>{
@@ -158,6 +154,16 @@ class AddBanner extends Component{
   }
 
   handleClick(){
+    const {location, pic, url, desc, sort} = this.state
+    this.props.dispatch(addBannerItem({
+      location,
+      pic,
+      url,
+      desc,
+      sort,
+      category: this.state.content_album ? 1 : 2,
+      status:this.state.statusShow ? 1 : 0
+    }))
   }
 }
-export default AddBanner
+export default connect()(AddBanner)
