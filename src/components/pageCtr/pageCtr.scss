@@ -1,0 +1,21 @@
+.pageCtr{
+  display:flex;
+  justify-content: center;
+  &>li{
+    border:1px solid;
+    font:{
+      size:12px;
+    }
+
+    text-align: center;
+    line-height: 18px;
+    margin:0 12px;
+    width:18px;
+  }
+  li:first-child{
+    width:100px;
+  }
+  li:last-child{
+    width:100px;
+  }
+}

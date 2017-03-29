@@ -4,6 +4,7 @@ import AddTo from '../addTo/addTo.js'
 import {connect} from 'react-redux'
 import {Link} from 'react-router'
 import {formTime} from '../../plugs/plugs.js'
+import PageCtr from '../pageCtr/pageCtr.js'
 import {
   delMusicItem, toggleMusicStatus,
   getLinkAlbumList, linkToAlbum,getMusicList
@@ -18,7 +19,6 @@ class Music extends Component{
       showPanel:false,
       addId:'',
       category:'0',
-      page:1,
       showAllButton:false,
       buttonMode:'1',
       userInput:''
@@ -131,8 +131,12 @@ class Music extends Component{
           options={this.props.linkAlbumList}
           addTo={this.dispatchLinkToAlbum.bind(this)}
           />
+          <PageCtr total='15' buttons='10' changePage={this.changePage.bind(this)}/>
       </div>
     )
+  }
+  changePage(page){
+    this.props.dispatch(getMusicList({page,category:this.state.category}))
   }
   componentWillMount(){
     const {dispatch} = this.props
