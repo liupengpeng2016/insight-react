@@ -1,0 +1,25 @@
+.pageCtr{
+  text-align: center;
+  margin:20px 0;
+  color:#c7c7c7;
+  ul{
+    display:inline-block;
+  }
+  li{
+    border:1px solid;
+    font:{
+      size:12px;
+    }
+    text-align: center;
+    line-height: 32px;
+    margin:0 4px;
+    width:32px;
+    float:left;
+  }
+  li:first-child{
+    width:80px;
+  }
+  li:last-child{
+    width:80px;
+  }
+}

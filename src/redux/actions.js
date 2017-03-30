@@ -42,7 +42,9 @@ function fetchData(url, params, dispatch, action){
     mode: 'cors'
   }).then(res => res.json())
   .then(json => {
-      return dispatch(action(json.data))
+      if(action){
+        return dispatch(action(json.data))
+      }
   }).catch(error => console.log(error))
 }
 //获取media列表
@@ -62,11 +64,11 @@ export const getBannerList =
 export const getLinkAlbumList =
   params =>
     dispatch => fetchData('/tingting/music/getCanAssociateAlbums', params,dispatch,saveLinkAlbumList)
-//删除media列表项
+//删除music列表项
 export const delMusicItem =
   params =>
     dispatch => fetchData('/tingting/music/delete', params, dispatch, null)
-//修改media列表项状态
+//修改music列表项状态
 export const toggleMusicStatus =
   params =>
     dispatch => fetchData('/tingting/music/modifyStatus',params, dispatch, null)
