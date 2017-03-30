@@ -126,10 +126,8 @@ class Music extends Component{
     this.props.dispatch(getMusicList({page,category:this.state.category}))
     this.setState({page})
   }
-  componentWillMount(){
-    this.getMusicList()
-  }
   componentDidMount(){
+    this.getMusicList()
     this.setState({checkbox:obj})
   }
   toggleButton(){
@@ -149,7 +147,9 @@ class Music extends Component{
     const keys=Object.keys(obj)
     const ids=[]
     for(let i of keys){
-      obj[i]? ids.push(i) : undefined
+      if(obj[i]){
+        ids.push(i)
+      }
     }
     return ids
   }
@@ -170,7 +170,9 @@ class Music extends Component{
     const keys=Object.keys(checkbox)
     let checked = undefined
     for(let i of keys){
-      checked === undefined ? (checked = !checkbox[i]) : ''
+      if(checked === undefined){
+        (checked = !checkbox[i])
+      }
       checkbox[i]= checked
     }
     this.setState({checkbox})

@@ -9,8 +9,6 @@ class PageCtr extends Component{
     }
   }
   render(){
-    let {total} = this.props
-    total=parseInt(total,10)
     return (
       <div className='pageCtr'>
         <ul>
@@ -37,7 +35,7 @@ class PageCtr extends Component{
           style={this.state.arr[this.state.arr.length-1] === this.state.active? {display:'none'}: null}
           onClick={
             ()=>{
-              this.handleClick(this.state.active+1, )
+              this.handleClick(this.state.active+1)
             }
           }
         >下一页</li>
@@ -45,9 +43,9 @@ class PageCtr extends Component{
       </div>
     )
   }
-  componentWillUpdate(){
+  componentWillReceiveProps(nextProps){
     let {total, buttons} =this.props
-    if(total){
+    if(nextProps.total !== total || nextProps.buttons !== buttons){
       const arr=[]
       total=parseInt(total,10)
       buttons=parseInt(buttons,10)
@@ -84,11 +82,6 @@ class PageCtr extends Component{
     this.setState({arr})
   }
   handleClick(pageTo){
-    let {total, buttons} =this.props
-    total=parseInt(total,10)
-    buttons=parseInt(buttons,10)
-    buttons=total>buttons? buttons :total
-    pageTo=parseInt(pageTo, 10)
     const arr=this.state.arr
     const middlePage=parseInt((arr[0]+arr[arr.length-1])/2, 10)
     this.move(pageTo-middlePage)

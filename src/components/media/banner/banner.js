@@ -130,7 +130,9 @@ class Banner extends Component{
     const keys=Object.keys(obj)
     const ids=[]
     for(let i of keys){
-      obj[i]? ids.push(i) : ''
+      if(obj[i]){
+        ids.push(i)
+      }
     }
     return ids
   }
@@ -152,7 +154,9 @@ class Banner extends Component{
     const keys=Object.keys(checkbox)
     let checked = undefined
     for(let i of keys){
-      checked === undefined ? (checked = !checkbox[i]) : ''
+      if(checked === undefined){
+        checked = !checkbox[i]
+      }
       checkbox[i]= checked
     }
     this.setState({checkbox})

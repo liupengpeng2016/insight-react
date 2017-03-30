@@ -45,9 +45,10 @@ function fetchData(url, params, dispatch, action){
       if(action){
         return dispatch(action(json.data))
       }
+      return ''
   }).catch(error => console.log(error))
 }
-//获取media列表
+//获取music列表
 export const getMusicList =
   params =>
     dispatch => fetchData('/tingting/music/lists', params, dispatch, saveMusicList)
