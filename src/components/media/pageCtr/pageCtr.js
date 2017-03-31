@@ -45,11 +45,11 @@ class PageCtr extends Component{
   }
   componentWillReceiveProps(nextProps){
     let {total, buttons} =this.props
-    if(nextProps.total !== total || nextProps.buttons !== buttons){
+    if(nextProps.total){
       const arr=[]
-      total=parseInt(total,10)
-      buttons=parseInt(buttons,10)
-      buttons=total>buttons? buttons :total
+      total=parseInt(nextProps.total,10)
+      buttons=parseInt(nextProps.buttons,10)
+      buttons = total>buttons ? buttons :total
       for(let i=0;i<buttons;i++){
         arr[i]=i+1
       }

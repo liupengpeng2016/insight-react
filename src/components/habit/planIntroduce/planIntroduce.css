@@ -1,0 +1,36 @@
+.sleep-plan-introduce {
+  padding-left: 16px;
+  padding-right: 16px;
+  padding-bottom: 24px;
+  border-bottom: 1px #dbdbdb dashed; }
+  .sleep-plan-introduce > h1 {
+    line-height: 40px;
+    color: #dbdbdb;
+    font-size: 12px; }
+  .sleep-plan-introduce > ul {
+    font-size: 12px;
+    border: 1px solid #b0b0b0;
+    line-height: 50px;
+    margin-bottom: 26px; }
+    .sleep-plan-introduce > ul > li {
+      border-top: 1px solid #b0b0b0; }
+      .sleep-plan-introduce > ul > li > span {
+        display: inline-block;
+        width: 118px;
+        color: #b0b0b0;
+        padding-left: 12px; }
+      .sleep-plan-introduce > ul > li img {
+        display: inline-block;
+        vertical-align: middle; }
+    .sleep-plan-introduce > ul > li:first-child {
+      border: none;
+      background: #faf9fd; }
+  .sleep-plan-introduce > p {
+    line-height: 52px;
+    width: 340px;
+    color: white;
+    font-size: 20px;
+    text-align: center;
+    margin: 0 auto;
+    border-radius: 5px;
+    background: #5cc1df; }

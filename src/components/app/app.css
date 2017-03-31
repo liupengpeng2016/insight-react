@@ -266,4 +266,29 @@ input:focus {
     margin: 0 auto;
     border-radius: 5px; }
 
+.content {
+  float: left;
+  width: 1016px;
+  height: 1166px;
+  margin-left: 14px;
+  background: white; }
+  .content > h1 {
+    line-height: 40px;
+    color: #d0d0d0;
+    font-size: 14px;
+    background: #f4f4f4; }
+  .content > h2 {
+    line-height: 40px;
+    margin-left: 16px;
+    font-size: 15px; }
+  .content > h2 + ul {
+    padding-left: 16px;
+    border-bottom: 1px solid #f7f7f7;
+    overflow: hidden; }
+    .content > h2 + ul li {
+      width: 112px;
+      line-height: 46px;
+      float: left;
+      text-align: center; }
+
 /*public-css over*/

@@ -3,7 +3,7 @@ import {
   SAVE_MUSIC_LIST,SAVE_ALBUM_LIST,
   SAVE_TOPIC_LIST,SAVE_BANNER_LIST,
   SAVE_LINK_ALBUM_LIST,SAVE_SEARCH_MUSIC_LIST,
-  SAVE_LINK_TOPIC_LIST
+  SAVE_LINK_TOPIC_LIST,SAVE_HABIT_PLAN,SAVE_HABIT_PLAN_EVENT
 } from './actionTypes.js'
 function mediaData(state={
   musicList: [],
@@ -33,6 +33,19 @@ function mediaData(state={
     return state
   }
 }
+function habitData(state={
+  habitPlan:[],
+  habitPlanEvent:[]
+}, action){
+  switch(action.type){
+    case SAVE_HABIT_PLAN:
+    return Object.assign({}, state, {habitPlan: action.data})
+    case SAVE_HABIT_PLAN_EVENT:
+    return Object.assign({}, state, {habitPlanEvent: action.data})
+    default: return state
+  }
+}
 export default combineReducers({
-  mediaData
+  mediaData,
+  habitData
 })

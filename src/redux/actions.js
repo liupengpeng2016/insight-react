@@ -5,7 +5,9 @@ import {
   SAVE_BANNER_LIST,
   SAVE_LINK_ALBUM_LIST,
   SAVE_SEARCH_MUSIC_LIST,
-  SAVE_LINK_TOPIC_LIST
+  SAVE_LINK_TOPIC_LIST,
+  SAVE_HABIT_PLAN,
+  SAVE_HABIT_PLAN_EVENT
 } from './actionTypes.js'
 import {baseUrl} from '../config/config.js'
 import fetch from 'isomorphic-fetch'
@@ -48,6 +50,7 @@ function fetchData(url, params, dispatch, action){
       return ''
   }).catch(error => console.log(error))
 }
+/******* media part **********/
 //获取music列表
 export const getMusicList =
   params =>
@@ -145,3 +148,30 @@ export const toggleBannerStatus =
 export const editorBanner =
   params =>
     dispatch => fetchData('/tingting/banner/edit', params, dispatch, null)
+/******* habit part **********/
+const saveHabitPlan = data => ({type: SAVE_HABIT_PLAN, data})
+const saveHabitPlanEvent = data => ({type: SAVE_HABIT_PLAN_EVENT, data})
+//睡眠计划列表
+export const getHabitPlan =
+  params =>
+    dispatch => fetchData('/plan/defaultPlan/planList', params, dispatch, saveHabitPlan)
+//睡眠计划事件
+export const getHabitPlanEvent =
+  params =>
+    dispatch => fetchData('/plan/defaultPlan/planEventList', params, dispatch, saveHabitPlanEvent)
+//睡眠计划添加计划
+export const addHabitPlan =
+  params =>
+    dispatch => fetchData('/plan/defaultPlan/addPlan', params, dispatch, null)
+//睡眠计划添加事件
+export const addHabitPlanEvent =
+  params =>
+    dispatch => fetchData('/plan/defaultPlan/addPlanEvent', params, dispatch, null)
+//睡眠计划删除计划
+export const delHabitPlan =
+  params =>
+    dispatch => fetchData('/plan/defaultPlan/deletePlan', params, dispatch, null)
+//睡眠计划删除事件
+export const delHabitPlanEvent =
+  params =>
+    dispatch => fetchData('/plan/defaultPlan/deletePlanEvent', params, dispatch, null)

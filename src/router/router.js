@@ -2,11 +2,10 @@ import React from 'react'
 import {Router, Route, browserHistory, IndexRedirect} from 'react-router'
 import App from '../components/app/app.js'
 import Home from '../components/home/root/home.js'
-import Media from '../components/media/root/media.js'
-import Habit from '../components/habit/root/habit.js'
 import Product from '../components/product/root/product.js'
 import Toy from '../components/toy/root/toy.js'
-
+//media
+import Media from '../components/media/root/media.js'
 import Music from '../components/media/music/music.js'
 import Album from '../components/media/album/album.js'
 import Topic from '../components/media/topic/topic.js'
@@ -19,6 +18,11 @@ import AddBanner from '../components/media/addBanner/addBanner.js'
 import AddTopic from '../components/media/addTopic/addTopic.js'
 import EditorMusic from '../components/media/editorMusic/editorMusic.js'
 import EditorAlbum from '../components/media/editorAlbum/editorAlbum.js'
+//habit
+import Habit from '../components/habit/root/habit.js'
+import ShowPlan from '../components/habit/showPlan/showPlan.js'
+import AddPlan from '../components/habit/addPlan/addPlan.js'
+import AddEvent from '../components/habit/addEvent/addEvent.js'
 const router = (
   <Router history={browserHistory}>
     <Route path='/' component={App}>
@@ -33,7 +37,12 @@ const router = (
         <Route path='editorMusic' component={EditorMusic}></Route>
         <Route path='editorAlbum' component={EditorAlbum}></Route>
       </Route>
-      <Route path='habit' component={Habit}></Route>
+      <Route path='habit' component={Habit}>
+        <IndexRedirect to='showPlan'/>
+        <Route path='showPlan' component={ShowPlan}/>
+        <Route path='addPlan' component={AddPlan}/>
+        <Route path='addEvent' component={AddEvent}/>
+      </Route>
       <Route path='product' component={Product}></Route>
       <Route path='Toy' component={Toy}></Route>
       <Route path='addMusic' component={AddMusic}>

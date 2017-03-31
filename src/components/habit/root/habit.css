@@ -1,0 +1,20 @@
+.habit .habit-tab > li {
+  margin: 0 26px;
+  width: auto;
+  text-align: center;
+  cursor: pointer; }
+
+.habit .habit-tab > li:last-child {
+  width: 104px;
+  line-height: 30px;
+  border: 1px solid #5cc1df;
+  border-radius: 5px;
+  float: right;
+  margin-top: 6px; }
+  .habit .habit-tab > li:last-child a {
+    color: #5cc1df; }
+
+.habit .habit-tab > li:last-child:before {
+  content: '+';
+  font-size: 20px;
+  color: #5cc1df; }
