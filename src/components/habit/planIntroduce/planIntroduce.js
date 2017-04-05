@@ -3,7 +3,6 @@ import './planIntroduce.css'
 class PlanIntroduce extends Component{
   render(){
     const {planIntroduce} = this.props
-    console.log(planIntroduce)
     return (
       <div className='sleep-plan-introduce'>
         <h1>计划简介</h1>
@@ -23,7 +22,7 @@ class PlanIntroduce extends Component{
     )
   }
   handleEditor(){
-    
+
   }
 }
 export default PlanIntroduce

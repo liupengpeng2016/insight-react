@@ -20,26 +20,27 @@ const saveLinkAlbumList = data => ({type:SAVE_LINK_ALBUM_LIST, data})
 const saveSearchMusicList = data => ({type:SAVE_SEARCH_MUSIC_LIST, data})
 const saveLinkTopicList = data => ({type: SAVE_LINK_TOPIC_LIST, data})
 function fetchData(url, params, dispatch, action){
-  let formParams=''
+  let formParams= new FormData()
   if(params){
-    const keys=Object.keys(params)
-    for(let i of keys){
-      if(params[i] instanceof Array){
-        for(let k=0; k<params[i].length; k++){
-          formParams += i + '['+ k +']=' + params[i][k] + '&'
+    if(params instanceof FormData){
+      formParams= params
+    }else{
+      const keys=Object.keys(params)
+      for(let i of keys){
+        if(params[i] instanceof Array){
+          for(let k=0; k<params[i].length; k++){
+            formParams.append(i+ '['+ k +']', params[i][k])
+          }
+        }else{
+          formParams.append(i, params[i])
         }
-      }else{
-        formParams+= (i+'='+params[i]) + '&'
       }
     }
-    formParams=formParams.slice(0,-1)
+  }else{
+    formParams=null
   }
-  const headers=new Headers({
-    "Content-Type": "application/x-www-form-urlencoded"
-  })
   fetch(baseUrl + url, {
     method: 'post',
-    headers,
     body: formParams,
     mode: 'cors'
   }).then(res => res.json())
@@ -151,27 +152,27 @@ export const editorBanner =
 /******* habit part **********/
 const saveHabitPlan = data => ({type: SAVE_HABIT_PLAN, data})
 const saveHabitPlanEvent = data => ({type: SAVE_HABIT_PLAN_EVENT, data})
-//睡眠计划列表
+//计划列表
 export const getHabitPlan =
   params =>
     dispatch => fetchData('/plan/defaultPlan/planList', params, dispatch, saveHabitPlan)
-//睡眠计划事件
+//计划事件
 export const getHabitPlanEvent =
   params =>
     dispatch => fetchData('/plan/defaultPlan/planEventList', params, dispatch, saveHabitPlanEvent)
-//睡眠计划添加计划
+//添加计划
 export const addHabitPlan =
   params =>
     dispatch => fetchData('/plan/defaultPlan/addPlan', params, dispatch, null)
-//睡眠计划添加事件
+//添加事件
 export const addHabitPlanEvent =
   params =>
     dispatch => fetchData('/plan/defaultPlan/addPlanEvent', params, dispatch, null)
-//睡眠计划删除计划
+//删除计划
 export const delHabitPlan =
   params =>
     dispatch => fetchData('/plan/defaultPlan/deletePlan', params, dispatch, null)
-//睡眠计划删除事件
+//删除事件
 export const delHabitPlanEvent =
   params =>
     dispatch => fetchData('/plan/defaultPlan/deletePlanEvent', params, dispatch, null)

@@ -20,10 +20,10 @@ class AddAlbum extends Component{
   }
   render(){
     return (
-      <div className='add-media content'>
+      <div className='content'>
         <h1>葡萄听听>专辑列表>新增专辑</h1>
         <h2>新增专辑</h2>
-        <ul>
+        <ul className='add-item'>
           <li>
             <span>选择分类</span>
             <select
@@ -98,8 +98,8 @@ class AddAlbum extends Component{
                 />
               <label htmlFor='banner-hide'>隐藏</label>
           </li>
+          <li onClick={this.handleClick.bind(this)}>提交</li>
         </ul>
-        <p onClick={this.handleClick.bind(this)}>提交</p>
       </div>
     )
   }

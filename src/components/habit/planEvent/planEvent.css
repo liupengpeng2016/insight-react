@@ -26,7 +26,16 @@
       margin-bottom: 25px; }
       .sleep-plan-list .habit-control-buttons > ul li {
         float: right;
-        margin: 0 12px; }
+        margin: 0 12px;
+        line-height: 28px;
+        padding: 0 22px;
+        border-radius: 5px; }
+      .sleep-plan-list .habit-control-buttons > ul li:nth-child(2) {
+        color: #5cc1df;
+        border: 1px solid; }
+      .sleep-plan-list .habit-control-buttons > ul li:nth-child(1) {
+        color: white;
+        background: #ff5722; }
     .sleep-plan-list .habit-control-buttons > h1 {
       width: 98px;
       line-height: 30px;
@@ -39,7 +48,8 @@
       width: 340px;
       line-height: 52px;
       background: #5cc1df;
-      color: white;
       margin: 0 auto;
       font-size: 20px;
       border-radius: 5px; }
+      .sleep-plan-list .habit-control-buttons > h2 a {
+        color: white; }

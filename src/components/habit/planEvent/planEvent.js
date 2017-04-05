@@ -1,6 +1,18 @@
 import React, {Component} from 'react'
 import './planEvent.css'
+import CtrButtons from '../ctrButtons/ctrButtons.js'
+import {delHabitPlanEvent} from '../../../redux/actions.js'
+import {Link} from 'react-router'
+import {connect} from 'react-redux'
 class PlanEvent extends Component {
+  constructor(props){
+    super(props)
+    this.state={
+      mode:'1',
+      checkbox:{}
+    }
+    this.checkbox={}
+  }
   render(){
     const {planEvent} = this.props
     return (
@@ -31,7 +43,16 @@ class PlanEvent extends Component {
                   <td>{val.status === 1 ? '是' : '否'}</td>
                   <td>{val.time}</td>
                   <td>{val.sort}</td>
-                  <td>操作</td>
+                  <td>
+                    <CtrButtons
+                      mode={this.state.mode}
+                      path='/habit/addEvent'
+                      del={this.delItem.bind(this, val.id)}
+                      checked={this.state.checkbox[val.id]||false}
+                      activeId={this.props.activeId}
+                      change={this.handleChange.bind(this, val.id)}
+                    />
+                  </td>
                 </tr>
               )
             })
@@ -39,17 +60,67 @@ class PlanEvent extends Component {
           </tbody>
         </table>
         <div className='habit-control-buttons'>
-          <ul>
-            <li>全选</li>
-            <li>批量删除</li>
-            <li>批量上架</li>
-            <li>批量下架</li>
+          <ul style={this.state.mode === '1' ? {display: 'none'} : null}>
+            <li onClick={this.delAll.bind(this)}>批量删除</li>
+            <li onClick={this.chooseAll.bind(this)}>全选</li>
           </ul>
-          <h1>批量管理</h1>
-          <h2>新增提醒</h2>
+          <h1 onClick={this.changeMode.bind(this)}
+            style={this.state.mode === '1' ? null : {display: 'none'}}
+          >批量管理</h1>
+        <h2><Link to='/habit/addEvent'>新增提醒</Link></h2>
         </div>
       </div>
     )
   }
+  //props
+  delItem(id){
+    this.props.dispatch(delHabitPlanEvent({default_plan_event_ids:id}))
+  }
+  componentWillReceiveProps(nextProps){
+    if(nextProps.activeId !== this.props.activeId){
+      this.checkbox={}
+      this.setState({checkbox: {}, mode:'1'})
+    }
+  }
+  componentDidUpdate(prevProps){
+    if(prevProps.activeId !== this.props.activeId){
+      this.setState({checkbox: this.checkbox})
+    }
+  }
+  handleChange(id, checked){
+    console.log(id)
+    Object.assign(this.checkbox, {[id]: checked})
+    this.setState({checkbox: this.checkbox})
+  }
+  componentDidMount(){
+    this.setState({checkbox: this.checkbox})
+  }
+  //ctr
+  chooseAll(){
+    const keys=Object.keys(this.checkbox)
+    const checked=  !this.checkbox[keys[0]] ? true : false
+    for(let i of keys){
+      this.checkbox[i]= checked
+    }
+    this.setState({checkbox: this.checkbox})
+  }
+  delAll(){
+    const obj= Object.assign({}, this.state.checkbox)
+    let ids= ''
+    const keys=Object.keys(obj)
+    for(let i of keys){
+      if(obj[i]){
+        ids+= i+ ','
+      }
+    }
+    ids.slice(0, -1)
+    this.props.dispatch(delHabitPlanEvent({default_plan_event_ids:ids}))
+    setTimeout(()=>{
+      this.props.refresh()
+    },150)
+  }
+  changeMode(){
+    this.setState({mode: '2'})
+  }
 }
-export default PlanEvent
+export default connect()(PlanEvent)

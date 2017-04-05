@@ -16,10 +16,10 @@ class AddTopic extends Component{
 
   render(){
     return (
-      <div className='add-media content'>
+      <div className='content'>
         <h1>葡萄听听>专题列表>新增专题</h1>
         <h2>新增专题</h2>
-        <ul>
+        <ul className='add-item'>
           <li>
             <span>选择位置</span>
             <select
@@ -59,8 +59,8 @@ class AddTopic extends Component{
               />
               <label htmlFor='banner-hide'>隐藏</label>
           </li>
+          <li onClick={this.handleClick.bind(this)}>提交</li>
         </ul>
-        <p onClick={this.handleClick.bind(this)}>提交</p>
       </div>
     )
   }

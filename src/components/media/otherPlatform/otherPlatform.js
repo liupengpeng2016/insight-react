@@ -23,8 +23,8 @@ class OtherPlatform extends Component{
   }
   render(){
     return (
-      <div className='add-media content'>
-        <ul className='otherPlatform'>
+      <div className='content'>
+        <ul className='add-item'>
           <li>
             <span>歌曲类别</span>
             <select
@@ -119,11 +119,10 @@ class OtherPlatform extends Component{
             <h1>选择文件</h1>
             <p>图片格式为JPG或PNG,大小为2M以内。</p>
           </li>
+          <li
+            onClick={this.handleClick.bind(this)}
+            >提交</li>
         </ul>
-        <p
-          onClick={this.handleClick.bind(this)}
-        >提交
-        </p>
       </div>
     )
   }

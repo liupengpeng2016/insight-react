@@ -19,7 +19,7 @@ class Aside extends Component{
           <li><Link to='/media' activeStyle={activeCSS}>多媒体库</Link></li>
           <li><Link to='/habit' activeStyle={activeCSS}>习惯养成</Link></li>
           <li><Link to='/product' activeStyle={activeCSS}>哄宝神奇</Link></li>
-          <li><Link to='/toy' activeStyle={activeCSS}>玩偶设置</Link></li>
+          <li><Link to='/toy/toyPlan' activeStyle={activeCSS}>玩偶设置</Link></li>
         </ul>
       </div>
     )

@@ -15,7 +15,7 @@
     }
     td{
       border:1px solid #dbdbdb;
-      
+
     }
     tr{
       background:#fafafa;
@@ -34,10 +34,21 @@
       li{
         float:right;
         margin:0 12px;
+        line-height: 28px;
+        padding:0 22px;
+        border-radius:5px;
       }
       overflow: hidden;
       margin:{
         bottom:25px;
+      }
+      li:nth-child(2){
+        color:#5cc1df;
+        border:1px solid;
+      }
+      li:nth-child(1){
+        color:white;
+        background:#ff5722;
       }
     }
     &>h1{
@@ -53,10 +64,13 @@
       width:340px;
       line-height:52px;
       background:#5cc1df;
-      color:white;
+
       margin: 0 auto;
       font-size:20px;
       border-radius:5px;
+      a{
+        color:white;
+      }
     }
   }
 }

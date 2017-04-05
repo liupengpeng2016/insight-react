@@ -1,0 +1,41 @@
+.toy-plan > h1 {
+  line-height: 40px;
+  color: #d0d0d0;
+  font-size: 14px;
+  background: #f4f4f4; }
+
+.toy-plan > h2 {
+  line-height: 40px;
+  margin-left: 16px;
+  font-size: 15px; }
+
+.toy-plan-tabs {
+  padding-left: 16px;
+  border-bottom: 1px solid #f7f7f7;
+  overflow: hidden; }
+
+.toy-plan-tabs li {
+  line-height: 46px;
+  float: left;
+  text-align: center;
+  margin: 0 12px; }
+
+.toy-plan-tabs > li:last-child {
+  width: 104px;
+  line-height: 30px;
+  border: 1px solid #5cc1df;
+  border-radius: 5px;
+  float: right;
+  color: #5cc1df;
+  margin-top: 6px; }
+
+.toy-plan-tabs > li:last-child a {
+  color: #5cc1df; }
+
+.toy-plan-tabs > li:last-child:before {
+  content: '+';
+  font-size: 20px;
+  color: #5cc1df; }
+
+.toy-plan-tabs > li:last-child:before a {
+  color: #5cc1df; }

@@ -19,8 +19,8 @@ class EditorAlbum extends Component{
   }
   render(){
     return (
-      <div className='add-media editor-music'>
-        <ul>
+      <div className='editor-music'>
+        <ul className='add-item'>
           <li>
             <span>歌曲名称</span>
             <input type='text' placeholder='请输入歌曲名称'
@@ -109,8 +109,8 @@ class EditorAlbum extends Component{
             <h1>选取文件</h1>
             <p>歌词格式为lrc，大小为200kb以内。</p>
           </li>
+          <li onClick={this.handleClick.bind(this)}>编辑信息</li>
         </ul>
-        <p onClick={this.handleClick.bind(this)}>编辑信息</p>
       </div>
     )
   }

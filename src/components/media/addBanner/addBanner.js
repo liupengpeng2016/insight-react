@@ -20,10 +20,10 @@ class AddBanner extends Component{
   }
   render(){
     return (
-      <div className='add-media content'>
+      <div className='content'>
         <h1>葡萄听听>banner列表>新增banner</h1>
         <h2>新增banner</h2>
-        <ul>
+        <ul className='add-item'>
           <li>
             <span>选择位置</span>
             <select
@@ -98,8 +98,8 @@ class AddBanner extends Component{
               />
               <label htmlFor='banner-hide'>隐藏</label>
           </li>
+          <li onClick={this.handleClick.bind(this)}>提交</li>
         </ul>
-        <p onClick={this.handleClick.bind(this)}>提交</p>
       </div>
     )
   }

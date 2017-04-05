@@ -17,10 +17,10 @@ class ShowPlan extends Component{
   render(){
     const {habitPlan} = this.props
     return (
-      <div className='content habit'>
+      <div className='content'>
         <h1>习惯养成</h1>
         <h2>系统计划</h2>
-        <ul className='habit-tab'>
+        <ul className='habit-sub-tabs'>
           {
             (habitPlan||[]).map((val, i) => {
               return (
@@ -31,18 +31,25 @@ class ShowPlan extends Component{
               )
             })
           }
-          <li><Link to='/habit/addPlan'>新增计划</Link></li>
+          <li>
+            <Link to={{
+              pathname:'/habit/addPlan',
+              state:(habitPlan[0]||[]).appid
+            }}>新增计划</Link></li>
         </ul>
         <PlanIntroduce
           planIntroduce={this.state.activeId ? this.filterHabitPlan(this.state.activeId)[0] : []}
           />
-        <PlanEvent planEvent={this.props.habitPlanEvent}/>
+        <PlanEvent planEvent={this.props.habitPlanEvent}
+          refresh={()=>{getHabitPlanEvent({default_plan_id: this.state.activeId})}}
+          activeId={this.state.activeId}
+          />
       </div>
     )
   }
   componentWillReceiveProps(nextProps){
     if(!this.props.habitPlan[0]){
-      const id= nextProps.habitPlan[0].id
+      const id= (nextProps.habitPlan[0]||[]).id
       if(id){
         this.props.dispatch(getHabitPlanEvent({default_plan_id: id}))
         this.setState({activeId: id})

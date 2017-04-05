@@ -201,70 +201,70 @@ input:focus {
   height: 30px;
   border-radius: 5px; }
 
-.add-media {
-  font-size: 14px; }
-  .add-media > ul {
-    padding-left: 16px;
-    color: #ababab; }
-    .add-media > ul li {
-      padding-top: 24px;
-      line-height: 42px; }
-      .add-media > ul li span {
-        display: inline-block;
-        width: 120px; }
-      .add-media > ul li select, .add-media > ul li input {
-        height: 42px;
-        color: #ababab;
-        vertical-align: middle; }
-      .add-media > ul li [type='checkbox'] {
-        width: 18px;
-        height: 18px; }
-      .add-media > ul li input[type='text'] {
-        padding-left: 14px;
-        width: 328px; }
-      .add-media > ul li > label {
-        color: black;
-        margin: 0 26px 0 10px; }
-    .add-media > ul .input-img {
-      position: relative; }
-      .add-media > ul .input-img img {
-        width: 116px;
-        height: 116px;
-        display: inline-block;
-        vertical-align: top;
-        border: 1px dashed #eee; }
-      .add-media > ul .input-img [type='file'] {
-        display: block;
-        margin: 16px 118px 0;
-        width: 204px;
-        height: 40px;
-        border: 1px solid;
-        position: relative;
-        z-index: 1;
-        opacity: 0; }
-      .add-media > ul .input-img p {
-        font-size: 10px;
-        padding-left: 115px; }
-      .add-media > ul .input-img h1 {
-        position: absolute;
-        width: 206px;
-        height: 42px;
-        bottom: 42px;
-        left: 118px;
-        background: #5cc1df;
-        color: white;
-        text-align: center;
-        line-height: 40px;
-        font-size: 16px; }
-  .add-media > p {
+.add-item {
+  font-size: 14px;
+  padding-left: 16px;
+  color: #ababab; }
+  .add-item li {
+    padding-top: 24px;
+    line-height: 42px; }
+    .add-item li span {
+      display: inline-block;
+      width: 120px; }
+    .add-item li select, .add-item li input {
+      height: 42px;
+      color: #ababab;
+      vertical-align: middle; }
+    .add-item li [type='checkbox'] {
+      width: 18px;
+      height: 18px; }
+    .add-item li input[type='text'] {
+      padding-left: 14px;
+      width: 328px; }
+    .add-item li label {
+      color: black;
+      margin: 0 26px 0 10px; }
+  .add-item .input-img {
+    position: relative; }
+    .add-item .input-img img {
+      width: 116px;
+      height: 116px;
+      display: inline-block;
+      vertical-align: top;
+      border: 1px dashed #eee; }
+    .add-item .input-img [type='file'] {
+      display: block;
+      margin: 16px 118px 0;
+      width: 204px;
+      height: 40px;
+      border: 1px solid;
+      position: relative;
+      z-index: 1;
+      opacity: 0; }
+    .add-item .input-img p {
+      font-size: 10px;
+      padding-left: 115px; }
+    .add-item .input-img h1 {
+      position: absolute;
+      width: 206px;
+      height: 42px;
+      bottom: 42px;
+      left: 118px;
+      background: #5cc1df;
+      color: white;
+      text-align: center;
+      line-height: 40px;
+      font-size: 16px; }
+  .add-item li:last-child {
     width: 340px;
     line-height: 40px;
     text-align: center;
     color: white;
     font-size: 18px;
     background: #5cc1df;
-    margin: 0 auto;
-    border-radius: 5px; }
+    margin: 24px auto 0;
+    border-radius: 5px;
+    padding: 0; }
 
 .content {
   float: left;
@@ -281,11 +281,11 @@ input:focus {
     line-height: 40px;
     margin-left: 16px;
     font-size: 15px; }
-  .content > h2 + ul {
+  .content .sub-tabs {
     padding-left: 16px;
     border-bottom: 1px solid #f7f7f7;
     overflow: hidden; }
-    .content > h2 + ul li {
+    .content .sub-tabs li {
       width: 112px;
       line-height: 46px;
       float: left;
