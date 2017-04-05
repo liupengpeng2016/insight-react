@@ -20,7 +20,7 @@ class AddBanner extends Component{
   }
   render(){
     return (
-      <div className='content'>
+      <div className='root-media-list'>
         <h1>葡萄听听>banner列表>新增banner</h1>
         <h2>新增banner</h2>
         <ul className='add-item'>

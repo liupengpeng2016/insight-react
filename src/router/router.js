@@ -5,6 +5,7 @@ import Home from '../components/home/root/home.js'
 import Product from '../components/product/root/product.js'
 //media
 import Media from '../components/media/root/media.js'
+import MediaList from '../components/media/mediaList/mediaList.js'
 import Music from '../components/media/music/music.js'
 import Album from '../components/media/album/album.js'
 import Topic from '../components/media/topic/topic.js'
@@ -23,7 +24,6 @@ import Habit from '../components/habit/root/habit.js'
 import ShowPlan from '../components/habit/showPlan/showPlan.js'
 import AddPlan from '../components/habit/addPlan/addPlan.js'
 import AddEvent from '../components/habit/addEvent/addEvent.js'
-
 //toy
 import Toy from '../components/toy/root/toy.js'
 import ToyPlan from '../components/toy/toyPlan/toyPlan.js'
@@ -33,14 +33,25 @@ const router = (
       <IndexRedirect to='home'></IndexRedirect>
       <Route path='home' component={Home}></Route>
       <Route path='media' component={Media}>
-        <IndexRedirect to='music'></IndexRedirect>
-        <Route path='music' component={Music}></Route>
-        <Route path='album' component={Album}></Route>
-        <Route path='topic' component={Topic}></Route>
-        <Route path='banner' component={Banner}></Route>
+        <IndexRedirect to='mediaList'></IndexRedirect>
+        <Route path='mediaList' component={MediaList}>
+          <IndexRedirect to='music'></IndexRedirect>
+          <Route path='music' component={Music}></Route>
+          <Route path='album' component={Album}></Route>
+          <Route path='topic' component={Topic}></Route>
+          <Route path='banner' component={Banner}></Route>
+        </Route>
         <Route path='editorMusic' component={EditorMusic}></Route>
         <Route path='editorAlbum' component={EditorAlbum}></Route>
         <Route path='editorTopic' component={EditorTopic}></Route>
+        <Route path='addMusic' component={AddMusic}>
+          <IndexRedirect to='tingting'/>
+          <Route path='tingting' component={Tingting}></Route>
+          <Route path='other' component={OtherPlatform}></Route>
+        </Route>
+        <Route path='addAlbum' component={AddAlbum}></Route>
+        <Route path='addTopic' component={AddTopic}></Route>
+        <Route path='addBanner' component={AddBanner}></Route>
       </Route>
       <Route path='habit' component={Habit}>
         <IndexRedirect to='showPlan'/>
@@ -54,14 +65,6 @@ const router = (
         <Route path='toyPlan' component={ToyPlan}>
         </Route>
       </Route>
-      <Route path='addMusic' component={AddMusic}>
-        <IndexRedirect to='tingting'/>
-        <Route path='tingting' component={Tingting}></Route>
-        <Route path='other' component={OtherPlatform}></Route>
-      </Route>
-      <Route path='addAlbum' component={AddAlbum}></Route>
-      <Route path='addTopic' component={AddTopic}></Route>
-      <Route path='addBanner' component={AddBanner}></Route>
     </Route>
   </Router>
 )

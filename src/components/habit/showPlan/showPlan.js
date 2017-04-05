@@ -17,7 +17,7 @@ class ShowPlan extends Component{
   render(){
     const {habitPlan} = this.props
     return (
-      <div className='content'>
+      <div className='root-media-list'>
         <h1>习惯养成</h1>
         <h2>系统计划</h2>
         <ul className='habit-sub-tabs'>

@@ -20,7 +20,7 @@ class AddAlbum extends Component{
   }
   render(){
     return (
-      <div className='content'>
+      <div className='root-media-list'>
         <h1>葡萄听听>专辑列表>新增专辑</h1>
         <h2>新增专辑</h2>
         <ul className='add-item'>

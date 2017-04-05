@@ -88,7 +88,7 @@ class Topic extends Component{
             <li onClick={this.delAll.bind(this)}>批量删除</li>
             <li onClick={this.chooseAll.bind(this)}>全选</li>
           </ul>
-          <p><Link to='/addTopic'>新增专题</Link></p>
+          <p><Link to='/media/addTopic'>新增专题</Link></p>
           <h1
             onClick={this.toggleButton.bind(this)}
             style={this.state.showAllButton? {display:'none'}: null}
@@ -172,7 +172,7 @@ class Topic extends Component{
     for(let i of keys){
       if(checked === undefined){
         checked = !checkbox[i]
-      } 
+      }
       checkbox[i]= checked
     }
     this.setState({checkbox})

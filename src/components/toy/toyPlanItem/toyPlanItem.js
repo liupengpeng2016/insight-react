@@ -1,6 +1,12 @@
 import React, {Component} from 'react'
 import './toyPlanItem.css'
 class ToyPlanItem extends Component{
+  constructor(props){
+    super(props)
+    this.state={
+      showAllButton: false
+    }
+  }
   render(){
     return (
       <ul className='toy-plan-item'>
@@ -50,11 +56,16 @@ class ToyPlanItem extends Component{
               </tr>
             </tbody>
           </table>
-          <ul className='toy-operate-buttons'>
+          <ul className='toy-operate-buttons'
+            style={!this.state.showAllButton? {display: 'none'}: null}
+          >
             <li>批量删除</li>
             <li>全选</li>
           </ul>
-          <p>批量管理</p>
+          <p
+            style={this.state.showAllButton ? {display: 'none'}: null}
+            onClick={this.toggleButton.bind(this)}
+          >批量管理</p>
           <input type='button' value='编辑信息'/>
         </li>
         <li>
@@ -70,6 +81,9 @@ class ToyPlanItem extends Component{
         </li>
       </ul>
     )
+  }
+  toggleButton(){
+    this.setState({showAllButton: true})
   }
 }
 export default ToyPlanItem

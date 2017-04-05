@@ -16,7 +16,7 @@ class AddTopic extends Component{
 
   render(){
     return (
-      <div className='content'>
+      <div className='root-media-list'>
         <h1>葡萄听听>专题列表>新增专题</h1>
         <h2>新增专题</h2>
         <ul className='add-item'>

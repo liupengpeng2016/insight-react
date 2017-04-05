@@ -272,7 +272,6 @@ input:focus{
       height:116px;
       display:inline-block;
       vertical-align:top;
-      border:1px dashed #eee;
     }
     [type='file']{
       display:block;
@@ -330,6 +329,8 @@ input:focus{
     left:14px;
   }
   background:white;
+}
+.root-media-list{
   &>h1{
     line-height:40px;
     color:#d0d0d0;

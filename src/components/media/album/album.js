@@ -95,7 +95,7 @@ class Album extends Component{
             <li onClick={this.delAll.bind(this)}>批量删除</li>
             <li onClick={this.chooseAll.bind(this)}>全选</li>
           </ul>
-          <p><Link to='/addAlbum'>新增专辑</Link></p>
+          <p><Link to='/media/addAlbum'>新增专辑</Link></p>
           <h1
             onClick={this.toggleButton.bind(this)}
             style={this.state.showAllButton? {display:'none'}: null}
