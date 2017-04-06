@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import './planIntroduce.css'
+import {Link} from 'react-router'
 class PlanIntroduce extends Component{
   render(){
     const {planIntroduce} = this.props
@@ -17,7 +18,7 @@ class PlanIntroduce extends Component{
         </ul>
         <p
           onClick={this.handleEditor.bind(this)}
-          >编辑信息</p>
+          ><Link to='/habit/editorPlan'>编辑信息</Link></p>
       </div>
     )
   }

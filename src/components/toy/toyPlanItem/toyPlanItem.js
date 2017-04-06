@@ -48,12 +48,12 @@ class ToyPlanItem extends Component{
                         {
                           this.state.buttonMode ? (
                             <div className='operate-button'>
-                              <span className='editor-button'>编辑</span>
+                              <span className='editor-button'><Link to='toy/editorToyAction'>编辑</Link></span>
                               <span className='del-button'>删除</span>
                             </div>
                           ) : (
                             <div className='operate-button'>
-                              <span className='editor-button'>编辑</span>
+                              <span className='editor-button'><Link to='toy/editorToyAction'>编辑</Link></span>
                               <input type='checkbox'
                                 checked={this.state.checkbox[val.id] || false}
                                 onChange={this.handleChecked.bind(this, val.id)}

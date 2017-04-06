@@ -1,0 +1,10 @@
+.habit-plan > h1 {
+  line-height: 40px;
+  color: #d0d0d0;
+  font-size: 14px;
+  background: #f4f4f4; }
+
+.habit-plan > h2 {
+  line-height: 40px;
+  margin-left: 16px;
+  font-size: 15px; }

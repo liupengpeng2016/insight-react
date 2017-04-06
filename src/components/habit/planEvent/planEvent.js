@@ -1,6 +1,5 @@
 import React, {Component} from 'react'
 import './planEvent.css'
-import CtrButtons from '../ctrButtons/ctrButtons.js'
 import {delHabitPlanEvent} from '../../../redux/actions.js'
 import {Link} from 'react-router'
 import {connect} from 'react-redux'
@@ -8,10 +7,9 @@ class PlanEvent extends Component {
   constructor(props){
     super(props)
     this.state={
-      mode:'1',
+      mode:1,
       checkbox:{}
     }
-    this.checkbox={}
   }
   render(){
     const {planEvent} = this.props
@@ -44,14 +42,23 @@ class PlanEvent extends Component {
                   <td>{val.time}</td>
                   <td>{val.sort}</td>
                   <td>
-                    <CtrButtons
-                      mode={this.state.mode}
-                      path='/habit/addEvent'
-                      del={this.delItem.bind(this, val.id)}
-                      checked={this.state.checkbox[val.id]||false}
-                      activeId={this.props.activeId}
-                      change={this.handleChange.bind(this, val.id)}
-                    />
+                    {
+                      this.state.mode?(
+                        <ul className='ctr-buttons'>
+                          <li><Link to='/habit/editorPlanEvent'>编辑</Link></li>
+                          <li onClick={this.delItem.bind(this, val.id)}>删除</li>
+                        </ul>
+                      ):(
+                        <ul className='ctr-buttons'>
+                          <li><Link to='/habit/editorPlanEvent'>编辑</Link></li>
+                          <li>
+                            <input type='checkbox' checked={this.state.checkbox[val.id]}
+                              onChange={this.handleChange.bind(this, val.id)}
+                            />
+                          </li>
+                        </ul>
+                      )
+                    }
                   </td>
                 </tr>
               )
@@ -60,12 +67,12 @@ class PlanEvent extends Component {
           </tbody>
         </table>
         <div className='habit-control-buttons'>
-          <ul style={this.state.mode === '1' ? {display: 'none'} : null}>
+          <ul style={this.state.mode? {display: 'none'} : null}>
             <li onClick={this.delAll.bind(this)}>批量删除</li>
             <li onClick={this.chooseAll.bind(this)}>全选</li>
           </ul>
           <h1 onClick={this.changeMode.bind(this)}
-            style={this.state.mode === '1' ? null : {display: 'none'}}
+            style={this.state.mode? null : {display: 'none'}}
           >批量管理</h1>
         <h2><Link to='/habit/addEvent'>新增提醒</Link></h2>
         </div>
@@ -78,8 +85,13 @@ class PlanEvent extends Component {
   }
   componentWillReceiveProps(nextProps){
     if(nextProps.activeId !== this.props.activeId){
-      this.checkbox={}
-      this.setState({checkbox: {}, mode:'1'})
+      let {planEvent} = nextProps
+      planEvent= planEvent || []
+      const checkbox= {}
+      for(let i of planEvent){
+          Object.assign(checkbox, {[i.id]: false})
+      }
+      this.setState({checkbox, mode: 1})
     }
   }
   componentDidUpdate(prevProps){

@@ -24,6 +24,8 @@ import Habit from '../components/habit/root/habit.js'
 import ShowPlan from '../components/habit/showPlan/showPlan.js'
 import AddPlan from '../components/habit/addPlan/addPlan.js'
 import AddEvent from '../components/habit/addEvent/addEvent.js'
+import EditorPlan from '../components/habit/editorPlan/editorPlan.js'
+import EditorPlanEvent from '../components/habit/editorPlanEvent/editorPlanEvent.js'
 //toy
 import Toy from '../components/toy/root/toy.js'
 import ToyPlan from '../components/toy/toyPlan/toyPlan.js'
@@ -61,6 +63,8 @@ const router = (
         <Route path='showPlan' component={ShowPlan}/>
         <Route path='addPlan' component={AddPlan}/>
         <Route path='addEvent' component={AddEvent}/>
+        <Route path='editorPlan' component={EditorPlan}/>
+        <Route path='editorPlanEvent' component={EditorPlanEvent}/>
       </Route>
       <Route path='product' component={Product}></Route>
       <Route path='toy' component={Toy}>

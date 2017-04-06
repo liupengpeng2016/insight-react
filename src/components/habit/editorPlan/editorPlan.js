@@ -1,19 +1,10 @@
-import React,{Component} from 'react'
-import './editorToyAction.css'
-import {connect} from 'react-redux'
-import {editorToyAction} from '../../../redux/actions.js'
-class EditorToyAction extends Component {
-  constructor(){
-    super()
-    this.state= {
-
-    }
-  }
+import React, {Component} from 'react'
+class EditorPlan extends Component{
   render(){
     return (
-      <div className='add-toy-action toy-plan'>
-        <h1>玩偶设置>编辑动作</h1>
-        <h2>编辑动作信息</h2>
+      <div className='habit-plan'>
+        <h1>习惯养成>编辑计划</h1>
+        <h2>编辑计划信息</h2>
         <ul className='add-item'>
           <li>
             <span>选择动作</span>
@@ -40,15 +31,12 @@ class EditorToyAction extends Component {
               <option value='sequence'>随机</option>
             </select>
           </li>
-          <li onClick={this.handleSubmit.bind(this)}>
+          <li>
              提交
           </li>
         </ul>
       </div>
     )
   }
-  handleSubmit(){
-    this.props.dispatch(editorToyAction())
-  }
 }
-export default connect()(EditorToyAction)
+export default EditorPlan

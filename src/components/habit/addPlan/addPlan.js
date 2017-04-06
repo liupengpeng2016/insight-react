@@ -17,9 +17,8 @@ class AddPlan extends Component{
     }
   }
   render(){
-    console.log(this)
     return (
-      <div className='content'>
+      <div className='habit-plan'>
         <h1>习惯养成>新增计划</h1>
         <h2>设置计划信息</h2>
         <ul className='add-item'>
