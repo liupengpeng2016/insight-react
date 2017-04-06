@@ -144,6 +144,9 @@
   font-size: 16px;
   float: right;
   text-align: center;
+  margin:{
+    right:16px;
+  }
 }
 .operate-button{
   &>span,&>input{

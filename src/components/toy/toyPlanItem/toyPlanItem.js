@@ -7,14 +7,10 @@ class ToyPlanItem extends Component{
       checkbox:{},
       buttonMode:1
     }
-    this.checkbox={}
   }
   render(){
     let {itemData} = this.props
-    itemData= itemData||[]
-    for(let i of itemData){
-      Object.assign(this.checkbox, {[i.id]: false})
-    }
+    itemData= itemData || []
     return (
       <ul className='toy-plan-item'>
         <li>
@@ -119,8 +115,14 @@ class ToyPlanItem extends Component{
     }
     this.setState({checkbox})
   }
-  componentDidUpdate(){
-    // this.setState({checkbox:this.checkbox})
+  componentWillReceiveProps(nextProps){
+    let {itemData} = nextProps
+    itemData= itemData||[]
+    const checkbox={}
+    for(let i of itemData){
+      Object.assign(checkbox, {[i.id]: false})
+    }
+    this.setState({checkbox})
   }
 }
 export default ToyPlanItem

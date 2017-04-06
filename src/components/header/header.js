@@ -6,7 +6,7 @@ class Header extends Component{
       <div className='header'>
         <div className="container">
             <span>退出</span>
-            <p>吴大关</p>
+            <p>userName</p>
             <p>普通管理员</p>
         </div>
       </div>

@@ -4,44 +4,39 @@
   width: 100%;
   height: 100%;
   top: 0; }
-
-.fetch-notice > div {
-  width: 420px;
-  height: 306px;
-  background: white;
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  margin: auto;
-  text-align: center; }
-
-.fetch-notice > div h1 {
-  font-size: 18px;
-  line-height: 74px;
-  position: relative; }
-
-.fetch-notice > div h1 span {
-  position: absolute;
-  right: 20px;
-  font-size: 20px;
-  line-height: 60px; }
-
-.fetch-notice > div p {
-  font-size: 14px;
-  margin-top: 42px;
-  padding: 0 30px; }
-
-.fetch-notice > div h2 {
-  font-size: 18px;
-  line-height: 40px;
-  width: 202px;
-  color: white;
-  background: #5cc1df;
-  position: absolute;
-  border-radius: 5px;
-  left: 0;
-  right: 0;
-  margin: 0 auto;
-  bottom: 25px; }
+  .fetch-notice > div {
+    width: 420px;
+    height: 306px;
+    background: white;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    text-align: center; }
+    .fetch-notice > div h1 {
+      font-size: 18px;
+      line-height: 74px;
+      position: relative; }
+      .fetch-notice > div h1 span {
+        position: absolute;
+        right: 20px;
+        font-size: 20px;
+        line-height: 60px; }
+    .fetch-notice > div p {
+      font-size: 14px;
+      margin-top: 42px;
+      padding: 0 30px; }
+    .fetch-notice > div h2 {
+      font-size: 18px;
+      line-height: 40px;
+      width: 202px;
+      color: white;
+      background: #5cc1df;
+      position: absolute;
+      border-radius: 5px;
+      left: 0;
+      right: 0;
+      margin: 0 auto;
+      bottom: 25px; }

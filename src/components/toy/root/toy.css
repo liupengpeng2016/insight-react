@@ -125,7 +125,8 @@
   border-radius: 5px;
   font-size: 16px;
   float: right;
-  text-align: center; }
+  text-align: center;
+  margin-right: 16px; }
 
 .operate-button > span, .operate-button > input {
   margin: 0 12px; }
