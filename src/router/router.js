@@ -27,6 +27,9 @@ import AddEvent from '../components/habit/addEvent/addEvent.js'
 //toy
 import Toy from '../components/toy/root/toy.js'
 import ToyPlan from '../components/toy/toyPlan/toyPlan.js'
+import AddToyAction from '../components/toy/addToyAction/addToyAction.js'
+import EditorToyAction from '../components/toy/editorToyAction/editorToyAction.js'
+import EditorToyInformation from '../components/toy/editorToyInformation/editorToyInformation.js'
 const router = (
   <Router history={browserHistory}>
     <Route path='/' component={App}>
@@ -61,9 +64,12 @@ const router = (
       </Route>
       <Route path='product' component={Product}></Route>
       <Route path='toy' component={Toy}>
-        <IndexRedirect to='toyPlan'/>
-        <Route path='toyPlan' component={ToyPlan}>
+        <IndexRedirect to='toyPlan/shake'></IndexRedirect>
+        <Route path='toyPlan/:id' component={ToyPlan}>
         </Route>
+        <Route path='addToyAction' component={AddToyAction}></Route>
+        <Route path='editorToyAction' component={EditorToyAction}></Route>
+        <Route path='editorToyInformation' component={EditorToyInformation}></Route>
       </Route>
     </Route>
   </Router>

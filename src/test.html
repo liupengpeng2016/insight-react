@@ -7,20 +7,8 @@
   <title>Document</title>
 </head>
 <body>
-  <input type="file" id='test'>
-  <div class="box">sdfsd</div>
   <script>
-      var test=document.querySelector('#test')
-      document.querySelector('.box').onclick=function(){
-        var test=document.querySelector('#test')
-        var reader= new FileReader()
-        reader.readAsBinaryString(test.files[0])
-        reader.onload=function(){
-          console.log(test)
-        }
-    }
-
+    console.log(Boolean(''))
   </script>
-
 </body>
 </html>

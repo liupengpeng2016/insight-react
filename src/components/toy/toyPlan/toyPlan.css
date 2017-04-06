@@ -15,22 +15,10 @@
   overflow: hidden; }
   .toy-plan-tabs li {
     line-height: 46px;
+    width: 114px;
     float: left;
     text-align: center;
     margin: 0 12px; }
-  .toy-plan-tabs > li:last-child {
-    width: 104px;
-    line-height: 30px;
-    border: 1px solid #5cc1df;
-    border-radius: 5px;
-    float: right;
-    color: #5cc1df;
-    margin-top: 6px; }
-    .toy-plan-tabs > li:last-child a {
-      color: #5cc1df; }
-  .toy-plan-tabs > li:last-child:before {
-    content: '+';
-    font-size: 20px;
-    color: #5cc1df; }
-    .toy-plan-tabs > li:last-child:before a {
-      color: #5cc1df; }
+    .toy-plan-tabs li a {
+      display: block;
+      width: 100%; }

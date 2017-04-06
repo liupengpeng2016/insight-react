@@ -1,4 +1,5 @@
 import React, {Component} from 'react'
+import './toy.css'
 class Toy extends Component{
   render(){
     return (

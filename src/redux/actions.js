@@ -7,10 +7,13 @@ import {
   SAVE_SEARCH_MUSIC_LIST,
   SAVE_LINK_TOPIC_LIST,
   SAVE_HABIT_PLAN,
-  SAVE_HABIT_PLAN_EVENT
+  SAVE_HABIT_PLAN_EVENT,
+  SAVE_TOY_PLAN, FETCH_NOTICE
 } from './actionTypes.js'
 import {baseUrl} from '../config/config.js'
 import fetch from 'isomorphic-fetch'
+//visibility
+export const setVisibility = data => ({type: data.name, show: data.show, msg: data.msg})
 //存储media列表
 const saveMusicList = data => ({type:SAVE_MUSIC_LIST, data})
 const saveAlbumList = data => ({type:SAVE_ALBUM_LIST, data})
@@ -47,9 +50,12 @@ function fetchData(url, params, dispatch, action){
   .then(json => {
       if(action){
         return dispatch(action(json.data))
+      }else{
+        return dispatch(setVisibility({name:FETCH_NOTICE, show: true, msg: '操作成功'}))
       }
-      return ''
-  }).catch(error => console.log(error))
+  }).catch(error => {
+    dispatch(setVisibility({name:FETCH_NOTICE, show: true, msg: '操作失败'}))
+  })
 }
 /******* media part **********/
 //获取music列表
@@ -149,7 +155,7 @@ export const toggleBannerStatus =
 export const editorBanner =
   params =>
     dispatch => fetchData('/tingting/banner/edit', params, dispatch, null)
-/******* habit part **********/
+/********** habit part **********/
 const saveHabitPlan = data => ({type: SAVE_HABIT_PLAN, data})
 const saveHabitPlanEvent = data => ({type: SAVE_HABIT_PLAN_EVENT, data})
 //计划列表
@@ -176,3 +182,17 @@ export const delHabitPlan =
 export const delHabitPlanEvent =
   params =>
     dispatch => fetchData('/plan/defaultPlan/deletePlanEvent', params, dispatch, null)
+/************* toy part **************/
+export const saveToyPlan= data => ({type: SAVE_TOY_PLAN, data})
+export const getToyPlan =
+  params =>
+    dispatch => fetchData('/toy/toy/index', params, dispatch, saveToyPlan)
+export const addToyAction =
+  params =>
+    dispatch => fetchData('/toy/toy/addActionContent', params, dispatch, null)
+export const editorToyAction =
+  params =>
+    dispatch => fetchData('/toy/toy/editAction', params, dispatch, null)
+export const editorToyInformation =
+  params =>
+        dispatch => fetchData('/toy/toy/edit', params, dispatch, null)
