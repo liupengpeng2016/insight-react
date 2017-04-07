@@ -9,8 +9,7 @@ import {
   delMusicItem, toggleMusicStatus,
   getLinkAlbumList, linkToAlbum,getMusicList
 } from '../../../redux/actions.js'
-import OperateButtons from '../operateButtons/operateButtons.js'
-const obj={}
+// import OperateButtons from '../operateButtons/operateButtons.js'
 class Music extends Component{
   constructor(props){
     super(props)
@@ -24,7 +23,6 @@ class Music extends Component{
       userInput:'',
       page:1,
     }
-    this.checkbox={}
   }
   render(){
     const {musicList} = this.props
@@ -81,16 +79,30 @@ class Music extends Component{
                 <td>{parseInt(val.status, 10) === 1 ? '是'  : '否'}</td>
                 <td>{val.origin}</td>
                 <td>{val.created_at.slice(0,10)}</td>
-                <td><OperateButtons
-                  mode={this.state.buttonMode}
-                  editorTo={{pathname:'/media/editorMusic',state:{id: val.id}}}
-                  handleDel={this.handleDel.bind(this,[val.id])}
-                  handleStatus={this.handleStatus.bind(this,val.status,[val.id])}
-                  handleAdd={this.handleAdd.bind(this,val.id)}
-                  status={val.status}
-                  checked={this.state.checkbox[val.id]}
-                  toggleChecked={this.toggleChecked.bind(this,val.id)}
-                  />
+                <td>
+                {
+                  this.state.buttonMode?(
+                    <ul className='operate-buttons'>
+                      <li ><Link to={{pathname:'/media/editorAlbum',state:{id:val.id}}} style={{color:'#76cbe5'}}>编辑</Link></li>
+                      <li onClick={this.handleDel.bind(this,[val.id])} style={{color:'#fe6434'}}>删除</li>
+                      <li onClick={this.handleStatus.bind(this,val.status,[val.id])} style={{color:'#50ca71'}}>
+                        {parseInt(val.status, 10)===1?<span style={{color:'#aaa'}}>下架</span>:<span>上架</span>}
+                      </li>
+                      <li onClick={this.handleAdd.bind(this, val.id)} style={{color:'#76cbe5'}}>添加</li>
+                    </ul>
+                  ):(
+                    <ul className='operate-buttons'>
+                      <li ><Link to={{pathname:'/media/editorAlbum',state:{id:val.id}}} style={{color:'#76cbe5'}}>编辑</Link></li>
+                      <li >
+                        <input type='checkbox'
+                          onChange={this.handleChecked.bind(this,val.id)}
+                          checked={this.state.checkbox[val.id]||false}
+                          />
+                      </li>
+                    </ul>
+                  )
+
+                }
                 </td>
               </tr>
               )
@@ -98,7 +110,7 @@ class Music extends Component{
           </tbody>
         </table>
         <div className='batch-process'>
-          <ul style={!this.state.showAllButton? {display:'none'}: null}>
+          <ul style={this.state.buttonMode? {display:'none'}: null}>
             <li onClick={this.offAll.bind(this)}>批量下架</li>
             <li onClick={this.onAll.bind(this)}>批量上架</li>
             <li onClick={this.delAll.bind(this)}>批量删除</li>
@@ -107,7 +119,7 @@ class Music extends Component{
           <p><Link to='/media/addMusic'>新增歌曲</Link></p>
           <h1
             onClick={this.toggleButton.bind(this)}
-            style={this.state.showAllButton? {display:'none'}: null}
+            style={!this.state.buttonMode? {display:'none'}: null}
           >批量处理</h1>
         </div>
         <AddTo
@@ -128,10 +140,19 @@ class Music extends Component{
   }
   componentDidMount(){
     this.getMusicList()
-    this.setState({checkbox:obj})
+  }
+  componentWillReceiveProps(nextProps){
+    const {musicList} = nextProps
+    if(musicList){
+      const checkbox= {}
+      for(let i of musicList){
+        Object.assign(checkbox, {[i.id]: false})
+      }
+      this.setState({checkbox})
+    }
   }
   toggleButton(){
-    this.setState({showAllButton: true, buttonMode: 2})
+    this.setState({buttonMode: 0})
   }
   //用户搜索
   searchMusic(){
@@ -154,25 +175,22 @@ class Music extends Component{
     return ids
   }
   delAll(){
-    this.props.dispatch(delMusicItem({ids: this.filterIds(this.checkbox)}))
+    this.props.dispatch(delMusicItem({ids: this.filterIds(this.state.checkbox)}))
     setTimeout(this.getMusicList.bind(this),150)
   }
   onAll(){
-    this.props.dispatch(toggleMusicStatus({ids: this.filterIds(this.checkbox), status: 1}))
+    this.props.dispatch(toggleMusicStatus({ids: this.filterIds(this.state.checkbox), status: 1}))
     setTimeout(this.getMusicList.bind(this),150)
   }
   offAll(){
-    this.props.dispatch(toggleMusicStatus({ids: this.filterIds(this.checkbox), status: 0}))
+    this.props.dispatch(toggleMusicStatus({ids: this.filterIds(this.state.checkbox), status: 0}))
     setTimeout(this.getMusicList.bind(this),150)
   }
   chooseAll(){
-    const checkbox=this.checkbox
-    const keys=Object.keys(checkbox)
-    let checked = undefined
+    const checkbox= Object.assign({},this.state.checkbox)
+    const keys= Object.keys(checkbox)
+    let checked = !checkbox[keys[0]]
     for(let i of keys){
-      if(checked === undefined){
-        (checked = !checkbox[i])
-      }
       checkbox[i]= checked
     }
     this.setState({checkbox})
@@ -210,6 +228,10 @@ class Music extends Component{
   handleCategory(e){
     this.setState({category: e.target.value})
     this.props.dispatch(getMusicList({category: e.target.value}))
+  }
+  handleChecked(id,e){
+    const checkbox= Object.assign({},this.state.checkbox, {[id]: e.target.checked})
+    this.setState({checkbox})
   }
 }
 function mapStateToProps(state){

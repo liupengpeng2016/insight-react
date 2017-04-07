@@ -27,7 +27,7 @@ function mediaData(state={
   topicList: [],
   bannerList: [],
   linkAlbumList: [],
-  searchMusicList: [],
+  searchMusicList: undefined,
   linkTopicList: []
 },action){
   switch(action.type){

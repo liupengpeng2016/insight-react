@@ -90,6 +90,15 @@
   }
   &>li:last-child{
     border-bottom: none;
+    table{
+      td{
+        border:none;
+        p{
+          line-height:24px;
+        }
+      }
+
+    }
   }
   .toy-operate-buttons{
     overflow: hidden;
@@ -154,6 +163,9 @@
   }
   &>.editor-button{
     color:#5cc1df;
+    a{
+      color:#5cc1df;
+    }
   }
   &>.del-button{
     color:rgb(254, 100, 52);

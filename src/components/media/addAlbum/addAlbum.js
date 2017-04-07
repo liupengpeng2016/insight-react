@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import './addAlbum.css'
 import {addAlbumItem} from '../../../redux/actions.js'
+import fileUpload from '../../../fileUpload/fileUpload.js'
 import {connect} from 'react-redux'
 class AddAlbum extends Component{
   constructor(props){
@@ -14,7 +15,7 @@ class AddAlbum extends Component{
       age:'',
       statusShow:true,
       statusHide:false,
-      musicImg:'',
+      file:'',
       imageUrl:''
     }
   }
@@ -83,6 +84,13 @@ class AddAlbum extends Component{
               <option value='1'>1</option>
               <option value='2'>2</option>
               <option value='3'>3</option>
+              <option value='4'>4</option>
+              <option value='5'>5</option>
+              <option value='6'>6</option>
+              <option value='7'>7</option>
+              <option value='8'>8</option>
+              <option value='9'>9</option>
+              <option value='10'>10</option>
             </select>
           </li>
           <li>
@@ -98,7 +106,7 @@ class AddAlbum extends Component{
                 />
               <label htmlFor='banner-hide'>隐藏</label>
           </li>
-          <li onClick={this.handleClick.bind(this)}>提交</li>
+          <li onClick={this.handleSubmit.bind(this)}>提交</li>
         </ul>
       </div>
     )
@@ -122,12 +130,8 @@ class AddAlbum extends Component{
     this.setState({sort:e.target.value})
   }
   handleFile(e){
-    const imgReader1 = new FileReader()
     const imgReader2 = new FileReader()
-    imgReader1.readAsBinaryString(e.target.files[0])
-    imgReader1.onload=() =>{
-      this.setState({musicImg: imgReader1.result})
-    }
+    this.setState({file: e.target.files[0]})
     imgReader2.readAsDataURL(e.target.files[0])
     imgReader2.onload=()=>{
       this.setState({imageUrl: imgReader2.result})
@@ -145,7 +149,7 @@ class AddAlbum extends Component{
       statusHide:e.target.checked
     })
   }
-  handleClick(){
+  dispatchEditor(cover){
     const {category,name,age,tags,desc,sort} = this.state
     this.props.dispatch(addAlbumItem({
       category,
@@ -154,9 +158,13 @@ class AddAlbum extends Component{
       tags,
       desc,
       sort,
-      cover:this.state.musicImg,
+      cover,
       status:this.state.statusShow ? 1 : 0
     }))
+  }
+  handleSubmit(){
+    const {file} = this.state
+    fileUpload(file,this.dispatchEditor.bind(this))
   }
 }
 export default connect()(AddAlbum)

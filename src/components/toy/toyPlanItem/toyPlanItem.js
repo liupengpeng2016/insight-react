@@ -1,5 +1,8 @@
 import React, {Component} from 'react'
 import {Link} from 'react-router'
+import './toyPlanItem.css'
+import {connect} from 'react-redux'
+import {delToyAction, getToyPlan} from '../../../redux/actions.js'
 class ToyPlanItem extends Component{
   constructor(){
     super()
@@ -23,7 +26,7 @@ class ToyPlanItem extends Component{
               <tr><td>{itemData.desc}</td></tr>
             </tbody>
           </table>
-          <p className='submit'><Link to='/toy/editorToyInformation'>编辑玩偶信息</Link></p>
+          <p className='submit'><Link to='/toy/editorToyAction'>编辑玩偶动作</Link></p>
         </li>
         <li>
           <h2>语音播放顺序：顺序播放</h2>
@@ -42,18 +45,24 @@ class ToyPlanItem extends Component{
                     <tr key={i}>
                       <td>{val.id}</td>
                       <td>{val.content}</td>
-                      <td>{val.audio_url}</td>
+                      <td>
+                        {
+                        <div className='play-music'>
+                          <audio src={val.audio_url}></audio>
+                          <p onClick={this.handleMusic.bind(this)}>点击试听</p>
+                        </div>
+                        }</td>
                       <td>{val.updated_at.slice(0,10)}</td>
                       <td>
                         {
                           this.state.buttonMode ? (
                             <div className='operate-button'>
-                              <span className='editor-button'><Link to='toy/editorToyAction'>编辑</Link></span>
-                              <span className='del-button'>删除</span>
+                              <span className='del-button'
+                                onClick={this.handleDel.bind(this, val.id)}
+                                >删除</span>
                             </div>
                           ) : (
                             <div className='operate-button'>
-                              <span className='editor-button'><Link to='toy/editorToyAction'>编辑</Link></span>
                               <input type='checkbox'
                                 checked={this.state.checkbox[val.id] || false}
                                 onChange={this.handleChecked.bind(this, val.id)}
@@ -71,7 +80,9 @@ class ToyPlanItem extends Component{
           <ul className='button-operate-all'
             style={this.state.buttonMode?{display:'none'}:null}
             >
-            <li className='del-all'>批量删除</li>
+            <li className='del-all'
+              onClick={this.handleDelAll.bind(this)}
+              >批量删除</li>
             <li className='choose-all'
               onClick={this.chooseAll.bind(this)}
               >全选</li>
@@ -89,12 +100,30 @@ class ToyPlanItem extends Component{
           <h1>玩偶简介</h1>
           <table>
             <tbody>
-              <tr><td>玩偶简介</td></tr>
-              <tr><td>图标</td></tr>
-              <tr><td>玩偶简介</td></tr>
-              <tr><td>功能简介</td></tr>
+              <tr>
+                <td>玩偶简介</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>图标</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>玩偶简介</td>
+                <td>哆啦A梦只能陪伴玩偶基于动画片《哆啦A梦》中的人物形象为原型，原生原味的声音，可以问更多关于哆啦A梦的问题。</td>
+              </tr>
+              <tr>
+                <td>功能简介</td>
+                <td>
+                  <p>1.微信聊天</p>
+                  <p>2.语音互动</p>
+                  <p>3.智能互动</p>
+                  <p>4.听故事、儿歌、音乐</p>
+                </td>
+              </tr>
             </tbody>
           </table>
+          <p className='submit'><Link to='/toy/editorToyInformation'>编辑玩偶信息</Link></p>
         </li>
       </ul>
     )
@@ -115,6 +144,23 @@ class ToyPlanItem extends Component{
     }
     this.setState({checkbox})
   }
+  handleDel(id){
+    this.props.dispatch(delToyAction({ids: [id]}))
+    setTimeout(()=>{
+      this.props.dispatch(getToyPlan())
+    },150)
+  }
+  handleDelAll(){
+    const {checkbox} = this.state
+    const keys = Object.keys(checkbox)
+    const ids=[]
+    for(let i of keys){
+      if(checkbox[i]){
+        ids.push(i)
+      }
+    }
+    this.props.dispatch(delToyAction({ids}))
+  }
   componentWillReceiveProps(nextProps){
     let {itemData} = nextProps
     itemData= itemData||[]
@@ -124,5 +170,8 @@ class ToyPlanItem extends Component{
     }
     this.setState({checkbox})
   }
+  handleMusic(e){
+    e.target.previousSibling.play()
+  }
 }
-export default ToyPlanItem
+export default connect()(ToyPlanItem)

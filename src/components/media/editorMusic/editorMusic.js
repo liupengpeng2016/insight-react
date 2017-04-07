@@ -22,6 +22,8 @@ class EditorMusic extends Component{
   render(){
     return (
       <div className='editor-music'>
+        <h1>多媒体库>音乐列表>编辑音乐</h1>
+        <h2>编辑音乐</h2>
         <ul className='add-item'>
           <li>
             <span>歌曲名称</span>

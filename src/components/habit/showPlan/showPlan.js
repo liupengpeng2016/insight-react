@@ -11,7 +11,7 @@ class ShowPlan extends Component{
   constructor(props){
     super(props)
     this.state={
-      activeId:undefined
+      activeId:''
     }
   }
   render(){
@@ -48,6 +48,9 @@ class ShowPlan extends Component{
     )
   }
   componentWillReceiveProps(nextProps){
+    if(!this.state.activeId){
+      this.setState({activeId: nextProps.habitPlan[0].id})
+    }
     if(!this.props.habitPlan[0]){
       const id= (nextProps.habitPlan[0]||[]).id
       if(id){

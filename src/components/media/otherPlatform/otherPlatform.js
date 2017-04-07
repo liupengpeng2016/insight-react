@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import './otherPlatform.css'
 import {connect} from 'react-redux'
 import {addOtherPlatformMusic} from '../../../redux/actions.js'
+import fileUpload from '../../../fileUpload/fileUpload.js'
 class OtherPlatform extends Component{
   constructor(props){
     super(props)
@@ -15,7 +16,7 @@ class OtherPlatform extends Component{
       duration:'',
       sort:'0',
       url:'',
-      musicImg:'',
+      file:'',
       imageUrl:'',
       statusShow:true,
       statusHide:false
@@ -120,7 +121,7 @@ class OtherPlatform extends Component{
             <p>图片格式为JPG或PNG,大小为2M以内。</p>
           </li>
           <li
-            onClick={this.handleClick.bind(this)}
+            onClick={this.handleSubmit.bind(this)}
             >提交</li>
         </ul>
       </div>
@@ -154,18 +155,13 @@ class OtherPlatform extends Component{
     this.setState({age: e.target.value})
   }
   handleFile(e){
-    const imgReader1 = new FileReader()
-    const imgReader2 = new FileReader()
-    imgReader1.readAsBinaryString(e.target.files[0])
-    imgReader1.onload=() =>{
-      this.setState({musicImg: imgReader1.result})
-    }
-    imgReader2.readAsDataURL(e.target.files[0])
-    imgReader2.onload=()=>{
-      this.setState({imageUrl: imgReader2.result})
+    const imgReader = new FileReader()
+    this.setState({file: e.target.files[0]})
+    imgReader.readAsDataURL(e.target.files[0])
+    imgReader.onload=()=>{
+      this.setState({imageUrl: imgReader.result})
     }
   }
-
   handleStatusShow(e){
     this.setState({
       statusShow: e.target.value,
@@ -178,8 +174,8 @@ class OtherPlatform extends Component{
       statusHide: e.target.value
     })
   }
-  handleClick(){
-    const {category,name,singer,age,tags,musicImg,duration,desc,sort,url,statusShow} = this.state
+  dispatchEditor(icon){
+    const {category,name,singer,age,tags,duration,desc,sort,url,statusShow} = this.state
     this.props.dispatch(addOtherPlatformMusic({
       category,
       name,
@@ -190,9 +186,13 @@ class OtherPlatform extends Component{
       tags,
       desc,
       sort,
-      icon:musicImg,
+      icon,
       status: statusShow? '1' : '0'
     }))
+  }
+  handleSubmit(){
+    const {file} = this.state
+    fileUpload(file,this.dispatchEditor.bind(this))
   }
 }
 export default connect()(OtherPlatform)

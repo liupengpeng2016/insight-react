@@ -52,7 +52,7 @@ class PlanEvent extends Component {
                         <ul className='ctr-buttons'>
                           <li><Link to='/habit/editorPlanEvent'>编辑</Link></li>
                           <li>
-                            <input type='checkbox' checked={this.state.checkbox[val.id]}
+                            <input type='checkbox' checked={this.state.checkbox[val.id]||false}
                               onChange={this.handleChange.bind(this, val.id)}
                             />
                           </li>
@@ -84,37 +84,28 @@ class PlanEvent extends Component {
     this.props.dispatch(delHabitPlanEvent({default_plan_event_ids:id}))
   }
   componentWillReceiveProps(nextProps){
-    if(nextProps.activeId !== this.props.activeId){
       let {planEvent} = nextProps
       planEvent= planEvent || []
       const checkbox= {}
       for(let i of planEvent){
           Object.assign(checkbox, {[i.id]: false})
       }
+      console.log(checkbox)
       this.setState({checkbox, mode: 1})
-    }
   }
-  componentDidUpdate(prevProps){
-    if(prevProps.activeId !== this.props.activeId){
-      this.setState({checkbox: this.checkbox})
-    }
-  }
-  handleChange(id, checked){
-    console.log(id)
-    Object.assign(this.checkbox, {[id]: checked})
-    this.setState({checkbox: this.checkbox})
-  }
-  componentDidMount(){
-    this.setState({checkbox: this.checkbox})
+  handleChange(id, e){
+    const checkbox= Object.assign({},this.state.checkbox,{[id]: e.target.checked})
+    this.setState({checkbox})
   }
   //ctr
   chooseAll(){
-    const keys=Object.keys(this.checkbox)
-    const checked=  !this.checkbox[keys[0]] ? true : false
+    const checkbox = Object.assign({}, this.state.checkbox)
+    const keys=Object.keys(checkbox)
+    const checked= !checkbox[keys[0]] ? true : false
     for(let i of keys){
-      this.checkbox[i]= checked
+      checkbox[i]= checked
     }
-    this.setState({checkbox: this.checkbox})
+    this.setState({checkbox})
   }
   delAll(){
     const obj= Object.assign({}, this.state.checkbox)
@@ -132,7 +123,7 @@ class PlanEvent extends Component {
     },150)
   }
   changeMode(){
-    this.setState({mode: '2'})
+    this.setState({mode: 0})
   }
 }
 export default connect()(PlanEvent)

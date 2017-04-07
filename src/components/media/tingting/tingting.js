@@ -17,7 +17,7 @@ class Tingting extends Component{
     }
   }
   render(){
-    const {searchMusicList} = this.props
+    let {searchMusicList} = this.props
     return (
       <div className='tingting'>
         {
@@ -65,17 +65,6 @@ class Tingting extends Component{
               <option value='insight'>insight库</option>
             </select>
           </li>
-          {
-            /*
-            <li>
-              <span>来源</span>
-              <select>
-                <option value=''>全部</option>
-              </select>
-            </li>
-
-            */
-          }
           <li>
             <span>歌曲ID/歌名</span>
             <input type='text' placeholder='请输入歌曲ID／歌名'
@@ -102,7 +91,7 @@ class Tingting extends Component{
               <td>上传时间</td>
               <td>操作</td>
             </tr>
-            {(searchMusicList || []).map((val, i) => {
+            {((searchMusicList||[]).list||[]).map((val, i) => {
               return (
                 <tr key={i}>
                   <td>{val.id}</td>
@@ -121,6 +110,7 @@ class Tingting extends Component{
             })}
           </tbody>
         </table>
+        <p className='tingting-notice' style={searchMusicList === undefined ? {display: "none"} : (!searchMusicList.length === 0 ? {display: 'none'}: null)}>没有找到相应内容!</p>
       </div>
     )
   }

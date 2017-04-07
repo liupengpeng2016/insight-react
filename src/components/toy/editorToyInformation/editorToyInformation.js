@@ -1,12 +1,13 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {editorToyInformation} from '../../../redux/actions.js'
+import fileUpload from '../../../fileUpload/fileUpload.js'
 class EditorToyInformation extends Component{
   constructor(){
     super()
     this.state={
       name:'',
-      icon:'',
+      file:'',
       desc:''
     }
   }
@@ -52,15 +53,19 @@ class EditorToyInformation extends Component{
     this.setState({desc:e.target.value})
   }
   handleFile(e){
-    this.setState({icon:e.target.value})
+    this.setState({file:e.target.files[0]})
   }
-  handleSubmit(){
-    const {name, desc, icon} = this.state
+  dispatchEditor(icon){
+    const {name, desc} = this.state
     this.props.dispatch(editorToyInformation({
       name,
       desc,
       icon
     }))
+  }
+  handleSubmit(){
+    const {file} = this.state
+    fileUpload(file,this.dispatchEditor.bind(this))
   }
 }
 export default connect()(EditorToyInformation)

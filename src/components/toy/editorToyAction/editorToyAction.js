@@ -6,7 +6,9 @@ class EditorToyAction extends Component {
   constructor(){
     super()
     this.state= {
-
+      action: '-1',
+      desc:'',
+      play_order:'-1'
     }
   }
   render(){
@@ -17,8 +19,11 @@ class EditorToyAction extends Component {
         <ul className='add-item'>
           <li>
             <span>选择动作</span>
-            <select>
-              <option value=''>请选择动作</option>
+            <select
+              onChange={this.handleAction.bind(this)}
+              value={this.state.action}
+              >
+              <option value='－1'>请选择动作</option>
               <option value='shake'>摇一摇</option>
               <option value='pat'>拍一下</option>
               <option value='wakeup'>唤醒</option>
@@ -26,16 +31,23 @@ class EditorToyAction extends Component {
           </li>
           <li>
             <span>动作名称</span>
-            <input type='text' placeholder='请输入动作名称'/>
+            <input type='text' placeholder='请输入动作名称'
+              />
           </li>
           <li>
             <span>动作描述</span>
-            <input type='text' placeholder='请输入动作描述'/>
+            <input type='text' placeholder='请输入动作描述'
+              onChange={this.handleDesc.bind(this)}
+              value={this.state.desc}
+              />
           </li>
           <li>
             <span>播放顺序</span>
-            <select>
-              <option value=''>请选择播放顺序</option>
+            <select
+              onChange={this.handlePlay_order.bind(this)}
+              value={this.state.play_order}
+              >
+              <option value='-1'>请选择播放顺序</option>
               <option value='rand'>顺序</option>
               <option value='sequence'>随机</option>
             </select>
@@ -47,8 +59,22 @@ class EditorToyAction extends Component {
       </div>
     )
   }
+  handleAction(e){
+    this.setState({action: e.target.value})
+  }
+  handleDesc(e){
+    this.setState({desc: e.target.value})
+  }
+  handlePlay_order(e){
+    this.setState({desc: e.target.value})
+  }
   handleSubmit(){
-    this.props.dispatch(editorToyAction())
+    const {action, desc, play_order} = this.state
+    this.props.dispatch(editorToyAction({
+      action,
+      desc,
+      play_order
+    }))
   }
 }
 export default connect()(EditorToyAction)

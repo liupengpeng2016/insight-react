@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import './addBanner.css'
 import {addBannerItem} from '../../../redux/actions.js'
 import {connect} from 'react-redux'
+import fileUpload from '../../../fileUpload/fileUpload.js'
 class AddBanner extends Component{
   constructor(props){
     super(props)
@@ -141,12 +142,8 @@ class AddBanner extends Component{
     })
   }
   handleFile(e){
-    const imgReader1 = new FileReader()
     const imgReader2 = new FileReader()
-    imgReader1.readAsBinaryString(e.target.files[0])
-    imgReader1.onload=() =>{
-      this.setState({pic: imgReader1.result})
-    }
+    this.setState({file: e.target.files[0]})
     imgReader2.readAsDataURL(e.target.files[0])
     imgReader2.onload=()=>{
       this.setState({imageUrl: imgReader2.result})
@@ -165,5 +162,22 @@ class AddBanner extends Component{
       status:this.state.statusShow ? 1 : 0
     }))
   }
+  dispatchEditor(pic){
+    const {location, url, desc, sort} = this.state
+    this.props.dispatch(addBannerItem({
+      location,
+      pic,
+      url,
+      desc,
+      sort,
+      category: this.state.content_album ? 1 : 2,
+      status:this.state.statusShow ? 1 : 0
+    }))
+  }
+  handleSubmit(){
+    const {pic} = this.state
+    fileUpload(pic,this.dispatchEditor.bind(this))
+  }
+
 }
 export default connect()(AddBanner)

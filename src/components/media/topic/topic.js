@@ -3,7 +3,7 @@ import {Link} from 'react-router'
 import AddTo from '../addTo/addTo.js'
 import {connect} from 'react-redux'
 import {getTopicList, toggleTopicStatus, delTopicItem} from '../../../redux/actions.js'
-import OperateButtons from '../operateButtons/operateButtons.js'
+// import OperateButtons from '../operateButtons/operateButtons.js'
 import PageCtr from '../pageCtr/pageCtr.js'
 
 class Topic extends Component{
@@ -11,12 +11,10 @@ class Topic extends Component{
     super(props)
     this.state={
       showPanel:false,
-      showAllButton:false,
       page:1,
-      buttonMode:'1',
+      buttonMode:1,
       checkbox:{}
     }
-    this.checkbox={}
   }
   render(){
     const {topicList} = this.props
@@ -65,7 +63,7 @@ class Topic extends Component{
                     <td>{parseInt(val.status, 10) === 1 ? '是'  : '否'}</td>
                     <td>{val.created_at.slice(0,10)}</td>
                     <td>
-                      <OperateButtons
+                      {/*<OperateButtons
                         mode={this.state.buttonMode}
                         editorTo={{pathname:'/media/editorTopic',state:{id: val.id}}}
                         handleDel={this.handleDel.bind(this,[val.id])}
@@ -73,7 +71,28 @@ class Topic extends Component{
                         status={val.status}
                         checked={this.state.checkbox[val.id]}
                         toggleChecked={this.toggleChecked.bind(this,val.id)}
-                      />
+                      />*/}
+                      {
+                        this.state.buttonMode?(
+                          <ul className='operate-buttons'>
+                            <li ><Link to={{pathname:'/media/editorTopic',state:{id:val.id}}} style={{color:'#76cbe5'}}>编辑</Link></li>
+                            <li onClick={this.handleDel.bind(this,[val.id])} style={{color:'#fe6434'}}>删除</li>
+                            <li onClick={this.handleStatus.bind(this,val.status,[val.id])} style={{color:'#50ca71'}}>
+                              {parseInt(val.status, 10)===1?<span style={{color:'#aaa'}}>下架</span>:<span>上架</span>}
+                            </li>
+                          </ul>
+                        ):(
+                          <ul className='operate-buttons'>
+                            <li ><Link to={{pathname:'/media/editorTopic',state:{id:val.id}}} style={{color:'#76cbe5'}}>编辑</Link></li>
+                            <li >
+                              <input type='checkbox'
+                                onChange={this.handleChecked.bind(this, val.id)}
+                                checked={this.state.checkbox[val.id]||false}
+                                />
+                            </li>
+                          </ul>
+                        )
+                      }
                     </td>
                   </tr>
                 )
@@ -82,7 +101,7 @@ class Topic extends Component{
           </tbody>
         </table>
         <div className='batch-process'>
-          <ul style={!this.state.showAllButton? {display:'none'}: null}>
+          <ul style={this.state.buttonMode? {display:'none'}: null}>
             <li onClick={this.offAll.bind(this)}>批量下架</li>
             <li onClick={this.onAll.bind(this)}>批量上架</li>
             <li onClick={this.delAll.bind(this)}>批量删除</li>
@@ -91,7 +110,7 @@ class Topic extends Component{
           <p><Link to='/media/addTopic'>新增专题</Link></p>
           <h1
             onClick={this.toggleButton.bind(this)}
-            style={this.state.showAllButton? {display:'none'}: null}
+            style={!this.state.buttonMode ? {display:'none'}: null}
           >批量处理</h1>
         </div>
         <AddTo isShow={this.state.showPanel} hidePanle={this.hidePanel.bind(this)}/>
@@ -113,7 +132,7 @@ class Topic extends Component{
     }
   }
   toggleButton(){
-    this.setState({showAllButton:true, buttonMode:2})
+    this.setState({buttonMode: 0})
   }
   hidePanel(){
     this.setState({showPanel:false})
@@ -131,6 +150,16 @@ class Topic extends Component{
 //初始化数据
   componentWillMount(){
     this.getTopicList()
+  }
+  componentWillReceiveProps(nextProps){
+    const {topicList} = nextProps
+    if(topicList){
+      const checkbox= {}
+      for(let i of topicList){
+        Object.assign(checkbox, {[i.id]: false})
+      }
+      this.setState({checkbox})
+    }
   }
 //button按钮事件
   handleDel(ids){
@@ -154,25 +183,22 @@ class Topic extends Component{
     return ids
   }
   delAll(){
-    this.props.dispatch(delTopicItem({ids: this.filterIds(this.checkbox)}))
+    this.props.dispatch(delTopicItem({ids: this.filterIds(this.state.checkbox)}))
     setTimeout(this.getTopicList.bind(this),150)
   }
   onAll(){
-    this.props.dispatch(toggleTopicStatus({ids: this.filterIds(this.checkbox), status: 1}))
+    this.props.dispatch(toggleTopicStatus({ids: this.filterIds(this.state.checkbox), status: 1}))
     setTimeout(this.getTopicList.bind(this),150)
   }
   offAll(){
-    this.props.dispatch(toggleTopicStatus({ids: this.filterIds(this.checkbox), status: 0}))
+    this.props.dispatch(toggleTopicStatus({ids: this.filterIds(this.state.checkbox), status: 0}))
     setTimeout(this.getTopicList.bind(this),150)
   }
   chooseAll(){
-    const checkbox=this.checkbox
+    const checkbox= Object.assign({},this.state.checkbox)
     const keys=Object.keys(checkbox)
-    let checked = undefined
+    let checked = !checkbox[keys[0]]
     for(let i of keys){
-      if(checked === undefined){
-        checked = !checkbox[i]
-      }
       checkbox[i]= checked
     }
     this.setState({checkbox})
@@ -181,7 +207,10 @@ class Topic extends Component{
     const checkbox=Object.assign(this.checkbox,{[id]: checked})
     this.setState({checkbox})
   }
-
+  handleChecked(id,e){
+    const checkbox= Object.assign({},this.state.checkbox, {[id]: e.target.checked})
+    this.setState({checkbox})
+  }
 }
 function mapStateToProps(state){
   return {

@@ -53,3 +53,16 @@
       border-radius: 5px; }
       .sleep-plan-list .habit-control-buttons > h2 a {
         color: white; }
+
+.ctr-buttons {
+  width: 150px;
+  margin: 0 auto; }
+  .ctr-buttons li {
+    padding: 0 16px;
+    float: left; }
+  .ctr-buttons li:first-child a {
+    color: #62c3e1; }
+  .ctr-buttons li:nth-child(2) {
+    color: #ff6b3c; }
+    .ctr-buttons li:nth-child(2) a {
+      color: #ff6b3c; }

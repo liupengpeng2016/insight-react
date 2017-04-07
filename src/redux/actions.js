@@ -196,3 +196,6 @@ export const editorToyAction =
 export const editorToyInformation =
   params =>
         dispatch => fetchData('/toy/toy/edit', params, dispatch, null)
+export const delToyAction =
+  params =>
+        dispatch => fetchData('/toy/toy/delActionContent', params, dispatch, null)
