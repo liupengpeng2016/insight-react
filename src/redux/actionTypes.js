@@ -13,3 +13,6 @@ export const SAVE_HABIT_PLAN_EVENT = 'SAVE_HABIT_PLAN_EVENT'
 export const SAVE_TOY_PLAN = 'SAVE_TOY_PLAN'
 //visibility
 export const FETCH_NOTICE = 'FETCH_NOTICE'
+//home
+export const SAVE_DATA_SITUATION = 'SAVE_DATA_SITUATION'
+export const SAVE_USER_LIST = 'SAVEZ_USER_LIST'

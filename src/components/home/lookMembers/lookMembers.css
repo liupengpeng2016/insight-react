@@ -1,0 +1,47 @@
+.look-members {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  font-size: 16px;
+  font-weight: bold; }
+
+.look-members > div {
+  width: 420px;
+  height: 312px;
+  border-radius: 10px;
+  background: white;
+  text-align: center;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto; }
+
+.look-members > div > span {
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  font-size: 40px;
+  right: 10px;
+  top: 6px; }
+
+.look-members > div h1 {
+  line-height: 62px;
+  font-size: 18px; }
+
+.look-members > div img {
+  width: 80px;
+  height: 80px;
+  display: inline-block;
+  margin: 10px 0; }
+
+.look-members > div p {
+  line-height: 40px; }
+
+.look-members > div p span {
+  margin: 0 18px;
+  color: #b1b1b1; }

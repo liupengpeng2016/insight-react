@@ -8,20 +8,13 @@ import {
   SAVE_LINK_TOPIC_LIST,
   SAVE_HABIT_PLAN,
   SAVE_HABIT_PLAN_EVENT,
-  SAVE_TOY_PLAN, FETCH_NOTICE
+  SAVE_TOY_PLAN, FETCH_NOTICE,
+  SAVE_DATA_SITUATION, SAVE_USER_LIST
 } from './actionTypes.js'
 import {baseUrl} from '../config/config.js'
 import fetch from 'isomorphic-fetch'
 //visibility
 export const setVisibility = data => ({type: data.name, show: data.show, msg: data.msg})
-//存储media列表
-const saveMusicList = data => ({type:SAVE_MUSIC_LIST, data})
-const saveAlbumList = data => ({type:SAVE_ALBUM_LIST, data})
-const saveTopicList = data => ({type:SAVE_TOPIC_LIST, data})
-const saveBannerList = data => ({type:SAVE_BANNER_LIST, data})
-const saveLinkAlbumList = data => ({type:SAVE_LINK_ALBUM_LIST, data})
-const saveSearchMusicList = data => ({type:SAVE_SEARCH_MUSIC_LIST, data})
-const saveLinkTopicList = data => ({type: SAVE_LINK_TOPIC_LIST, data})
 function fetchData(url, params, dispatch, action){
   let formParams= new FormData()
   if(params){
@@ -57,7 +50,24 @@ function fetchData(url, params, dispatch, action){
     dispatch(setVisibility({name:FETCH_NOTICE, show: true, msg: '操作失败'}))
   })
 }
+/********************* home part ******************/
+const saveDataSituation = data => ({type:SAVE_DATA_SITUATION, data})
+const saveUserList = data => ({type:SAVE_USER_LIST, data})
+export const getDataSituation =
+  params =>
+    dispatch => fetchData('/index/index/index', params, dispatch, saveDataSituation)
+export const getUserList =
+  params =>
+    dispatch => fetchData('/index/index/lists', params, dispatch, saveUserList)
 /******* media part **********/
+//存储media列表
+const saveMusicList = data => ({type:SAVE_MUSIC_LIST, data})
+const saveAlbumList = data => ({type:SAVE_ALBUM_LIST, data})
+const saveTopicList = data => ({type:SAVE_TOPIC_LIST, data})
+const saveBannerList = data => ({type:SAVE_BANNER_LIST, data})
+const saveLinkAlbumList = data => ({type:SAVE_LINK_ALBUM_LIST, data})
+const saveSearchMusicList = data => ({type:SAVE_SEARCH_MUSIC_LIST, data})
+const saveLinkTopicList = data => ({type: SAVE_LINK_TOPIC_LIST, data})
 //获取music列表
 export const getMusicList =
   params =>

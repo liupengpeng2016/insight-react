@@ -163,12 +163,13 @@ class ToyPlanItem extends Component{
   }
   componentWillReceiveProps(nextProps){
     let {itemData} = nextProps
-    itemData= itemData||[]
-    const checkbox={}
-    for(let i of itemData){
-      Object.assign(checkbox, {[i.id]: false})
+    if(itemData){
+      const checkbox={}
+      for(let i of itemData){
+        Object.assign(checkbox, {[i.id]: false})
+      }
+      this.setState({checkbox, buttonMode: 1})
     }
-    this.setState({checkbox})
   }
   handleMusic(e){
     e.target.previousSibling.play()
