@@ -2,7 +2,6 @@ import React from 'react'
 import {Router, Route, browserHistory, IndexRedirect} from 'react-router'
 import App from '../components/app/app.js'
 import Home from '../components/home/root/home.js'
-import Product from '../components/product/root/product.js'
 //media
 import Media from '../components/media/root/media.js'
 import MediaList from '../components/media/mediaList/mediaList.js'
@@ -26,6 +25,12 @@ import AddPlan from '../components/habit/addPlan/addPlan.js'
 import AddEvent from '../components/habit/addEvent/addEvent.js'
 import EditorPlan from '../components/habit/editorPlan/editorPlan.js'
 import EditorPlanEvent from '../components/habit/editorPlanEvent/editorPlanEvent.js'
+//voice
+import Voice from '../components/voice/root/voice.js'
+import VoiceSystem from '../components/voice/voiceSystem/voiceSystem.js'
+import VoiceManage from '../components/voice/voiceManage/voiceManage.js'
+import Situation from '../components/voice/situation/situation.js'
+import Record from '../components/voice/record/record.js'
 //toy
 import Toy from '../components/toy/root/toy.js'
 import ToyPlan from '../components/toy/toyPlan/toyPlan.js'
@@ -66,11 +71,18 @@ const router = (
         <Route path='editorPlan' component={EditorPlan}/>
         <Route path='editorPlanEvent' component={EditorPlanEvent}/>
       </Route>
-      <Route path='product' component={Product}></Route>
+      <Route path='voice' component={Voice}>
+        <IndexRedirect to='voiceSystem'/>
+        <Route path='voiceSystem' component={VoiceSystem}>
+          <IndexRedirect to='voiceManage'/>
+          <Route path='voiceManage' component={VoiceManage}></Route>
+          <Route path='situation' component={Situation}></Route>
+          <Route path='record' component={Record}></Route>
+        </Route>
+      </Route>
       <Route path='toy' component={Toy}>
         <IndexRedirect to='toyPlan/shake'></IndexRedirect>
-        <Route path='toyPlan/:id' component={ToyPlan}>
-        </Route>
+        <Route path='toyPlan/:id' component={ToyPlan}></Route>
         <Route path='addToyAction' component={AddToyAction}></Route>
         <Route path='editorToyAction' component={EditorToyAction}></Route>
         <Route path='editorToyInformation' component={EditorToyInformation}></Route>

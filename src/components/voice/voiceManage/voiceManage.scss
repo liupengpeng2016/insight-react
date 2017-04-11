@@ -1,0 +1,133 @@
+.voice-manage-search{
+  padding:{
+    left:16px;
+  }
+  overflow: hidden;
+  border-bottom: 1px dashed #f0f0f0;
+  &>h1{
+    font-size: 12px;
+    color:#cdcdcd;
+    float:left;
+    margin:{
+      top:22px;
+    }
+  }
+  &>ul{
+    float:right;
+    line-height: 68px;
+    overflow: hidden;
+    li{
+      float:left;
+      margin:{
+        right:24px;
+      }
+      [type='checkbox']{
+        width:18px;
+        height:18px;
+        margin:0 5px;
+        vertical-align: middle;
+      }
+    }
+    li:last-child{
+      margin-right:16px;
+      &>span{
+        width:85px;
+        line-height:36px;
+        display:inline-block;
+        color:white;
+        text-align: center;
+        background: #5cc1df;
+        vertical-align: middle;
+        cursor:pointer;
+      }
+      &>input{
+        vertical-align: middle;
+        border:1px solid #e7e7e7;
+        width:298px;
+        height:34px;
+        padding:{
+          left:36px;
+        }
+      }
+    }
+  }
+}
+.voice-manage-scope{
+  padding:{
+    left:16px;
+  }
+  line-height: 60px;
+  &>span{
+    width:50px;
+    line-height:32px;
+    display:inline-block;
+    text-align: center;
+    background: #faf9fd;
+    border:1px solid #ebebeb;
+    vertical-align: middle;
+  }
+  &>select{
+    vertical-align: middle;
+    margin:{
+      right:16px;
+    }
+    height:34px;
+    border:1px solid #ebebeb;
+  }
+}
+.voice-manage-list{
+  margin:{
+    left:16px;
+  }
+  width:986px;
+  border:1px solid #f0f0f0;
+  border-collapse:collapse;
+  line-height: 40px;
+  text-align: center;
+  tr:nth-child(2n+1){
+    background: #fafafa;
+  }
+  tr:first-child{
+    background:#faf9fd;
+    color:#bfbfc0;
+  }
+  td{
+    border:1px solid #f0f0f0;
+  }
+}
+.voice-manage-buttons{
+  padding:16px 0;
+  li{
+    width:96px;
+    line-height:30px;
+    color:#5cc1df;
+    text-align: center;
+    float:right;
+    border: 1px solid;
+    margin:{
+      right:16px;
+    }
+    cursor:pointer;
+    border-radius:5px;
+  }
+  overflow:hidden;
+}
+.voice-manage-add{
+  text-align: center;
+  p{
+    display: inline-block;
+    width:204px;
+    line-height:40px;
+    background: #5cc1df;
+    font-size:18px;
+    margin: 0 13px;
+    border-radius:5px;
+    a{color:white;}
+  }
+  span{
+    color:#5cc1df;
+    font-size:12px;
+    vertical-align:bottom;
+    cursor:pointer;
+  }
+}

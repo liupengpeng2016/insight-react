@@ -1,0 +1,70 @@
+.editor-voice{
+  ul{
+    line-height: 42px;
+    li{
+      text-align: left;
+      padding: 11px 0;
+      span{
+        width:66px;
+        display:inline-block;
+        color:#c7c7c7;
+        margin:{
+          left:26px;
+        }
+      }
+      [type='checkbox']{
+        width:16px;
+        height:16px;
+        margin-right:8px;
+        vertical-align: middle;
+      }
+      label{
+        margin-right:22px;
+      }
+      select{
+        height:38px;
+      }
+      [type='text']{
+        height:38px;
+        width:286px;
+        border:1px solid #f0f0f0;
+        padding-left:18px;
+      }
+    }
+  }
+  .editor-voice-info{
+    &>h2{
+      width:205px;
+      line-height:40px;
+      background:#5cc1df;
+      text-align: center;
+      color:white;
+      font-size:18px;
+      border-radius:5px;
+      margin:20px auto 0;
+    }
+  }
+  .editor-voice-submit{
+    overflow: hidden;
+    padding:{
+      left:37px;
+    }
+    margin:40px 0;
+    &>p{
+      width:140px;
+      line-height:52px;
+      float:left;
+      text-align: center;
+      font-size:20px;
+      color:white;
+      border-radius:5px;
+    }
+    &>p:first-child{
+      background:#dbdbdb;
+      margin-right:60px;
+    }
+    &>p:last-child{
+      background:#5cc1df;
+    }
+  }
+}

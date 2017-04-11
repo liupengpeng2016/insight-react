@@ -3,6 +3,7 @@ import './home.css'
 import {connect} from 'react-redux'
 import {getDataSituation, getUserList} from '../../../redux/actions.js'
 import LookMembers from '../lookMembers/lookMembers.js'
+import LookDeviceInfo from '../lookDeviceInfo/lookDeviceInfo.js'
 function formTime(time){
   time= String(time)||''
   let length= time.length
@@ -32,7 +33,10 @@ class Home extends Component{
       gender:'',
       userInput:'',
       searchType:'',
-      membersShow: true
+      membersShow: false,
+      deviceInfoShow: false,
+      userInfo:{},
+      device: {}
     }
   }
   render(){
@@ -43,7 +47,13 @@ class Home extends Component{
       <div className='home content'>
         <LookMembers
           isShow={this.state.membersShow}
-          handleClick={this.toggleMembers.bind(this)}
+          handleClick={this.hideMembers.bind(this)}
+          userInfo={this.state.userInfo}
+          />
+        <LookDeviceInfo
+          isShow={this.state.deviceInfoShow}
+          handleClick={this.hideDeviceInfo.bind(this)}
+          device={this.state.device}
           />
         <h1>首页</h1>
         <h2>数据信息概况</h2>
@@ -74,7 +84,7 @@ class Home extends Component{
             onChange={this.handleUserInput.bind(this)}
             value={this.state.userInput}
             >用户信息概况
-            <span onClick={() => this.handleSearch.bind(this)}>搜索</span>
+            <span onClick={this.handleSearch.bind(this)}>搜索</span>
             <input type='text' placeholder='输入微信昵称、宝宝昵称、设备ID'/>
             <select
               onChange={this.handleSearchType.bind(this)}
@@ -134,7 +144,9 @@ class Home extends Component{
                 userList.map((val, i) =>{
                   return (
                     <tr key={i}>
-                      <td style={{color: '#5cc1df', cursor: 'pointer'}}>查看</td>
+                      <td style={{color: '#5cc1df', cursor: 'pointer'}}
+                        onClick={this.showDeviceInfo.bind(this, val.device)}
+                        >查看</td>
                       <td>{val.phone}</td>
                       <td>{val.baby_nick}</td>
                       <td>{parseInt(val.nick,10) === 1 ? '男' : '女'}</td>
@@ -145,7 +157,7 @@ class Home extends Component{
                             {
                               (val.members||[]).map((mem,i)=>{
                                 return <li key={i}
-                                  onClick={this.toggleMembers.bind(this)}
+                                  onClick={this.showMembers.bind(this, mem.nick, mem.gender, mem.role, mem.is_admin)}
                                   >{mem.nick}</li>
                               })
                             }
@@ -180,6 +192,8 @@ class Home extends Component{
       dispatch(getUserList(newParams))
   }
   handleSearch(){
+    console.log(11)
+    this.searchUserList()
   }
   handleUserInput(e){
     this.setState({userInput: e.target.value})
@@ -199,10 +213,27 @@ class Home extends Component{
     this.searchUserList({gender: e.target.value})
   }
   handleSearchType(e){
-    this.setState({searchList: e.target.value})
+    this.setState({searchType: e.target.value})
   }
-  toggleMembers(){
-    this.setState({membersShow: !this.state.membersShow})
+  showMembers(nick, gender, role, is_admin){
+    this.setState({
+      membersShow: true,
+      userInfo: {role, nick, gender, is_admin }
+    })
+  }
+  hideMembers(){
+    this.setState({
+      membersShow: false
+    })
+  }
+  showDeviceInfo(device){
+    this.setState({
+      deviceInfoShow: true,
+      device
+    })
+  }
+  hideDeviceInfo(){
+    this.setState({deviceInfoShow: false})
   }
 }
 function mapStateToProps(state){
