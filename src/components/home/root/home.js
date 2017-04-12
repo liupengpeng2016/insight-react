@@ -4,6 +4,7 @@ import {connect} from 'react-redux'
 import {getDataSituation, getUserList} from '../../../redux/actions.js'
 import LookMembers from '../lookMembers/lookMembers.js'
 import LookDeviceInfo from '../lookDeviceInfo/lookDeviceInfo.js'
+import PageCtr from '../../media/pageCtr/pageCtr.js'
 function formTime(time){
   time= String(time)||''
   let length= time.length
@@ -21,6 +22,47 @@ function formTime(time){
   }
   if(length<4){
     return time
+  }
+}
+function computedTime(val){
+  const time= new Date()
+  const seconds= time.getTime()
+  function setTime(seconds){
+    time.setTime(seconds)
+    return time
+  }
+  function formMonthAndDate(num){
+    if(String(num).length === 1){
+      return '0'+String(num)
+    }
+    return String(num)
+  }
+  const nowTime= String(setTime(seconds).getFullYear())+
+  formMonthAndDate(setTime(seconds).getMonth()+1)+
+  formMonthAndDate(setTime(seconds).getDate())
+  switch(val){
+    case '1':
+    return [
+      nowTime,
+      String(setTime(seconds-24*60*60*1000*365).getFullYear())+
+      formMonthAndDate(setTime(seconds-24*60*60*1000*365).getMonth()+1)+
+      formMonthAndDate(setTime(seconds-24*60*60*1000*365).getDate())
+    ]
+    case '2':
+    return [
+      nowTime,
+      String(setTime(seconds-24*60*60*1000*30).getFullYear())+
+      formMonthAndDate(setTime(seconds-24*60*60*1000*30).getMonth()+1)+
+      formMonthAndDate(setTime(seconds-24*60*60*1000*30).getDate())
+    ]
+    case '3':
+    return [
+      nowTime,
+      String(setTime(seconds-24*60*60*1000*7).getFullYear)+
+      formMonthAndDate(setTime(seconds-24*60*60*1000*7).getMonth()+1)+
+      formMonthAndDate(setTime(seconds-24*60*60*1000*7).getDate())
+    ]
+    default: return []
   }
 }
 class Home extends Component{
@@ -102,10 +144,13 @@ class Home extends Component{
               onChange={this.handleActiveTime.bind(this)}
               value={this.state.activeTime}
               >
+              {
+
+              }
               <option value=''>请选择时间</option>
-              <option value='1'>2016/09/30至2017/09/10</option>
-              <option value='2'></option>
-              <option value='3'></option>
+              <option value='1'>近一年</option>
+              <option value='2'>近一月</option>
+              <option value='3'>近一周</option>
             </select>
             <span>年龄</span>
             <select
@@ -171,12 +216,21 @@ class Home extends Component{
             </tbody>
           </table>
         </div>
+        <PageCtr
+          total={this.props.userList.pages}
+          buttons='10'
+          changePage={this.changePage.bind(this)}
+          />
       </div>
     )
   }
   componentDidMount(){
     this.searchUserList()
     this.props.dispatch(getDataSituation())
+  }
+  changePage(page){
+    this.searchUserList({page})
+    this.setState({page})
   }
   searchUserList(params= null){
     const {dispatch} = this.props
@@ -186,13 +240,12 @@ class Home extends Component{
       gender,
       min_age: age.split('-')[0]||'',
       max_age: age.split('-')[1]||'',
-      active_begin: activeTime.split('-')[0]||'',
-      active_end: activeTime.split('-')[1]||''
+      active_begin: computedTime(activeTime)[1]||'',
+      active_end: computedTime(activeTime)[0]||''
     }, {[searchType]: userInput},params)
       dispatch(getUserList(newParams))
   }
   handleSearch(){
-    console.log(11)
     this.searchUserList()
   }
   handleUserInput(e){
@@ -201,7 +254,7 @@ class Home extends Component{
   handleActiveTime(e){
     const activeTime = e.target.value
     this.setState({activeTime})
-    this.searchUserList({active_begin: activeTime.split('-')[0] || '', max_age: activeTime.split('-')[1] || ''})
+    this.searchUserList({active_begin: computedTime(activeTime)[1]||'', active_end: computedTime(activeTime)[0]||''})
   }
   handleAge(e){
     const age = e.target.value

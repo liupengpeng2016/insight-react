@@ -8,10 +8,13 @@
   font-size: 16px;
   font-weight: bold;
   &>div{
+    margin:{
+      top:62px;
+    }
     width:420px;
-    border-radius: 10px;
+    border-radius: 5px;
     background: white;
-    text-align: center;
+    text-align: right;
     position:absolute;
     overflow: scroll;
     bottom:60px;
@@ -19,17 +22,30 @@
     left:0;
     right:0;
     margin:auto;
-    &>span{
-      position:absolute;
-      width:30px;
-      height:30px;
-      font-size:40px;
-      right:10px;
-      top:6px;
+    &>h3{
+      position:fixed;
+      line-height:30px;
+      font-size:30px;
+      width:404px;
+      z-index: 2;
+      padding-right:16px;
+      padding-top:10px;
+      text-align: right;
     }
     &>h1{
       line-height: 62px;
       font-size: 18px;
+      position: fixed;
+      text-align: center;
+      background: white;
+      width:420px;
+      border-top-left-radius: 5px;
+      border-top-right-radius: 5px;
+    }
+    &>h1+ul{
+      margin:{
+        top:62px;
+      }
     }
   }
 }

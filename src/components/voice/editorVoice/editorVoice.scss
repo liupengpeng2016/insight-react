@@ -1,37 +1,4 @@
 .editor-voice{
-  ul{
-    line-height: 42px;
-    li{
-      text-align: left;
-      padding: 11px 0;
-      span{
-        width:66px;
-        display:inline-block;
-        color:#c7c7c7;
-        margin:{
-          left:26px;
-        }
-      }
-      [type='checkbox']{
-        width:16px;
-        height:16px;
-        margin-right:8px;
-        vertical-align: middle;
-      }
-      label{
-        margin-right:22px;
-      }
-      select{
-        height:38px;
-      }
-      [type='text']{
-        height:38px;
-        width:286px;
-        border:1px solid #f0f0f0;
-        padding-left:18px;
-      }
-    }
-  }
   .editor-voice-info{
     &>h2{
       width:205px;
@@ -42,6 +9,75 @@
       font-size:18px;
       border-radius:5px;
       margin:20px auto 0;
+    }
+    &>ul{
+      line-height: 42px;
+      &>li{
+        text-align: left;
+        padding: 11px 0;
+        &>span{
+          width:66px;
+          display:inline-block;
+          color:#c7c7c7;
+          margin:{
+            left:26px;
+          }
+        }
+        [type='checkbox']{
+          width:16px;
+          height:16px;
+          margin-right:8px;
+          vertical-align: middle;
+        }
+        label{
+          margin-right:22px;
+        }
+        select{
+          height:38px;
+        }
+        [type='text']{
+          height:38px;
+          width:286px;
+          border:1px solid #f0f0f0;
+          padding-left:18px;
+        }
+      }
+      .voice-input-notice{
+        overflow: hidden;
+        padding:0;
+        line-height: 1;
+        &>span{
+          height:1px;
+          float:left;
+        }
+        &>ul{
+          width:306px;
+          float:left;
+          li:first-child{
+            float:left;
+            &>p{
+              font-size:10px;
+              line-height: 1;
+              color:#c8c8c8;
+            }
+          }
+          li:last-child{
+            float:right;
+            &>h1{
+              font-size: 12px;
+              float:left;
+              line-height: 1;
+            }
+            h1:first-child{
+              margin-right:16px;
+              color:#5cc1df;
+            }
+            h1:last-child{
+              color:#ff602e;
+            }
+          }
+        }
+      }
     }
   }
   .editor-voice-submit{

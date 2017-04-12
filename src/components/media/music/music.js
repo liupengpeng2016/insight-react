@@ -9,7 +9,6 @@ import {
   delMusicItem, toggleMusicStatus,
   getLinkAlbumList, linkToAlbum,getMusicList
 } from '../../../redux/actions.js'
-// import OperateButtons from '../operateButtons/operateButtons.js'
 class Music extends Component{
   constructor(props){
     super(props)

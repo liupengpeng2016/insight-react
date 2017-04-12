@@ -1,12 +1,32 @@
 import React, {Component} from 'react'
 import './voiceManage.css'
 import EditorVoice from '../editorVoice/editorVoice.js'
-import {Link} from 'react-router'
+import AddVoice from '../addVoice/addVoice.js'
 class VoiceManage extends Component{
+  constructor(){
+    super()
+    this.state={
+      toggleEditorVoice: false,
+      toggleAddVoice: false,
+      questionNum_add: 2,
+      questionNum_editor: 2,
+    }
+  }
   render(){
     return (
       <div className='voice-manage'>
-        <EditorVoice></EditorVoice>
+        <EditorVoice
+          toggleEditorVoice={this.state.toggleEditorVoice}
+          hideEditorVoice={this.hideEditorVoice.bind(this)}
+          questionNum={this.state.questionNum_editor}
+          addMore={()=>{this.setState({questionNum_editor: this.state.questionNum_editor+1})}}
+          ></EditorVoice>
+        <AddVoice
+          toggleAddVoice={this.state.toggleAddVoice}
+          hideAddVoice={this.hideAddVoice.bind(this)}
+          questionNum={this.state.questionNum_add}
+          addMore={()=>{this.setState({questionNum_add: this.state.questionNum_add+1})}}
+          ></AddVoice>
         <div className='voice-manage-search'>
           <h1>语料列表</h1>
           <ul>
@@ -81,12 +101,20 @@ class VoiceManage extends Component{
           <li>批量处理</li>
         </ul>
         <div className='voice-manage-add'>
-          <p><Link to='voice/addVoice'>新增语料</Link></p>
-          <p><Link to='voice/addSituation'>新增场景语料</Link></p>
+          <p
+            onClick={()=> this.setState({toggleAddVoice: true, questionNum_add: 2})}
+            >新增语料</p>
+          <p>新增场景语料</p>
           <span>查看场景树 ></span>
         </div>
       </div>
     )
+  }
+  hideEditorVoice(){
+    this.setState({toggleEditorVoice: false})
+  }
+  hideAddVoice(){
+    this.setState({toggleAddVoice: false})
   }
 }
 export default VoiceManage
