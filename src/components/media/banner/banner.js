@@ -3,7 +3,6 @@ import {Link} from 'react-router'
 import AddTo from '../addTo/addTo.js'
 import {connect} from 'react-redux'
 import {getBannerList, toggleBannerStatus, delBannerItem} from '../../../redux/actions.js'
-// import OperateButtons from '../operateButtons/operateButtons.js'
 import PageCtr from '../pageCtr/pageCtr.js'
 
 class Banner extends Component{
@@ -59,19 +58,10 @@ class Banner extends Component{
                     <td>{val.sort}</td>
                     <td>{parseInt(val.status, 10) === 1 ? '是'  : '否'}</td>
                     <td>
-                      {/*<OperateButtons
-                        mode={this.state.buttonMode}
-                        editorTo={{pathname:'/media/editorTopic',state:{id: val.id}}}
-                        handleDel={this.handleDel.bind(this,[val.id])}
-                        handleStatus={this.handleStatus.bind(this,val.status,[val.id])}
-                        status={val.status}
-                        checked={this.state.checkbox[val.id]}
-                        toggleChecked={this.toggleChecked.bind(this,val.id)}
-                      />*/}
                       {
                         this.state.buttonMode?(
                           <ul className='operate-buttons'>
-                            <li ><Link to={{pathname:'/media/editorTopic',state:{id:val.id}}} style={{color:'#76cbe5'}}>编辑</Link></li>
+                            <li ><Link to={{pathname:'/media/editorBanner',state:{id:val.id}}} style={{color:'#76cbe5'}}>编辑</Link></li>
                             <li onClick={this.handleDel.bind(this,[val.id])} style={{color:'#fe6434'}}>删除</li>
                             <li onClick={this.handleStatus.bind(this,val.status,[val.id])} style={{color:'#50ca71'}}>
                               {parseInt(val.status, 10)===1?<span style={{color:'#aaa'}}>下架</span>:<span>上架</span>}
@@ -79,7 +69,7 @@ class Banner extends Component{
                           </ul>
                         ):(
                           <ul className='operate-buttons'>
-                            <li ><Link to={{pathname:'/media/editorTopic',state:{id:val.id}}} style={{color:'#76cbe5'}}>编辑</Link></li>
+                            <li ><Link to={{pathname:'/media/editorBanner',state:{id:val.id}}} style={{color:'#76cbe5'}}>编辑</Link></li>
                             <li >
                               <input type='checkbox'
                                 onChange={this.handleChecked.bind(this, val.id)}

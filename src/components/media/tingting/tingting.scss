@@ -28,6 +28,7 @@
       line-height: 30px;
       text-align:center;
       padding: 0 10px;
+      border-right:none;
     }
     select{
       height:32px;
@@ -36,11 +37,17 @@
       padding:{
         left:22px;
       }
+      border-right:none;
     }
+
   }
   .search-button{
     background:#76cbe5;
     color:white;
+    border:none;
+    float:left;
+    line-height: 32px;
+    height:32px;
   }
 }
 .tingting-notice{

@@ -7,40 +7,36 @@
   background: rgba(0, 0, 0, 0.6);
   font-size: 16px;
   font-weight: bold; }
-
-.voice-popup > div {
-  margin-top: 62px;
-  width: 420px;
-  border-radius: 5px;
-  background: white;
-  text-align: right;
-  position: absolute;
-  overflow: scroll;
-  bottom: 60px;
-  top: 60px;
-  left: 0;
-  right: 0;
-  margin: auto; }
-
-.voice-popup > div > h3 {
-  position: fixed;
-  line-height: 30px;
-  font-size: 30px;
-  width: 404px;
-  z-index: 2;
-  padding-right: 16px;
-  padding-top: 10px;
-  text-align: right; }
-
-.voice-popup > div > h1 {
-  line-height: 62px;
-  font-size: 18px;
-  position: fixed;
-  text-align: center;
-  background: white;
-  width: 420px;
-  border-top-left-radius: 5px;
-  border-top-right-radius: 5px; }
-
-.voice-popup > div > h1 + ul {
-  margin-top: 62px; }
+  .voice-popup > div {
+    margin-top: 62px;
+    width: 420px;
+    border-radius: 5px;
+    background: white;
+    text-align: right;
+    position: absolute;
+    overflow: scroll;
+    bottom: 60px;
+    top: 60px;
+    left: 0;
+    right: 0;
+    margin: auto; }
+    .voice-popup > div > h3 {
+      position: fixed;
+      line-height: 30px;
+      font-size: 30px;
+      width: 404px;
+      z-index: 2;
+      padding-right: 16px;
+      padding-top: 10px;
+      text-align: right; }
+    .voice-popup > div > h1 {
+      line-height: 62px;
+      font-size: 18px;
+      position: fixed;
+      text-align: center;
+      background: white;
+      width: 420px;
+      border-top-left-radius: 5px;
+      border-top-right-radius: 5px; }
+    .voice-popup > div > h1 + ul {
+      margin-top: 62px; }

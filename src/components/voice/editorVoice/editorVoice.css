@@ -10,88 +10,70 @@
 
 .editor-voice .editor-voice-info > ul {
   line-height: 42px; }
-
-.editor-voice .editor-voice-info > ul > li {
-  text-align: left;
-  padding: 11px 0; }
-
-.editor-voice .editor-voice-info > ul > li > span {
-  width: 66px;
-  display: inline-block;
-  color: #c7c7c7;
-  margin-left: 26px; }
-
-.editor-voice .editor-voice-info > ul > li [type='checkbox'] {
-  width: 16px;
-  height: 16px;
-  margin-right: 8px;
-  vertical-align: middle; }
-
-.editor-voice .editor-voice-info > ul > li label {
-  margin-right: 22px; }
-
-.editor-voice .editor-voice-info > ul > li select {
-  height: 38px; }
-
-.editor-voice .editor-voice-info > ul > li [type='text'] {
-  height: 38px;
-  width: 286px;
-  border: 1px solid #f0f0f0;
-  padding-left: 18px; }
-
-.editor-voice .editor-voice-info > ul .voice-input-notice {
-  overflow: hidden;
-  padding: 0;
-  line-height: 1; }
-
-.editor-voice .editor-voice-info > ul .voice-input-notice > span {
-  height: 1px;
-  float: left; }
-
-.editor-voice .editor-voice-info > ul .voice-input-notice > ul {
-  width: 306px;
-  float: left; }
-
-.editor-voice .editor-voice-info > ul .voice-input-notice > ul li:first-child {
-  float: left; }
-
-.editor-voice .editor-voice-info > ul .voice-input-notice > ul li:first-child > p {
-  font-size: 10px;
-  line-height: 1;
-  color: #c8c8c8; }
-
-.editor-voice .editor-voice-info > ul .voice-input-notice > ul li:last-child {
-  float: right; }
-
-.editor-voice .editor-voice-info > ul .voice-input-notice > ul li:last-child > h1 {
-  font-size: 12px;
-  float: left;
-  line-height: 1; }
-
-.editor-voice .editor-voice-info > ul .voice-input-notice > ul li:last-child h1:first-child {
-  margin-right: 16px;
-  color: #5cc1df; }
-
-.editor-voice .editor-voice-info > ul .voice-input-notice > ul li:last-child h1:last-child {
-  color: #ff602e; }
+  .editor-voice .editor-voice-info > ul > li {
+    text-align: left;
+    padding: 11px 0; }
+    .editor-voice .editor-voice-info > ul > li > span {
+      width: 66px;
+      display: inline-block;
+      color: #c7c7c7;
+      margin-left: 26px; }
+    .editor-voice .editor-voice-info > ul > li [type='checkbox'] {
+      width: 16px;
+      height: 16px;
+      margin-right: 8px;
+      vertical-align: middle; }
+    .editor-voice .editor-voice-info > ul > li label {
+      margin-right: 22px; }
+    .editor-voice .editor-voice-info > ul > li select {
+      height: 38px; }
+    .editor-voice .editor-voice-info > ul > li [type='text'] {
+      height: 38px;
+      width: 286px;
+      border: 1px solid #f0f0f0;
+      padding-left: 18px; }
+  .editor-voice .editor-voice-info > ul .voice-input-notice {
+    overflow: hidden;
+    padding: 0;
+    line-height: 1; }
+    .editor-voice .editor-voice-info > ul .voice-input-notice > span {
+      height: 1px;
+      float: left; }
+    .editor-voice .editor-voice-info > ul .voice-input-notice > ul {
+      width: 306px;
+      float: left; }
+      .editor-voice .editor-voice-info > ul .voice-input-notice > ul li:first-child {
+        float: left; }
+        .editor-voice .editor-voice-info > ul .voice-input-notice > ul li:first-child > p {
+          font-size: 10px;
+          line-height: 1;
+          color: #c8c8c8; }
+      .editor-voice .editor-voice-info > ul .voice-input-notice > ul li:last-child {
+        float: right; }
+        .editor-voice .editor-voice-info > ul .voice-input-notice > ul li:last-child > h1 {
+          font-size: 12px;
+          float: left;
+          line-height: 1; }
+        .editor-voice .editor-voice-info > ul .voice-input-notice > ul li:last-child h1:first-child {
+          margin-right: 16px;
+          color: #5cc1df; }
+        .editor-voice .editor-voice-info > ul .voice-input-notice > ul li:last-child h1:last-child {
+          color: #ff602e; }
 
 .editor-voice .editor-voice-submit {
   overflow: hidden;
   padding-left: 37px;
   margin: 40px 0; }
-
-.editor-voice .editor-voice-submit > p {
-  width: 140px;
-  line-height: 52px;
-  float: left;
-  text-align: center;
-  font-size: 20px;
-  color: white;
-  border-radius: 5px; }
-
-.editor-voice .editor-voice-submit > p:first-child {
-  background: #dbdbdb;
-  margin-right: 60px; }
-
-.editor-voice .editor-voice-submit > p:last-child {
-  background: #5cc1df; }
+  .editor-voice .editor-voice-submit > p {
+    width: 140px;
+    line-height: 52px;
+    float: left;
+    text-align: center;
+    font-size: 20px;
+    color: white;
+    border-radius: 5px; }
+  .editor-voice .editor-voice-submit > p:first-child {
+    background: #dbdbdb;
+    margin-right: 60px; }
+  .editor-voice .editor-voice-submit > p:last-child {
+    background: #5cc1df; }

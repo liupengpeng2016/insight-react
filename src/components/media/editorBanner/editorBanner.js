@@ -1,29 +1,28 @@
 import React, {Component} from 'react'
-import './addBanner.css'
-import {addBannerItem} from '../../../redux/actions.js'
 import {connect} from 'react-redux'
+import {editorBanner} from '../../../redux/actions.js'
 import fileUpload from '../../../fileUpload/fileUpload.js'
-class AddBanner extends Component{
+class EditorBanner extends Component{
   constructor(props){
     super(props)
     this.state={
-      location:'1',
-      content_album:true,
-      content_url:false,
-      desc:'',
-      sort:'0',
+      location:'',
       url:'',
+      desc:'',
+      sort:'',
       statusShow:true,
       statusHide:false,
-      imageUrl:'',
+      content_album:true,
+      content_url: false,
+      imgUrl:'',
       file:''
     }
   }
   render(){
     return (
       <div className='root-media-list'>
-        <h1>葡萄听听>banner列表>新增banner</h1>
-        <h2>新增banner</h2>
+        <h1>葡萄听听>banner列表>编辑banner</h1>
+        <h2>编辑banner</h2>
         <ul className='add-item'>
           <li>
             <span>选择位置</span>
@@ -63,7 +62,7 @@ class AddBanner extends Component{
           </li>
           <li>
             <span>Banner描述</span>
-            <input type='text' placeholder='请输入专辑简介'
+            <input type='text' placeholder='请输入Banner简介'
               onChange={this.handleDesc.bind(this)}
               value={this.state.desc}
             />
@@ -160,21 +159,21 @@ class AddBanner extends Component{
     }
   }
   dispatchEditor(pic){
-    const {location, url, desc, sort} = this.state
-    this.props.dispatch(addBannerItem({
+    const {location, desc, sort, url, statusShow, content_album} = this.state
+    this.props.dispatch(editorBanner({
       location,
       pic,
-      url,
       desc,
       sort,
-      category: this.state.content_album ? 1 : 2,
-      status:this.state.statusShow ? 1 : 0
+      url,
+      id: this.props.location.state.id,
+      status: statusShow ? 1 : 0,
+      cagegory: content_album? 1 :2
     }))
   }
   handleSubmit(){
     const {file} = this.state
     fileUpload(file,this.dispatchEditor.bind(this))
   }
-
 }
-export default connect()(AddBanner)
+export default connect()(EditorBanner)

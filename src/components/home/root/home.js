@@ -148,9 +148,9 @@ class Home extends Component{
 
               }
               <option value=''>请选择时间</option>
-              <option value='1'>近一年</option>
-              <option value='2'>近一月</option>
-              <option value='3'>近一周</option>
+              <option value='1'>最近一年</option>
+              <option value='2'>最近一月</option>
+              <option value='3'>最近一周</option>
             </select>
             <span>年龄</span>
             <select

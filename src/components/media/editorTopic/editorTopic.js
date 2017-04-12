@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {editorTopic} from '../../../redux/actions.js'
+import fileUpload from '../../../fileUpload/fileUpload.js'
 class EditorTopic extends Component{
   constructor(props){
     super(props)
@@ -9,7 +10,7 @@ class EditorTopic extends Component{
       name:'',
       age:'1',
       tags:'',
-      cover:'',
+      file:'',
       desc:'',
       sort:'0',
       statusShow:true,
@@ -24,14 +25,14 @@ class EditorTopic extends Component{
         <h2>编辑专题</h2>
         <ul className='add-item'>
           <li>
-            <span>歌曲名称</span>
-            <input type='text' placeholder='请输入歌曲名称'
+            <span>专辑名称</span>
+            <input type='text' placeholder='请输入专辑名称'
               onChange={this.changeName.bind(this)}
               value={this.state.name}
               />
           </li>
           <li>
-            <span>歌曲描述</span>
+            <span>专辑描述</span>
             <input type='text' placeholder='请输入描述信息'
               onChange={this.changeDesc.bind(this)}
               value={this.state.desc}
@@ -86,6 +87,13 @@ class EditorTopic extends Component{
               <option value='1'> 1 </option>
               <option value='2'> 2 </option>
               <option value='3'> 3 </option>
+              <option value='4'> 4 </option>
+              <option value='5'> 5 </option>
+              <option value='6'> 6 </option>
+              <option value='7'> 7 </option>
+              <option value='8'> 8 </option>
+              <option value='9'> 9 </option>
+              <option value='10'> 10 </option>
             </select>
           </li>
           <li>
@@ -111,7 +119,7 @@ class EditorTopic extends Component{
             <h1>选取文件</h1>
             <p>歌词格式为lrc，大小为200kb以内。</p>
           </li>
-          <li onClick={this.handleClick.bind(this)}>编辑信息</li>
+          <li onClick={this.handleSubmit.bind(this)}>编辑信息</li>
         </ul>
       </div>
     )
@@ -135,16 +143,12 @@ class EditorTopic extends Component{
     this.setState({tags: e.target.value})
   }
   changeImg(e){
-    const imgReader1 = new FileReader()
-    const imgReader2 = new FileReader()
-    imgReader1.readAsBinaryString(e.target.files[0])
-    imgReader1.onload=() =>{
-      this.setState({cover: imgReader1.result})
+    const imgReader = new FileReader()
+    imgReader.readAsDataURL(e.target.files[0])
+    imgReader.onload=()=>{
+      this.setState({imgUrl: imgReader.result})
     }
-    imgReader2.readAsDataURL(e.target.files[0])
-    imgReader2.onload=()=>{
-      this.setState({imgUrl: imgReader2.result})
-    }
+    this.setState({file: e.target.files[0]})
   }
   changeStatusShow(e){
     this.setState({
@@ -158,8 +162,8 @@ class EditorTopic extends Component{
       statusShow: !e.target.checked
     })
   }
-  handleClick(){
-    const {category,name,age,tags,cover,desc,sort,statusShow} = this.state
+  dispatchEditor(cover){
+    const {category,name,age,tags,desc,sort,statusShow} = this.state
     this.props.dispatch(editorTopic({
       category,
       name,
@@ -171,6 +175,10 @@ class EditorTopic extends Component{
       id: this.props.location.state.id,
       status: statusShow ? 1 : 0
     }))
+  }
+  handleSubmit(){
+    const {file} = this.state
+    fileUpload(file,this.dispatchEditor.bind(this))
   }
 }
 export default connect()(EditorTopic)

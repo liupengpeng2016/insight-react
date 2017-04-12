@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {editorAlbum} from '../../../redux/actions.js'
+import fileUpload from '../../../fileUpload/fileUpload.js'
 class EditorAlbum extends Component{
   constructor(props){
     super(props)
@@ -9,7 +10,7 @@ class EditorAlbum extends Component{
       name:'',
       age:'1',
       tags:'',
-      cover:'',
+      file:'',
       desc:'',
       sort:'0',
       statusShow:true,
@@ -111,7 +112,7 @@ class EditorAlbum extends Component{
             <h1>选取文件</h1>
             <p>歌词格式为lrc，大小为200kb以内。</p>
           </li>
-          <li onClick={this.handleClick.bind(this)}>编辑信息</li>
+          <li onClick={this.handleSubmit.bind(this)}>编辑信息</li>
         </ul>
       </div>
     )
@@ -135,16 +136,12 @@ class EditorAlbum extends Component{
     this.setState({tags: e.target.value})
   }
   changeImg(e){
-    const imgReader1 = new FileReader()
-    const imgReader2 = new FileReader()
-    imgReader1.readAsBinaryString(e.target.files[0])
-    imgReader1.onload=() =>{
-      this.setState({cover: imgReader1.result})
+    const imgReader = new FileReader()
+    imgReader.readAsDataURL(e.target.files[0])
+    imgReader.onload=()=>{
+      this.setState({imgUrl: imgReader.result})
     }
-    imgReader2.readAsDataURL(e.target.files[0])
-    imgReader2.onload=()=>{
-      this.setState({imgUrl: imgReader2.result})
-    }
+    this.setState({file: e.target.files[0]})
   }
   changeStatusShow(e){
     this.setState({
@@ -159,7 +156,9 @@ class EditorAlbum extends Component{
     })
   }
   handleClick(){
-    const {category,name,age,tags,cover,desc,sort,statusShow} = this.state
+  }
+  dispatchEditor(cover){
+    const {category,name,age,tags,desc,sort,statusShow} = this.state
     this.props.dispatch(editorAlbum({
       category,
       name,
@@ -171,6 +170,10 @@ class EditorAlbum extends Component{
       id: this.props.location.state.id,
       status: statusShow ? 1 : 0
     }))
+  }
+  handleSubmit(){
+    const {file} = this.state
+    fileUpload(file,this.dispatchEditor.bind(this))
   }
 }
 export default connect()(EditorAlbum)

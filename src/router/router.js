@@ -18,6 +18,7 @@ import AddTopic from '../components/media/addTopic/addTopic.js'
 import EditorMusic from '../components/media/editorMusic/editorMusic.js'
 import EditorAlbum from '../components/media/editorAlbum/editorAlbum.js'
 import EditorTopic from '../components/media/editorTopic/editorTopic.js'
+import EditorBanner from '../components/media/editorBanner/editorBanner.js'
 //habit
 import Habit from '../components/habit/root/habit.js'
 import ShowPlan from '../components/habit/showPlan/showPlan.js'
@@ -54,6 +55,7 @@ const router = (
         <Route path='editorMusic' component={EditorMusic}></Route>
         <Route path='editorAlbum' component={EditorAlbum}></Route>
         <Route path='editorTopic' component={EditorTopic}></Route>
+        <Route path='editorBanner' component={EditorBanner}></Route>
         <Route path='addMusic' component={AddMusic}>
           <IndexRedirect to='tingting'/>
           <Route path='tingting' component={Tingting}></Route>

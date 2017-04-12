@@ -16,7 +16,7 @@ class FetchNotice extends Component{
         <div>
           <h1>操作提示<span
             onClick={this.handleClick}
-          >x</span></h1>
+          >×</span></h1>
           <p>{fetchNotice.msg}</p>
           <h2 onClick={this.handleClick}>确定</h2>
         </div>
@@ -28,7 +28,6 @@ class FetchNotice extends Component{
   }
 }
 function mapStateToProps(state){
-  console.log(state.visibility)
   return {fetchNotice: state.visibility.fetchNotice}
 }
 export default connect(mapStateToProps)(FetchNotice)

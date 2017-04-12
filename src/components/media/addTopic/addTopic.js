@@ -34,17 +34,29 @@ class AddTopic extends Component{
           </li>
           <li>
             <span>输入名称</span>
-            <input type='text' placeholder='请输入专辑名称'
+            <input type='text' placeholder='请输入专题名称'
               onChange={this.handleName.bind(this)}
               value={this.state.name}
             />
           </li>
           <li>
             <span>权重</span>
-            <input type='text'
+            <select
               onChange={this.handleSort.bind(this)}
               value={this.state.sort}
-              />
+              >
+              <option value='0'>0</option>
+              <option value='1'>1</option>
+              <option value='2'>2</option>
+              <option value='3'>3</option>
+              <option value='4'>4</option>
+              <option value='5'>5</option>
+              <option value='6'>6</option>
+              <option value='7'>7</option>
+              <option value='8'>8</option>
+              <option value='9'>9</option>
+              <option value='10'>10</option>
+            </select>
           </li>
           <li>
             <span>状态</span>
