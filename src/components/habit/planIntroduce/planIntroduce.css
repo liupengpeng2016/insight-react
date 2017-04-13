@@ -19,7 +19,8 @@
         width: 118px;
         color: #b0b0b0;
         padding-left: 12px; }
-      .sleep-plan-introduce > ul > li img {
+      .sleep-plan-introduce > ul > li > img {
+        height: 40px;
         display: inline-block;
         vertical-align: middle; }
     .sleep-plan-introduce > ul > li:first-child {

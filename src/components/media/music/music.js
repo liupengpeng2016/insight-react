@@ -76,7 +76,7 @@ class Music extends Component{
                 <td>{val.lyric}</td>
                 <td>{val.age}</td>
                 <td>{parseInt(val.status, 10) === 1 ? '是'  : '否'}</td>
-                <td>{val.origin}</td>
+                <td>{this.formOrigin(val.origin)}</td>
                 <td>{val.created_at.slice(0,10)}</td>
                 <td>
                 {
@@ -132,6 +132,21 @@ class Music extends Component{
         <PageCtr total={this.props.total} buttons='10' changePage={this.changePage.bind(this)}/>
       </div>
     )
+  }
+  formOrigin(origin){
+    switch(origin){
+      case 1 :
+      return '葡萄'
+      case 2 :
+      return '蜻蜓'
+      case 3 :
+      return '喜马拉雅'
+      case 4 :
+      return '自营'
+      case 5 :
+      return '其它'
+      default: return ''
+    }
   }
   changePage(page){
     this.props.dispatch(getMusicList({page,category:this.state.category}))

@@ -194,7 +194,7 @@ class Home extends Component{
                         >查看</td>
                       <td>{val.phone}</td>
                       <td>{val.baby_nick}</td>
-                      <td>{parseInt(val.nick,10) === 1 ? '男' : '女'}</td>
+                      <td>{parseInt(val.gender,10) === 1 ? '男' : '女'}</td>
                       <td>{val.age}</td>
                       <td style={{color: '#5cc1df', cursor: 'pointer'}}>查看</td>
                       <td>{(

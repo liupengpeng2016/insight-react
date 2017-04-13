@@ -9,7 +9,8 @@ import {
   SAVE_HABIT_PLAN,
   SAVE_HABIT_PLAN_EVENT,
   SAVE_TOY_PLAN, FETCH_NOTICE,
-  SAVE_DATA_SITUATION, SAVE_USER_LIST
+  SAVE_DATA_SITUATION, SAVE_USER_LIST,
+  SAVE_VOICE_LIST
 } from './actionTypes.js'
 import {baseUrl} from '../config/config.js'
 import fetch from 'isomorphic-fetch'
@@ -44,7 +45,9 @@ function fetchData(url, params, dispatch, action){
       if(action){
         return dispatch(action(json.data))
       }else{
-        return dispatch(setVisibility({name:FETCH_NOTICE, show: true, msg: '操作成功'}))
+        return json.http_status_code === 200?
+        dispatch(setVisibility({name:FETCH_NOTICE, show: true, msg:'操作成功'})):
+        dispatch(setVisibility({name:FETCH_NOTICE, show: true, msg: json.msg ||'操作失败'}))
       }
   }).catch(error => {
     dispatch(setVisibility({name:FETCH_NOTICE, show: true, msg: '操作失败'}))
@@ -192,6 +195,14 @@ export const delHabitPlan =
 export const delHabitPlanEvent =
   params =>
     dispatch => fetchData('/plan/defaultPlan/deletePlanEvent', params, dispatch, null)
+//编辑计划
+export const editorHabitPlan =
+  params =>
+    dispatch => fetchData('/plan/defaultPlan/updatePlan', params, dispatch, null)
+//编辑事件
+export const editorHabitPlanEvent =
+  params =>
+    dispatch => fetchData('/plan/defaultPlan/updatePlanEvent', params, dispatch, null)
 /************* toy part **************/
 export const saveToyPlan= data => ({type: SAVE_TOY_PLAN, data})
 export const getToyPlan =
@@ -208,4 +219,21 @@ export const editorToyInformation =
         dispatch => fetchData('/toy/toy/edit', params, dispatch, null)
 export const delToyAction =
   params =>
-        dispatch => fetchData('/toy/toy/delActionContent', params, dispatch, null)
+    dispatch => fetchData('/toy/toy/delActionContent', params, dispatch, null)
+/************** voice part ***************/
+export const saveVoiceList = data => ({type: SAVE_VOICE_LIST, data})
+//获取语料列表
+export const getVoiceList= params => dispatch =>
+ fetchData('/corpus/corpus/getCorpusList', params, dispatch, saveVoiceList)
+//编辑语料
+export const editorVoiceItem= params => dispatch =>
+ fetchData('', params, dispatch, null)
+//删除语料
+export const delVoiceItem= params => dispatch =>
+ fetchData('', params, dispatch, null)
+//添加语料
+export const addVoiceItem= params => dispatch =>
+ fetchData('', params, dispatch, null)
+//启用／弃用语料
+export const toggleVoiceItem= params => dispatch =>
+ fetchData('', params, dispatch, null)

@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
-import './addPlan.css'
 import {addHabitPlan} from '../../../redux/actions.js'
 import {connect} from 'react-redux'
+import fileUpload from '../../../fileUpload/fileUpload.js'
 class AddPlan extends Component{
   constructor(props){
     super(props)
@@ -19,8 +19,8 @@ class AddPlan extends Component{
   render(){
     return (
       <div className='habit-plan'>
-        <h1>习惯养成>新增计划</h1>
-        <h2>设置计划信息</h2>
+        <h1>习惯养成>添加计划</h1>
+        <h2>添加计划信息</h2>
         <ul className='add-item'>
           <li className='input-img'>
             <span>图标</span>
@@ -84,7 +84,7 @@ class AddPlan extends Component{
                 />
               <label htmlFor='banner-hide'>隐藏</label>
           </li>
-          <li onClick={this.handleClick.bind(this)}>提交信息</li>
+          <li onClick={this.handleSubmit.bind(this)}>提交信息</li>
         </ul>
       </div>
     )
@@ -108,28 +108,29 @@ class AddPlan extends Component{
     this.setState({statusShow: !e.target.checked, statusHide: e.target.checked})
   }
   handleFile(e){
-    const fileReader1= new FileReader()
-    const fileReader2= new FileReader()
-    fileReader1.onload= () => {
-      this.setState({file: e.target.files[0]})
+    const fileReader= new FileReader()
+    fileReader.readAsDataURL(e.target.files[0])
+    fileReader.onload= () => {
+      this.setState({fileUrl: fileReader.result})
     }
-    fileReader2.readAsDataURL(e.target.files[0])
-    fileReader2.onload= () => {
-      this.setState({fileUrl: fileReader2.result})
-    }
+    this.setState({file: e.target.files[0]})
   }
-  handleClick(){
-    const {name,desc,sort,time_interval, file, statusShow} = this.state
+  dispatchEditor(icon){
+    const {name,desc,sort,time_interval, statusShow} = this.state
     this.props.dispatch(addHabitPlan(
       {
         name,
         desc,
         sort,
-        appid:this.props.location.state,
         time_interval,
-        icon: file,
-        status: statusShow ? 1 : 0,
+        icon,
+        appid: this.props.location.state,
+        status: statusShow ? 1 : 0
       }))
+  }
+  handleSubmit(){
+    const {file} = this.state
+    fileUpload(file,this.dispatchEditor.bind(this))
   }
 }
 export default connect()(AddPlan)

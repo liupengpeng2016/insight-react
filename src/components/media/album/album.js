@@ -61,7 +61,7 @@ class Album extends Component{
                 return (
                   <tr key={i}>
                     <td>{val.id}</td>
-                    <td>{val.category === '1'? '儿童':(val.category ==='2' ? '音乐': '教育')}</td>
+                    <td>{val.category === 1? '儿童':(val.category ===2 ? '音乐': '教育')}</td>
                     <td>{val.name}</td>
                     <td>{val.music_count}</td>
                     <td>{val.sort}</td>

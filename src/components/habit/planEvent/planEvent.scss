@@ -19,6 +19,11 @@
     }
     tr{
       background:#fafafa;
+      img{
+        display:inline-block;
+        vertical-align: middle;
+        height:30px;
+      }
     }
     tr:nth-child(2n){
       background:white;

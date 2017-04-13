@@ -5,6 +5,7 @@ import {
   SAVE_LINK_ALBUM_LIST,SAVE_SEARCH_MUSIC_LIST,
   SAVE_LINK_TOPIC_LIST,SAVE_HABIT_PLAN,SAVE_HABIT_PLAN_EVENT,
   SAVE_TOY_PLAN, FETCH_NOTICE,SAVE_USER_LIST,SAVE_DATA_SITUATION,
+  SAVE_VOICE_LIST
 } from './actionTypes.js'
 /********** visibility *********/
 function visibility(state={
@@ -85,10 +86,22 @@ function toyData(state={
     default : return state
   }
 }
+/************** VOICE PART ***************/
+function voiceData(state={
+  voiceList:{}
+},action){
+  switch(action.type){
+    case SAVE_VOICE_LIST:
+    return Object.assign({}, state, {voiceList: action.data})
+    default : return state
+  }
+}
+
 export default combineReducers({
   visibility,
   homeData,
   mediaData,
   habitData,
-  toyData
+  toyData,
+  voiceData
 })

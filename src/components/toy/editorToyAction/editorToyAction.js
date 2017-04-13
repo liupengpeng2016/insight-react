@@ -6,9 +6,10 @@ class EditorToyAction extends Component {
   constructor(){
     super()
     this.state= {
-      action: '-1',
+      action: '',
       desc:'',
-      play_order:'-1'
+      play_order:'',
+      name:''
     }
   }
   render(){
@@ -23,7 +24,7 @@ class EditorToyAction extends Component {
               onChange={this.handleAction.bind(this)}
               value={this.state.action}
               >
-              <option value='－1'>请选择动作</option>
+              <option value=''>请选择动作</option>
               <option value='shake'>摇一摇</option>
               <option value='pat'>拍一下</option>
               <option value='wakeup'>唤醒</option>
@@ -32,6 +33,8 @@ class EditorToyAction extends Component {
           <li>
             <span>动作名称</span>
             <input type='text' placeholder='请输入动作名称'
+              onChange={this.handleName.bind(this)}
+              value={this.state.name}
               />
           </li>
           <li>
@@ -65,14 +68,18 @@ class EditorToyAction extends Component {
   handleDesc(e){
     this.setState({desc: e.target.value})
   }
+  handleName(e){
+    this.setState({name: e.target.value})
+  }
   handlePlay_order(e){
-    this.setState({desc: e.target.value})
+    this.setState({play_order: e.target.value})
   }
   handleSubmit(){
-    const {action, desc, play_order} = this.state
+    const {action, desc, play_order, name} = this.state
     this.props.dispatch(editorToyAction({
       action,
       desc,
+      name,
       play_order
     }))
   }

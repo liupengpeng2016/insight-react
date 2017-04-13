@@ -2,6 +2,9 @@ import React, {Component} from 'react'
 import './voiceManage.css'
 import EditorVoice from '../editorVoice/editorVoice.js'
 import AddVoice from '../addVoice/addVoice.js'
+import {getVoiceList} from '../../../redux/actions.js'
+import {connect} from 'react-redux'
+import PageCtr from '../../media/pageCtr/pageCtr.js'
 class VoiceManage extends Component{
   constructor(){
     super()
@@ -10,9 +13,12 @@ class VoiceManage extends Component{
       toggleAddVoice: false,
       questionNum_add: 2,
       questionNum_editor: 2,
+      page:'1'
     }
   }
   render(){
+    const {voiceList} = this.props
+    console.log(voiceList)
     return (
       <div className='voice-manage'>
         <EditorVoice
@@ -85,7 +91,6 @@ class VoiceManage extends Component{
         <table className='voice-manage-list'>
           <tbody>
             <tr>
-              <td>编号</td>
               <td>场景</td>
               <td>问题</td>
               <td>关键词</td>
@@ -94,6 +99,33 @@ class VoiceManage extends Component{
               <td>问答对状态</td>
               <td>操作</td>
             </tr>
+            {
+              (voiceList.list||[]).map((val,i)=>{
+                return (
+                  <tr key={i}>
+                    <td>{val.s_scene}</td>
+                    <td>
+                      {val.questions.map((val,i)=>{
+                        return <p key={i}>{val.question}</p>
+                      })}
+                    </td>
+                    <td>
+                      {val.questions.map((val,i)=>{
+                        return <p key={i}>{val.keywords}</p>
+                      })}
+                    </td>
+                    <td>
+                      {val.answers.map((val,i)=>{
+                        return <p key={i}>{1}</p>
+                      })}
+                    </td>
+                    <td>
+
+                    </td>
+                  </tr>
+                )
+              })
+            }
           </tbody>
         </table>
         <ul className='voice-manage-buttons'>
@@ -107,6 +139,7 @@ class VoiceManage extends Component{
           <p>新增场景语料</p>
           <span>查看场景树 ></span>
         </div>
+        <PageCtr total={voiceList.pages} buttons='10' changePage={this.changePage.bind(this)}/>
       </div>
     )
   }
@@ -116,5 +149,18 @@ class VoiceManage extends Component{
   hideAddVoice(){
     this.setState({toggleAddVoice: false})
   }
+  changePage(){
+
+  }
+//初始化数据
+  componentDidMount(){
+    const {dispatch} = this.props
+    dispatch(getVoiceList())
+  }
 }
-export default VoiceManage
+function mapStateToProps(state){
+  return {
+    voiceList: state.voiceData.voiceList
+  }
+}
+export default connect(mapStateToProps)(VoiceManage)

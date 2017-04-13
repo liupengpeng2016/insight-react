@@ -16,3 +16,5 @@ export const FETCH_NOTICE = 'FETCH_NOTICE'
 //home
 export const SAVE_DATA_SITUATION = 'SAVE_DATA_SITUATION'
 export const SAVE_USER_LIST = 'SAVEZ_USER_LIST'
+//voice
+export const SAVE_VOICE_LIST = 'SAVE_VOICE_LIST'

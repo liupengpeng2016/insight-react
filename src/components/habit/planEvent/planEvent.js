@@ -37,7 +37,13 @@ class PlanEvent extends Component {
                   <td><img src={val.icon} alt=''/></td>
                   <td>{val.name}</td>
                   <td>{val.voice_name}</td>
-                  <td><voice src={val.voice_url}></voice></td>
+                  <td>
+                    <audio src={val.voice_url}></audio>
+                    <span
+                      onClick={this.playVoice.bind(this)}
+                      style={{cursor:'pointer', color:'#5ccdef'}}
+                    >试听</span>
+                  </td>
                   <td>{val.status === 1 ? '是' : '否'}</td>
                   <td>{val.time}</td>
                   <td>{val.sort}</td>
@@ -45,12 +51,18 @@ class PlanEvent extends Component {
                     {
                       this.state.mode?(
                         <ul className='ctr-buttons'>
-                          <li><Link to='/habit/editorPlanEvent'>编辑</Link></li>
+                          <li><Link
+                             to={{pathname:'/habit/editorPlanEvent',
+                             state: val.id}}
+                            >编辑</Link></li>
                           <li onClick={this.delItem.bind(this, val.id)}>删除</li>
                         </ul>
                       ):(
                         <ul className='ctr-buttons'>
-                          <li><Link to='/habit/editorPlanEvent'>编辑</Link></li>
+                          <li><Link
+                            to={{pathname:'/habit/editorPlanEvent',
+                            state: val.id}}
+                            >编辑</Link></li>
                           <li>
                             <input type='checkbox' checked={this.state.checkbox[val.id]||false}
                               onChange={this.handleChange.bind(this, val.id)}
@@ -74,7 +86,7 @@ class PlanEvent extends Component {
           <h1 onClick={this.changeMode.bind(this)}
             style={this.state.mode? null : {display: 'none'}}
           >批量管理</h1>
-        <h2><Link to='/habit/addEvent'>新增提醒</Link></h2>
+        <h2><Link to={{pathname:'/habit/addEvent', state: (planEvent[0]||{}).default_plan_id}}>新增提醒</Link></h2>
         </div>
       </div>
     )
@@ -124,6 +136,9 @@ class PlanEvent extends Component {
   }
   changeMode(){
     this.setState({mode: 0})
+  }
+  playVoice(e){
+    e.target.previousSibling.play()
   }
 }
 export default connect()(PlanEvent)

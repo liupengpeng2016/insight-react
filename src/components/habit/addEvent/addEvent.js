@@ -2,18 +2,20 @@ import React, {Component} from 'react'
 import './addEvent.css'
 import {addHabitPlanEvent} from '../../../redux/actions.js'
 import {connect} from 'react-redux'
+import fileUpload from '../../../fileUpload/fileUpload.js'
 class AddEvent extends Component{
   constructor(props){
     super(props)
     this.state={
       name:'',
-      voice_name:'',
-      music_id:'1',
-      hours: '0',
+      icon:'',
+      hours:'0',
       minutes:'0',
-      fileUrl: '',
+      sort:'0',
+      voice_name:'',
+      music_id:'',
       file:'',
-      sort:'0'
+      fileUrl:''
     }
   }
   render(){
@@ -45,13 +47,29 @@ class AddEvent extends Component{
               onChange={this.handleHours.bind(this)}
               value={this.state.hours}
               >
-            <option value='0'>0</option>
+              {
+                (function(){
+                  const arr= []
+                  for(let i = 0; i<60; i++){
+                    arr.push(<option  key={i} value={i< 10? '0'+i : i}>{i}</option>)
+                  }
+                  return arr
+                })()
+              }
             </select><span>时</span>
             <select className='notice-minutes'
-              onChange={this.handleHours.bind(this)}
+              onChange={this.handleMinutes.bind(this)}
               value={this.state.minutes}
               >
-              <option value='0'>0</option>
+              {
+                (function(){
+                  const arr= []
+                  for(let i = 0; i<60; i++){
+                    arr.push(<option key={i} value={i< 10? '0'+i : i}>{i}</option>)
+                  }
+                  return arr
+                })()
+              }
             </select><span>分</span>
           </li>
           <li>
@@ -87,7 +105,7 @@ class AddEvent extends Component{
               <option value='10'>10</option>
             </select>
           </li>
-          <li onClick={this.handleClick.bind(this)}>提交信息</li>
+          <li onClick={this.handleSubmit.bind(this)}>提交信息</li>
         </ul>
       </div>
     )
@@ -108,32 +126,32 @@ class AddEvent extends Component{
     this.setState({hours: e.target.value})
   }
   handleMinutes(e){
-    this.setState({minutes: e.target.checked})
+    this.setState({minutes: e.target.value})
   }
   handleFile(e){
-    const fileReader1= new FileReader()
-    const fileReader2= new FileReader()
-    fileReader1.readAsBinaryString(e.target.files[0])
-    fileReader1.onload= () => {
-      this.setState({file:fileReader1.result})
+    const fileReader= new FileReader()
+    fileReader.readAsDataURL(e.target.files[0])
+    fileReader.onload= () => {
+      this.setState({fileUrl: fileReader.result})
     }
-    fileReader2.readAsDataURL(e.target.files[0])
-    fileReader2.onload= () => {
-      this.setState({fileUrl: fileReader2.result})
-    }
+    this.setState({file: e.target.files[0]})
   }
-  handleClick(){
-    const {name,voice_name, music_id, hours, sort, minutes, file} = this.state
+  dispatchEditor(icon){
+    const {name,voice_name, music_id, hours, sort, minutes} = this.state
     this.props.dispatch(addHabitPlanEvent(
       {
         name,
         voice_name,
         music_id,
         sort,
+        icon,
         default_plan_id: this.props.location.state,
-        icon: file,
         time:hours+ ':' + minutes,
       }))
+  }
+  handleSubmit(){
+    const {file} = this.state
+    fileUpload(file,this.dispatchEditor.bind(this))
   }
 }
 export default connect()(AddEvent)

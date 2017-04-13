@@ -13,7 +13,7 @@ class ToyPlanItem extends Component{
   }
   render(){
     let {itemData} = this.props
-    itemData= itemData || []
+    itemData= itemData||{}
     return (
       <ul className='toy-plan-item'>
         <li>
@@ -40,7 +40,7 @@ class ToyPlanItem extends Component{
                 <td>操作</td>
               </tr>
               {
-                itemData.map((val, i)=>{
+                (itemData.contents||[]).map((val, i)=>{
                   return (
                     <tr key={i}>
                       <td>{val.id}</td>
@@ -163,9 +163,9 @@ class ToyPlanItem extends Component{
   }
   componentWillReceiveProps(nextProps){
     let {itemData} = nextProps
-    if(itemData){
+    if(itemData.contents){
       const checkbox={}
-      for(let i of itemData){
+      for(let i of itemData.contents){
         Object.assign(checkbox, {[i.id]: false})
       }
       this.setState({checkbox, buttonMode: 1})

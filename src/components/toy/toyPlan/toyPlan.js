@@ -29,11 +29,11 @@ class ToyPlan extends Component{
     const {shake, pat, wakeup, params} = this.props
     switch(params.id){
       case 'shake':
-      return (shake||[]).contents
+      return shake
       case 'pat':
-      return (pat||[]).contents
+      return pat
       case 'wakeup':
-      return (wakeup||[]).contents
+      return wakeup
       default :
       return []
     }

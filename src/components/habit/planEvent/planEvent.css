@@ -14,6 +14,10 @@
       border: 1px solid #dbdbdb; }
     .sleep-plan-list > table tr {
       background: #fafafa; }
+      .sleep-plan-list > table tr img {
+        display: inline-block;
+        vertical-align: middle;
+        height: 30px; }
     .sleep-plan-list > table tr:nth-child(2n) {
       background: white; }
     .sleep-plan-list > table tr:first-child {
