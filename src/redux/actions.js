@@ -50,7 +50,7 @@ function fetchData(url, params, dispatch, action){
         dispatch(setVisibility({name:FETCH_NOTICE, show: true, msg: json.msg ||'操作失败'}))
       }
   }).catch(error => {
-    dispatch(setVisibility({name:FETCH_NOTICE, show: true, msg: '操作失败'}))
+    dispatch(setVisibility({name:FETCH_NOTICE, show: true, msg: '获取数据失败'}))
   })
 }
 /********************* home part ******************/
@@ -227,13 +227,13 @@ export const getVoiceList= params => dispatch =>
  fetchData('/corpus/corpus/getCorpusList', params, dispatch, saveVoiceList)
 //编辑语料
 export const editorVoiceItem= params => dispatch =>
- fetchData('', params, dispatch, null)
+ fetchData('/corpus/corpus/editCorpus', params, dispatch, null)
 //删除语料
 export const delVoiceItem= params => dispatch =>
- fetchData('', params, dispatch, null)
+ fetchData('/corpus/corpus/delCorpus', params, dispatch, null)
 //添加语料
 export const addVoiceItem= params => dispatch =>
- fetchData('', params, dispatch, null)
+ fetchData('/corpus/corpus/addCorpus', params, dispatch, null)
 //启用／弃用语料
-export const toggleVoiceItem= params => dispatch =>
- fetchData('', params, dispatch, null)
+export const toggleVoiceStatus= params => dispatch =>
+ fetchData('/corpus/corpus/enableCorpus', params, dispatch, null)

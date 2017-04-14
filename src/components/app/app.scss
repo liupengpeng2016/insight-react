@@ -41,6 +41,9 @@ select {
 }
 /*reset public-css over*/
 /*public-css start*/
+.hide{
+  display:none;
+}
 .container{
   width:1190px;
   margin:0 auto;

@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import './voiceManage.css'
 import EditorVoice from '../editorVoice/editorVoice.js'
 import AddVoice from '../addVoice/addVoice.js'
-import {getVoiceList} from '../../../redux/actions.js'
+import {getVoiceList, editorVoiceItem, delVoiceItem, toggleVoiceStatus} from '../../../redux/actions.js'
 import {connect} from 'react-redux'
 import PageCtr from '../../media/pageCtr/pageCtr.js'
 class VoiceManage extends Component{
@@ -13,19 +13,21 @@ class VoiceManage extends Component{
       toggleAddVoice: false,
       questionNum_add: 2,
       questionNum_editor: 2,
-      page:'1'
+      page:1,
+      buttonMode:1,
+      editorData:{}
     }
+    this.spreadDetail= this.spreadDetail.bind(this)
   }
   render(){
     const {voiceList} = this.props
-    console.log(voiceList)
     return (
       <div className='voice-manage'>
         <EditorVoice
           toggleEditorVoice={this.state.toggleEditorVoice}
           hideEditorVoice={this.hideEditorVoice.bind(this)}
-          questionNum={this.state.questionNum_editor}
-          addMore={()=>{this.setState({questionNum_editor: this.state.questionNum_editor+1})}}
+          editorSubmit={this.state.editorSubmit}
+          editorData={this.state.editorData}
           ></EditorVoice>
         <AddVoice
           toggleAddVoice={this.state.toggleAddVoice}
@@ -89,7 +91,7 @@ class VoiceManage extends Component{
           </select>
         </div>
         <table className='voice-manage-list'>
-          <tbody>
+          <thead>
             <tr>
               <td>场景</td>
               <td>问题</td>
@@ -99,34 +101,67 @@ class VoiceManage extends Component{
               <td>问答对状态</td>
               <td>操作</td>
             </tr>
+          </thead>
             {
               (voiceList.list||[]).map((val,i)=>{
                 return (
-                  <tr key={i}>
-                    <td>{val.s_scene}</td>
-                    <td>
-                      {val.questions.map((val,i)=>{
-                        return <p key={i}>{val.question}</p>
-                      })}
-                    </td>
-                    <td>
-                      {val.questions.map((val,i)=>{
-                        return <p key={i}>{val.keywords}</p>
-                      })}
-                    </td>
-                    <td>
-                      {val.answers.map((val,i)=>{
-                        return <p key={i}>{1}</p>
-                      })}
-                    </td>
-                    <td>
-
-                    </td>
-                  </tr>
+                  <tbody  key={i}>
+                    <tr>
+                      <td className='spread-array-shrink'
+                        onClick={this.spreadDetail}
+                        >{val.s_scene}</td>
+                      <td>
+                        {val.questions.map((val,i)=>{
+                          return <p key={i}>{val.question}</p>
+                        })}
+                      </td>
+                      <td>
+                        {val.questions.map((val,i)=>{
+                          return <p key={i}>{val.keywords}</p>
+                        })}
+                      </td>
+                      <td>
+                        {val.answers.map((val,i)=>{
+                          return <p key={i}>{val.answer}</p>
+                        })}
+                      </td>
+                      <td>
+                        {val.answers.map((val,i)=>{
+                          return <p key={i}>{`${val.weight}/${val.age}`}</p>
+                        })}
+                      </td>
+                      <td>{val.status? '启用':'弃用'}</td>
+                      <td>{
+                          this.state.buttonMode? (
+                            <ul className='button-mode1'>
+                              <li
+                                onClick={()=>this.setState({
+                                  toggleEditorVoice: true,
+                                  editorData:{
+                                    group_id: val.group_id,
+                                    s_scene_id: val.s_scene_id
+                                  }
+                                })}
+                                >编辑</li>
+                              <li onClick={this.toggleVoiceStatus.bind(this, val.group_id, val.status)}>{!val.status? '启用':'弃用'}</li>
+                              <li onClick={this.handelDelVoice.bind(this,[val.group_id])}>删除</li>
+                            </ul>
+                          ):(
+                            <input type='checkbox'/>
+                          )
+                        }
+                      </td>
+                    </tr>
+                    <tr className='hide'>
+                      <td colSpan='7' className='voice-manage-list-detail'>
+                        <p><span>语料库</span>{val.corpus_lib_name}</p>
+                        <p><span>语料id</span>{val.group_id}</p>
+                      </td>
+                    </tr>
+                  </tbody>
                 )
               })
             }
-          </tbody>
         </table>
         <ul className='voice-manage-buttons'>
           <li>导出语料</li>
@@ -149,13 +184,37 @@ class VoiceManage extends Component{
   hideAddVoice(){
     this.setState({toggleAddVoice: false})
   }
-  changePage(){
+  changePage(page){
+    this.setState({page})
+  }
+  spreadDetail(e){
+    const className= e.target.parentNode.nextSibling.className
+    if(className === 'hide'){
+      e.target.parentNode.nextSibling.className=''
+      e.target.className='spread-array-spread'
+    }else{
+      e.target.parentNode.nextSibling.className='hide'
+      e.target.className='spread-array-shrink'
+    }
+  }
+  toggleVoiceStatus(group_id, status){
+    const {dispatch} = this.props
+    status= status ? 0 : 1
+    dispatch(toggleVoiceStatus({group_id, status}))
+  }
+  handelDelVoice(group_ids){
+    const {dispatch} = this.props
+    dispatch(delVoiceItem({group_ids}))
 
   }
 //初始化数据
   componentDidMount(){
     const {dispatch} = this.props
     dispatch(getVoiceList())
+  }
+  editorSubmit(params){
+    const {dispatch} = this.props
+    dispatch(editorVoiceItem(params))
   }
 }
 function mapStateToProps(state){

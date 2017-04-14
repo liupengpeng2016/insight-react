@@ -1,5 +1,5 @@
 import React from 'react'
-import {Router, Route, browserHistory, IndexRedirect} from 'react-router'
+import {Router, Route, hashHistory, IndexRedirect} from 'react-router'
 import App from '../components/app/app.js'
 import Home from '../components/home/root/home.js'
 //media
@@ -39,7 +39,7 @@ import AddToyAction from '../components/toy/addToyAction/addToyAction.js'
 import EditorToyAction from '../components/toy/editorToyAction/editorToyAction.js'
 import EditorToyInformation from '../components/toy/editorToyInformation/editorToyInformation.js'
 const router = (
-  <Router history={browserHistory}>
+  <Router history={hashHistory}>
     <Route path='/' component={App}>
       <IndexRedirect to='home'></IndexRedirect>
       <Route path='home' component={Home}></Route>
