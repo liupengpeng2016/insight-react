@@ -1,20 +1,21 @@
 import React, {Component} from 'react'
 import './editorVoice.css'
+import {connect} from 'react-redux'
+import {getAllFirstSceneList, getSecondSceneList} from '../../../redux/actions.js'
 class EditorVoice extends Component{
   constructor(){
     super()
     this.state={
-      commonVoice: false,
-      taotaoVoice: false,
-      qvoice: false,
-      view: '',
-      questions:[{question:'', keyword:'',question_id:''},{answer:'', keyword:'',question_i:''}],
-      answers:[{answer:'',weight:'', age:'', answer_id:''},{answer:'',weight:'', age:'', answer_id:''}],
+      firstScene: '',
+      secondScene:'',
+      answers:[],
+      questions:[]
     }
   }
   render(){
-    let {hideEditorVoice, toggleEditorVoice} = this.props
-    const {answers, questions} = this.state
+    let {hideEditorVoice, toggleEditorVoice,
+       editorData, allFirstSceneList, secondSceneList} = this.props
+    const {answers, questions} = editorData||{}
     return (
       <div className='voice-popup editor-voice'
         style={toggleEditorVoice? null:{display:'none'}}
@@ -30,34 +31,58 @@ class EditorVoice extends Component{
             <ul>
               <li>
                 <span>场景</span>
-                <select
-                  onChange={this.handleView.bind(this)}
-                  value={this.state.view}
-                  >
-                  <option>请选择场景</option>
-                  <option></option>
-                </select>
+                  <select
+                    onChange={this.handleFirseScene.bind(this)}
+                    value={this.state.firstScene}
+                    style={{borderRight:'none'}}
+                    >
+                    <option value=''>请选择一级场景</option>
+                    {
+                      allFirstSceneList.map((val, i)=> {
+                        return (
+                          <option value={val.f_scene_id} key={i}
+                            >{val.name}</option>
+                        )
+                      })
+                    }
+                  </select>
+                  <select
+                    onChange={this.handleSecondScene.bind(this)}
+                    value={this.state.secondScene}
+                    >
+                    <option value=''>请选择二级场景</option>
+                      {
+                        (secondSceneList.list||[]).map((val, i)=> {
+                          return (
+                            <option value={val.s_scene_id} key={i}
+                              >{val.name}</option>
+                          )
+                        })
+                      }
+                  </select>
               </li>
             </ul>
               {
-                questions.map((val, i)=>{
+                this.state.questions.map((val, i)=>{
                   return (
                     <ul key={i}>
                       <li>
-                        <span>答案{i+1}</span>
+                        <span>问题{i+1}</span>
                         <input type='text' placeholder='请输入问题'
                           onChange={this.handleQuestion.bind(this,i)}
-                          value={val.question}
+                          value={(questions[i]||{}).question}
                           />
                       </li>
                       <li className='editor-voice-notice'>
                         <ul>
                           <li>
-                            <p>更新时间</p>
-                            <p>作者</p>
+                            <p>作者: {(questions[i]||{}).editor}</p>
+                            <p>更新时间: {((questions[i]||{}).editor_time||'').slice(0, 10)}</p>
                           </li>
                           <li>
-                            <span className='del'>删除</span>
+                            <span className='del'
+                              onClick={this.delQuestion.bind(this, val.question_id, i)}
+                              >删除</span>
                           </li>
                         </ul>
                       </li>
@@ -65,7 +90,7 @@ class EditorVoice extends Component{
                         <span>关键词</span>
                         <input type='text' placeholder='请输入关键词，多个关键词之间用“／”间隔'
                           onChange={this.handleKeyword.bind(this,i)}
-                          value={val.keyword}
+                          value={(questions[i]||{}).keywords}
                           />
                       </li>
                       <li className='editor-voice-notice'>
@@ -73,7 +98,6 @@ class EditorVoice extends Component{
                           <li>
                           </li>
                           <li>
-                            <span className='del'>删除</span>
                           </li>
                         </ul>
                       </li>
@@ -82,14 +106,14 @@ class EditorVoice extends Component{
                 })
               }
             <h2 onClick={this.addQuestions.bind(this)}>添加相似问题</h2>
-            {answers.map((val, i)=>{
+            {this.state.answers.map((val, i)=>{
                 return (
                   <ul key={i}>
                     <li>
                       <span>答案{i+1}</span>
                       <input type='text' placeholder='请输入问题'
                         onChange={this.handleAnswer.bind(this, i)}
-                        value={val.answer}
+                        value={(answers[i]||{}).answer}
                         />
                     </li>
                     <li className='editor-voice-notice'>
@@ -99,7 +123,9 @@ class EditorVoice extends Component{
                           <p>作者</p>
                         </li>
                         <li>
-                          <span className='del'>删除</span>
+                          <span className='del'
+                            onClick={ this.delAnswer.bind(this, val.answer_id, i)}
+                            >删除</span>
                         </li>
                       </ul>
                     </li>
@@ -148,25 +174,64 @@ class EditorVoice extends Component{
       </div>
     )
   }
+  componentWillReceiveProps(nextProps){
+    if(nextProps.editorData){
+      const nextQuestions= nextProps.editorData.questions;
+      const nextAnswers= nextProps.editorData.answers;
+      let questions= [], answers= []
+      for(let i= 0; i<nextQuestions.length; i++){
+        questions.push({
+          question: nextQuestions[i].question,
+          keyword: nextQuestions[i].keywords,
+          question_id: nextQuestions[i].question_id
+        })
+      }
+      for(let i= 0; i<nextAnswers.length; i++){
+        answers.push({
+          answer:nextAnswers[i].answer,
+          weight:nextAnswers[i].weight,
+          age:nextAnswers[i].age,
+          answer_id: nextAnswers[i].answer_id
+        })
+      }
+      this.setState({answers, questions})
+    }
+  }
+  componentDidMount(){
+    this.props.dispatch(getAllFirstSceneList())
+  }
   handleSubmit(){
     const { editorData, editorSubmit} = this.props
-    const params= Object.assign(editorData, {s_scene_id:'', is_scene_corpus: '', questions:'', answers:''})
-    editorSubmit({params})
+    let {questions, answers, secondScene} = this.state
+    questions= JSON.stringify(questions)
+    answers= JSON.stringify(answers)
+    const params= {
+      group_id: editorData.group_id,
+      corpus_lib_id: editorData.corpus_lib_id,
+      s_scene_id: secondScene,
+      is_scene_corpus: editorData.is_scene_corpus,
+      questions,
+      answers
+    }
+    editorSubmit(params)
   }
   addAnswers(){
     let answers= [...this.state.answers]
-    answers.push({answer:'', sort:'', age:''})
+    answers.push({answer:'', sort:'', age:'', answer_id:''})
     this.setState({answers})
   }
   addQuestions(){
     let questions= [...this.state.questions]
-    questions.push({question:'', keywords:''})
+    questions.push({question:'', keyword:'', question_id:''})
     this.setState({questions})
   }
-
-  //表单处理
-  handleView(e){
-    this.setState({view: e.target.value})
+//handle input
+  handleFirseScene(e){
+    this.setState({firstScene: e.target.value})
+    this.props.dispatch(getSecondSceneList({f_scene_id: e.target.value}))
+  }
+  handleSecondScene(e){
+    this.setState({secondScene: e.target.value})
   }
   handleQuestion(i,e){
     const question = [...this.state.questions]
@@ -193,5 +258,27 @@ class EditorVoice extends Component{
     answer[i].sort= e.target.value
     this.setState({answer})
   }
+  delQuestion(question_id, i){
+    const questions= [...this.state.questions]
+    if(questions[i].question_id){
+      this.props.delVoiceQuestion(question_id)
+    }
+    questions.splice(i,1)
+    this.setState({questions})
+  }
+  delAnswer(answer_id, i){
+    const answers= [...this.state.answers]
+    if(answers[i].answer_id){
+      this.props.delVoiceAnswer(answer_id)
+    }
+    answers.splice(i,1)
+    this.setState({answers})
+  }
 }
-export default EditorVoice
+function mapStateToProps({voiceData}){
+  return {
+    allFirstSceneList: voiceData.allFirstSceneList,
+    secondSceneList: voiceData.secondSceneList
+  }
+}
+export default connect(mapStateToProps)(EditorVoice)

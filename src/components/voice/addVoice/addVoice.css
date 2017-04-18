@@ -1,0 +1,9 @@
+.editor-voice .editor-voice-info .add-voice-scope > li {
+  overflow: hidden;
+  padding-left: 20px; }
+  .editor-voice .editor-voice-info .add-voice-scope > li > span {
+    float: left;
+    padding-left: 0;
+    margin-left: 0; }
+  .editor-voice .editor-voice-info .add-voice-scope > li > p {
+    float: left; }

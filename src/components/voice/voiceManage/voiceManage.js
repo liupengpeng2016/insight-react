@@ -2,7 +2,13 @@ import React, {Component} from 'react'
 import './voiceManage.css'
 import EditorVoice from '../editorVoice/editorVoice.js'
 import AddVoice from '../addVoice/addVoice.js'
-import {getVoiceList, editorVoiceItem, delVoiceItem, toggleVoiceStatus} from '../../../redux/actions.js'
+import {
+  getVoiceList, editorVoiceItem,
+  delVoiceItem, delVoiceAnswer,
+  delVoiceQuestion, toggleVoiceStatus,
+  getCorpusList, addVoiceItem,
+  setVisibility
+} from '../../../redux/actions.js'
 import {connect} from 'react-redux'
 import PageCtr from '../../media/pageCtr/pageCtr.js'
 class VoiceManage extends Component{
@@ -15,41 +21,45 @@ class VoiceManage extends Component{
       questionNum_editor: 2,
       page:1,
       buttonMode:1,
-      editorData:{}
+      editorData:1,
+      checkobx:{},
+      is_scene_corpus: 0
     }
     this.spreadDetail= this.spreadDetail.bind(this)
   }
   render(){
-    const {voiceList} = this.props
+    const {voiceList, corpusList} = this.props
     return (
       <div className='voice-manage'>
         <EditorVoice
           toggleEditorVoice={this.state.toggleEditorVoice}
           hideEditorVoice={this.hideEditorVoice.bind(this)}
-          editorSubmit={this.state.editorSubmit}
-          editorData={this.state.editorData}
+          editorSubmit={this.editorSubmit.bind(this)}
+          editorData={(voiceList.list||[])[this.state.editorData]}
+          delVoiceAnswer={this.delVoiceAnswer.bind(this)}
+          delVoiceQuestion={this.delVoiceQuestion.bind(this)}
+          firstScene
           ></EditorVoice>
         <AddVoice
           toggleAddVoice={this.state.toggleAddVoice}
           hideAddVoice={this.hideAddVoice.bind(this)}
-          questionNum={this.state.questionNum_add}
-          addMore={()=>{this.setState({questionNum_add: this.state.questionNum_add+1})}}
+          is_scene_corpus={this.state.is_scene_corpus}
+          corpusList={corpusList}
+          addSubmit={this.addSubmit.bind(this)}
           ></AddVoice>
         <div className='voice-manage-search'>
           <h1>语料列表</h1>
           <ul>
-            <li>
-              <input type='checkbox' id='common-voice'/>
-              <label htmlFor='common-voice'>通用语料</label>
-            </li>
-            <li>
-              <input type='checkbox' id='small-q'/>
-              <label htmlFor='small-q'>小Q语料</label>
-            </li>
-            <li>
-              <input type='checkbox' id='taotao'/>
-              <label htmlFor='taotao'>淘淘语料</label>
-            </li>
+            {
+              corpusList.map((val, i)=> {
+                return (
+                  <li key={i}>
+                    <input type='checkbox' id={`voiceManage${i}`}/>
+                    <label htmlFor={`voiceManage${i}`}>{val.name}</label>
+                  </li>
+                )
+              })
+            }
             <li>
               <input type='text' placeholder='输入想要搜索的关键词'/>
               <span>关键词</span>
@@ -135,19 +145,17 @@ class VoiceManage extends Component{
                           this.state.buttonMode? (
                             <ul className='button-mode1'>
                               <li
-                                onClick={()=>this.setState({
-                                  toggleEditorVoice: true,
-                                  editorData:{
-                                    group_id: val.group_id,
-                                    s_scene_id: val.s_scene_id
-                                  }
-                                })}
+                                onClick={this.handleEditor.bind(this, i)}
                                 >编辑</li>
-                              <li onClick={this.toggleVoiceStatus.bind(this, val.group_id, val.status)}>{!val.status? '启用':'弃用'}</li>
-                              <li onClick={this.handelDelVoice.bind(this,[val.group_id])}>删除</li>
+                              <li onClick={this.toggleVoiceStatus.bind(this, [val.group_id], val.status)}>{!val.status? '启用':'弃用'}</li>
+                              <li className='del'
+                                onClick={this.handelDelVoice.bind(this,[val.group_id])}>删除</li>
                             </ul>
                           ):(
-                            <input type='checkbox'/>
+                            <input type='checkbox'
+                              onChange={this.handleChecked.bind(this, val.group_id)}
+                              checked={this.state.checkbox[val.group_id]}
+                              />
                           )
                         }
                       </td>
@@ -163,16 +171,32 @@ class VoiceManage extends Component{
               })
             }
         </table>
-        <ul className='voice-manage-buttons'>
+        <ul className='voice-manage-buttons'
+          style={this.state.buttonMode? null : {display:'none'}}
+          >
           <li>导出语料</li>
-          <li>批量处理</li>
+          <li
+            onClick={()=> this.setState({buttonMode: 0})}
+            >批量处理</li>
+        </ul>
+        <ul className='voice-manage-buttons'
+          style={!this.state.buttonMode? null : {display:'none'}}
+          >
+          <li onClick={this.delAll.bind(this)}>批量删除</li>
+          <li onClick={this.offAll.bind(this)}>批量弃用</li>
+          <li onClick={this.onAll.bind(this)}>批量启用</li>
+          <li onClick={this.chooseAll.bind(this)}>全选</li>
         </ul>
         <div className='voice-manage-add'>
           <p
-            onClick={()=> this.setState({toggleAddVoice: true, questionNum_add: 2})}
+            onClick={()=> this.setState({toggleAddVoice: true, is_scene_corpus: 0})}
             >新增语料</p>
-          <p>新增场景语料</p>
-          <span>查看场景树 ></span>
+          <p
+            onClick={()=> this.setState({toggleAddVoice: true, is_scene_corpus: 1})}
+            >新增场景语料</p>
+          <span
+            onClick={this.showSceneTree.bind(this)}
+            >查看场景树 ></span>
         </div>
         <PageCtr total={voiceList.pages} buttons='10' changePage={this.changePage.bind(this)}/>
       </div>
@@ -186,6 +210,14 @@ class VoiceManage extends Component{
   }
   changePage(page){
     this.setState({page})
+    const {dispatch} = this.props
+    dispatch(getVoiceList({page}))
+  }
+  handleEditor(i){
+    this.setState({
+      toggleEditorVoice: true,
+      editorData: i
+    })
   }
   spreadDetail(e){
     const className= e.target.parentNode.nextSibling.className
@@ -197,29 +229,94 @@ class VoiceManage extends Component{
       e.target.className='spread-array-shrink'
     }
   }
-  toggleVoiceStatus(group_id, status){
+  toggleVoiceStatus(group_ids, status){
     const {dispatch} = this.props
     status= status ? 0 : 1
-    dispatch(toggleVoiceStatus({group_id, status}))
+    dispatch(toggleVoiceStatus({group_ids, status}))
+    setTimeout(()=>{this.props.dispatch(getVoiceList({page: this.state.page}))}, 150)
   }
   handelDelVoice(group_ids){
     const {dispatch} = this.props
     dispatch(delVoiceItem({group_ids}))
 
   }
+  delVoiceAnswer(answer_id){
+    this.props.dispatch(delVoiceAnswer({answer_id}))
+  }
+  delVoiceQuestion(question_id){
+    this.props.dispatch(delVoiceQuestion({question_id}))
+  }
+  handleChecked(group_id, e){
+    const checkbox= Object.assign({}, this.state.checkbox, {[group_id]: e.target.checked})
+    this.setState({checkbox})
+  }
+  addSubmit(params){
+    this.props.dispatch(addVoiceItem(params))
+  }
+//批量按钮
+  chooseAll(){
+    const checkbox= Object.assign({}, this.state.checkbox)
+    const keys= Object.keys(checkbox)
+    const checked = checkbox[keys[0]] ? false : true
+    for(let i of keys){
+      checkbox[i]= checked
+    }
+    this.setState({checkbox})
+  }
+  filterChecked(obj){
+    const arr= []
+    const keys= Object.keys(obj)
+    for(let i of keys){
+      if(obj[i]){
+        arr.push(i)
+      }
+    }
+    return arr
+  }
+  onAll(){
+    const {dispatch} = this.props
+    dispatch(toggleVoiceStatus({group_ids: this.filterChecked(this.state.checkbox), status: 1}))
+    setTimeout(()=> this.props.dispatch(getVoiceList({page:this.state.page})), 150)
+  }
+  offAll(){
+    const {dispatch} = this.props
+    dispatch(toggleVoiceStatus({group_ids: this.filterChecked(this.state.checkbox), status: 0}))
+    setTimeout(()=> this.props.dispatch(getVoiceList({page:this.state.page})), 150)
+  }
+  delAll(){
+    const {dispatch} = this.props
+    dispatch(delVoiceItem({group_ids: this.filterChecked(this.state.checkbox)}))
+    setTimeout(()=> this.props.dispatch(getVoiceList({page:this.state.page})), 150)
+  }
 //初始化数据
   componentDidMount(){
     const {dispatch} = this.props
     dispatch(getVoiceList())
+    dispatch(getCorpusList())
+  }
+  componentWillReceiveProps(nextProps){
+    const {voiceList}= nextProps
+    if(voiceList.list){
+      const checkbox= {}
+      for(let i= 0; i<voiceList.list.length; i++){
+        Object.assign(checkbox, {[voiceList.list[i].group_id]: false})
+      }
+      this.setState({checkbox})
+    }
+  }
+  showSceneTree(){
+    this.props.dispatch(setVisibility({name: 'SCENE_TREE', show: true}))
   }
   editorSubmit(params){
     const {dispatch} = this.props
     dispatch(editorVoiceItem(params))
   }
 }
-function mapStateToProps(state){
+function mapStateToProps({voiceData}){
   return {
-    voiceList: state.voiceData.voiceList
+    voiceList: voiceData.voiceList,
+    corpusList: voiceData.corpusList,
+    secondSceneList: voiceData.secondSceneList
   }
 }
 export default connect(mapStateToProps)(VoiceManage)

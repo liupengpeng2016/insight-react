@@ -1,0 +1,69 @@
+.editor-scene{
+  width:100%;
+  height:100%;
+  background: rgba(0,0,0,0.6);
+  position:fixed;
+  top:0;
+  left:0;
+  .editor-scene-data{
+    width:420px;
+    height:355px;
+    background: white;
+    position: absolute;
+    top:0;
+    left:0;
+    right:0;
+    bottom:0;
+    margin:auto;
+    color:#b2b2b2;
+    border-radius: 10px;
+    &>h1{
+      line-height: 62px;
+      text-align: center;
+      font-size: 18px;
+      color:black;
+      span{
+        position: absolute;
+        right:10px;
+        top:0;
+        font-size: 30px;
+        line-height: 30px;
+      }
+    }
+    li{
+      margin-bottom:22px;
+      span{
+        width:66px;
+        margin-left:24px;
+        display: inline-block;
+        vertical-align: middle;
+      }
+      input{
+        width:290px;
+        height:38px;
+        vertical-align: middle;
+        border:1px solid #dbdbdb;
+        padding-left:16px;
+      }
+      .editor-scene-detail{
+        line-height: 24px;
+        font-size: 12px;
+      }
+      .editor-scene-notice{
+        padding-left:90px;
+        font-size: 12px;
+        line-height: 20px;
+      }
+    }
+    &>p{
+      line-height: 40px;
+      width:206px;
+      background: #5cc1df;
+      color:white;
+      text-align: center;
+      font-size: 18px;
+      margin:0 auto;
+      border-radius: 5px;
+    }
+  }
+}

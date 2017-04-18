@@ -30,8 +30,9 @@ import EditorPlanEvent from '../components/habit/editorPlanEvent/editorPlanEvent
 import Voice from '../components/voice/root/voice.js'
 import VoiceSystem from '../components/voice/voiceSystem/voiceSystem.js'
 import VoiceManage from '../components/voice/voiceManage/voiceManage.js'
-import Situation from '../components/voice/situation/situation.js'
 import Record from '../components/voice/record/record.js'
+import SceneManage from '../components/voice/sceneManage/sceneManage.js'
+import SecondScene from '../components/voice/secondScene/secondScene.js'
 //toy
 import Toy from '../components/toy/root/toy.js'
 import ToyPlan from '../components/toy/toyPlan/toyPlan.js'
@@ -78,9 +79,10 @@ const router = (
         <Route path='voiceSystem' component={VoiceSystem}>
           <IndexRedirect to='voiceManage'/>
           <Route path='voiceManage' component={VoiceManage}></Route>
-          <Route path='situation' component={Situation}></Route>
+          <Route path='sceneManage' component={SceneManage}></Route>
           <Route path='record' component={Record}></Route>
         </Route>
+        <Route path='secondScene' component={SecondScene}></Route>
       </Route>
       <Route path='toy' component={Toy}>
         <IndexRedirect to='toyPlan/shake'></IndexRedirect>

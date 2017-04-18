@@ -1,0 +1,18 @@
+.editor-voice{
+  .editor-voice-info{
+    .add-voice-scope{
+      &>li{
+        overflow: hidden;
+        padding-left:20px;
+        &>span{
+          float:left;
+          padding-left:0;
+          margin-left:0;
+        }
+        &>p{
+          float:left;
+        }
+      }
+    }
+  }
+}

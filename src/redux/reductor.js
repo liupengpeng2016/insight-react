@@ -5,18 +5,25 @@ import {
   SAVE_LINK_ALBUM_LIST,SAVE_SEARCH_MUSIC_LIST,
   SAVE_LINK_TOPIC_LIST,SAVE_HABIT_PLAN,SAVE_HABIT_PLAN_EVENT,
   SAVE_TOY_PLAN, FETCH_NOTICE,SAVE_USER_LIST,SAVE_DATA_SITUATION,
-  SAVE_VOICE_LIST
+  SAVE_VOICE_LIST, SAVE_CORPUS_LIST,SAVE_FIRST_SCENE_LIST,
+  SAVE_SECOND_SCENE_LIST,SCENE_TREE,
+  SAVE_ALL_FIRST_SCENE_LIST, SAVE_ALL_SECOND_SCENE_LIST
 } from './actionTypes.js'
 /********** visibility *********/
 function visibility(state={
   fetchNotice:{
     show:false,
     msg:'操作成功'
+  },
+  sceneTree:{
+    show: false
   }
 },action){
   switch(action.type){
     case FETCH_NOTICE:
     return Object.assign({}, state, {fetchNotice:{show: action.show, msg: action.msg}})
+    case SCENE_TREE:
+    return Object.assign({}, state, {sceneTree:{show: action.show, msg: action.msg}})
     default:
     return state
   }
@@ -88,11 +95,26 @@ function toyData(state={
 }
 /************** VOICE PART ***************/
 function voiceData(state={
-  voiceList:{}
+  voiceList: {},
+  corpusList: [],
+  firstSceneList: [],
+  secondSceneList: [],
+  allFirstSceneList: [],
+  allSecondSceneList: []
 },action){
   switch(action.type){
     case SAVE_VOICE_LIST:
     return Object.assign({}, state, {voiceList: action.data})
+    case SAVE_CORPUS_LIST:
+    return Object.assign({}, state, {corpusList: action.data})
+    case SAVE_FIRST_SCENE_LIST:
+    return Object.assign({}, state, {firstSceneList: action.data})
+    case SAVE_SECOND_SCENE_LIST:
+    return Object.assign({}, state, {secondSceneList: action.data})
+    case SAVE_ALL_FIRST_SCENE_LIST:
+    return Object.assign({}, state, {allFirstSceneList: action.data})
+    case SAVE_ALL_SECOND_SCENE_LIST:
+    return Object.assign({}, state, {allSecondSceneList: action.data})
     default : return state
   }
 }

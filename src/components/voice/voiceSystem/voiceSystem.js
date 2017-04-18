@@ -11,7 +11,7 @@ class VoiceSystem extends Component{
         <h2>动作设置</h2>
         <ul className='toy-plan-tabs'>
           <li><Link to='/voice/voiceSystem/voiceManage' activeStyle={activeCss}>语料管理</Link></li>
-          <li><Link to='/voice/voiceSystem/situation' activeStyle={activeCss}>场景管理</Link></li>
+          <li><Link to='/voice/voiceSystem/sceneManage' activeStyle={activeCss}>场景管理</Link></li>
           <li><Link to='/voice/voiceSystem/record' activeStyle={activeCss}>录入记录</Link></li>
         </ul>
         {this.props.children}

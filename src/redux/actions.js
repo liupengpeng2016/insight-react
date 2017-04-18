@@ -10,7 +10,9 @@ import {
   SAVE_HABIT_PLAN_EVENT,
   SAVE_TOY_PLAN, FETCH_NOTICE,
   SAVE_DATA_SITUATION, SAVE_USER_LIST,
-  SAVE_VOICE_LIST
+  SAVE_VOICE_LIST, SAVE_CORPUS_LIST,
+  SAVE_FIRST_SCENE_LIST, SAVE_SECOND_SCENE_LIST,
+  SAVE_ALL_FIRST_SCENE_LIST, SAVE_ALL_SECOND_SCENE_LIST
 } from './actionTypes.js'
 import {baseUrl} from '../config/config.js'
 import fetch from 'isomorphic-fetch'
@@ -222,6 +224,14 @@ export const delToyAction =
     dispatch => fetchData('/toy/toy/delActionContent', params, dispatch, null)
 /************** voice part ***************/
 export const saveVoiceList = data => ({type: SAVE_VOICE_LIST, data})
+export const saveCorpusList = data => ({type: SAVE_CORPUS_LIST, data})
+export const saveFirstSceneList = data => ({type: SAVE_FIRST_SCENE_LIST, data})
+export const saveSecondSceneList = data => ({type: SAVE_SECOND_SCENE_LIST, data})
+export const saveAllFirstSceneList = data => ({type: SAVE_ALL_FIRST_SCENE_LIST, data})
+export const saveAllSecondSceneList = data => ({type: SAVE_ALL_SECOND_SCENE_LIST, data})
+//获取语料库列表
+export const getCorpusList= params => dispatch =>
+ fetchData('/corpus/corpus/getCorpusLibraries', params, dispatch, saveCorpusList)
 //获取语料列表
 export const getVoiceList= params => dispatch =>
  fetchData('/corpus/corpus/getCorpusList', params, dispatch, saveVoiceList)
@@ -237,3 +247,45 @@ export const addVoiceItem= params => dispatch =>
 //启用／弃用语料
 export const toggleVoiceStatus= params => dispatch =>
  fetchData('/corpus/corpus/enableCorpus', params, dispatch, null)
+//删除问题
+export const delVoiceQuestion= params => dispatch =>
+  fetchData('/corpus/corpus/delQuestion', params, dispatch, null)
+//删除回答
+export const delVoiceAnswer= params => dispatch =>
+  fetchData('/corpus/corpus/delAnswer', params, dispatch, null)
+//获取一级场景
+export const getFirstSceneList= params => dispatch =>
+  fetchData('/corpus/scene/firstSceneList', params, dispatch, saveFirstSceneList)
+//获取所有一级场景
+export const getAllFirstSceneList= params => dispatch =>
+  fetchData('/corpus/scene/allFirstScene', params, dispatch, saveAllFirstSceneList)
+//更改一级场景status
+export const toggleFirstSceneStatus= params => dispatch =>
+  fetchData('/corpus/scene/enableFirstScene', params, dispatch, null)
+//删除一级场景
+export const delFirstSceneItem= params => dispatch =>
+  fetchData('/corpus/scene/delFirstScene', params, dispatch, null)
+//编辑一级场景
+export const editorFirstSceneItem= params => dispatch =>
+  fetchData('/corpus/scene/editFirstScene', params, dispatch, null)
+//添加一级场景
+export const addFirstSceneItem= params => dispatch =>
+  fetchData('/corpus/scene/addFirstScene', params, dispatch, null)
+//获取二级场景列表
+export const getSecondSceneList= params => dispatch =>
+  fetchData('/corpus/scene/secondSceneList', params, dispatch, saveSecondSceneList)
+//获取所有二级场景列表
+export const getAllSecondSceneList= params => dispatch =>
+  fetchData('/corpus/scene/allSecondScene', params, dispatch, saveSecondSceneList)
+//编辑二级场景
+export const editorSecondSceneItem= params => dispatch =>
+  fetchData('/corpus/scene/editSecondScene', params, dispatch, null)
+//添加二级场景
+export const addSecondSceneItem= params => dispatch =>
+  fetchData('/corpus/scene/addSecondScene', params, dispatch, null)
+//删除二级场景
+export const delSecondSceneItem= params => dispatch =>
+  fetchData('/corpus/scene/delSecondScene', params, dispatch, null)
+//更改二级场景status
+export const toggleSecondSceneStatus= params => dispatch =>
+  fetchData('/corpus/scene/enableSecondScene', params, dispatch, null)

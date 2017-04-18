@@ -1,8 +1,18 @@
 import React, {Component} from 'react'
 import './addVoice.css'
 class AddVoice extends Component{
+  constructor(){
+    super()
+    this.state={
+      checkbox:{},
+      view: '',
+      answers:[{answer: '', weight: '', age: ''}],
+      questions:[{question: '', keyword: ''}]
+    }
+  }
   render(){
-    let {hideAddVoice, toggleAddVoice, questionNum, addMore} = this.props
+    let {hideAddVoice, toggleAddVoice, corpusList} = this.props
+    const {answers, questions} = this.state
     return (
       <div className='voice-popup editor-voice'
         style={toggleAddVoice? null:{display:'none'}}
@@ -13,90 +23,226 @@ class AddVoice extends Component{
               onClick={hideAddVoice}
               >×</span>
             </h3>
-          <h1
-            >新增语料</h1>
-            <ul>
+            <h1
+              >新增语料</h1>
+            <ul className='add-voice-scope'>
               <li>
                 <span>语料库</span>
-                <input type='checkbox' id='voice-voice'/>
-                <label htmlFor='voice-voice'>通用语聊</label>
-                <input type='checkbox' id='voice-small-q'/>
-                <label htmlFor='voice-small-q'>小Q语聊</label>
-                <input type='checkbox' id='voice-taotao'/>
-                <label htmlFor='voice-taotao'>淘淘语聊</label>
+                {
+                  (corpusList||[]).map((val, i)=>{
+                    return (
+                      <p key={i}>
+                        <input type='checkbox' id={`addVoice${i}`}
+                          onChange={this.handleChecked.bind(this, val.corpus_id)}
+                          checked={this.state.checkbox[val.corpus_id]}
+                        />
+                        <label htmlFor={`addVoice${i}`}>{val.name}</label>
+                      </p>
+                    )
+                  })
+                }
               </li>
               <li>
                 <span>场景</span>
-                <select>
-                  <option>请选择场景</option>
-                  <option></option>
+                <select
+                  onChange={this.handleView.bind(this)}
+                  value={this.state.view}
+                  >
+                  <option value=''>请选择场景</option>
                 </select>
               </li>
             </ul>
               {
-                (function(){
-                  const arr=[]
-                  for( let i=0; i<questionNum; i++){
-                    const item= (
-                      <ul key={i}>
+                questions.map((val, i)=>{
+                  return (
+                    <ul key={i}>
+                      <li>
+                        <span>问题{i+1}</span>
+                        <input type='text' placeholder='请输入问题'
+                          onChange={this.handleQuestion.bind(this,i)}
+                          value={(questions[i]||{}).question}
+                          />
+                      </li>
+                      <li className='editor-voice-notice'>
+                        <ul>
+                          <li>
+                          </li>
+                          <li>
+                            <span className='del'
+                              onClick={this.delQuestion.bind(this, val.question_id, i)}
+                              >删除</span>
+                          </li>
+                        </ul>
+                      </li>
+                      <li>
+                        <span>关键词</span>
+                        <input type='text' placeholder='请输入关键词，多个关键词之间用“／”间隔'
+                          onChange={this.handleKeyword.bind(this,i)}
+                          value={(questions[i]||{}).keywords}
+                          />
+                      </li>
+                      <li className='editor-voice-notice'>
+                        <ul>
+                        </ul>
+                      </li>
+                    </ul>
+                  )
+                })
+              }
+            <h2 onClick={this.addQuestions.bind(this)}>添加相似问题</h2>
+            {
+              answers.map((val, i)=>{
+                return (
+                  <ul key={i}>
+                    <li>
+                      <span>答案{i+1}</span>
+                      <input type='text' placeholder='请输入问题'
+                        onChange={this.handleAnswer.bind(this, i)}
+                        value={(answers[i]||{}).answer}
+                        />
+                    </li>
+                    <li className='editor-voice-notice'>
+                      <ul>
                         <li>
-                          <span>答案{i+1}</span>
-                          <input type='text' placeholder='请输入问题'/>
-                        </li>
-                        <li className='voice-input-notice'>
-                          <span></span>
-                          <ul>
-                            <li>
-                              <p>更新时间</p>
-                              <p>作者</p>
-                            </li>
-                            <li>
-                              <h1>启用</h1>
-                              <h1>删除</h1>
-                            </li>
-                          </ul>
                         </li>
                         <li>
-                          <span>权重</span>
-                          <select>
-                            <option value='0'>0</option>
-                            <option value='1'>1</option>
-                            <option value='2'>2</option>
-                            <option value='3'>3</option>
-                            <option value='4'>4</option>
-                            <option value='5'>5</option>
-                            <option value='6'>6</option>
-                            <option value='7'>7</option>
-                            <option value='8'>8</option>
-                            <option value='9'>9</option>
-                            <option value='10'>10</option>
-                          </select>
-                        </li>
-                        <li>
-                          <span>年龄段</span>
-                          <select>
-                            <option value=''>入园前</option>
-                            <option value=''>幼小衔接</option>
-                            <option value=''>小学</option>
-                            <option value=''>初中</option>
-                            <option value=''>成人</option>
-                          </select>
+                          <span className='del'
+                            onClick={ this.delAnswer.bind(this, val.answer_id, i)}
+                            >删除</span>
                         </li>
                       </ul>
-                    )
-                    arr.push(item)
-                  }
-                  return arr
-                })()
-              }
-            <h2 onClick={addMore}>添加更多答案</h2>
+                    </li>
+                    <li>
+                      <span>权重</span>
+                      <select
+                        onChange={this.handleSort.bind(this,i)}
+                        value={val.sort}
+                        >
+                        <option value='0'>0</option>
+                        <option value='1'>1</option>
+                        <option value='2'>2</option>
+                        <option value='3'>3</option>
+                        <option value='4'>4</option>
+                        <option value='5'>5</option>
+                        <option value='6'>6</option>
+                        <option value='7'>7</option>
+                        <option value='8'>8</option>
+                        <option value='9'>9</option>
+                        <option value='10'>10</option>
+                      </select>
+                    </li>
+                    <li>
+                      <span>年龄段</span>
+                      <select
+                        onChange={this.handleAge.bind(this,i)}
+                        value={val.age}
+                        >
+                        <option value='0'>通用</option>
+                        <option value='1'>入园前</option>
+                        <option value='2'>幼小衔接</option>
+                        <option value='4'>小学</option>
+                        <option value='8'>初中</option>
+                        <option value='16'>成人</option>
+                      </select>
+                    </li>
+                  </ul>
+                )
+            })}
+            <h2 onClick={this.addAnswers.bind(this)}>添加更多答案</h2>
             <div className='editor-voice-submit'>
               <p onClick={hideAddVoice}>取消</p>
-              <p>保存</p>
+              <p onClick={this.handleSubmit.bind(this)}>保存</p>
             </div>
           </div>
       </div>
     )
+  }
+  filterChecked(obj){
+    const keys= Object.keys(obj)
+    const arr= []
+    for(let i of keys){
+      if(obj[i]){
+        arr.push(i)
+      }
+    }
+    return arr
+  }
+  handleSubmit(){
+    const {addSubmit, is_scene_corpus} = this.props
+    let {questions, answers, view} = this.state
+    questions= JSON.stringify(questions)
+    answers= JSON.stringify(answers)
+    const params= {
+      s_scene_id: view,
+      corpus_lib_ids: this.filterChecked(this.state.checkbox),
+      is_scene_corpus,
+      questions,
+      answers
+    }
+    addSubmit(params)
+  }
+  addAnswers(){
+    let answers= [...this.state.answers]
+    answers.push({answer:'', sort:'', age:''})
+    this.setState({answers})
+  }
+  addQuestions(){
+    let questions= [...this.state.questions]
+    questions.push({question:'', keyword:''})
+    this.setState({questions})
+  }
+  //初始化数据
+  componentWillReceiveProps(nextProps){
+    if(nextProps.corpusList){
+      const checkbox = {}
+      for( let i= 0; i<nextProps.corpusList.length; i++){
+        Object.assign(checkbox, {[nextProps.corpusList[i].corpus_id]: false})
+      }
+      this.setState({checkbox})
+    }
+  }
+  //表单处理
+  handleView(e){
+    this.setState({view: e.target.value})
+  }
+  handleQuestion(i,e){
+    const question = [...this.state.questions]
+    question[i].question= e.target.value
+    this.setState({question})
+  }
+  handleKeyword(i,e){
+    const question = [...this.state.questions]
+    question[i].keyword= e.target.value
+    this.setState({question})
+  }
+  handleAnswer(i,e){
+    const answer = [...this.state.answers]
+    answer[i].answer= e.target.value
+    this.setState({answer})
+  }
+  handleAge(i,e){
+    const answer = [...this.state.answers]
+    answer[i].age= e.target.value
+    this.setState({answer})
+  }
+  handleSort(i,e){
+    const answer = [...this.state.answers]
+    answer[i].sort= e.target.value
+    this.setState({answer})
+  }
+  delQuestion(question_id, i){
+    const questions= [...this.state.questions]
+    questions.splice(i,1)
+    this.setState({questions})
+  }
+  delAnswer(answer_id, i){
+    const answers= [...this.state.answers]
+    answers.splice(i,1)
+    this.setState({answers})
+  }
+  handleChecked(corpus_id,e){
+    const checkbox = Object.assign({}, this.state.checkbox, {[corpus_id]: e.target.checked})
+    this.setState({checkbox})
   }
 }
 export default AddVoice
