@@ -41,7 +41,7 @@ class ShowPlan extends Component{
           planIntroduce={this.state.activeId ? this.filterHabitPlan(this.state.activeId)[0] : []}
           />
         <PlanEvent planEvent={this.props.habitPlanEvent}
-          refresh={()=>{getHabitPlanEvent({default_plan_id: this.state.activeId})}}
+          refresh={()=>{this.props.dispatch(getHabitPlanEvent({default_plan_id: this.state.activeId}))}}
           activeId={this.state.activeId}
           />
       </div>

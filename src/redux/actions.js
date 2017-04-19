@@ -110,6 +110,10 @@ export const editorMusic =
 export const getSearchMusicList =
   params =>
     dispatch => fetchData('/tingting/music/searchMusic', params, dispatch, saveSearchMusicList)
+//添加搜索音乐到自己音乐列表
+export const addToOwnMusicList =
+  params =>
+    dispatch => fetchData('/tingting/music/addMusic', params, dispatch, null)
 //添加歌曲
 export const addOtherPlatformMusic =
   params =>

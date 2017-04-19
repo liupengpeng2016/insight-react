@@ -10,7 +10,9 @@ class PageCtr extends Component{
   }
   render(){
     return (
-      <div className='pageCtr'>
+      <div className='pageCtr'
+        style={!this.props.total || this.props.total === 1 ? {display: 'none'} : null}
+        >
         <ul>
           <li
             style={this.state.arr[0] === this.state.active? {display:'none'}: null}

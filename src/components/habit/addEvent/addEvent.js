@@ -19,7 +19,6 @@ class AddEvent extends Component{
     }
   }
   render(){
-    console.log(this)
     return (
       <div className='habit-plan'>
         <h1>习惯养成>新增提醒</h1>

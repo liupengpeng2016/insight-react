@@ -86,13 +86,16 @@ class PlanEvent extends Component {
           <h1 onClick={this.changeMode.bind(this)}
             style={this.state.mode? null : {display: 'none'}}
           >批量管理</h1>
-        <h2><Link to={{pathname:'/habit/addEvent', state: (planEvent[0]||{}).default_plan_id}}>新增提醒</Link></h2>
+        <h2><Link to={{pathname:'/habit/addEvent', state: this.props.activeId}}>新增提醒</Link></h2>
         </div>
       </div>
     )
   }
   //props
   delItem(id){
+    setTimeout(()=>{
+      this.props.refresh()
+    },150)
     this.props.dispatch(delHabitPlanEvent({default_plan_event_ids:id}))
   }
   componentWillReceiveProps(nextProps){

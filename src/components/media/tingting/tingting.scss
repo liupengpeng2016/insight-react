@@ -55,3 +55,14 @@
     left:16px;
   }
 }
+.tingting-list-button{
+  &>span{
+    color:#5cc1df;
+  }
+  .off{
+    color:#ff9979;
+    span{
+      color:#ababab;
+    }
+  }
+}

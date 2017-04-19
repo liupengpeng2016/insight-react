@@ -1,11 +1,22 @@
 import React, {Component} from 'react'
 import './tingting.css'
 import {connect} from 'react-redux'
-import {getSearchMusicList} from '../../../redux/actions.js'
+import {getSearchMusicList, addToOwnMusicList} from '../../../redux/actions.js'
+import PageCtr from '../pageCtr/pageCtr.js'
 const formTime = time => {
   const m = parseInt(time/1000/60, 10);
-  const s = time/1000%60;
+  const s = parseInt(time/1000%60, 10);
   return m + '分' + s + '秒';
+}
+const formOrigin = origin => {
+  switch(origin){
+    case 1: return '葡萄'
+    case 2: return '蜻蜓'
+    case 3: return '喜马拉雅'
+    case 4: return '自营'
+    case 5: return '其它'
+    default: return ''
+  }
 }
 class Tingting extends Component{
   constructor(props){
@@ -13,36 +24,14 @@ class Tingting extends Component{
     this.state={
       type: 'tingting',
       category: '1',
-      userInput:''
+      userInput:'',
+      page: 1
     }
   }
   render(){
     let {searchMusicList} = this.props
     return (
       <div className='tingting'>
-        {
-          /*
-          <div className='media-search tingting-search'>
-            <p><span>已选歌曲列表</span></p>
-            <p>
-              <select
-                onChange={this.handleType.bind(this)}
-                value={this.state.type}
-                >
-                <option value='tingting'>葡萄听听</option>
-                <option value='insight'>insight库</option>
-              </select>
-              <input type='text' placeholder='请输入歌曲名称／歌曲ID'
-                onChange={this.handleInput.bind(this)}
-                value={this.state.userInput}
-                />
-              <input type='button' value='搜索已选歌曲'
-                onClick={this.handleSearch.bind(this)}
-                />
-            </p>
-          </div>
-          */
-        }
         <ul className='tingting-scope'>
           <li>
             <span>分类</span>
@@ -95,39 +84,52 @@ class Tingting extends Component{
               return (
                 <tr key={i}>
                   <td>{val.id}</td>
-                  <td>{val.type}</td>
+                  <td>{val.category === 1? '儿童' : (val.category === 2? '音乐': '教育')}</td>
                   <td>{val.name}</td>
                   <td>{formTime(val.duration)}</td>
                   <td>{val.play_times}</td>
-                  <td>{val.lyric}</td>
+                  <td>{val.lyric === 1 ? '是': '否'}</td>
                   <td>{val.age}</td>
                   <td>{val.status === 1 ? '是'  : '否'}</td>
-                  <td>{val.origin}</td>
+                  <td>{formOrigin(val.origin)}</td>
                   <td>{val.created_at.slice(0,10)}</td>
-                  <td>{this.state.showAllButton ? this.state.editorButtonAll(val) : this.state.editorButtonPart(val)}</td>
+                  <td className='tingting-list-button'>{!val.is_add? <span onClick={this.handleAdd.bind(this, this.state.type, val.id)}>添加</span>: <span>移除<span>已添加</span></span>}</td>
                 </tr>
               )
             })}
           </tbody>
         </table>
-        <p className='tingting-notice' style={searchMusicList === undefined ? {display: "none"} : (!searchMusicList.length === 0 ? {display: 'none'}: null)}>没有找到相应内容!</p>
+        <p className='tingting-notice' style={searchMusicList === undefined ? {display: "none"} : (searchMusicList.list.length === 0 ? null: {display: 'none'})}>没有找到相应内容!</p>
+        <PageCtr
+          buttons='10'
+          total={(searchMusicList||[]).pages}
+          changePage={ page=> this.handleSearch({page})}
+          />
       </div>
     )
   }
   handleSearch(){
-    const {type,category,userInput} = this.state
-    const formNum = Number(userInput)
-    const input =  typeof formNum === 'number' ? 'tingting_id' : 'name'
-    this.props.dispatch(getSearchMusicList({type,category,[input]: userInput}))
+    this.search()
+  }
+  search(newParams= null){
+    const {type, category, userInput, page} = this.state
+    const params= Object.assign({type, page, category, tingting_id: userInput}, newParams)
+    this.props.dispatch(getSearchMusicList(params))
   }
   handleCategory(e){
+    this.search({category: e.target.value})
     this.setState({category: e.target.value})
   }
   handleType(e){
+    this.search({type: e.target.value})
     this.setState({type: e.target.value})
   }
   handleUserInput(e){
     this.setState({userInput: e.target.value})
+  }
+  handleAdd(type, id){
+    this.props.dispatch(addToOwnMusicList({type, id}))
+    setTimeout(()=> {this.search()}, 100)
   }
 }
 function mapStateToProps (state) {

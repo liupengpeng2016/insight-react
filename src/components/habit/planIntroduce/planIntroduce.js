@@ -4,7 +4,6 @@ import {Link} from 'react-router'
 class PlanIntroduce extends Component{
   render(){
     const {planIntroduce} = this.props
-    console.log(planIntroduce)
     return (
       <div className='sleep-plan-introduce'>
         <h1>计划简介</h1>
