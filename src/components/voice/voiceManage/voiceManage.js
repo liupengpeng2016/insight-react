@@ -38,7 +38,6 @@ class VoiceManage extends Component{
           editorData={(voiceList.list||[])[this.state.editorData]}
           delVoiceAnswer={this.delVoiceAnswer.bind(this)}
           delVoiceQuestion={this.delVoiceQuestion.bind(this)}
-          firstScene
           ></EditorVoice>
         <AddVoice
           toggleAddVoice={this.state.toggleAddVoice}
@@ -252,6 +251,7 @@ class VoiceManage extends Component{
   }
   addSubmit(params){
     this.props.dispatch(addVoiceItem(params))
+    setTimeout(()=>this.refreshVoiceList(), 150)
   }
 //批量按钮
   chooseAll(){
@@ -310,6 +310,12 @@ class VoiceManage extends Component{
   editorSubmit(params){
     const {dispatch} = this.props
     dispatch(editorVoiceItem(params))
+    setTimeout(()=>this.refreshVoiceList(), 150)
+  }
+  refreshVoiceList(){
+    const {dispatch} = this.props
+    const {page} = this.state
+    dispatch(getVoiceList({page}))
   }
 }
 function mapStateToProps({voiceData}){

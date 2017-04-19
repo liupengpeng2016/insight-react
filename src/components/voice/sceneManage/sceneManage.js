@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import './sceneManage.css'
 import {
-  getFirstSceneList,
+  getFirstSceneList,setVisibility,
   toggleFirstSceneStatus, delFirstSceneItem,
   editorFirstSceneItem, addFirstSceneItem
 } from '../../../redux/actions.js'
@@ -86,7 +86,9 @@ class SceneManage extends Component{
         </table>
         <div className='scene-manage-button'>
           <p onClick={()=>this.setState({isShow_add: true})}>增加一级场景</p>
-          <span>查看场景树 ></span>
+          <span
+            onClick={this.showSceneTree.bind(this)}
+            >查看场景树 ></span>
         </div>
         <PageCtr
           buttons='10'
@@ -127,9 +129,14 @@ class SceneManage extends Component{
   }
   editorSubmit(params){
     this.props.dispatch(editorFirstSceneItem(params))
+    setTimeout(()=> this.getFirstSceneList() ,150)
   }
   addSubmit(params){
     this.props.dispatch(addFirstSceneItem(params))
+    setTimeout(()=> this.getFirstSceneList() ,150)
+  }
+  showSceneTree(){
+    this.props.dispatch(setVisibility({name: 'SCENE_TREE', show: true}))
   }
 }
 

@@ -7,8 +7,8 @@ class VoiceSystem extends Component{
     const activeCss={borderBottom: '5px solid #5cc1df'}
     return (
       <div className='toy-plan'>
-        <h1>玩偶设置</h1>
-        <h2>动作设置</h2>
+        <h1>语料系统</h1>
+        <h2>语料系统</h2>
         <ul className='toy-plan-tabs'>
           <li><Link to='/voice/voiceSystem/voiceManage' activeStyle={activeCss}>语料管理</Link></li>
           <li><Link to='/voice/voiceSystem/sceneManage' activeStyle={activeCss}>场景管理</Link></li>

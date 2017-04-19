@@ -5,7 +5,7 @@ import {connect} from 'react-redux'
 import {
   getSecondSceneList, addSecondSceneItem,
   editorSecondSceneItem, toggleSecondSceneStatus,
-  delSecondSceneItem
+  delSecondSceneItem, setVisibility
 } from '../../../redux/actions.js'
 import AddSecondScene from '../addSecondScene/addScendScene.js'
 import EditorSecondScene from '../editorSecondScene/editorSecondScene.js'
@@ -91,6 +91,7 @@ class SecondScene extends Component{
             onClick={()=> this.setState({isShow_add: true, f_scene_id: state})}
             >增加二级场景</p>
           <span
+            onClick={this.showSceneTree.bind(this)}
             >查看场景树 ></span>
         </div>
         <PageCtr
@@ -133,6 +134,10 @@ class SecondScene extends Component{
     className ? e.target.parentNode.nextSibling.className='' :
      e.target.parentNode.nextSibling.className='hide'
   }
+  showSceneTree(){
+    this.props.dispatch(setVisibility({name: 'SCENE_TREE', show: true}))
+  }
+
 }
 function mapStateToProps({voiceData}){
   return {

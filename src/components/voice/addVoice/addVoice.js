@@ -1,17 +1,20 @@
 import React, {Component} from 'react'
 import './addVoice.css'
+import {connect} from 'react-redux'
+import {getAllFirstSceneList, getAllSecondSceneList} from '../../../redux/actions.js'
 class AddVoice extends Component{
   constructor(){
     super()
     this.state={
       checkbox:{},
-      view: '',
-      answers:[{answer: '', weight: '', age: ''}],
+      firstScene: '',
+      secondScene:'',
+      answers:[{answer: '', weight: '0', age: '0'}],
       questions:[{question: '', keyword: ''}]
     }
   }
   render(){
-    let {hideAddVoice, toggleAddVoice, corpusList} = this.props
+    let {hideAddVoice, toggleAddVoice, corpusList, allFirstSceneList, allSecondSceneList} = this.props
     const {answers, questions} = this.state
     return (
       <div className='voice-popup editor-voice'
@@ -44,12 +47,35 @@ class AddVoice extends Component{
               </li>
               <li>
                 <span>场景</span>
-                <select
-                  onChange={this.handleView.bind(this)}
-                  value={this.state.view}
-                  >
-                  <option value=''>请选择场景</option>
-                </select>
+                  <select
+                    onChange={this.handleFirseScene.bind(this)}
+                    value={this.state.firstScene}
+                    style={{borderRight:'none'}}
+                    >
+                    <option value=''>请选择一级场景</option>
+                    {
+                      allFirstSceneList.map((val, i)=> {
+                        return (
+                          <option value={val.f_scene_id} key={i}
+                            >{val.name}</option>
+                        )
+                      })
+                    }
+                  </select>
+                  <select
+                    onChange={this.handleSecondScene.bind(this)}
+                    value={this.state.secondScene}
+                    >
+                    <option value=''>请选择二级场景</option>
+                      {
+                        allSecondSceneList.map((val, i)=> {
+                          return (
+                            <option value={val.s_scene_id} key={i}
+                              >{val.name}</option>
+                          )
+                        })
+                      }
+                  </select>
               </li>
             </ul>
               {
@@ -169,11 +195,11 @@ class AddVoice extends Component{
   }
   handleSubmit(){
     const {addSubmit, is_scene_corpus} = this.props
-    let {questions, answers, view} = this.state
+    let {questions, answers, secondScene} = this.state
     questions= JSON.stringify(questions)
     answers= JSON.stringify(answers)
     const params= {
-      s_scene_id: view,
+      s_scene_id: secondScene,
       corpus_lib_ids: this.filterChecked(this.state.checkbox),
       is_scene_corpus,
       questions,
@@ -183,7 +209,7 @@ class AddVoice extends Component{
   }
   addAnswers(){
     let answers= [...this.state.answers]
-    answers.push({answer:'', sort:'', age:''})
+    answers.push({answer:'', sort:'0', age:'0'})
     this.setState({answers})
   }
   addQuestions(){
@@ -201,9 +227,16 @@ class AddVoice extends Component{
       this.setState({checkbox})
     }
   }
+  componentDidMount(){
+    this.props.dispatch(getAllFirstSceneList())
+  }
   //表单处理
-  handleView(e){
-    this.setState({view: e.target.value})
+  handleFirseScene(e){
+    this.setState({firstScene: e.target.value})
+    this.props.dispatch(getAllSecondSceneList({f_scene_id: e.target.value}))
+  }
+  handleSecondScene(e){
+    this.setState({secondScene: e.target.value})
   }
   handleQuestion(i,e){
     const question = [...this.state.questions]
@@ -245,4 +278,10 @@ class AddVoice extends Component{
     this.setState({checkbox})
   }
 }
-export default AddVoice
+function mapStateToProps({voiceData}){
+  return {
+    allFirstSceneList: voiceData.allFirstSceneList,
+    allSecondSceneList: voiceData.allSecondSceneList
+  }
+}
+export default connect(mapStateToProps)(AddVoice)

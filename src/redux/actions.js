@@ -276,7 +276,7 @@ export const getSecondSceneList= params => dispatch =>
   fetchData('/corpus/scene/secondSceneList', params, dispatch, saveSecondSceneList)
 //获取所有二级场景列表
 export const getAllSecondSceneList= params => dispatch =>
-  fetchData('/corpus/scene/allSecondScene', params, dispatch, saveSecondSceneList)
+  fetchData('/corpus/scene/allSecondScene', params, dispatch, saveAllSecondSceneList)
 //编辑二级场景
 export const editorSecondSceneItem= params => dispatch =>
   fetchData('/corpus/scene/editSecondScene', params, dispatch, null)

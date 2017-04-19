@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import './editorVoice.css'
 import {connect} from 'react-redux'
-import {getAllFirstSceneList, getSecondSceneList} from '../../../redux/actions.js'
+import {getAllFirstSceneList, getAllSecondSceneList} from '../../../redux/actions.js'
 class EditorVoice extends Component{
   constructor(){
     super()
@@ -14,7 +14,7 @@ class EditorVoice extends Component{
   }
   render(){
     let {hideEditorVoice, toggleEditorVoice,
-       editorData, allFirstSceneList, secondSceneList} = this.props
+       editorData, allFirstSceneList, allSecondSceneList} = this.props
     const {answers, questions} = editorData||{}
     return (
       <div className='voice-popup editor-voice'
@@ -52,7 +52,7 @@ class EditorVoice extends Component{
                     >
                     <option value=''>请选择二级场景</option>
                       {
-                        (secondSceneList.list||[]).map((val, i)=> {
+                        (allSecondSceneList||[]).map((val, i)=> {
                           return (
                             <option value={val.s_scene_id} key={i}
                               >{val.name}</option>
@@ -228,7 +228,7 @@ class EditorVoice extends Component{
 //handle input
   handleFirseScene(e){
     this.setState({firstScene: e.target.value})
-    this.props.dispatch(getSecondSceneList({f_scene_id: e.target.value}))
+    this.props.dispatch(getAllSecondSceneList({f_scene_id: e.target.value}))
   }
   handleSecondScene(e){
     this.setState({secondScene: e.target.value})
@@ -278,7 +278,7 @@ class EditorVoice extends Component{
 function mapStateToProps({voiceData}){
   return {
     allFirstSceneList: voiceData.allFirstSceneList,
-    secondSceneList: voiceData.secondSceneList
+    allSecondSceneList: voiceData.allSecondSceneList
   }
 }
 export default connect(mapStateToProps)(EditorVoice)
