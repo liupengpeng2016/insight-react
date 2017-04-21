@@ -24,8 +24,7 @@
         display: inline-block;
         vertical-align: middle; }
     .sleep-plan-introduce > ul > li:first-child {
-      border: none;
-      background: #faf9fd; }
+      border: none; }
   .sleep-plan-introduce > p {
     line-height: 52px;
     width: 340px;

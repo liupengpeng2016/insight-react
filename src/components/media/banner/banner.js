@@ -19,13 +19,15 @@ class Banner extends Component{
     const {bannerList} = this.props
     return (
       <div className='album'>
-        <div className='media-search'>
-          <p><span>banner列表</span></p>
-          <p>
-            <input type='text' placeholder='请输入歌曲名称、banner名称'/>
-            <input type='button' value='搜索已选歌曲'/>
-          </p>
-        </div>
+        {/*
+          <div className='media-search'>
+            <p><span>banner列表</span></p>
+            <p>
+              <input type='text' placeholder='请输入歌曲名称、banner名称'/>
+              <input type='button' value='搜索已选banner'/>
+            </p>
+          </div>
+          */}
         <ul className='media-scope'>
           <li>
             <span>头图播放顺序</span>
@@ -61,7 +63,7 @@ class Banner extends Component{
                       {
                         this.state.buttonMode?(
                           <ul className='operate-buttons'>
-                            <li ><Link to={{pathname:'/media/editorBanner',state:{id:val.id}}} style={{color:'#76cbe5'}}>编辑</Link></li>
+                            <li ><Link to={{pathname:'/media/editorBanner',state:val}} style={{color:'#76cbe5'}}>编辑</Link></li>
                             <li onClick={this.handleDel.bind(this,[val.id])} style={{color:'#fe6434'}}>删除</li>
                             <li onClick={this.handleStatus.bind(this,val.status,[val.id])} style={{color:'#50ca71'}}>
                               {parseInt(val.status, 10)===1?<span style={{color:'#aaa'}}>下架</span>:<span>上架</span>}
@@ -69,7 +71,7 @@ class Banner extends Component{
                           </ul>
                         ):(
                           <ul className='operate-buttons'>
-                            <li ><Link to={{pathname:'/media/editorBanner',state:{id:val.id}}} style={{color:'#76cbe5'}}>编辑</Link></li>
+                            <li ><Link to={{pathname:'/media/editorBanner',state:val}} style={{color:'#76cbe5'}}>编辑</Link></li>
                             <li >
                               <input type='checkbox'
                                 onChange={this.handleChecked.bind(this, val.id)}

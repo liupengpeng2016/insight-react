@@ -19,7 +19,17 @@ class OtherPlatform extends Component{
       file:'',
       imageUrl:'',
       statusShow:true,
-      statusHide:false
+      statusHide:false,
+      valid:{
+        name:undefined,
+        singer:undefined,
+        tags:undefined,
+        age:undefined,
+        desc:undefined,
+        duration:undefined,
+        url:undefined,
+        file:undefined
+      }
     }
   }
   render(){
@@ -43,6 +53,9 @@ class OtherPlatform extends Component{
               onChange={this.handleName.bind(this)}
               value={this.state.name}
             />
+            <i className='valid' style={this.state.valid.name=== false? null: {display: 'none'}}>
+              不能为空！
+            </i>
           </li>
           <li>
             <span>歌手名</span>
@@ -50,6 +63,9 @@ class OtherPlatform extends Component{
               onChange={this.handleSinger.bind(this)}
               value={this.state.singer}
             />
+            <i className='valid' style={this.state.valid.singer=== false? null: {display: 'none'}}>
+              不能为空！
+            </i>
           </li>
           <li>
             <span>年龄</span>
@@ -57,13 +73,19 @@ class OtherPlatform extends Component{
               onChange={this.handleAge.bind(this)}
               value={this.state.age}
             />
+          <i className='valid' style={this.state.valid.age=== false? null: {display: 'none'}}>
+              不能为空且必须为数字！
+            </i>
           </li>
           <li>
             <span>歌曲时长</span>
             <input type='text' placeholder='歌曲时长'
               onChange={this.handleDuration.bind(this)}
               value={this.state.duration}
-            />
+            /> 秒
+            <i className='valid' style={this.state.valid.duration=== false? null: {display: 'none'}}>
+                不能为空且必须为数字！
+            </i>
           </li>
           <li>
             <span>歌曲标签</span>
@@ -71,6 +93,9 @@ class OtherPlatform extends Component{
               onChange={this.handleTags.bind(this)}
               value={this.state.tags}
             />
+            <i className='valid' style={this.state.valid.tags=== false? null: {display: 'none'}}>
+                不能为空！
+            </i>
           </li>
           <li>
             <span>歌曲描述</span>
@@ -78,6 +103,9 @@ class OtherPlatform extends Component{
               onChange={this.handleDesc.bind(this)}
               value={this.state.desc}
             />
+          <i className='valid' style={this.state.valid.desc=== false? null: {display: 'none'}}>
+                不能为空！
+              </i>
           </li>
           <li>
             <span>权重</span>
@@ -104,6 +132,14 @@ class OtherPlatform extends Component{
               onChange={this.handleUrl.bind(this)}
               value={this.state.url}
             />
+            <span className='valid'
+              style={(()=>{
+                if(this.state.valid.url === false){
+                  return null
+                }
+                return {display:'none'}
+              })()}
+            >请输入正确链接地址</span>
           </li>
           <li className='platform-status'>
             <span>状态</span>
@@ -121,6 +157,9 @@ class OtherPlatform extends Component{
           <li className='input-img'>
             <span>专辑封面</span>
             <img src={this.state.imageUrl} alt=''/>
+              <i className='valid' style={this.state.valid.file=== false? null: {display: 'none'}}>
+                图片不符合要求！
+              </i>
             <input type='file'
               onChange={this.handleFile.bind(this)}
             />
@@ -138,30 +177,59 @@ class OtherPlatform extends Component{
     this.setState({category: e.target.value})
   }
   handleName(e){
-    this.setState({name: e.target.value})
+    const userInput= e.target.value
+    const valid= Object.assign({}, this.state.valid)
+    valid.name= /\S+/.test(userInput)
+    this.setState({name: userInput, valid})
   }
   handleSinger(e){
-    this.setState({singer: e.target.value})
+    const userInput= e.target.value
+    const valid= Object.assign({}, this.state.valid)
+    valid.singer= /\S+/.test(userInput)
+    this.setState({singer: userInput, valid})
   }
   handleTags(e){
-    this.setState({tags: e.target.value})
+    const userInput= e.target.value
+    const valid= Object.assign({}, this.state.valid)
+    valid.tags= /\S+/.test(userInput)
+    this.setState({tags: userInput, valid})
   }
   handleDesc(e){
-    this.setState({desc: e.target.value})
+    const userInput= e.target.value
+    const valid= Object.assign({}, this.state.valid)
+    valid.desc= /\S+/.test(userInput)
+    this.setState({desc: userInput, valid})
   }
   handleSort(e){
     this.setState({sort: e.target.value})
   }
   handleUrl(e){
-    this.setState({url: e.target.value})
+    const userInput= e.target.value
+    const valid= Object.assign({}, this.state.valid)
+    valid.url= false
+    if(/^((http)|(https)):\/\/\w+/.test(userInput)){
+      valid.url= true
+    }
+    this.setState({url: e.target.value, valid})
   }
   handleDuration(e){
-    this.setState({duration: e.target.value})
+    const userInput= e.target.value
+    const valid= Object.assign({}, this.state.valid)
+    valid.duration= /\d+/.test(userInput)
+    this.setState({duration:userInput, valid})
   }
   handleAge(e){
-    this.setState({age: e.target.value})
+    const userInput= e.target.value
+    const valid= Object.assign({}, this.state.valid)
+    valid.age= /\d+/.test(userInput)
+    this.setState({age: userInput, valid})
   }
   handleFile(e){
+    const userInput= e.target.files[0]
+    const valid= Object.assign({}, this.state.valid)
+    valid.file= userInput.size>2*1024*1024? false: true
+    this.setState({file:userInput, valid})
+
     const imgReader = new FileReader()
     this.setState({file: e.target.files[0]})
     imgReader.readAsDataURL(e.target.files[0])
@@ -188,18 +256,52 @@ class OtherPlatform extends Component{
       name,
       singer,
       url,
-      duration,
       age,
       tags,
       desc,
       sort,
-      icon,
+      icon: icon||'',
+      duration:Number(duration)*1000,
       status: statusShow? '1' : '0'
     }))
   }
   handleSubmit(){
-    const {file} = this.state
-    fileUpload(file,this.dispatchEditor.bind(this))
+    const {name, singer, url, age, tags, desc,duration,file } = this.state.valid
+    const valid= Object.assign({}, this.state.valid)
+    if(!name){
+      valid.name= false
+      return this.setState({valid})
+    }
+    if(!singer){
+      valid.singer= false
+      return this.setState({valid})
+    }
+    if(!age){
+      valid.age= false
+      return this.setState({valid})
+    }
+    if(!duration){
+      valid.duration= false
+      return this.setState({valid})
+    }
+    if(!tags){
+      valid.tags= false
+      return this.setState({valid})
+    }
+    if(!desc){
+      valid.desc= false
+      return this.setState({valid})
+    }
+    if(!url){
+      valid.url= false
+      return this.setState({valid})
+    }
+    if(!file){
+      valid.file= false
+      return this.setState({valid})
+    }
+
+    fileUpload(this.state.file,this.dispatchEditor.bind(this))
   }
 }
 export default connect()(OtherPlatform)

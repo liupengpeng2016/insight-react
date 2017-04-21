@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import './tingting.css'
 import {connect} from 'react-redux'
-import {getSearchMusicList, addToOwnMusicList} from '../../../redux/actions.js'
+import {getSearchMusicList, addToOwnMusicList, delMusicItem} from '../../../redux/actions.js'
 import PageCtr from '../pageCtr/pageCtr.js'
 const formTime = time => {
   const m = parseInt(time/1000/60, 10);
@@ -84,7 +84,7 @@ class Tingting extends Component{
               return (
                 <tr key={i}>
                   <td>{val.id}</td>
-                  <td>{val.category === 1? '儿童' : (val.category === 2? '音乐': '教育')}</td>
+                  <td>{val.category === 1? '故事' : (val.category === 2? '儿歌': '音乐')}</td>
                   <td>{val.name}</td>
                   <td>{formTime(val.duration)}</td>
                   <td>{val.play_times}</td>
@@ -93,13 +93,19 @@ class Tingting extends Component{
                   <td>{val.status === 1 ? '是'  : '否'}</td>
                   <td>{formOrigin(val.origin)}</td>
                   <td>{val.created_at.slice(0,10)}</td>
-                  <td className='tingting-list-button'>{!val.is_add? <span onClick={this.handleAdd.bind(this, this.state.type, val.id)}>添加</span>: <span>移除<span>已添加</span></span>}</td>
+                  <td className='tingting-list-button'>{!val.is_add? <span onClick={this.handleAdd.bind(this, this.state.type, val.id)}>添加</span>:
+                     <span className='off'
+                       onClick={()=> {
+                         this.props.dispatch(delMusicItem({ids: [val.local_id]}))
+                         setTimeout(this.search.bind(this), 100)
+                     }}
+                    >移除<span>已添加</span></span>}</td>
                 </tr>
               )
             })}
           </tbody>
         </table>
-        <p className='tingting-notice' style={searchMusicList === undefined ? {display: "none"} : (searchMusicList.list.length === 0 ? null: {display: 'none'})}>没有找到相应内容!</p>
+        <p className='tingting-notice' style={searchMusicList === undefined ? {display: "none"} : ((searchMusicList.list||[]).length === 0 ? null: {display: 'none'})}>没有找到相应内容!</p>
         <PageCtr
           buttons='10'
           total={(searchMusicList||[]).pages}

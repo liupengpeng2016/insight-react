@@ -24,7 +24,6 @@ class SecondScene extends Component{
     const { secondSceneList, location} = this.props
     const {state} = location
     const {name, ename} = location.query
-    console.log(this.props)
     return (
       <div className='toy-plan'>
         <AddSecondScene
@@ -108,7 +107,8 @@ class SecondScene extends Component{
     dispatch((getSecondSceneList({f_scene_id})))
   }
   getSecondSceneList(params= null){
-    const {f_scene_id, page} = this.state
+    const f_scene_id = this.props.location.state
+    const {page} = this.state
     params= Object.assign({f_scene_id,page}, params)
     this.props.dispatch(getSecondSceneList(params))
   }

@@ -77,9 +77,17 @@ function habitData(state={
 }, action){
   switch(action.type){
     case SAVE_HABIT_PLAN:
-    return Object.assign({}, state, {habitPlan: action.data})
+    const habitPlan= action.data
+    habitPlan.sort(function(a, b){
+      return a.sort-b.sort
+    })
+    return Object.assign({}, state, {habitPlan})
     case SAVE_HABIT_PLAN_EVENT:
-    return Object.assign({}, state, {habitPlanEvent: action.data})
+    const habitPlanEvent= action.data
+    habitPlanEvent.sort(function(a, b){
+      return a.sort-b.sort
+    })
+    return Object.assign({}, state, {habitPlanEvent})
     default: return state
   }
 }

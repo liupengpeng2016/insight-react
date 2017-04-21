@@ -14,7 +14,12 @@ class EditorEvent extends Component{
       voice_name:'',
       music_id:'',
       file:'',
-      fileUrl:''
+      fileUrl:'',
+      valid:{
+        name:undefined,
+        music_id:undefined,
+        file:undefined
+      }
     }
   }
   render(){
@@ -26,6 +31,9 @@ class EditorEvent extends Component{
           <li className='input-img'>
             <span>上传图片</span>
             <img src={this.state.fileUrl} alt=''/>
+            <i className='valid'
+              style={this.state.valid.file === false? null: {display:'none'}}
+              >图片不符合要求</i>
             <input type='file'
               onChange={this.handleFile.bind(this)}
               />
@@ -38,6 +46,11 @@ class EditorEvent extends Component{
               onChange={this.handleName.bind(this)}
               value={this.state.name}
               />
+            <i className='valid'
+              style={this.state.valid.name === false? null: {display:'none'}}
+            >
+            不能为空！
+            </i>
           </li>
           <li>
             <span>提醒时间</span>
@@ -48,7 +61,7 @@ class EditorEvent extends Component{
               {
                 (function(){
                   const arr= []
-                  for(let i = 0; i<60; i++){
+                  for(let i = 0; i<24; i++){
                     arr.push(<option  key={i} value={i< 10? '0'+i : i}>{i}</option>)
                   }
                   return arr
@@ -84,6 +97,11 @@ class EditorEvent extends Component{
               value={this.state.music_id}
               />
           </li>
+          <i className='valid'
+            style={this.state.valid.music_id === false? null: {display:'none'}}
+          >
+          只能为纯数字且不能为空！
+          </i>
           <li>
             <span>权重</span>
             <select
@@ -108,8 +126,25 @@ class EditorEvent extends Component{
       </div>
     )
   }
+  componentDidMount(){
+    const {icon,name, sort, words, music_id, time}= this.props.location.state
+    const hours= time.split(':')[0]
+    const minutes= time.split(':')[1]
+    this.setState({
+      name,
+      sort,
+      words,
+      hours,
+      minutes,
+      music_id,
+      fileUrl: icon
+    })
+  }
   handleName(e){
-    this.setState({name: e.target.value})
+    const userInput= e.target.value
+    const valid= Object.assign({}, this.state.valid)
+    valid.name= /\S+/.test(userInput)
+    this.setState({name: userInput,valid})
   }
   handleVoice(e){
     this.setState({voice_name: e.target.value})
@@ -118,7 +153,10 @@ class EditorEvent extends Component{
     this.setState({sort: e.target.value})
   }
   handleMusicId(e){
-    this.setState({music_id: e.target.value})
+    const userInput= e.target.value
+    const valid= Object.assign({}, this.state.valid)
+    valid.music_id= /\d+/.test(userInput)
+    this.setState({music_id:userInput, valid})
   }
   handleHours(e){
     this.setState({hours: e.target.value})
@@ -127,6 +165,11 @@ class EditorEvent extends Component{
     this.setState({minutes: e.target.value})
   }
   handleFile(e){
+    const userInput= e.target.files[0]
+    const valid= Object.assign({}, this.state.valid)
+    valid.file= userInput.size>2*1024*1024? false: true
+    this.setState({file:userInput, valid})
+
     const fileReader= new FileReader()
     fileReader.readAsDataURL(e.target.files[0])
     fileReader.onload= () => {
@@ -136,33 +179,35 @@ class EditorEvent extends Component{
   }
   dispatchEditor(icon){
     const {name,voice_name, music_id, hours, sort, minutes} = this.state
-    const params={}
-    if(name){
-      Object.assign(params,{name})
-    }
-    if(icon){
-      Object.assign(params,{icon})
-    }
-    if(voice_name){
-      Object.assign(params,{voice_name})
-    }
-    if(hours&&minutes){
-      Object.assign(params,{time:hours+ ':' + minutes})
-    }
-    if(sort){
-      Object.assign(params,{sort})
-    }
-    if(music_id){
-      Object.assign(params,{music_id})
-    }
+    const params={name, voice_name, music_id, sort}
     Object.assign(params,{
-      default_plan_event_id: this.props.location.state
+      default_plan_event_id: this.props.location.state.id,
+      time:hours+':'+minutes
     })
     this.props.dispatch(editorHabitPlanEvent(params))
   }
   handleSubmit(){
-    const {file} = this.state
-    fileUpload(file,this.dispatchEditor.bind(this))
+    const {name, music_id, file} = this.state.valid
+    const valid= Object.assign({}, this.state.valid)
+    if(!file){
+      if(this.state.fileUrl !== this.props.location.state.icon){
+        valid.file= false
+        return this.setState({valid})
+      }
+    }
+    if(!name){
+      if(this.state.name !== this.props.location.state.name){
+        valid.name= false
+        return this.setState({valid})
+      }
+    }
+    if(!music_id){
+      if(this.state.music_id !== this.props.location.state.music_id){
+        valid.music_id= false
+        return this.setState({valid})
+      }
+    }
+    fileUpload(this.state.file,this.dispatchEditor.bind(this))
   }
 }
 export default connect()(EditorEvent)

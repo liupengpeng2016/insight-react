@@ -25,6 +25,28 @@ class FetchNotice extends Component{
   }
   handleClick(){
     this.props.dispatch(setVisibility({name:'FETCH_NOTICE', show: false}))
+    const harsh= location.hash
+    if(/addEvent/.test(harsh)){
+      return history.back()
+    }
+    if(/editorPlan/.test(harsh)){
+      return history.back()
+    }
+    if(/other/.test(harsh)){
+      return history.back()
+    }
+    if(/addAlbum/.test(harsh)){
+      return history.back()
+    }
+    if(/addTopic/.test(harsh)){
+      return history.back()
+    }
+    if(/addPlan/.test(harsh)){
+      return history.back()
+    }
+    if(/addBanner/.test(harsh)){
+      return history.back()
+    }
   }
 }
 function mapStateToProps(state){

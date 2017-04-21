@@ -10,12 +10,12 @@ class EditorAlbum extends Component{
       name:'',
       age:'1',
       tags:'',
-      file:'',
       desc:'',
       sort:'0',
-      statusShow:true,
-      statusHide:false,
-      imgUrl:''
+      status_show:'',
+      status_hide:'',
+      file:'',
+      fileUrl:''
     }
   }
   render(){
@@ -25,14 +25,14 @@ class EditorAlbum extends Component{
         <h2>编辑专辑</h2>
         <ul className='add-item'>
           <li>
-            <span>歌曲名称</span>
-            <input type='text' placeholder='请输入歌曲名称'
+            <span>专辑名称</span>
+            <input type='text' placeholder='请输入专辑名称'
               onChange={this.changeName.bind(this)}
               value={this.state.name}
               />
           </li>
           <li>
-            <span>歌曲描述</span>
+            <span>专辑描述</span>
             <input type='text' placeholder='请输入描述信息'
               onChange={this.changeDesc.bind(this)}
               value={this.state.desc}
@@ -57,7 +57,7 @@ class EditorAlbum extends Component{
             />
           </li>
           <li>
-            <span>年龄段</span>
+            <span>年龄</span>
             <select
               onChange={this.changeAge.bind(this)}
               value={this.state.age}
@@ -71,10 +71,9 @@ class EditorAlbum extends Component{
               <option value='7'>7</option>
               <option value='8'>8</option>
               <option value='9'>9</option>
-            </select>
-            <span className='age'>至</span>
-            <select>
-              <option value=''>0</option>
+              <option value='10'>10</option>
+              <option value='11'>11</option>
+              <option value='12'>12</option>
             </select>
           </li>
           <li>
@@ -87,35 +86,53 @@ class EditorAlbum extends Component{
               <option value='1'> 1 </option>
               <option value='2'> 2 </option>
               <option value='3'> 3 </option>
+              <option value='4'> 4 </option>
+              <option value='5'> 5 </option>
+              <option value='6'> 6 </option>
+              <option value='7'> 7 </option>
+              <option value='8'> 8 </option>
+              <option value='9'> 9 </option>
+              <option value='10'> 10 </option>
             </select>
           </li>
           <li>
             <span>状态</span>
               <input type='checkbox' id='banner-show' name='editor'
-                onChange={this.changeStatusShow.bind(this)}
-                checked={this.state.statusShow}
+                onChange={this.changeStatus_show.bind(this)}
+                checked={this.state.status_show}
                 />
               <label htmlFor='banner-show'>显示</label>
               <input type='checkbox' id='banner-hide' name='editor'
-                onChange={this.changeStatusHide.bind(this)}
-                checked={this.state.statusHide}
+                onChange={this.changeStatus_hide.bind(this)}
+                checked={this.state.status_hide}
                 />
               <label htmlFor='banner-hide'>隐藏</label>
           </li>
           <li  className='input-img'>
             <span>上传图片</span>
-            <span>查看歌词</span>
-            <img src={this.state.imgUrl} alt=''/>
+            <img src={this.state.fileUrl} alt=''/>
             <input type='file'
-              onChange={this.changeImg.bind(this)}
+              onChange={this.changeFile.bind(this)}
               />
             <h1>选取文件</h1>
-            <p>歌词格式为lrc，大小为200kb以内。</p>
+            <p>图片格式为jpg/png，大小为2M以内。</p>
           </li>
           <li onClick={this.handleSubmit.bind(this)}>编辑信息</li>
         </ul>
       </div>
     )
+  }
+  componentDidMount(){
+    const {name, category, age, sort, status} = this.props.location.state
+    console.log(this.props.location.state)
+    this.setState({
+      name,
+      category,
+      age,
+      sort,
+      status_show: status? true: false,
+      status_hide: !status? true: false
+    })
   }
   changeName(e){
     this.setState({name: e.target.value})
@@ -135,30 +152,30 @@ class EditorAlbum extends Component{
   changeTags(e){
     this.setState({tags: e.target.value})
   }
-  changeImg(e){
+  changeFile(e){
     const imgReader = new FileReader()
     imgReader.readAsDataURL(e.target.files[0])
     imgReader.onload=()=>{
-      this.setState({imgUrl: imgReader.result})
+      this.setState({fileUrl: imgReader.result})
     }
     this.setState({file: e.target.files[0]})
   }
-  changeStatusShow(e){
+  changeStatus_show(e){
     this.setState({
-      statusShow: e.target.checked,
-      statusHide: !e.target.checked
+      status_show: e.target.checked,
+      status_hide: !e.target.checked
     })
   }
-  changeStatusHide(e){
+  changeStatus_hide(e){
     this.setState({
-      statusHide: e.target.checked,
-      statusShow: !e.target.checked
+      status_hide: e.target.checked,
+      status_show: !e.target.checked
     })
   }
   handleClick(){
   }
   dispatchEditor(cover){
-    const {category,name,age,tags,desc,sort,statusShow} = this.state
+    const {category,name,age,tags,desc,sort,status_show} = this.state
     this.props.dispatch(editorAlbum({
       category,
       name,
@@ -168,7 +185,7 @@ class EditorAlbum extends Component{
       desc,
       sort,
       id: this.props.location.state.id,
-      status: statusShow ? 1 : 0
+      status: status_show ? 1 : 0
     }))
   }
   handleSubmit(){

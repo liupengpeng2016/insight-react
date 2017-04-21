@@ -1,21 +1,15 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {editorTopic} from '../../../redux/actions.js'
-import fileUpload from '../../../fileUpload/fileUpload.js'
 class EditorTopic extends Component{
   constructor(props){
     super(props)
     this.state={
-      category:'1',
       name:'',
-      age:'1',
-      tags:'',
-      file:'',
-      desc:'',
       sort:'0',
+      location:'1',
       statusShow:true,
-      statusHide:false,
-      imgUrl:''
+      statusHide:false
     }
   }
   render(){
@@ -25,56 +19,22 @@ class EditorTopic extends Component{
         <h2>编辑专题</h2>
         <ul className='add-item'>
           <li>
-            <span>专辑名称</span>
+            <span>专题名称</span>
             <input type='text' placeholder='请输入专辑名称'
               onChange={this.changeName.bind(this)}
               value={this.state.name}
               />
           </li>
           <li>
-            <span>专辑描述</span>
-            <input type='text' placeholder='请输入描述信息'
-              onChange={this.changeDesc.bind(this)}
-              value={this.state.desc}
-              />
-          </li>
-          <li>
-            <span>选择类型</span>
+            <span>专题位置</span>
             <select
-              onChange={this.changeCategory.bind(this)}
-              value={this.state.category}
+              onChange={this.changeLocation.bind(this)}
+              value={this.state.location}
               >
-              <option value='1'>儿童</option>
-              <option value='2'>音乐</option>
-              <option value='3'>教育</option>
-            </select>
-          </li>
-          <li>
-            <span>专辑标签</span>
-            <input type='text' placeholder='请输入专辑标签多个用竖线分隔'
-              onChange={this.changeTags.bind(this)}
-              value={this.state.tags}
-            />
-          </li>
-          <li>
-            <span>年龄段</span>
-            <select
-              onChange={this.changeAge.bind(this)}
-              value={this.state.age}
-              >
-              <option value='1'>1</option>
-              <option value='2'>2</option>
-              <option value='3'>3</option>
-              <option value='4'>4</option>
-              <option value='5'>5</option>
-              <option value='6'>6</option>
-              <option value='7'>7</option>
-              <option value='8'>8</option>
-              <option value='9'>9</option>
-            </select>
-            <span className='age'>至</span>
-            <select>
-              <option value=''>0</option>
+              <option value='1'>首页</option>
+              <option value='2'>故事</option>
+              <option value='3'>儿歌</option>
+              <option value='4'>音乐</option>
             </select>
           </li>
           <li>
@@ -109,44 +69,29 @@ class EditorTopic extends Component{
                 />
               <label htmlFor='banner-hide'>隐藏</label>
           </li>
-          <li  className='input-img'>
-            <span>上传图片</span>
-            <span>查看歌词</span>
-            <img src={this.state.imgUrl} alt=''/>
-            <input type='file'
-              onChange={this.changeImg.bind(this)}
-              />
-            <h1>选取文件</h1>
-            <p>歌词格式为lrc，大小为200kb以内。</p>
-          </li>
           <li onClick={this.handleSubmit.bind(this)}>编辑信息</li>
         </ul>
       </div>
     )
   }
+  componentDidMount(){
+    const {name, sort, status} = this.props.location.state
+    this.setState({name, sort, statusShow: status? true: false, statusHide: !status? true: false})
+  }
   changeName(e){
     this.setState({name: e.target.value})
-  }
-  changeDesc(e){
-    this.setState({desc: e.target.value})
-  }
-  changeCategory(e){
-    this.setState({category: e.target.value})
   }
   changeSort(e){
     this.setState({sort: e.target.value})
   }
-  changeAge(e){
-    this.setState({age: e.target.value})
+  changeLocation(e){
+    this.setState({location: e.target.value})
   }
-  changeTags(e){
-    this.setState({tags: e.target.value})
-  }
-  changeImg(e){
+  changeFile(e){
     const imgReader = new FileReader()
     imgReader.readAsDataURL(e.target.files[0])
     imgReader.onload=()=>{
-      this.setState({imgUrl: imgReader.result})
+      this.setState({fileUrl: imgReader.result})
     }
     this.setState({file: e.target.files[0]})
   }
@@ -162,23 +107,15 @@ class EditorTopic extends Component{
       statusShow: !e.target.checked
     })
   }
-  dispatchEditor(cover){
-    const {category,name,age,tags,desc,sort,statusShow} = this.state
+  handleSubmit(){
+    const {name, sort, statusShow, location} = this.state
     this.props.dispatch(editorTopic({
-      category,
       name,
-      age,
-      tags,
-      cover,
-      desc,
       sort,
+      location,
       id: this.props.location.state.id,
       status: statusShow ? 1 : 0
     }))
-  }
-  handleSubmit(){
-    const {file} = this.state
-    fileUpload(file,this.dispatchEditor.bind(this))
   }
 }
 export default connect()(EditorTopic)

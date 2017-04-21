@@ -26,7 +26,7 @@ class ShowPlan extends Component{
               return (
                 <li key={i}
                   onClick={this.handleClick.bind(this, val.id)}
-                  style={this.state.activeId === val.id? activeCss : null}
+                  style={this.state.activeId === val.id? activeCss : {borderBottom:'4px solid transparent'}}
                   >{val.name}</li>
               )
             })

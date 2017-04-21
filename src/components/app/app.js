@@ -4,7 +4,6 @@ import Header from '../header/header.js'
 import Aside from '../aside/aside.js'
 import FetchNotice from '../fetchNotice/fetchNotice.js'
 class App extends Component{
-
   render(){
     return (
       <div>

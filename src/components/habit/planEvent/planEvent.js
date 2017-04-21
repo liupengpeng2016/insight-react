@@ -53,7 +53,7 @@ class PlanEvent extends Component {
                         <ul className='ctr-buttons'>
                           <li><Link
                              to={{pathname:'/habit/editorPlanEvent',
-                             state: val.id}}
+                             state: val}}
                             >编辑</Link></li>
                           <li onClick={this.delItem.bind(this, val.id)}>删除</li>
                         </ul>
@@ -105,7 +105,6 @@ class PlanEvent extends Component {
       for(let i of planEvent){
           Object.assign(checkbox, {[i.id]: false})
       }
-      console.log(checkbox)
       this.setState({checkbox, mode: 1})
   }
   handleChange(id, e){

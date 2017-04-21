@@ -3,7 +3,6 @@ import {Link} from 'react-router'
 import AddTo from '../addTo/addTo.js'
 import {connect} from 'react-redux'
 import {getTopicList, toggleTopicStatus, delTopicItem} from '../../../redux/actions.js'
-// import OperateButtons from '../operateButtons/operateButtons.js'
 import PageCtr from '../pageCtr/pageCtr.js'
 
 class Topic extends Component{
@@ -13,6 +12,7 @@ class Topic extends Component{
       showPanel:false,
       page:1,
       buttonMode:1,
+      location:'0',
       checkbox:{}
     }
   }
@@ -24,14 +24,21 @@ class Topic extends Component{
           <p><span>已选歌曲列表</span></p>
           <p>
             <input type='text' placeholder='请输入歌曲名称、专题名称'/>
-            <input type='button' value='搜索已选歌曲'/>
+            <input type='button' value='搜索已选专题'/>
           </p>
         </div>
         <ul className='media-scope'>
           <li>
             <span>位置</span>
-            <select>
-              <option value=''>全部</option>
+            <select
+              onChange={this.handleLocation.bind(this)}
+              value={this.state.location}
+              >
+              <option value='0'>全部</option>
+              <option value='1'>首页</option>
+              <option value='2'>故事</option>
+              <option value='3'>儿歌</option>
+              <option value='4'>音乐</option>
             </select>
           </li>
           <li>
@@ -63,19 +70,9 @@ class Topic extends Component{
                     <td>{parseInt(val.status, 10) === 1 ? '是'  : '否'}</td>
                     <td>{val.created_at.slice(0,10)}</td>
                     <td>
-                      {/*<OperateButtons
-                        mode={this.state.buttonMode}
-                        editorTo={{pathname:'/media/editorTopic',state:{id: val.id}}}
-                        handleDel={this.handleDel.bind(this,[val.id])}
-                        handleStatus={this.handleStatus.bind(this,val.status,[val.id])}
-                        status={val.status}
-                        checked={this.state.checkbox[val.id]}
-                        toggleChecked={this.toggleChecked.bind(this,val.id)}
-                      />*/}
-                      {
-                        this.state.buttonMode?(
+                        {this.state.buttonMode?(
                           <ul className='operate-buttons'>
-                            <li ><Link to={{pathname:'/media/editorTopic',state:{id:val.id}}} style={{color:'#76cbe5'}}>编辑</Link></li>
+                            <li ><Link to={{pathname:'/media/editorTopic',state:val}} style={{color:'#76cbe5'}}>编辑</Link></li>
                             <li onClick={this.handleDel.bind(this,[val.id])} style={{color:'#fe6434'}}>删除</li>
                             <li onClick={this.handleStatus.bind(this,val.status,[val.id])} style={{color:'#50ca71'}}>
                               {parseInt(val.status, 10)===1?<span style={{color:'#aaa'}}>下架</span>:<span>上架</span>}
@@ -83,7 +80,7 @@ class Topic extends Component{
                           </ul>
                         ):(
                           <ul className='operate-buttons'>
-                            <li ><Link to={{pathname:'/media/editorTopic',state:{id:val.id}}} style={{color:'#76cbe5'}}>编辑</Link></li>
+                            <li ><Link to={{pathname:'/media/editorTopic',state:val}} style={{color:'#76cbe5'}}>编辑</Link></li>
                             <li >
                               <input type='checkbox'
                                 onChange={this.handleChecked.bind(this, val.id)}
@@ -142,9 +139,10 @@ class Topic extends Component{
     this.setState({page})
   }
   //获取列表
-  getTopicList(){
-    const {page} = this.state
-    this.props.dispatch(getTopicList({page}))
+  getTopicList(params= {}){
+    const {page, location} = this.state
+    params= Object.assign({page, location}, params)
+    this.props.dispatch(getTopicList(params))
   }
 
 //初始化数据
@@ -160,6 +158,10 @@ class Topic extends Component{
       }
       this.setState({checkbox})
     }
+  }
+  handleLocation(e){
+    this.setState({location:e.target.value})
+    this.getTopicList({location:e.target.value})
   }
 //button按钮事件
   handleDel(ids){

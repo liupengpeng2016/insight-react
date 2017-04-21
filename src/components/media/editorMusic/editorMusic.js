@@ -2,21 +2,36 @@ import React, {Component} from 'react'
 import './editorMusic.css'
 import {connect} from 'react-redux'
 import {editorMusic} from '../../../redux/actions.js'
+import fileUpload from '../../../fileUpload/fileUpload.js'
+import {valid} from '../../../plugs/plugs.js'
 class EditorMusic extends Component{
   constructor(props){
     super(props)
     this.state={
-      musicName:'',
-      musicDesc:'',
-      musicType:'1',
-      musicAuthor:'',
-      musicAge:'1',
-      musicAblum:'',
-      musicImg:'',
-      musicSort:'0',
-      musicStatusShow:true,
-      musicStatusHide:false,
-      imgUrl:''
+      category:'',
+      name: '',
+      singer:'',
+      url:'',
+      druation:'',
+      age:'',
+      tags:'',
+      desc:'',
+      sort:'',
+      status_show: true,
+      status_hide: false,
+      file:'',
+      fileUrl:'',
+      valid:{
+        name: undefined,
+        singer: undefined,
+        url: undefined,
+        duration: undefined,
+        age: undefined,
+        tags: undefined,
+        desc: undefined,
+        sort: undefined,
+        file: undefined,
+      }
     }
   }
   render(){
@@ -29,21 +44,22 @@ class EditorMusic extends Component{
             <span>歌曲名称</span>
             <input type='text' placeholder='请输入歌曲名称'
               onChange={this.changeName.bind(this)}
-              value={this.state.musicName}
+              value={this.state.name}
               />
           </li>
+          <i className='valid'>{this.state.name=== undefined? '': valid(this.state.name,{'不能为空': 'require'})}</i>
           <li>
             <span>歌曲描述</span>
             <input type='text' placeholder='请输入描述信息'
               onChange={this.changeDesc.bind(this)}
-              value={this.state.musicDesc}
+              value={this.state.desc}
               />
           </li>
           <li>
             <span>选择类型</span>
             <select
-              onChange={this.changeType.bind(this)}
-              value={this.state.musicType}
+              onChange={this.changeCategory.bind(this)}
+              value={this.state.category}
               >
               <option value='1'>儿童</option>
               <option value='2'>音乐</option>
@@ -53,15 +69,29 @@ class EditorMusic extends Component{
           <li>
             <span>作者名称</span>
             <input type='text' placeholder='请输入作者名称'
-              onChange={this.changeAuthor.bind(this)}
-              value={this.state.musicAuthor}
+              onChange={this.changeSinger.bind(this)}
+              value={this.state.singer}
               />
           </li>
           <li>
-            <span>年龄段</span>
+            <span>歌曲标签</span>
+            <input type='text' placeholder='请输入歌曲标签, 多个用竖线分隔'
+              onChange={this.changeTags.bind(this)}
+              value={this.state.tags}
+              />
+          </li>
+          <li>
+            <span>歌曲时长</span>
+            <input type='text' placeholder='请输入歌曲时长'
+              onChange={this.changeDuration.bind(this)}
+              value={parseInt(this.state.duration/1000, 10)}
+              /> 秒
+          </li>
+          <li>
+            <span>年龄</span>
             <select
               onChange={this.changeAge.bind(this)}
-              value={this.state.musicAge}
+              value={this.state.age}
               >
               <option value='1'>1</option>
               <option value='2'>2</option>
@@ -72,115 +102,156 @@ class EditorMusic extends Component{
               <option value='7'>7</option>
               <option value='8'>8</option>
               <option value='9'>9</option>
-            </select>
-            <span className='age'>至</span>
-            <select>
-              <option value=''>0</option>
+              <option value='10'>10</option>
+              <option value='11'>11</option>
+              <option value='12'>12</option>
             </select>
           </li>
           <li>
             <span>权重</span>
             <select
               onChange={this.changeSort.bind(this)}
-              value={this.state.musicSort}
+              value={this.state.sort}
               >
               <option value='0'> 0 </option>
               <option value='1'> 1 </option>
               <option value='2'> 2 </option>
               <option value='3'> 3 </option>
+              <option value='4'> 4 </option>
+              <option value='5'> 5 </option>
+              <option value='6'> 6 </option>
+              <option value='7'> 7 </option>
+              <option value='8'> 8 </option>
+              <option value='9'> 9 </option>
+              <option value='10'> 10 </option>
             </select>
           </li>
           <li>
             <span>状态</span>
               <input type='checkbox' id='banner-show' name='editor'
-                onChange={this.changeStatusShow.bind(this)}
-                checked={this.state.musicStatusShow}
+                onChange={this.changeStatus_show.bind(this)}
+                checked={this.state.status_show}
                 />
               <label htmlFor='banner-show'>显示</label>
               <input type='checkbox' id='banner-hide' name='editor'
-                onChange={this.changeStatusHide.bind(this)}
-                checked={this.state.musicStatusHide}
+                onChange={this.changeStatus_hide.bind(this)}
+                checked={this.state.status_hide}
                 />
               <label htmlFor='banner-hide'>隐藏</label>
           </li>
           <li  className='input-img'>
             <span>上传图片</span>
-            <span>查看歌词</span>
-            <img src={this.state.imgUrl} alt=''/>
+            <img src={this.state.fileUrl} alt=''/>
             <input type='file'
-              onChange={this.changeImg.bind(this)}
+              onChange={this.changeFile.bind(this)}
               />
             <h1>选取文件</h1>
-            <p>歌词格式为lrc，大小为200kb以内。</p>
+            <p>图片格式为jpg/png，大小为2M以内。</p>
           </li>
-          <li onClick={this.handleClick.bind(this)}>编辑信息</li>
+          <li onClick={this.handleSubmit.bind(this)}>编辑信息</li>
         </ul>
       </div>
     )
   }
+  componentDidMount(){
+    const {name, duration, age, sort, status, singer}= this.props.location.state
+    this.setState({
+      name,
+      duration,
+      age,
+      sort,
+      singer,
+      status_show: status? true : false,
+      status_hide: !status? true: false,
+      category:'1'
+    })
+  }
   changeName(e){
-    this.setState({musicName: e.target.value})
+    const valid= Object.assing({}, this.state.valid)
+    valid.name= 1
+    this.setState({name: e.target.value, valid})
   }
   changeDesc(e){
-    this.setState({musicDesc: e.target.value})
+    this.setState({desc: e.target.value})
   }
-  changeType(e){
-    this.setState({musicType: e.target.value})
+  changeCategory(e){
+    this.setState({category: e.target.value})
 
   }
-  changeOrigin(e){
-    this.setState({musicOrigin: e.target.value})
+  changeSinger(e){
+    this.setState({singer: e.target.value})
 
   }
   changeAge(e){
-    this.setState({musicAge: e.target.value})
+    this.setState({age: e.target.value})
+  }
+  changeDuration(e){
+    this.setState({duration: parseInt(e.target.value, 10)*1000})
+  }
+  changeTags(e){
+    this.setState({tags: e.target.value})
 
   }
-  changeImg(e){
-    const imgReader1 = new FileReader()
-    const imgReader2 = new FileReader()
-    imgReader1.readAsBinaryString(e.target.files[0])
-    imgReader1.onload=() =>{
-      this.setState({musicImg: imgReader1.result})
-    }
-    imgReader2.readAsDataURL(e.target.files[0])
-    imgReader2.onload=()=>{
-      this.setState({imgUrl: imgReader2.result})
+  changeFile(e){
+    const imgReader = new FileReader()
+    imgReader.readAsDataURL(e.target.files[0])
+    this.setState({file: e.target.files[0]})
+    imgReader.onload=()=>{
+      this.setState({fileUrl: imgReader.result})
     }
   }
-  changeStatusShow(e){
+  changeStatus_show(e){
     this.setState({
-      musicStatusShow: e.target.checked,
-      musicStatusHide: !e.target.checked
+      status_show: e.target.checked,
+      status_hide: !e.target.checked
     })
   }
-  changeStatusHide(e){
+  changeStatus_hide(e){
     this.setState({
-      musicStatusHide: e.target.checked,
-      musicStatusShow: !e.target.checked
+      status_hide: e.target.checked,
+      status_show: !e.target.checked
     })
-  }
-  changeAuthor(e){
-    this.setState({musicAuthor: e.target.value})
   }
   changeSort(e){
-    this.setState({musicSort: e.target.value})
+    this.setState({sort: e.target.value})
   }
-  handleClick(){
+  dispatchSubmit(fileName){
+    const {
+      category,
+      name,
+      singer,
+      url,
+      duration,
+      age,
+      tags,
+      desc,
+      sort,
+      status_show,
+    } = this.state
+    const { id }= this.props.location.state
     this.props.dispatch(editorMusic({
-      id: this.props.location.state.id,
-      category: this.state.musicType,
-      name: this.state.musicName,
-      singer: this.state.musicAuthor,
-      url: '',
-      duration: this.props.location.state.duration,
-      age: this.state.musicAge,
-      tags: '',
-      icon: this.state.musicImg,
-      desc: this.state.musicDesc,
-      sort: this.state.musicSort,
-      status: this.state.musicStatusShow ? 1 : 0
+      id,
+      category,
+      name,
+      singer,
+      url,
+      age,
+      tags,
+      desc,
+      sort,
+      duration,
+      icon:fileName,
+      status: status_show ? 1: 0,
     }))
+  }
+  handleSubmit(){
+    const valid= Object.assign({}, this.state.valid)
+    const keys= Object.keys(valid)
+    for(let i of keys){
+      valid[i]= 1
+    }
+    this.setState({valid})
+    fileUpload(this.state.file, this.dispatchSubmit.bind(this))
   }
 }
 export default connect()(EditorMusic)

@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {editorHabitPlan} from '../../../redux/actions.js'
+import {editorHabitPlan, delHabitPlan} from '../../../redux/actions.js'
 import {connect} from 'react-redux'
 import fileUpload from '../../../fileUpload/fileUpload.js'
 class EditorPlan extends Component{
@@ -13,7 +13,10 @@ class EditorPlan extends Component{
       statusShow: true,
       statusHide: false,
       fileUrl: '',
-      file:''
+      file:'',
+      valid:{
+        time_interval:undefined
+      }
     }
   }
   render(){
@@ -25,6 +28,9 @@ class EditorPlan extends Component{
           <li className='input-img'>
             <span>图标</span>
             <img src={this.state.fileUrl} alt=''/>
+            <i className='valid'
+              style={this.state.valid.file === false? null: {display:'none'}}
+              >图片不符合要求!</i>
             <input type='file'
               onChange={this.handleFile.bind(this)}
               />
@@ -68,8 +74,11 @@ class EditorPlan extends Component{
             <span>时间间隔</span>
             <input type='text'
               onChange={this.handleTime.bind(this)}
-              value={this.state.time_interval}
-            />分
+              value={this.state.time_interval }
+            /> 秒
+            <i className='valid'
+              style={this.state.valid.time_interval === false? null: {display:'none'}}
+              >间隔小于15分钟，且必须为数字！</i>
           </li>
           <li>
             <span>状态</span>
@@ -84,10 +93,29 @@ class EditorPlan extends Component{
                 />
               <label htmlFor='banner-hide'>隐藏</label>
           </li>
-          <li onClick={this.handleSubmit.bind(this)}>提交信息</li>
+          <li className='two-buttons'>
+            <p
+               onClick={()=>this.props.dispatch(delHabitPlan({default_plan_ids:this.props.location.state.id}))}
+              >删除</p>
+            <p
+               onClick={this.handleSubmit.bind(this)}
+              >提交</p>
+          </li>
         </ul>
       </div>
     )
+  }
+  componentDidMount(){
+    const {name, desc, time_interval, sort, status, icon} = this.props.location.state
+    this.setState({
+      name,
+      desc,
+      sort,
+      time_interval: time_interval/1000,
+      statusShow: status? true: false,
+      statusHide: !status? true: false,
+      fileUrl:icon
+    })
   }
   handleName(e){
     this.setState({name: e.target.value})
@@ -99,7 +127,10 @@ class EditorPlan extends Component{
     this.setState({sort: e.target.value})
   }
   handleTime(e){
-    this.setState({time_interval: e.target.value})
+    const userInput= e.target.value
+    const valid= Object.assign({}, this.state.valid)
+    valid.time_interval= /\d+/.test(userInput) && Number(userInput, 10)<15*60
+    this.setState({time_interval: userInput,valid})
   }
   handleStatusShow(e){
     this.setState({statusShow: e.target.checked, statusHide: !e.target.checked})
@@ -108,6 +139,11 @@ class EditorPlan extends Component{
     this.setState({statusShow: !e.target.checked, statusHide: e.target.checked})
   }
   handleFile(e){
+    const userInput= e.target.files[0]
+    const valid= Object.assign({}, this.state.valid)
+    valid.file= userInput.size>2*1024*1024? false: true
+    this.setState({file:userInput, valid})
+
     const fileReader= new FileReader()
     fileReader.readAsDataURL(e.target.files[0])
     fileReader.onload= () => {
@@ -117,31 +153,33 @@ class EditorPlan extends Component{
   }
   dispatchEditor(icon){
     const {name,desc,sort,time_interval, statusShow} = this.state
-    const params= {}
-    if(name){
-      Object.assign(params,{name})
+    const params= {
+      name,
+      desc,
+      sort,
+      icon:icon||'',
+      time_interval:Number(time_interval)*1000,
+      status: statusShow? 1: 0,
+      default_plan_id:this.props.location.state.id
     }
-    if(desc){
-      Object.assign(params,{desc})
-    }
-    if(sort){
-      Object.assign(params,{sort})
-    }
-    if(icon){
-      Object.assign(params,{icon})
-    }
-    if(time_interval){
-      Object.assign(params,{time_interval})
-    }
-    Object.assign(params,{
-      default_plan_id: this.props.location.state,
-      status: statusShow ? 1 : 0
-    })
     this.props.dispatch(editorHabitPlan(params))
   }
   handleSubmit(){
-    const {file} = this.state
-    fileUpload(file,this.dispatchEditor.bind(this))
+    const {time_interval, file} = this.state.valid
+    const valid= Object.assign({}, this.state.valid)
+    if(!file){
+      if(this.state.fileUrl!== this.props.location.state.icon){
+        valid.file= false
+        return this.setState({valid})
+      }
+    }
+    if(!time_interval){
+      if(Number(this.state.time_interval)*1000!== this.props.location.state.time_interval){
+        valid.time_interval= false
+        return this.setState({valid})
+      }
+    }
+    fileUpload(this.state.file,this.dispatchEditor.bind(this))
   }
 }
 export default connect()(EditorPlan)

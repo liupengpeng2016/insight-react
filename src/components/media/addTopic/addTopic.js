@@ -77,7 +77,7 @@ class AddTopic extends Component{
     )
   }
   handleLocation(e){
-    this.setState({type:e.target.value})
+    this.setState({location:e.target.value})
   }
   handleName(e){
     this.setState({name:e.target.value})

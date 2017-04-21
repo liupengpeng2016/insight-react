@@ -82,7 +82,7 @@ class Music extends Component{
                 {
                   this.state.buttonMode?(
                     <ul className='operate-buttons'>
-                      <li ><Link to={{pathname:'/media/editorAlbum',state:{id:val.id}}} style={{color:'#76cbe5'}}>编辑</Link></li>
+                      <li ><Link to={{pathname:'/media/editorMusic',state: val}} style={{color:'#76cbe5'}}>编辑</Link></li>
                       <li onClick={this.handleDel.bind(this,[val.id])} style={{color:'#fe6434'}}>删除</li>
                       <li onClick={this.handleStatus.bind(this,val.status,[val.id])} style={{color:'#50ca71'}}>
                         {parseInt(val.status, 10)===1?<span style={{color:'#aaa'}}>下架</span>:<span>上架</span>}
@@ -91,7 +91,7 @@ class Music extends Component{
                     </ul>
                   ):(
                     <ul className='operate-buttons'>
-                      <li ><Link to={{pathname:'/media/editorAlbum',state:{id:val.id}}} style={{color:'#76cbe5'}}>编辑</Link></li>
+                      <li ><Link to={{pathname:'/media/editorMusic',state:val}} style={{color:'#76cbe5'}}>编辑</Link></li>
                       <li >
                         <input type='checkbox'
                           onChange={this.handleChecked.bind(this,val.id)}

@@ -58,11 +58,16 @@
 .tingting-list-button{
   &>span{
     color:#5cc1df;
+    padding: 0 12px;
+    cursor: pointer;
   }
   .off{
     color:#ff9979;
+    cursor: pointer;
     span{
       color:#ababab;
+      margin-left:10px;
+      cursor:auto;
     }
   }
 }

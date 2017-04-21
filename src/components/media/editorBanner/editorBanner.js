@@ -6,19 +6,20 @@ class EditorBanner extends Component{
   constructor(props){
     super(props)
     this.state={
-      location:'',
+      location:'1',
+      category:'',
       url:'',
+      album_id:'',
       desc:'',
       sort:'',
       statusShow:true,
       statusHide:false,
-      content_album:true,
-      content_url: false,
-      imgUrl:'',
-      file:''
+      file:'',
+      fileUrl:''
     }
   }
   render(){
+    const {category, url, album_id}= this.state
     return (
       <div className='root-media-list'>
         <h1>葡萄听听>banner列表>编辑banner</h1>
@@ -38,25 +39,26 @@ class EditorBanner extends Component{
           </li>
           <li>
             <span>Banner类型</span>
-            <input type='checkbox' id='album' name='banner'
-              onChange={this.handleContent_album.bind(this)}
-              checked={this.state.content_album}
-            />
-            <label htmlFor='album'>
-              歌曲专辑
-            </label>
-            <input type='checkbox' id='url' name='banner'
-              onChange={this.handleContent_url.bind(this)}
-              checked={this.state.content_url}
-            />
-            <label htmlFor='url'>
-              网页URL
-            </label>
+            <select
+              onChange={this.handleCategory.bind(this)}
+              value={this.state.category}
+              >
+              <option value='1'>歌曲专辑</option>
+              <option value='2'>网络URL</option>
+            </select>
             <p>
               <span></span>
-              <input type='text' placeholder='请输入歌曲专辑ID或网络url'
+              <input type='text' placeholder={this.state.category === '1'? '请输入专辑id':'请输入网络url'}
                 onChange={this.handleUrl.bind(this)}
-                value={this.state.url}
+                value={(function(){
+                  switch(category){
+                    case '1':
+                    return album_id
+                    case '2':
+                    return url
+                    default: return 'hehe'
+                  }
+                })()}
                 />
             </p>
           </li>
@@ -88,7 +90,7 @@ class EditorBanner extends Component{
           </li>
           <li className='input-img'>
             <span>上传图片</span>
-            <img src={this.state.imageUrl} alt=''/>
+            <img src={this.state.fileUrl} alt=''/>
             <input type='file'
               onChange={this.handleFile.bind(this)}
             />
@@ -113,6 +115,19 @@ class EditorBanner extends Component{
       </div>
     )
   }
+  componentDidMount(){
+    const {name, category, desc, sort, status, url, pic}= this.props.location.state
+    this.setState({
+      name,
+      desc,
+      url,
+      category: String(category),
+      sort: String(sort),
+      statusShow: status? true : false,
+      statusHide: !status? true: false,
+      fileUrl: pic
+    })
+  }
   handleLocation(e){
     this.setState({location:e.target.value})
   }
@@ -125,19 +140,9 @@ class EditorBanner extends Component{
   handleSort(e){
     this.setState({sort:e.target.value})
   }
-  handleContent_url(e){
-    this.setState({
-      content_url:e.target.checked,
-      content_album:!e.target.checked
-    })
+  handleCategory(e){
+    this.setState({category:e.target.value})
   }
-  handleContent_album(e){
-    this.setState({
-      content_album:e.target.checked,
-      content_url:!e.target.checked
-    })
-  }
-
   handleStatusShow(e){
     this.setState({
       statusShow:e.target.checked,
@@ -151,24 +156,24 @@ class EditorBanner extends Component{
     })
   }
   handleFile(e){
-    const imgReader2 = new FileReader()
+    const imgReader = new FileReader()
     this.setState({file: e.target.files[0]})
-    imgReader2.readAsDataURL(e.target.files[0])
-    imgReader2.onload=()=>{
-      this.setState({imageUrl: imgReader2.result})
+    imgReader.readAsDataURL(e.target.files[0])
+    imgReader.onload=()=>{
+      this.setState({fileUrl: imgReader.result})
     }
   }
   dispatchEditor(pic){
-    const {location, desc, sort, url, statusShow, content_album} = this.state
+    const {location, desc, sort, url, statusShow, category} = this.state
     this.props.dispatch(editorBanner({
       location,
-      pic,
       desc,
       sort,
       url,
+      category,
+      pic:pic||'',
       id: this.props.location.state.id,
       status: statusShow ? 1 : 0,
-      cagegory: content_album? 1 :2
     }))
   }
   handleSubmit(){

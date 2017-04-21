@@ -15,7 +15,13 @@ class AddEvent extends Component{
       voice_name:'',
       music_id:'',
       file:'',
-      fileUrl:''
+      fileUrl:'',
+      valid:{
+        name:undefined,
+        music_id:undefined,
+        file:undefined,
+        voice_name:undefined
+      }
     }
   }
   render(){
@@ -27,11 +33,14 @@ class AddEvent extends Component{
           <li className='input-img'>
             <span>上传图片</span>
             <img src={this.state.fileUrl} alt=''/>
+            <i className='valid'
+              style={this.state.valid.file === false? null: {display:'none'}}
+              >图片不符合要求！</i>
             <input type='file'
               onChange={this.handleFile.bind(this)}
               />
             <h1>选取文件</h1>
-            <p>请提供应用图标，图片格式为jpg或png，大小为2M以内。</p>
+            <p>请提供应用图标，图片格式为jpg或png，大小为2M以内(必选)。</p>
           </li>
           <li>
             <span>提醒名称</span>
@@ -39,6 +48,11 @@ class AddEvent extends Component{
               onChange={this.handleName.bind(this)}
               value={this.state.name}
               />
+            <i className='valid'
+              style={this.state.valid.name === false? null: {display:'none'}}
+            >
+            内容为1-10 个汉字或字符！
+            </i>
           </li>
           <li>
             <span>提醒时间</span>
@@ -49,7 +63,7 @@ class AddEvent extends Component{
               {
                 (function(){
                   const arr= []
-                  for(let i = 0; i<60; i++){
+                  for(let i = 0; i<24; i++){
                     arr.push(<option  key={i} value={i< 10? '0'+i : i}>{i}</option>)
                   }
                   return arr
@@ -77,6 +91,11 @@ class AddEvent extends Component{
               onChange={this.handleVoice.bind(this)}
               value={this.state.voice_name}
               />
+            <i className='valid'
+              style={this.state.valid.voice_name === false? null: {display:'none'}}
+            >
+            内容为1-25 个汉字或字符！
+            </i>
           </li>
           <li>
             <span>音乐id</span>
@@ -84,6 +103,11 @@ class AddEvent extends Component{
               onChange={this.handleMusicId.bind(this)}
               value={this.state.music_id}
               />
+            <i className='valid'
+              style={this.state.valid.music_id === false? null: {display:'none'}}
+            >
+            只能为纯数字且不能为空！
+            </i>
           </li>
           <li>
             <span>权重</span>
@@ -110,16 +134,25 @@ class AddEvent extends Component{
     )
   }
   handleName(e){
-    this.setState({name: e.target.value})
+    const userInput= e.target.value
+    const valid= Object.assign({}, this.state.valid)
+    valid.name= /^\S{1,10}$/u.test(userInput)
+    this.setState({name: userInput,valid})
   }
   handleVoice(e){
-    this.setState({voice_name: e.target.value})
+    const userInput= e.target.value
+    const valid= Object.assign({}, this.state.valid)
+    valid.voice_name= /^\S{1,25}$/u.test(userInput)
+    this.setState({voice_name: userInput,valid})
   }
   handleSort(e){
     this.setState({sort: e.target.value})
   }
   handleMusicId(e){
-    this.setState({music_id: e.target.value})
+    const userInput= e.target.value
+    const valid= Object.assign({}, this.state.valid)
+    valid.music_id= /\d+/.test(userInput)
+    this.setState({music_id:userInput, valid})
   }
   handleHours(e){
     this.setState({hours: e.target.value})
@@ -128,12 +161,15 @@ class AddEvent extends Component{
     this.setState({minutes: e.target.value})
   }
   handleFile(e){
+    const userInput= e.target.files[0]
+    const valid= Object.assign({}, this.state.valid)
+    valid.file= userInput.size>2*1024*1024? false: true
+    this.setState({file:userInput, valid})
     const fileReader= new FileReader()
     fileReader.readAsDataURL(e.target.files[0])
     fileReader.onload= () => {
       this.setState({fileUrl: fileReader.result})
     }
-    this.setState({file: e.target.files[0]})
   }
   dispatchEditor(icon){
     const {name,voice_name, music_id, hours, sort, minutes} = this.state
@@ -149,8 +185,25 @@ class AddEvent extends Component{
       }))
   }
   handleSubmit(){
-    const {file} = this.state
-    fileUpload(file,this.dispatchEditor.bind(this))
+    const {name, music_id, file, voice_name} = this.state.valid
+    const valid= Object.assign({}, this.state.valid)
+    if(!file){
+      valid.file= false
+      return this.setState({valid})
+    }
+    if(!name){
+      valid.name= false
+      return this.setState({valid})
+    }
+    if(!voice_name){
+      valid.voice_name= false
+      return this.setState({valid})
+    }
+    if(!music_id){
+      valid.music_id= false
+      return this.setState({valid})
+    }
+    fileUpload(this.state.file,this.dispatchEditor.bind(this))
   }
 }
 export default connect()(AddEvent)

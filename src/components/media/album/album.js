@@ -27,7 +27,7 @@ class Album extends Component{
           <p><span>已选歌曲列表</span></p>
           <p>
             <input type='text' placeholder='请输入歌曲名称、专辑名称'/>
-            <input type='button' value='搜索已选歌曲'/>
+            <input type='button' value='搜索已选专辑'/>
           </p>
         </div>
         <ul className='media-scope'>
@@ -50,6 +50,7 @@ class Album extends Component{
               <td>编号</td>
               <td>类型</td>
               <td>专辑名称</td>
+              <td>专辑图片</td>
               <td>歌曲数量</td>
               <td>权重</td>
               <td>适合年龄</td>
@@ -63,6 +64,9 @@ class Album extends Component{
                     <td>{val.id}</td>
                     <td>{val.category === 1? '儿童':(val.category ===2 ? '音乐': '教育')}</td>
                     <td>{val.name}</td>
+                    <td><img src={val.cover} alt=''
+                      style={{height:'30px',lineHeight:'normal',verticalAlign:'middle',display:'inline-block'}}
+                      /></td>
                     <td>{val.music_count}</td>
                     <td>{val.sort}</td>
                     <td>{val.age}</td>
@@ -72,7 +76,7 @@ class Album extends Component{
                         {
                           this.state.buttonMode?(
                             <ul className='operate-buttons'>
-                              <li ><Link to={{pathname:'/media/editorAlbum',state:{id:val.id}}} style={{color:'#76cbe5'}}>编辑</Link></li>
+                              <li ><Link to={{pathname:'/media/editorAlbum',state: val}} style={{color:'#76cbe5'}}>编辑</Link></li>
                               <li onClick={this.handleDel.bind(this,[val.id])} style={{color:'#fe6434'}}>删除</li>
                               <li onClick={this.handleStatus.bind(this,val.status,[val.id])} style={{color:'#50ca71'}}>
                                 {parseInt(val.status, 10)===1?<span style={{color:'#aaa'}}>下架</span>:<span>上架</span>}
@@ -81,7 +85,7 @@ class Album extends Component{
                             </ul>
                           ):(
                             <ul className='operate-buttons'>
-                              <li ><Link to={{pathname:'/media/editorAlbum',state:{id:val.id}}} style={{color:'#76cbe5'}}>编辑</Link></li>
+                              <li ><Link to={{pathname:'/media/editorAlbum',state:val}} style={{color:'#76cbe5'}}>编辑</Link></li>
                               <li >
                                 <input type='checkbox'
                                   onChange={this.handleChecked.bind(this,val.id)}

@@ -13,7 +13,13 @@ class AddPlan extends Component{
       statusShow: true,
       statusHide: false,
       fileUrl: '',
-      file:''
+      file:'',
+      valid:{
+        file:undefined,
+        name:undefined,
+        desc:undefined,
+        time_interval: undefined
+      }
     }
   }
   render(){
@@ -25,6 +31,9 @@ class AddPlan extends Component{
           <li className='input-img'>
             <span>图标</span>
             <img src={this.state.fileUrl} alt=''/>
+            <i className='valid'
+              style={this.state.valid.file === false? null: {display:'none'}}
+              >图片不符合要求!</i>
             <input type='file'
               onChange={this.handleFile.bind(this)}
               />
@@ -37,6 +46,15 @@ class AddPlan extends Component{
               onChange={this.handleName.bind(this)}
               value={this.state.name}
               />
+            <span className='valid'
+              style={(()=>{
+                if(this.state.valid.name ===false ){
+                  return null
+                }
+                return {display:'none'}
+              })()}
+              >1-15 个汉字!
+            </span>
           </li>
           <li>
             <span>计划描述</span>
@@ -44,6 +62,15 @@ class AddPlan extends Component{
               onChange={this.handleDesc.bind(this)}
               value={this.state.desc}
               />
+            <span className='valid'
+              style={(()=>{
+                if(this.state.valid.desc ===false ){
+                  return null
+                }
+                return {display:'none'}
+              })()}
+              >1-25 个汉字!
+            </span>
           </li>
           <li>
             <span>权重</span>
@@ -69,7 +96,10 @@ class AddPlan extends Component{
             <input type='text'
               onChange={this.handleTime.bind(this)}
               value={this.state.time_interval}
-            />分
+            /> 秒
+            <i className='valid'
+              style={this.state.valid.time_interval === false? null: {display:'none'}}
+              >间隔小于15分钟，且必须为数字！</i>
           </li>
           <li>
             <span>状态</span>
@@ -90,16 +120,23 @@ class AddPlan extends Component{
     )
   }
   handleName(e){
-    this.setState({name: e.target.value})
+    const valid= Object.assign({}, this.state.valid)
+    valid.name= /^.{1,15}$/u.test(e.target.value)
+    this.setState({name: e.target.value, valid})
   }
   handleDesc(e){
-    this.setState({desc: e.target.value})
+    const valid= Object.assign({}, this.state.valid)
+    valid.desc= /^.{1,25}$/u.test(e.target.value)
+    this.setState({desc: e.target.value, valid})
   }
   handleSort(e){
     this.setState({sort: e.target.value})
   }
   handleTime(e){
-    this.setState({time_interval: e.target.value})
+    const userInput= e.target.value
+    const valid= Object.assign({}, this.state.valid)
+    valid.time_interval= /\d+/.test(userInput) && Number(userInput, 10)<15*60
+    this.setState({time_interval: userInput,valid})
   }
   handleStatusShow(e){
     this.setState({statusShow: e.target.checked, statusHide: !e.target.checked})
@@ -108,6 +145,11 @@ class AddPlan extends Component{
     this.setState({statusShow: !e.target.checked, statusHide: e.target.checked})
   }
   handleFile(e){
+    const userInput= e.target.files[0]
+    const valid= Object.assign({}, this.state.valid)
+    valid.file= userInput.size>2*1024*1024? false: true
+    this.setState({file:userInput, valid})
+
     const fileReader= new FileReader()
     fileReader.readAsDataURL(e.target.files[0])
     fileReader.onload= () => {
@@ -122,15 +164,32 @@ class AddPlan extends Component{
         name,
         desc,
         sort,
-        time_interval,
         icon,
+        time_interval: Number(time_interval)*1000,
         appid: this.props.location.state,
         status: statusShow ? 1 : 0
       }))
   }
   handleSubmit(){
-    const {file} = this.state
-    fileUpload(file,this.dispatchEditor.bind(this))
+    const {name, desc, time_interval, file} = this.state.valid
+    const valid= Object.assign({}, this.state.valid)
+    if(!file){
+      valid.file= false
+      return this.setState({valid})
+    }
+    if(!name){
+      valid.name= false
+      return this.setState({valid})
+    }
+    if(!desc){
+      valid.desc= false
+      return this.setState({valid})
+    }
+    if(!time_interval){
+      valid.time_interval= false
+      return this.setState({valid})
+    }
+    fileUpload(this.state.file,this.dispatchEditor.bind(this))
   }
 }
 export default connect()(AddPlan)
