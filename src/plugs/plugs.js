@@ -12,6 +12,9 @@ export const valid= (target, rules) => {
       if(i=== 'number'&& !/^\d+$/.test(target)){
         return '只能为数字!'
       }
+      if(i=== 'url'&& !/(^http:\/\/\S+)|(^https:\/\/\S+)/.test(target)){
+        return '请输入正确网址！'
+      }
     }
     return ''
   }else{

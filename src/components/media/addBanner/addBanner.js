@@ -74,7 +74,13 @@ class AddBanner extends Component{
                 onChange={this.handleUrl.bind(this)}
                 value={this.state.url}
               />
-              <i className='valid' style={!this.valid.url.change? {display: 'none'}: null}>{this.valid.url.notice= valid(this.state.url,['require'])}</i>
+              <i className='valid' style={!this.valid.url.change? {display: 'none'}: null}>
+                {
+                  this.valid.url.notice= this.state.content_url?
+                  valid(this.state.url,['require','url']):
+                  valid(this.state.url,['require','number'])
+                }
+              </i>
             </p>
           </li>
           <li>
