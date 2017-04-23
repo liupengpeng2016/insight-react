@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import './otherPlatform.css'
 import {connect} from 'react-redux'
 import {addOtherPlatformMusic} from '../../../redux/actions.js'
+import {valid, validFile} from '../../../plugs/plugs.js'
 import fileUpload from '../../../fileUpload/fileUpload.js'
 class OtherPlatform extends Component{
   constructor(props){
@@ -17,18 +18,42 @@ class OtherPlatform extends Component{
       sort:'0',
       url:'',
       file:'',
-      imageUrl:'',
+      fileUrl:'',
       statusShow:true,
-      statusHide:false,
-      valid:{
-        name:undefined,
-        singer:undefined,
-        tags:undefined,
-        age:undefined,
-        desc:undefined,
-        duration:undefined,
-        url:undefined,
-        file:undefined
+      statusHide:false
+    }
+    this.valid={
+      name:{
+        change: false,
+        notice:''
+      },
+      singer:{
+        change:false,
+        notice:''
+      },
+      tags:{
+        change:false,
+        notice:''
+      },
+      age:{
+        change:false,
+        notice:''
+      },
+      url:{
+        change:false,
+        notice:''
+      },
+      desc:{
+        change:false,
+        notice:''
+      },
+      duration:{
+        change:false,
+        notice:''
+      },
+      file:{
+        change:false,
+        notice:''
       }
     }
   }
@@ -53,9 +78,7 @@ class OtherPlatform extends Component{
               onChange={this.handleName.bind(this)}
               value={this.state.name}
             />
-            <i className='valid' style={this.state.valid.name=== false? null: {display: 'none'}}>
-              不能为空！
-            </i>
+            <i className='valid' style={!this.valid.name.change? {display: 'none'}: null}>{this.valid.name.notice= valid(this.state.name,['require'])}</i>
           </li>
           <li>
             <span>歌手名</span>
@@ -63,9 +86,7 @@ class OtherPlatform extends Component{
               onChange={this.handleSinger.bind(this)}
               value={this.state.singer}
             />
-            <i className='valid' style={this.state.valid.singer=== false? null: {display: 'none'}}>
-              不能为空！
-            </i>
+            <i className='valid' style={!this.valid.singer.change? {display: 'none'}: null}>{this.valid.singer.notice= valid(this.state.singer,['require'])}</i>
           </li>
           <li>
             <span>年龄</span>
@@ -73,9 +94,7 @@ class OtherPlatform extends Component{
               onChange={this.handleAge.bind(this)}
               value={this.state.age}
             />
-          <i className='valid' style={this.state.valid.age=== false? null: {display: 'none'}}>
-              不能为空且必须为数字！
-            </i>
+            <i className='valid' style={!this.valid.age.change? {display: 'none'}: null}>{this.valid.age.notice= valid(this.state.age,['require','number'])}</i>
           </li>
           <li>
             <span>歌曲时长</span>
@@ -83,9 +102,7 @@ class OtherPlatform extends Component{
               onChange={this.handleDuration.bind(this)}
               value={this.state.duration}
             /> 秒
-            <i className='valid' style={this.state.valid.duration=== false? null: {display: 'none'}}>
-                不能为空且必须为数字！
-            </i>
+            <i className='valid' style={!this.valid.duration.change? {display: 'none'}: null}>{this.valid.duration.notice= valid(this.state.duration,['require','number'])}</i>
           </li>
           <li>
             <span>歌曲标签</span>
@@ -93,9 +110,7 @@ class OtherPlatform extends Component{
               onChange={this.handleTags.bind(this)}
               value={this.state.tags}
             />
-            <i className='valid' style={this.state.valid.tags=== false? null: {display: 'none'}}>
-                不能为空！
-            </i>
+            <i className='valid' style={!this.valid.tags.change? {display: 'none'}: null}>{this.valid.tags.notice= valid(this.state.tags,['require'])}</i>
           </li>
           <li>
             <span>歌曲描述</span>
@@ -103,9 +118,7 @@ class OtherPlatform extends Component{
               onChange={this.handleDesc.bind(this)}
               value={this.state.desc}
             />
-          <i className='valid' style={this.state.valid.desc=== false? null: {display: 'none'}}>
-                不能为空！
-              </i>
+            <i className='valid' style={!this.valid.desc.change? {display: 'none'}: null}>{this.valid.desc.notice= valid(this.state.desc,['require'])}</i>
           </li>
           <li>
             <span>权重</span>
@@ -132,14 +145,7 @@ class OtherPlatform extends Component{
               onChange={this.handleUrl.bind(this)}
               value={this.state.url}
             />
-            <span className='valid'
-              style={(()=>{
-                if(this.state.valid.url === false){
-                  return null
-                }
-                return {display:'none'}
-              })()}
-            >请输入正确链接地址</span>
+            <i className='valid' style={!this.valid.url.change? {display: 'none'}: null}>{this.valid.url.notice= valid(this.state.url,['require','url'])}</i>
           </li>
           <li className='platform-status'>
             <span>状态</span>
@@ -156,10 +162,8 @@ class OtherPlatform extends Component{
           </li>
           <li className='input-img'>
             <span>专辑封面</span>
-            <img src={this.state.imageUrl} alt=''/>
-              <i className='valid' style={this.state.valid.file=== false? null: {display: 'none'}}>
-                图片不符合要求！
-              </i>
+            <img src={this.state.fileUrl} alt=''/>
+            <i className='valid' style={!this.valid.file.change? {display: 'none'}: null}>{this.valid.file.notice= validFile(this.state.file,{size: 2*1024*1024, name:[/\.jpg$/,/\.png$/,/\.jpeg/]})}</i>
             <input type='file'
               onChange={this.handleFile.bind(this)}
             />
@@ -177,64 +181,44 @@ class OtherPlatform extends Component{
     this.setState({category: e.target.value})
   }
   handleName(e){
-    const userInput= e.target.value
-    const valid= Object.assign({}, this.state.valid)
-    valid.name= /\S+/.test(userInput)
-    this.setState({name: userInput, valid})
+    this.valid.name.change= true
+    this.setState({name: e.target.value, valid})
   }
   handleSinger(e){
-    const userInput= e.target.value
-    const valid= Object.assign({}, this.state.valid)
-    valid.singer= /\S+/.test(userInput)
-    this.setState({singer: userInput, valid})
+    this.valid.singer.change= true
+    this.setState({singer: e.target.value, valid})
   }
   handleTags(e){
-    const userInput= e.target.value
-    const valid= Object.assign({}, this.state.valid)
-    valid.tags= /\S+/.test(userInput)
-    this.setState({tags: userInput, valid})
+    this.valid.tags.change= true
+    this.setState({tags: e.target.value, valid})
   }
   handleDesc(e){
-    const userInput= e.target.value
-    const valid= Object.assign({}, this.state.valid)
-    valid.desc= /\S+/.test(userInput)
-    this.setState({desc: userInput, valid})
+    this.valid.desc.change= true
+    this.setState({desc: e.target.value, valid})
   }
   handleSort(e){
     this.setState({sort: e.target.value})
   }
   handleUrl(e){
-    const userInput= e.target.value
-    const valid= Object.assign({}, this.state.valid)
-    valid.url= false
-    if(/^((http)|(https)):\/\/\w+/.test(userInput)){
-      valid.url= true
-    }
+    this.valid.url.change= true
     this.setState({url: e.target.value, valid})
   }
   handleDuration(e){
-    const userInput= e.target.value
-    const valid= Object.assign({}, this.state.valid)
-    valid.duration= /^\d+$/.test(userInput)
-    this.setState({duration:userInput, valid})
+    this.valid.duration.change= true
+
+    this.setState({duration:e.target.value, valid})
   }
   handleAge(e){
-    const userInput= e.target.value
-    const valid= Object.assign({}, this.state.valid)
-    valid.age= /^\d+$/.test(userInput)
-    this.setState({age: userInput, valid})
+    this.valid.age.change= true
+    this.setState({age:e.target.value, valid})
   }
   handleFile(e){
-    const userInput= e.target.files[0]
-    const valid= Object.assign({}, this.state.valid)
-    valid.file= userInput.size>2*1024*1024? false: true
-    this.setState({file:userInput, valid})
-
+    this.valid.file.change= true
     const imgReader = new FileReader()
     this.setState({file: e.target.files[0]})
     imgReader.readAsDataURL(e.target.files[0])
     imgReader.onload=()=>{
-      this.setState({imageUrl: imgReader.result})
+      this.setState({fileUrl: imgReader.result})
     }
   }
   handleStatusShow(e){
@@ -266,41 +250,14 @@ class OtherPlatform extends Component{
     }))
   }
   handleSubmit(){
-    const {name, singer, url, age, tags, desc,duration,file } = this.state.valid
-    const valid= Object.assign({}, this.state.valid)
-    if(!name){
-      valid.name= false
-      return this.setState({valid})
+    const {name, singer, url, age, tags, desc,duration,file } = this.valid
+    if(name.notice||singer.notice||url.notice||age.notice||tags.notice||desc.notice||duration.notice||file.notice){
+      const keys= Object.keys(this.valid)
+      for(let i of keys){
+        this.valid[i].change= true
+      }
+      return this.forceUpdate()
     }
-    if(!singer){
-      valid.singer= false
-      return this.setState({valid})
-    }
-    if(!age){
-      valid.age= false
-      return this.setState({valid})
-    }
-    if(!duration){
-      valid.duration= false
-      return this.setState({valid})
-    }
-    if(!tags){
-      valid.tags= false
-      return this.setState({valid})
-    }
-    if(!desc){
-      valid.desc= false
-      return this.setState({valid})
-    }
-    if(!url){
-      valid.url= false
-      return this.setState({valid})
-    }
-    if(!file){
-      valid.file= false
-      return this.setState({valid})
-    }
-
     fileUpload(this.state.file,this.dispatchEditor.bind(this))
   }
 }

@@ -2,8 +2,8 @@ import React, {Component} from 'react'
 import './editorMusic.css'
 import {connect} from 'react-redux'
 import {editorMusic} from '../../../redux/actions.js'
+import {valid, validFile} from '../../../plugs/plugs.js'
 import fileUpload from '../../../fileUpload/fileUpload.js'
-import {valid} from '../../../plugs/plugs.js'
 class EditorMusic extends Component{
   constructor(props){
     super(props)
@@ -20,19 +20,39 @@ class EditorMusic extends Component{
       status_show: true,
       status_hide: false,
       file:'',
-      fileUrl:'',
-      valid:{
-        name: undefined,
-        singer: undefined,
-        url: undefined,
-        duration: undefined,
-        age: undefined,
-        tags: undefined,
-        desc: undefined,
-        sort: undefined,
-        file: undefined,
+      fileUrl:''
+    }
+    this.valid={
+      name:{
+        change: false,
+        notice:''
+      },
+      singer:{
+        change:false,
+        notice:''
+      },
+      duration:{
+        change:false,
+        notice:''
+      },
+      desc:{
+        change:false,
+        notice:''
+      },
+      file:{
+        change:false,
+        notice:''
+      },
+      tags:{
+        change:false,
+        notice:''
+      },
+      age:{
+        change:false,
+        notice:''
       }
     }
+
   }
   render(){
     return (
@@ -47,13 +67,14 @@ class EditorMusic extends Component{
               value={this.state.name}
               />
           </li>
-          <i className='valid'>{this.state.name=== undefined? '': valid(this.state.name,{'不能为空': 'require'})}</i>
+          <i className='valid' style={!this.valid.name.change? {display: 'none'}: null}>{this.valid.name.notice= valid(this.state.name,['require'])}</i>
           <li>
             <span>歌曲描述</span>
             <input type='text' placeholder='请输入描述信息'
               onChange={this.changeDesc.bind(this)}
               value={this.state.desc}
-              />
+            />
+            <i className='valid' style={!this.valid.desc.change? {display: 'none'}: null}>{this.valid.desc.notice= valid(this.state.desc,['require'])}</i>
           </li>
           <li>
             <span>选择类型</span>
@@ -71,41 +92,31 @@ class EditorMusic extends Component{
             <input type='text' placeholder='请输入作者名称'
               onChange={this.changeSinger.bind(this)}
               value={this.state.singer}
-              />
+            />
+            <i className='valid' style={!this.valid.singer.change? {display: 'none'}: null}>{this.valid.singer.notice= valid(this.state.singer,['require'])}</i>
           </li>
           <li>
             <span>歌曲标签</span>
             <input type='text' placeholder='请输入歌曲标签, 多个用竖线分隔'
               onChange={this.changeTags.bind(this)}
               value={this.state.tags}
-              />
+            />
+            <i className='valid' style={!this.valid.tags.change? {display: 'none'}: null}>{this.valid.tags.notice= valid(this.state.tags,['require'])}</i>
           </li>
           <li>
             <span>歌曲时长</span>
             <input type='text' placeholder='请输入歌曲时长'
               onChange={this.changeDuration.bind(this)}
-              value={parseInt(this.state.duration/1000, 10)}
+              value={this.state.duration}
               /> 秒
+              <i className='valid' style={!this.valid.duration.change? {display: 'none'}: null}>{this.valid.duration.notice= valid(this.state.duration,['require','number'])}</i>
           </li>
           <li>
             <span>年龄</span>
-            <select
+            <input type='text'
               onChange={this.changeAge.bind(this)}
               value={this.state.age}
-              >
-              <option value='1'>1</option>
-              <option value='2'>2</option>
-              <option value='3'>3</option>
-              <option value='4'>4</option>
-              <option value='5'>5</option>
-              <option value='6'>6</option>
-              <option value='7'>7</option>
-              <option value='8'>8</option>
-              <option value='9'>9</option>
-              <option value='10'>10</option>
-              <option value='11'>11</option>
-              <option value='12'>12</option>
-            </select>
+              />
           </li>
           <li>
             <span>权重</span>
@@ -142,6 +153,7 @@ class EditorMusic extends Component{
           <li  className='input-img'>
             <span>上传图片</span>
             <img src={this.state.fileUrl} alt=''/>
+            <i className='valid' style={!this.valid.file.change? {display: 'none'}: null}>{this.valid.file.notice= validFile(this.state.file,{size: 2*1024*1024, name:[/\.jpg$/,/\.png$/,/\.jpeg/]})}</i>
             <input type='file'
               onChange={this.changeFile.bind(this)}
               />
@@ -154,24 +166,27 @@ class EditorMusic extends Component{
     )
   }
   componentDidMount(){
-    const {name, duration, age, sort, status, singer}= this.props.location.state
+    const {name, age, sort, duration, singer, cover}= this.props.location.state
     this.setState({
       name,
-      duration,
       age,
       sort,
       singer,
+      fileUrl: cover,
+      file: 'ignore',
+      duration: Number(duration)/1000,
       status_show: status? true : false,
       status_hide: !status? true: false,
       category:'1'
     })
   }
   changeName(e){
-    const valid= Object.assing({}, this.state.valid)
-    valid.name= 1
+    this.valid.name.change= true
     this.setState({name: e.target.value, valid})
   }
   changeDesc(e){
+    this.valid.desc.change= true
+
     this.setState({desc: e.target.value})
   }
   changeCategory(e){
@@ -179,20 +194,30 @@ class EditorMusic extends Component{
 
   }
   changeSinger(e){
+    this.valid.singer.change= true
+
     this.setState({singer: e.target.value})
 
   }
   changeAge(e){
+    this.valid.age.change= true
+
     this.setState({age: e.target.value})
   }
   changeDuration(e){
-    this.setState({duration: parseInt(e.target.value, 10)*1000})
+    this.valid.duration.change= true
+
+    this.setState({duration: e.target.value})
   }
   changeTags(e){
+    this.valid.tags.change= true
+
     this.setState({tags: e.target.value})
 
   }
   changeFile(e){
+    this.valid.file.change= true
+
     const imgReader = new FileReader()
     imgReader.readAsDataURL(e.target.files[0])
     this.setState({file: e.target.files[0]})
@@ -239,18 +264,21 @@ class EditorMusic extends Component{
       tags,
       desc,
       sort,
-      duration,
+      duration: Number(duration)*1000,
       icon:fileName,
       status: status_show ? 1: 0,
     }))
   }
   handleSubmit(){
-    const valid= Object.assign({}, this.state.valid)
-    const keys= Object.keys(valid)
-    for(let i of keys){
-      valid[i]= 1
+    const {name, singer, age, tags, desc, duration,file } = this.valid
+    if(name.notice||singer.notice||age.notice||tags.notice||desc.notice||duration.notice||file.notice){
+      const keys= Object.keys(this.valid)
+      for(let i of keys){
+        this.valid[i].change= true
+      }
+      return this.forceUpdate()
     }
-    this.setState({valid})
+
     fileUpload(this.state.file, this.dispatchSubmit.bind(this))
   }
 }
