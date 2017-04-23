@@ -1,6 +1,8 @@
 import React, {Component} from 'react'
 import './addTopic.css'
 import {addTopicItem} from '../../../redux/actions.js'
+import {valid} from '../../../plugs/plugs.js'
+
 import {connect} from 'react-redux'
 class AddTopic extends Component{
   constructor(props){
@@ -11,6 +13,12 @@ class AddTopic extends Component{
       sort:'0',
       statusShow:true,
       statusHide:false
+    }
+    this.valid={
+      name:{
+        change:false,
+        notice:''
+      }
     }
   }
 
@@ -38,6 +46,7 @@ class AddTopic extends Component{
               onChange={this.handleName.bind(this)}
               value={this.state.name}
             />
+            <i className='valid' style={!this.valid.name.change? {display: 'none'}: null}>{this.valid.name.notice= valid(this.state.name,['require'])}</i>
           </li>
           <li>
             <span>权重</span>
@@ -80,6 +89,7 @@ class AddTopic extends Component{
     this.setState({location:e.target.value})
   }
   handleName(e){
+    this.valid.name.change= true
     this.setState({name:e.target.value})
   }
   handleSort(e){
@@ -98,6 +108,10 @@ class AddTopic extends Component{
     })
   }
   handleClick(){
+    if(this.valid.name.notice){
+      this.valid.name.change= true
+      return this.forceUpdate()
+    }
     const  {location, name, sort} = this.state
     this.props.dispatch(addTopicItem({
       location,

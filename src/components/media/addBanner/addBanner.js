@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import './addBanner.css'
 import {addBannerItem} from '../../../redux/actions.js'
 import {connect} from 'react-redux'
+import {valid, validFile} from '../../../plugs/plugs.js'
 import fileUpload from '../../../fileUpload/fileUpload.js'
 class AddBanner extends Component{
   constructor(props){
@@ -17,6 +18,20 @@ class AddBanner extends Component{
       statusHide:false,
       imageUrl:'',
       file:''
+    }
+    this.valid= {
+      desc:{
+        notice:'',
+        change:false
+      },
+      url:{
+        notice:'',
+        change:false
+      },
+      file:{
+        notice:'',
+        change:false
+      }
     }
   }
   render(){
@@ -58,7 +73,8 @@ class AddBanner extends Component{
               <input type='text' placeholder='请输入歌曲专辑ID或网络url'
                 onChange={this.handleUrl.bind(this)}
                 value={this.state.url}
-                />
+              />
+              <i className='valid' style={!this.valid.url.change? {display: 'none'}: null}>{this.valid.url.notice= valid(this.state.url,['require'])}</i>
             </p>
           </li>
           <li>
@@ -67,6 +83,7 @@ class AddBanner extends Component{
               onChange={this.handleDesc.bind(this)}
               value={this.state.desc}
             />
+            <i className='valid' style={!this.valid.desc.change? {display: 'none'}: null}>{this.valid.desc.notice= valid(this.state.desc,['require'])}</i>
           </li>
           <li>
             <span>权重</span>
@@ -90,6 +107,7 @@ class AddBanner extends Component{
           <li className='input-img'>
             <span>上传图片</span>
             <img src={this.state.imageUrl} alt=''/>
+            <i className='valid' style={!this.valid.file.change? {display: 'none'}: null}>{this.valid.file.notice= validFile(this.state.file,{size: 2*1024*1024, name:[/\.jpg$/,/\.png$/,/\.jpeg/]})}</i>
             <input type='file'
               onChange={this.handleFile.bind(this)}
             />
@@ -118,9 +136,11 @@ class AddBanner extends Component{
     this.setState({location:e.target.value})
   }
   handleUrl(e){
+    this.valid.url.change= true
     this.setState({url:e.target.value})
   }
   handleDesc(e){
+    this.valid.url.change= true
     this.setState({desc:e.target.value})
   }
   handleSort(e){
@@ -152,11 +172,12 @@ class AddBanner extends Component{
     })
   }
   handleFile(e){
-    const imgReader2 = new FileReader()
+    this.valid.file.change= true
+    const imgReader = new FileReader()
     this.setState({file: e.target.files[0]})
-    imgReader2.readAsDataURL(e.target.files[0])
-    imgReader2.onload=()=>{
-      this.setState({imageUrl: imgReader2.result})
+    imgReader.readAsDataURL(e.target.files[0])
+    imgReader.onload=()=>{
+      this.setState({imageUrl: imgReader.result})
     }
   }
   dispatchEditor(pic){
@@ -172,8 +193,16 @@ class AddBanner extends Component{
     }))
   }
   handleSubmit(){
-    const {file} = this.state
-    fileUpload(file,this.dispatchEditor.bind(this))
+    const {desc, file, url}= this.valid
+    if(desc.notice||file.notice||url.notice){
+      const keys= Object.keys(this.valid)
+      for(let i of keys){
+        this.valid[i].change= true
+      }
+      return this.forceUpdate()
+
+    }
+    fileUpload(this.state.file,this.dispatchEditor.bind(this))
   }
 
 }

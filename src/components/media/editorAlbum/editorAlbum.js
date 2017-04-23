@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {editorAlbum} from '../../../redux/actions.js'
 import fileUpload from '../../../fileUpload/fileUpload.js'
+import {valid, validFile} from '../../../plugs/plugs.js'
 class EditorAlbum extends Component{
   constructor(props){
     super(props)
@@ -17,6 +18,28 @@ class EditorAlbum extends Component{
       file:'',
       fileUrl:''
     }
+    this.valid= {
+      name:{
+        notice:'',
+        change:false
+      },
+      tags:{
+        notice:'',
+        change:false
+      },
+      desc:{
+        notice:'',
+        change:false
+      },
+      age:{
+        notice:'',
+        change:false
+      },
+      file:{
+        notice:'',
+        change:false
+      }
+    }
   }
   render(){
     return (
@@ -30,13 +53,15 @@ class EditorAlbum extends Component{
               onChange={this.changeName.bind(this)}
               value={this.state.name}
               />
+            <i className='valid' style={!this.valid.name.change? {display: 'none'}: null}>{this.valid.name.notice= valid(this.state.name,['require'])}</i>
           </li>
           <li>
             <span>专辑描述</span>
             <input type='text' placeholder='请输入描述信息'
               onChange={this.changeDesc.bind(this)}
               value={this.state.desc}
-              />
+            />
+            <i className='valid' style={!this.valid.desc.change? {display: 'none'}: null}>{this.valid.desc.notice= valid(this.state.desc,['require'])}</i>
           </li>
           <li>
             <span>选择类型</span>
@@ -55,26 +80,15 @@ class EditorAlbum extends Component{
               onChange={this.changeTags.bind(this)}
               value={this.state.tags}
             />
+            <i className='valid' style={!this.valid.tags.change? {display: 'none'}: null}>{this.valid.tags.notice= valid(this.state.tags,['require'])}</i>
           </li>
           <li>
             <span>年龄</span>
-            <select
+            <input type='text'
               onChange={this.changeAge.bind(this)}
               value={this.state.age}
-              >
-              <option value='1'>1</option>
-              <option value='2'>2</option>
-              <option value='3'>3</option>
-              <option value='4'>4</option>
-              <option value='5'>5</option>
-              <option value='6'>6</option>
-              <option value='7'>7</option>
-              <option value='8'>8</option>
-              <option value='9'>9</option>
-              <option value='10'>10</option>
-              <option value='11'>11</option>
-              <option value='12'>12</option>
-            </select>
+            />
+            <i className='valid' style={!this.valid.age.change? {display: 'none'}: null}>{this.valid.age.notice= valid(this.state.age,['require','number'])}</i>
           </li>
           <li>
             <span>权重</span>
@@ -111,6 +125,7 @@ class EditorAlbum extends Component{
           <li  className='input-img'>
             <span>上传图片</span>
             <img src={this.state.fileUrl} alt=''/>
+            <i className='valid' style={!this.valid.file.change? {display: 'none'}: null}>{this.valid.file.notice= validFile(this.state.file,{size: 2*1024*1024, name:[/\.jpg$/,/\.png$/,/\.jpeg/]})}</i>
             <input type='file'
               onChange={this.changeFile.bind(this)}
               />
@@ -123,21 +138,25 @@ class EditorAlbum extends Component{
     )
   }
   componentDidMount(){
-    const {name, category, age, sort, status} = this.props.location.state
-    console.log(this.props.location.state)
+    const {name, category, age, sort, status, cover} = this.props.location.state
     this.setState({
       name,
       category,
       age,
       sort,
+      fileUrl:cover,
+      file:'ignore',
       status_show: status? true: false,
       status_hide: !status? true: false
     })
   }
   changeName(e){
+    this.valid.name.change= true
     this.setState({name: e.target.value})
   }
   changeDesc(e){
+    this.valid.desc.change= true
+
     this.setState({desc: e.target.value})
   }
   changeCategory(e){
@@ -147,12 +166,18 @@ class EditorAlbum extends Component{
     this.setState({sort: e.target.value})
   }
   changeAge(e){
+    this.valid.age.change= true
+
     this.setState({age: e.target.value})
   }
   changeTags(e){
+    this.valid.tags.change= true
+
     this.setState({tags: e.target.value})
   }
   changeFile(e){
+    this.valid.file.change= true
+
     const imgReader = new FileReader()
     imgReader.readAsDataURL(e.target.files[0])
     imgReader.onload=()=>{
@@ -189,8 +214,16 @@ class EditorAlbum extends Component{
     }))
   }
   handleSubmit(){
-    const {file} = this.state
-    fileUpload(file,this.dispatchEditor.bind(this))
+    const {name, tags, desc, age, file} = this.valid
+    if(name.notice||tags.notice||desc.notice||age.notice||file.notice){
+      const keys=Object.keys(this.valid)
+      for(let i of keys){
+        this.valid[i].change= true
+      }
+      return this.forceUpdate()
+    }
+
+    fileUpload(this.state.file,this.dispatchEditor.bind(this))
   }
 }
 export default connect()(EditorAlbum)

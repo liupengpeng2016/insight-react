@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {editorBanner} from '../../../redux/actions.js'
+import {valid, validFile} from '../../../plugs/plugs.js'
 import fileUpload from '../../../fileUpload/fileUpload.js'
 class EditorBanner extends Component{
   constructor(props){
@@ -16,6 +17,20 @@ class EditorBanner extends Component{
       statusHide:false,
       file:'',
       fileUrl:''
+    }
+    this.valid= {
+      desc:{
+        notice:'',
+        change:false
+      },
+      url:{
+        notice:'',
+        change:false
+      },
+      file:{
+        notice:'',
+        change:false
+      }
     }
   }
   render(){
@@ -59,7 +74,9 @@ class EditorBanner extends Component{
                     default: return 'hehe'
                   }
                 })()}
-                />
+              />
+              <i className='valid' style={!this.valid.url.change? {display: 'none'}: null}>{this.valid.url.notice= valid(this.state.url,['require'])}</i>
+
             </p>
           </li>
           <li>
@@ -68,6 +85,7 @@ class EditorBanner extends Component{
               onChange={this.handleDesc.bind(this)}
               value={this.state.desc}
             />
+            <i className='valid' style={!this.valid.desc.change? {display: 'none'}: null}>{this.valid.desc.notice= valid(this.state.desc,['require'])}</i>
           </li>
           <li>
             <span>权重</span>
@@ -91,6 +109,7 @@ class EditorBanner extends Component{
           <li className='input-img'>
             <span>上传图片</span>
             <img src={this.state.fileUrl} alt=''/>
+            <i className='valid' style={!this.valid.file.change? {display: 'none'}: null}>{this.valid.file.notice= validFile(this.state.file,{size: 2*1024*1024, name:[/\.jpg$/,/\.png$/,/\.jpeg/]})}</i>
             <input type='file'
               onChange={this.handleFile.bind(this)}
             />
@@ -132,9 +151,11 @@ class EditorBanner extends Component{
     this.setState({location:e.target.value})
   }
   handleUrl(e){
+    this.valid.url.change= true
     this.setState({url:e.target.value})
   }
   handleDesc(e){
+    this.valid.desc.change= true
     this.setState({desc:e.target.value})
   }
   handleSort(e){
@@ -156,6 +177,7 @@ class EditorBanner extends Component{
     })
   }
   handleFile(e){
+    this.valid.file.change= true
     const imgReader = new FileReader()
     this.setState({file: e.target.files[0]})
     imgReader.readAsDataURL(e.target.files[0])
@@ -177,8 +199,15 @@ class EditorBanner extends Component{
     }))
   }
   handleSubmit(){
-    const {file} = this.state
-    fileUpload(file,this.dispatchEditor.bind(this))
+    const {file, desc, url}= this.valid
+    if(file.notice||desc.notice||url.notice){
+      const keys= Object.keys(this.valid)
+      for(let i of keys){
+        this.valid[i].change= true
+      }
+      return this.forceUpdate()
+    }
+    fileUpload(this.state.file,this.dispatchEditor.bind(this))
   }
 }
 export default connect()(EditorBanner)

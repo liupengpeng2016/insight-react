@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import './addAlbum.css'
 import {addAlbumItem} from '../../../redux/actions.js'
 import fileUpload from '../../../fileUpload/fileUpload.js'
+import {valid, validFile} from '../../../plugs/plugs.js'
 import {connect} from 'react-redux'
 class AddAlbum extends Component{
   constructor(props){
@@ -16,7 +17,29 @@ class AddAlbum extends Component{
       statusShow:true,
       statusHide:false,
       file:'',
-      imageUrl:''
+      imageUrl:'',
+    }
+    this.valid= {
+      name:{
+        notice:'',
+        change:false
+      },
+      tags:{
+        notice:'',
+        change:false
+      },
+      desc:{
+        notice:'',
+        change:false
+      },
+      age:{
+        notice:'',
+        change:false
+      },
+      file:{
+        notice:'',
+        change:false
+      }
     }
   }
   render(){
@@ -42,6 +65,7 @@ class AddAlbum extends Component{
               onChange={this.handleName.bind(this)}
               value={this.state.name}
             />
+            <i className='valid' style={!this.valid.name.change? {display: 'none'}: null}>{this.valid.name.notice= valid(this.state.name,['require'])}</i>
           </li>
           <li>
             <span>专辑标签</span>
@@ -49,6 +73,7 @@ class AddAlbum extends Component{
               onChange={this.handleTags.bind(this)}
               value={this.state.tags}
             />
+            <i className='valid' style={!this.valid.tags.change? {display: 'none'}: null}>{this.valid.tags.notice= valid(this.state.tags,['require'])}</i>
             <p><span></span>专辑标签有助于语音检索歌曲</p>
           </li>
           <li>
@@ -57,6 +82,7 @@ class AddAlbum extends Component{
               onChange={this.handleDesc.bind(this)}
               value={this.state.desc}
             />
+            <i className='valid' style={!this.valid.desc.change? {display: 'none'}: null}>{this.valid.desc.notice= valid(this.state.desc,['require'])}</i>
           </li>
           <li>
             <span>年龄</span>
@@ -64,10 +90,12 @@ class AddAlbum extends Component{
               onChange={this.handleAge.bind(this)}
               value={this.state.age}
             />
+            <i className='valid' style={!this.valid.age.change? {display: 'none'}: null}>{this.valid.age.notice= valid(this.state.age,['require','number'])}</i>
           </li>
           <li className='input-img'>
             <span>专辑封面</span>
             <img  src={this.state.imageUrl} alt=''/>
+            <i className='valid' style={!this.valid.file.change? {display: 'none'}: null}>{this.valid.file.notice= validFile(this.state.file,{size: 2*1024*1024, name:[/\.jpg$/,/\.png$/,/\.jpeg/]})}</i>
             <input type='file'
               onChange={this.handleFile.bind(this)}
             />
@@ -115,26 +143,31 @@ class AddAlbum extends Component{
     this.setState({category:e.target.value})
   }
   handleName(e){
+    this.valid.name.change= true
     this.setState({name:e.target.value})
   }
   handleAge(e){
+    this.valid.age.change= true
     this.setState({age:e.target.value})
   }
   handleTags(e){
+    this.valid.tags.change= true
     this.setState({tags:e.target.value})
   }
   handleDesc(e){
+    this.valid.desc.change= true
     this.setState({desc:e.target.value})
   }
   handleSort(e){
     this.setState({sort:e.target.value})
   }
   handleFile(e){
-    const imgReader2 = new FileReader()
+    this.valid.file.change= true
+    const imgReader = new FileReader()
     this.setState({file: e.target.files[0]})
-    imgReader2.readAsDataURL(e.target.files[0])
-    imgReader2.onload=()=>{
-      this.setState({imageUrl: imgReader2.result})
+    imgReader.readAsDataURL(e.target.files[0])
+    imgReader.onload=()=>{
+      this.setState({imageUrl: imgReader.result})
     }
   }
   handleStatusShow(e){
@@ -163,8 +196,15 @@ class AddAlbum extends Component{
     }))
   }
   handleSubmit(){
-    const {file} = this.state
-    fileUpload(file,this.dispatchEditor.bind(this))
+    const {name, tags, desc, age, file} = this.valid
+    if(name.notice||tags.notice||desc.notice||age.notice||file.notice){
+      const keys=Object.keys(this.valid)
+      for(let i of keys){
+        this.valid[i].change= true
+      }
+      return this.forceUpdate()
+    }
+    fileUpload(this.state.file,this.dispatchEditor.bind(this))
   }
 }
 export default connect()(AddAlbum)

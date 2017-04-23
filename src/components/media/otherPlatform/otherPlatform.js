@@ -215,13 +215,13 @@ class OtherPlatform extends Component{
   handleDuration(e){
     const userInput= e.target.value
     const valid= Object.assign({}, this.state.valid)
-    valid.duration= /\d+/.test(userInput)
+    valid.duration= /^\d+$/.test(userInput)
     this.setState({duration:userInput, valid})
   }
   handleAge(e){
     const userInput= e.target.value
     const valid= Object.assign({}, this.state.valid)
-    valid.age= /\d+/.test(userInput)
+    valid.age= /^\d+$/.test(userInput)
     this.setState({age: userInput, valid})
   }
   handleFile(e){

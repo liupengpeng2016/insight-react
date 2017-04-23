@@ -4,27 +4,49 @@ export const formTime = time => {
   return m + '分' + s + '秒';
 }
 export const valid= (target, rules) => {
-  const keys= Object.keys(rules)
-  for(let i of keys){
-    if(typeof rules[i]=== 'string'){
-      switch(rules[i]){
-        case 'require':
-        if(!/\s+/.test(target)){
-          return i
-        }
-        break;
-        case 'number':
-        if(!/^\d+$/.test(target)){
-          return i
-        }
-        break
-        default: break
+  if(rules instanceof Array){
+    for(let i of rules){
+      if(i === 'require'&& !/\S+/.test(target)){
+        return '内容不能为空！'
       }
-    }else{
+      if(i=== 'number'&& !/^\d+$/.test(target)){
+        return '只能为数字!'
+      }
+    }
+    return ''
+  }else{
+    const keys= Object.keys(rules)
+    for(let i of keys){
       if(!rules[i].test(target)){
         return i
       }
     }
+    return ''
   }
-  return ''
+}
+export const validFile= (target, rules)=> {
+  if(target=== 'ignore'){
+    return ''
+  }
+  if(!target){
+    return '请选择文件！'
+  }
+  const keys= Object.keys(rules)
+  for(let i of keys){
+    switch(i){
+      case 'size':
+      if(target[i]>=rules[i]){
+        return '文件大小超出范围！'
+      }
+      break;
+      case 'name':
+      for(let k of rules[i]){
+        if(k.test(target.name)){
+          return ''
+        }
+      }
+      return '图片格式不符合要求！'
+      default: return ''
+    }
+  }
 }

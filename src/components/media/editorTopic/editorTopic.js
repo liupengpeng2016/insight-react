@@ -1,5 +1,7 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
+import {valid} from '../../../plugs/plugs.js'
+
 import {editorTopic} from '../../../redux/actions.js'
 class EditorTopic extends Component{
   constructor(props){
@@ -11,6 +13,13 @@ class EditorTopic extends Component{
       statusShow:true,
       statusHide:false
     }
+    this.valid={
+      name:{
+        change:false,
+        notice:''
+      }
+    }
+
   }
   render(){
     return (
@@ -23,7 +32,8 @@ class EditorTopic extends Component{
             <input type='text' placeholder='请输入专辑名称'
               onChange={this.changeName.bind(this)}
               value={this.state.name}
-              />
+            />
+            <i className='valid' style={!this.valid.name.change? {display: 'none'}: null}>{this.valid.name.notice= valid(this.state.name,['require'])}</i>
           </li>
           <li>
             <span>专题位置</span>
@@ -79,6 +89,7 @@ class EditorTopic extends Component{
     this.setState({name, sort, statusShow: status? true: false, statusHide: !status? true: false})
   }
   changeName(e){
+    this.valid.name.change= true
     this.setState({name: e.target.value})
   }
   changeSort(e){
@@ -108,6 +119,10 @@ class EditorTopic extends Component{
     })
   }
   handleSubmit(){
+    if(this.valid.name.notice){
+      this.valid.name.change= true
+      return this.forceUpdate()
+    }
     const {name, sort, statusShow, location} = this.state
     this.props.dispatch(editorTopic({
       name,

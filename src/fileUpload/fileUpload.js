@@ -1,6 +1,9 @@
 import fetch from 'isomorphic-fetch'
 import {baseUrl} from '../config/config.js'
 function fileUpload(file, callBack){
+  if(file=== 'ignore'){
+    return callBack('')
+  }
   const formParams= new FormData()
   formParams.append('files',file)
   fetch(baseUrl+'/core/common/upload',{
