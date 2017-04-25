@@ -159,10 +159,12 @@ class VoiceManage extends Component{
                         }
                       </td>
                     </tr>
-                    <tr className='hide'>
+                    <tr className='hide' style={{background: 'white'}}>
                       <td colSpan='7' className='voice-manage-list-detail'>
                         <p><span>语料库</span>{val.corpus_lib_name}</p>
                         <p><span>语料id</span>{val.group_id}</p>
+                        <p><span>创建时间</span>{}<span>创建作者</span>{}</p>
+                        <p><span>修改时间</span>{}<span>修改作者</span>{}</p>
                       </td>
                     </tr>
                   </tbody>

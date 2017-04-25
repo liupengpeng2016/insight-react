@@ -3,17 +3,17 @@ export const formTime = time => {
   const s = parseInt(time/1000%60, 10);
   return m + '分' + s + '秒';
 }
-export const valid= (target, rules) => {
+export const valid= (target, rules, notice= []) => {
   if(rules instanceof Array){
-    for(let i of rules){
-      if(i === 'require'&& !/\S+/.test(target)){
-        return '内容不能为空！'
+    for(let i=0;i<rules.length; i++){
+      if(rules[i] === 'require'&& !/\S+/.test(target)){
+        return notice[i]||'内容不能为空！'
       }
-      if(i=== 'number'&& !/^\d+$/.test(target)){
-        return '只能为数字!'
+      if(rules[i]=== 'number'&& !/^\d+$/.test(target)){
+        return notice[i]||'只能为数字!'
       }
-      if(i=== 'url'&& !/(^http:\/\/\S+)|(^https:\/\/\S+)/.test(target)){
-        return '请输入正确网址！'
+      if(rules[i]=== 'url'&& !/(^http:\/\/\S+)|(^https:\/\/\S+)/.test(target)){
+        return notice[i]||'请输入正确网址！'
       }
     }
     return ''
@@ -48,7 +48,7 @@ export const validFile= (target, rules)=> {
           return ''
         }
       }
-      return '图片格式不符合要求！'
+      return '文件格式不符合要求！'
       default: return ''
     }
   }

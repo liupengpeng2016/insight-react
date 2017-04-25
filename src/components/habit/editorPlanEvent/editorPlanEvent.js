@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import {editorHabitPlanEvent} from '../../../redux/actions.js'
 import {connect} from 'react-redux'
+import {valid, validFile} from '../../../plugs/plugs.js'
 import fileUpload from '../../../fileUpload/fileUpload.js'
 class EditorEvent extends Component{
   constructor(props){
@@ -13,12 +14,26 @@ class EditorEvent extends Component{
       sort:'0',
       voice_name:'',
       music_id:'',
+      loop:'',
       file:'',
       fileUrl:'',
-      valid:{
-        name:undefined,
-        music_id:undefined,
-        file:undefined
+    }
+    this.valid={
+      name:{
+        change:false,
+        notice:''
+      },
+      music_id:{
+        change:false,
+        notice:''
+      },
+      file:{
+        change:false,
+        notice:''
+      },
+      voice_name:{
+        change:false,
+        notice:''
       }
     }
   }
@@ -31,9 +46,7 @@ class EditorEvent extends Component{
           <li className='input-img'>
             <span>上传图片</span>
             <img src={this.state.fileUrl} alt=''/>
-            <i className='valid'
-              style={this.state.valid.file === false? null: {display:'none'}}
-              >图片不符合要求</i>
+            <i className='valid' style={!this.valid.file.change? {display: 'none'}: null}>{this.valid.file.notice= validFile(this.state.file,{size: 2*1024*1024, name:[/\.jpg$/,/\.png$/,/\.jpeg/]})}</i>
             <input type='file'
               onChange={this.handleFile.bind(this)}
               />
@@ -45,12 +58,8 @@ class EditorEvent extends Component{
             <input type='text' placeholder='请输入提醒名称'
               onChange={this.handleName.bind(this)}
               value={this.state.name}
-              />
-            <i className='valid'
-              style={this.state.valid.name === false? null: {display:'none'}}
-            >
-            不能为空！
-            </i>
+            />
+            <i className='valid' style={!this.valid.name.change? {display: 'none'}: null}>{this.valid.name.notice= valid(this.state.name,['require'])}</i>
           </li>
           <li>
             <span>提醒时间</span>
@@ -88,7 +97,25 @@ class EditorEvent extends Component{
             <input type='text' placeholder='请输入语音文字'
               onChange={this.handleVoice.bind(this)}
               value={this.state.voice_name}
-              />
+            />
+            <i className='valid' style={!this.valid.voice_name.change? {display: 'none'}: null}>{this.valid.voice_name.notice= valid(this.state.voice_name,['require'])}</i>
+          </li>
+          <li>
+            <span>提醒次数</span>
+              <select
+                onChange={e => this.setState({loop: e.target.value})}
+                value={this.state.loop}
+              >
+                <option value='0000000'>仅一次</option>
+                <option value='1111111'>每天</option>
+                <option value='1000000'>每周一</option>
+                <option value='0100000'>每周二</option>
+                <option value='0010000'>每周三</option>
+                <option value='0001000'>每周四</option>
+                <option value='0000100'>每周五</option>
+                <option value='0000010'>每周六</option>
+                <option value='0000001'>每周日</option>
+              </select>
           </li>
           <li>
             <span>音乐id</span>
@@ -97,11 +124,7 @@ class EditorEvent extends Component{
               value={this.state.music_id}
               />
           </li>
-          <i className='valid'
-            style={this.state.valid.music_id === false? null: {display:'none'}}
-          >
-          只能为纯数字且不能为空！
-          </i>
+          <i className='valid' style={!this.valid.music_id.change? {display: 'none'}: null}>{this.valid.music_id.notice= valid(this.state.music_id,['require','number'])}</i>
           <li>
             <span>权重</span>
             <select
@@ -127,36 +150,35 @@ class EditorEvent extends Component{
     )
   }
   componentDidMount(){
-    const {icon,name, sort, words, music_id, time}= this.props.location.state
+    const {icon,name, sort, voice_name, music_id, time, loop}= this.props.location.state
     const hours= time.split(':')[0]
     const minutes= time.split(':')[1]
     this.setState({
       name,
       sort,
-      words,
       hours,
       minutes,
       music_id,
-      fileUrl: icon
+      voice_name,
+      loop,
+      fileUrl: icon,
+      file:'ignore'
     })
   }
   handleName(e){
-    const userInput= e.target.value
-    const valid= Object.assign({}, this.state.valid)
-    valid.name= /\S+/.test(userInput)
-    this.setState({name: userInput,valid})
+    this.valid.name.change= true
+    this.setState({name: e.target.value})
   }
   handleVoice(e){
+    this.valid.voice_name.change= true
     this.setState({voice_name: e.target.value})
   }
   handleSort(e){
     this.setState({sort: e.target.value})
   }
   handleMusicId(e){
-    const userInput= e.target.value
-    const valid= Object.assign({}, this.state.valid)
-    valid.music_id= /\d+/.test(userInput)
-    this.setState({music_id:userInput, valid})
+    this.valid.music_id.change= true
+    this.setState({music_id: e.target.value})
   }
   handleHours(e){
     this.setState({hours: e.target.value})
@@ -165,21 +187,17 @@ class EditorEvent extends Component{
     this.setState({minutes: e.target.value})
   }
   handleFile(e){
-    const userInput= e.target.files[0]
-    const valid= Object.assign({}, this.state.valid)
-    valid.file= userInput.size>2*1024*1024? false: true
-    this.setState({file:userInput, valid})
-
+    this.valid.file.change= true
+    this.setState({file: e.target.files[0]})
     const fileReader= new FileReader()
     fileReader.readAsDataURL(e.target.files[0])
     fileReader.onload= () => {
       this.setState({fileUrl: fileReader.result})
     }
-    this.setState({file: e.target.files[0]})
   }
   dispatchEditor(icon){
-    const {name,voice_name, music_id, hours, sort, minutes} = this.state
-    const params={name, voice_name, music_id, sort}
+    const {name,voice_name, music_id, hours, sort, minutes, loop} = this.state
+    const params={name, voice_name, music_id, sort, loop}
     Object.assign(params,{
       default_plan_event_id: this.props.location.state.id,
       time:hours+':'+minutes
@@ -187,25 +205,13 @@ class EditorEvent extends Component{
     this.props.dispatch(editorHabitPlanEvent(params))
   }
   handleSubmit(){
-    const {name, music_id, file} = this.state.valid
-    const valid= Object.assign({}, this.state.valid)
-    if(!file){
-      if(this.state.fileUrl !== this.props.location.state.icon){
-        valid.file= false
-        return this.setState({valid})
+    const {name, music_id, file, voice_name} = this.valid
+    if(name.notice||music_id.notice||file.notice||voice_name.notice){
+      const keys=Object.keys(this.valid)
+      for(let i of keys){
+        this.valid[i].change= true
       }
-    }
-    if(!name){
-      if(this.state.name !== this.props.location.state.name){
-        valid.name= false
-        return this.setState({valid})
-      }
-    }
-    if(!music_id){
-      if(this.state.music_id !== this.props.location.state.music_id){
-        valid.music_id= false
-        return this.setState({valid})
-      }
+      return this.forceUpdate()
     }
     fileUpload(this.state.file,this.dispatchEditor.bind(this))
   }

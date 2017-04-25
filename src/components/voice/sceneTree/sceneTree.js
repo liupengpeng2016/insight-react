@@ -31,7 +31,7 @@ class SceneTree extends Component{
                     <span onClick={toggleSecondScene} id={i}>
                       {sceneTree[i].name}
                     </span>
-                    <ul className='hide'>
+                    <ul>
                       {
                         (function(){
                           const outPut= []

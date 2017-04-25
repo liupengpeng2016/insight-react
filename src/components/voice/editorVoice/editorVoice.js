@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import './editorVoice.css'
 import {connect} from 'react-redux'
+import {valid, fileValid} from '../../../plugs/plugs.js'
 import {getAllFirstSceneList, getAllSecondSceneList} from '../../../redux/actions.js'
 class EditorVoice extends Component{
   constructor(){
@@ -132,8 +133,8 @@ class EditorVoice extends Component{
                     <li>
                       <span>权重</span>
                       <select
-                        onChange={this.handleSort.bind(this,i)}
-                        value={val.sort}
+                        onChange={this.handleWeight.bind(this,i)}
+                        value={val.weight}
                         >
                         <option value='0'>0</option>
                         <option value='1'>1</option>
@@ -217,7 +218,7 @@ class EditorVoice extends Component{
   }
   addAnswers(){
     let answers= [...this.state.answers]
-    answers.push({answer:'', sort:'', age:'', answer_id:''})
+    answers.push({answer:'', weight:'0', age:'0', answer_id:''})
     this.setState({answers})
   }
   addQuestions(){
@@ -234,29 +235,31 @@ class EditorVoice extends Component{
     this.setState({secondScene: e.target.value})
   }
   handleQuestion(i,e){
-    const question = [...this.state.questions]
-    question[i].question= e.target.value
-    this.setState({question})
+    const questions = [...this.state.questions]
+    questions[i].question= e.target.value
+    console.log(questions)
+    console.log(this.state.questions)
+    this.setState({questions})
   }
   handleKeyword(i,e){
-    const question = [...this.state.questions]
-    question[i].keyword= e.target.value
-    this.setState({question})
+    const questions = [...this.state.questions]
+    questions[i].keyword= e.target.value
+    this.setState({questions})
   }
   handleAnswer(i,e){
-    const answer = [...this.state.answers]
-    answer[i].answer= e.target.value
-    this.setState({answer})
+    const answers = [...this.state.answers]
+    answers[i].answer= e.target.value
+    this.setState({answers})
   }
   handleAge(i,e){
-    const answer = [...this.state.answers]
-    answer[i].age= e.target.value
-    this.setState({answer})
+    const answers = [...this.state.answers]
+    answers[i].age= e.target.value
+    this.setState({answers})
   }
-  handleSort(i,e){
-    const answer = [...this.state.answers]
-    answer[i].sort= e.target.value
-    this.setState({answer})
+  handleWeight(i,e){
+    const answers = [...this.state.answers]
+    answers[i].weight= e.target.value
+    this.setState({answers})
   }
   delQuestion(question_id, i){
     const questions= [...this.state.questions]

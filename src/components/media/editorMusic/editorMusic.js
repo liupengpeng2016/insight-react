@@ -8,15 +8,14 @@ class EditorMusic extends Component{
   constructor(props){
     super(props)
     this.state={
-      category:'',
+      category:'1',
       name: '',
       singer:'',
-      url:'',
-      druation:'',
+      duration:'',
       age:'',
       tags:'',
       desc:'',
-      sort:'',
+      sort:'0',
       status_show: true,
       status_hide: false,
       file:'',
@@ -166,13 +165,12 @@ class EditorMusic extends Component{
     )
   }
   componentDidMount(){
-    const {name, age, sort, duration, singer, cover}= this.props.location.state
+    const {name, age, sort, duration, singer, status}= this.props.location.state
     this.setState({
       name,
       age,
       sort,
       singer,
-      fileUrl: cover,
       file: 'ignore',
       duration: Number(duration)/1000,
       status_show: status? true : false,
@@ -184,6 +182,11 @@ class EditorMusic extends Component{
     this.valid.name.change= true
     this.setState({name: e.target.value, valid})
   }
+  changeUrl(e){
+    this.valid.url.change= true
+    this.setState({url: e.target.value, valid})
+  }
+
   changeDesc(e){
     this.valid.desc.change= true
 
@@ -245,7 +248,6 @@ class EditorMusic extends Component{
       category,
       name,
       singer,
-      url,
       duration,
       age,
       tags,
@@ -253,13 +255,12 @@ class EditorMusic extends Component{
       sort,
       status_show,
     } = this.state
-    const { id }= this.props.location.state
+    const id = this.props.location.state.id||this.props.location.state.music_id
     this.props.dispatch(editorMusic({
       id,
       category,
       name,
       singer,
-      url,
       age,
       tags,
       desc,
@@ -270,7 +271,7 @@ class EditorMusic extends Component{
     }))
   }
   handleSubmit(){
-    const {name, singer, age, tags, desc, duration,file } = this.valid
+    const {name, singer, age, tags, desc, duration,file} = this.valid
     if(name.notice||singer.notice||age.notice||tags.notice||desc.notice||duration.notice||file.notice){
       const keys= Object.keys(this.valid)
       for(let i of keys){

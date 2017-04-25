@@ -209,7 +209,7 @@ class EditorAlbum extends Component{
       cover,
       desc,
       sort,
-      id: this.props.location.state.id,
+      id: this.props.location.state.id||this.props.location.state.album_id,
       status: status_show ? 1 : 0
     }))
   }

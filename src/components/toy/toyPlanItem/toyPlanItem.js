@@ -13,6 +13,7 @@ class ToyPlanItem extends Component{
   }
   render(){
     let {itemData} = this.props
+    console.log(this.props)
     itemData= itemData||{}
     return (
       <ul className='toy-plan-item'>
@@ -26,7 +27,7 @@ class ToyPlanItem extends Component{
               <tr><td>{itemData.desc}</td></tr>
             </tbody>
           </table>
-          <p className='submit'><Link to='/toy/editorToyAction'>编辑玩偶动作</Link></p>
+          <p className='submit'><Link to={{pathname: '/toy/editorToyAction', state: this.props.target}}>编辑玩偶动作</Link></p>
         </li>
         <li>
           <h2>语音播放顺序：顺序播放</h2>
@@ -49,7 +50,9 @@ class ToyPlanItem extends Component{
                         {
                         <div className='play-music'>
                           <audio src={val.audio_url}></audio>
-                          <p onClick={this.handleMusic.bind(this)}>点击试听</p>
+                          <p
+                            style={{color:'#5cc1df',cursor:'pointer'}}
+                            onClick={this.handleMusic.bind(this)}>点击试听</p>
                         </div>
                         }</td>
                       <td>{val.updated_at.slice(0,10)}</td>

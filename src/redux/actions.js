@@ -1,18 +1,15 @@
 import {
-  SAVE_MUSIC_LIST,
-  SAVE_ALBUM_LIST,
-  SAVE_TOPIC_LIST,
-  SAVE_BANNER_LIST,
-  SAVE_LINK_ALBUM_LIST,
-  SAVE_SEARCH_MUSIC_LIST,
-  SAVE_LINK_TOPIC_LIST,
-  SAVE_HABIT_PLAN,
-  SAVE_HABIT_PLAN_EVENT,
+  SAVE_MUSIC_LIST, SAVE_MUSIC_OF_ALBUM,
+  SAVE_ALBUM_LIST, SAVE_TOPIC_LIST,
+  SAVE_BANNER_LIST, SAVE_LINK_ALBUM_LIST,
+  SAVE_SEARCH_MUSIC_LIST, SAVE_LINK_TOPIC_LIST,
+  SAVE_HABIT_PLAN, SAVE_HABIT_PLAN_EVENT,
   SAVE_TOY_PLAN, FETCH_NOTICE,
   SAVE_DATA_SITUATION, SAVE_USER_LIST,
   SAVE_VOICE_LIST, SAVE_CORPUS_LIST,
   SAVE_FIRST_SCENE_LIST, SAVE_SECOND_SCENE_LIST,
-  SAVE_ALL_FIRST_SCENE_LIST, SAVE_ALL_SECOND_SCENE_LIST
+  SAVE_ALL_FIRST_SCENE_LIST, SAVE_ALL_SECOND_SCENE_LIST,
+  SAVE_ALBUM_OF_TOPIC
 } from './actionTypes.js'
 import {baseUrl} from '../config/config.js'
 import fetch from 'isomorphic-fetch'
@@ -73,6 +70,8 @@ const saveBannerList = data => ({type:SAVE_BANNER_LIST, data})
 const saveLinkAlbumList = data => ({type:SAVE_LINK_ALBUM_LIST, data})
 const saveSearchMusicList = data => ({type:SAVE_SEARCH_MUSIC_LIST, data})
 const saveLinkTopicList = data => ({type: SAVE_LINK_TOPIC_LIST, data})
+const saveMusicOfAlbum = data => ({type: SAVE_MUSIC_OF_ALBUM, data})
+const saveAlbumOfTopic = data => ({type: SAVE_ALBUM_OF_TOPIC, data})
 //获取music列表
 export const getMusicList =
   params =>
@@ -142,6 +141,10 @@ export const editorAlbum =
 export const linkToTopic =
   params =>
     dispatch => fetchData('/tingting/album/associateSubject', params, dispatch, null)
+//获取专辑下的音乐
+export const getMusicOfAlbum =
+  params =>
+    dispatch => fetchData('/tingting/album/musics', params, dispatch, saveMusicOfAlbum)
 //删除专题项
 export const delTopicItem =
   params =>
@@ -158,6 +161,10 @@ export const toggleTopicStatus =
 export const editorTopic =
   params =>
     dispatch => fetchData('/tingting/subject/edit', params, dispatch, null)
+//获取专题下的专辑列表
+export const getAlbumOfTopic =
+  params =>
+    dispatch => fetchData('/tingting/subject/albums', params, dispatch, saveAlbumOfTopic)
 //banner删除
 export const delBannerItem =
   params =>

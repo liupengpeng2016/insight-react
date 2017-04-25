@@ -18,6 +18,7 @@ class ToyPlan extends Component{
         </ul>
         <ToyPlanItem
           itemData={this.getItemData()}
+          target={this.props.params.id}
           />
       </div>
     )

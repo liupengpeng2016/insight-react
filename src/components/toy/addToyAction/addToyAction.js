@@ -1,30 +1,40 @@
-import React, {Component}  from 'react'
-import './addToyAction.css'
+import React, {Component} from 'react'
 import {addToyAction}  from '../../../redux/actions.js'
 import {connect} from 'react-redux'
-class AddToyAction extends Component {
+import {valid, validFile} from '../../../plugs/plugs.js'
+import fileUpload from '../../../fileUpload/fileUpload.js'
+class AddToyAction extends Component{
   constructor(props){
     super(props)
     this.state={
-      action: '-1',
-      typeWord: true,
-      typeFile: false,
-      content:''
+      action: 'shake',
+      content_type:'1',
+      content:'',
+      file:''
+    }
+    this.valid= {
+      content:{
+        notice:'',
+        change:false
+      },
+      file:{
+        notice:'',
+        change:false
+      }
     }
   }
   render(){
     return (
-      <div className='add-toy-action toy-plan'>
-        <h1>玩偶设置>添加动作</h1>
-        <h2>设置动作信息</h2>
+      <div className='root-media-list'>
+        <h1>玩偶设置>新增动作内容</h1>
+        <h2>新增动作内容</h2>
         <ul className='add-item'>
           <li>
             <span>选择动作</span>
             <select
-              onChange={this.handleAction.bind(this)}
+              onChange={e => this.setState({action: e.target.value})}
               value={this.state.action}
-              >
-              <option value='-1'>请选择动作</option>
+            >
               <option value='shake'>摇一摇</option>
               <option value='pat'>拍一下</option>
               <option value='wakeup'>唤醒</option>
@@ -32,63 +42,76 @@ class AddToyAction extends Component {
           </li>
           <li>
             <span>内容类型</span>
-            <input type='checkbox' id='action-words'
-              onChange={this.handleTypeWord.bind(this)}
-              checked={this.state.typeWord}
-              />
-            <label htmlFor='action-words'>文字</label>
-            <input type='checkbox' id='action-audio'
-              onChange={this.handleTypeFile.bind(this)}
-              checked={this.state.typeFile}
-              />
-            <label htmlFor='action-audio'>音频文件</label>
+            <select
+              onChange={ e=> this.setState({content_type: e.target.value})}
+              value={this.state.content_type}
+            >
+              <option value='1'>文字</option>
+              <option value='2'>音频文件</option>
+            </select>
           </li>
-          <li className='input-img'>
-            <span></span>
-            <input type='text' placeholder='请输入文字信息'
-              onChange={this.handleContent.bind(this)}
-              value={this.state.content}
-              />
-          </li>
-          <li className='input-img' style={{paddingTop: 0}}>
-            <span style={{float:'left'}}></span>
+          <li className='input-img'
+            style={this.state.content_type=== '1'? {display:'none'}: null}
+          >
+            <span>上传歌曲</span>
+            <i className='valid' style={!this.valid.file.change? {display: 'none'}: null}>{this.valid.file.notice= validFile(this.state.file,{ name:[/\.mp3$/,/\.m4a$/]})}</i>
             <input type='file'
               onChange={this.handleFile.bind(this)}
-              />
-            <h1>选取文件</h1>
-            <p>音频格式为mp3或mp4，大小为20m以内。</p>
+            />
+            <h1>选择文件</h1>
+            <p>音频格式为mp3或m4a。</p>
           </li>
           <li
-            onClick={this.handleSubmit.bind(this)}
-            >
-             提交
+            style={this.state.content_type=== '2'? {display:'none'}: null}
+           >
+            <span>文字</span>
+            <input type='text' placeholder='请输入文字信息'
+              onChange={this.handleContent.bind(this)}
+              checked={this.state.content}
+            />
+            <i className='valid' style={!this.valid.content.change? {display: 'none'}: null}>{this.valid.content.notice= valid(this.state.content,['require'])}</i>
           </li>
+          <li onClick={this.handleSubmit.bind(this)}>提交</li>
         </ul>
       </div>
     )
   }
-  handleAction(e){
-    this.setState({action: e.target.value})
-  }
-  handleTypeWord(e){
-    this.setState({typeFile: !e.target.checked,typeWord: e.target.checked})
-  }
-  handleTypeFile(e){
-    this.setState({typeFile: e.target.checked,typeWord: !e.target.checked})
+  handleFile(e){
+    this.valid.file.change= true
+    this.setState({file: e.target.files[0]})
   }
   handleContent(e){
+    this.valid.content.change= true
     this.setState({content: e.target.value})
   }
-  handleFile(){
-
-  }
-  handleSubmit(){
-    const {action, typeWord, content} = this.state
+  dispatchEditor(pic){
+    const {action, content_type, content} = this.state
     this.props.dispatch(addToyAction({
       action,
-      content,
-      contentType: typeWord? '1' : '2'
+      content_type,
+      content:pic||content
     }))
+  }
+  handleSubmit(){
+    const {content, file}= this.valid
+    if(this.state.content_type=== '1'){
+      if(content.notice){
+        const keys= Object.keys(this.valid)
+        for(let i of keys){
+          this.valid[i].change= true
+        }
+        return this.forceUpdate()
+      }
+    }else{
+      if(file.notice){
+        const keys= Object.keys(this.valid)
+        for(let i of keys){
+          this.valid[i].change= true
+        }
+        return this.forceUpdate()
+      }
+    }
+    fileUpload(this.state.file,this.dispatchEditor.bind(this))
   }
 
 }

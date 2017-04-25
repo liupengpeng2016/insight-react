@@ -29,9 +29,6 @@ class FetchNotice extends Component{
     if(/addEvent/.test(harsh)){
       return history.back()
     }
-    if(/editorPlan/.test(harsh)){
-      return history.back()
-    }
     if(/other/.test(harsh)){
       return history.back()
     }
@@ -47,6 +44,31 @@ class FetchNotice extends Component{
     if(/addBanner/.test(harsh)){
       return history.back()
     }
+    if(/addToyAction/.test(harsh)){
+      return history.back()
+    }
+    if(/editorPlan/.test(harsh)){
+      return history.back()
+    }
+    if(/editorToyAction/.test(harsh)){
+      return history.back()
+    }
+    if(/editorMusic/.test(harsh)){
+      return history.back()
+    }
+    if(/editorAlbum/.test(harsh)){
+      return history.back()
+    }
+    if(/editorBanner/.test(harsh)){
+      return history.back()
+    }
+    if(/editorTopic/.test(harsh)){
+      return history.back()
+    }
+    if(/editorToyInformation/.test(harsh)){
+      return history.back()
+    }
+
   }
 }
 function mapStateToProps(state){

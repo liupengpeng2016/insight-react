@@ -6,8 +6,9 @@ import {
   SAVE_LINK_TOPIC_LIST,SAVE_HABIT_PLAN,SAVE_HABIT_PLAN_EVENT,
   SAVE_TOY_PLAN, FETCH_NOTICE,SAVE_USER_LIST,SAVE_DATA_SITUATION,
   SAVE_VOICE_LIST, SAVE_CORPUS_LIST,SAVE_FIRST_SCENE_LIST,
-  SAVE_SECOND_SCENE_LIST,SCENE_TREE,
-  SAVE_ALL_FIRST_SCENE_LIST, SAVE_ALL_SECOND_SCENE_LIST
+  SAVE_SECOND_SCENE_LIST,SCENE_TREE,SAVE_MUSIC_OF_ALBUM,
+  SAVE_ALL_FIRST_SCENE_LIST, SAVE_ALL_SECOND_SCENE_LIST,
+  SAVE_ALBUM_OF_TOPIC
 } from './actionTypes.js'
 /********** visibility *********/
 function visibility(state={
@@ -49,7 +50,9 @@ function mediaData(state={
   bannerList: [],
   linkAlbumList: [],
   searchMusicList: undefined,
-  linkTopicList: []
+  linkTopicList: [],
+  musicOfAlbum:[],
+  albumOfTopic:[]
 },action){
   switch(action.type){
     case SAVE_MUSIC_LIST:
@@ -66,6 +69,10 @@ function mediaData(state={
     return Object.assign({}, state, {searchMusicList: action.data})
     case SAVE_LINK_TOPIC_LIST:
     return Object.assign({}, state, {linkTopicList: action.data})
+    case SAVE_MUSIC_OF_ALBUM:
+    return Object.assign({}, state, {musicOfAlbum: action.data})
+    case SAVE_ALBUM_OF_TOPIC:
+    return Object.assign({}, state, {albumOfTopic: action.data})
     default:
     return state
   }

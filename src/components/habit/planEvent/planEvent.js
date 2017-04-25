@@ -15,7 +15,7 @@ class PlanEvent extends Component {
     const {planEvent} = this.props
     return (
       <div className='sleep-plan-list'>
-        <h1>睡眠习惯养成计划</h1>
+        <h1>计划事件</h1>
         <table>
           <tbody>
             <tr>
@@ -26,6 +26,7 @@ class PlanEvent extends Component {
               <td>玩偶语音</td>
               <td>是否打开</td>
               <td>提醒时间</td>
+              <td>提醒次数</td>
               <td>权重</td>
               <td>操作</td>
             </tr>
@@ -46,6 +47,31 @@ class PlanEvent extends Component {
                   </td>
                   <td>{val.status === 1 ? '是' : '否'}</td>
                   <td>{val.time}</td>
+                  <td>{
+                      (()=>{
+                        switch(val.loop){
+                          case '0000000':
+                          return '仅一次'
+                          case '1111111':
+                          return '每天'
+                          case '1000000':
+                          return '每周一'
+                          case '0100000':
+                          return '每周二'
+                          case '0010000':
+                          return '每周三'
+                          case '0001000':
+                          return '每周四'
+                          case '0000100':
+                          return '每周五'
+                          case '0000010':
+                          return '每周六'
+                          case '0000001':
+                          return '每周日'
+                          default: return
+                        }
+                      })()
+                    }</td>
                   <td>{val.sort}</td>
                   <td>
                     {

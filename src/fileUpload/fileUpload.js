@@ -4,6 +4,9 @@ function fileUpload(file, callBack){
   if(file=== 'ignore'){
     return callBack('')
   }
+  if(!file){
+    return callBack('')
+  }
   const formParams= new FormData()
   formParams.append('files',file)
   fetch(baseUrl+'/core/common/upload',{

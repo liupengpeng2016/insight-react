@@ -1,33 +1,42 @@
 import React, {Component} from 'react'
 import './addVoice.css'
 import {connect} from 'react-redux'
+import {valid} from '../../../plugs/plugs.js'
 import {getAllFirstSceneList, getAllSecondSceneList} from '../../../redux/actions.js'
 class AddVoice extends Component{
   constructor(){
     super()
     this.state={
-      checkbox:{},
+      checkbox:'',
       firstScene: '',
       secondScene:'',
       answers:[{answer: '', weight: '0', age: '0'}],
       questions:[{question: '', keyword: ''}]
     }
+    this.valid={
+      secondScene:{
+        change: false,
+        notice:''
+      },
+      questions:[{change: false, notice:''}],
+      keywords:[{change: false, notice:''}],
+      answers:[{change: false, notice:''}]
+    }
   }
   render(){
-    let {hideAddVoice, toggleAddVoice, corpusList, allFirstSceneList, allSecondSceneList} = this.props
+    let {is_scene_corpus, hideAddVoice, toggleAddVoice, corpusList, allFirstSceneList, allSecondSceneList} = this.props
     const {answers, questions} = this.state
     return (
       <div className='voice-popup editor-voice'
         style={toggleAddVoice? null:{display:'none'}}
-        >
+      >
           <div className='editor-voice-info'>
             <h3>
               <span
               onClick={hideAddVoice}
               >×</span>
             </h3>
-            <h1
-              >新增语料</h1>
+            <h1>{'新增'+ (is_scene_corpus? '场景':'') +'语料'}</h1>
             <ul className='add-voice-scope'>
               <li>
                 <span>语料库</span>
@@ -37,7 +46,7 @@ class AddVoice extends Component{
                       <p key={i}>
                         <input type='checkbox' id={`addVoice${i}`}
                           onChange={this.handleChecked.bind(this, val.corpus_id)}
-                          checked={this.state.checkbox[val.corpus_id]}
+                          checked={this.state.checkbox[val.corpus_id]|| false}
                         />
                         <label htmlFor={`addVoice${i}`}>{val.name}</label>
                       </p>
@@ -51,7 +60,7 @@ class AddVoice extends Component{
                     onChange={this.handleFirseScene.bind(this)}
                     value={this.state.firstScene}
                     style={{borderRight:'none'}}
-                    >
+                  >
                     <option value=''>请选择一级场景</option>
                     {
                       allFirstSceneList.map((val, i)=> {
@@ -76,6 +85,7 @@ class AddVoice extends Component{
                         })
                       }
                   </select>
+                  <i className='valid' style={!this.valid.secondScene.change? {visibility:'hidden'}: null}>{this.valid.secondScene.notice= valid(this.state.secondScene,['require'],['必选！'])}</i>
               </li>
             </ul>
               {
@@ -87,11 +97,12 @@ class AddVoice extends Component{
                         <input type='text' placeholder='请输入问题'
                           onChange={this.handleQuestion.bind(this,i)}
                           value={(questions[i]||{}).question}
-                          />
+                        />
                       </li>
                       <li className='editor-voice-notice'>
                         <ul>
                           <li>
+                            <i className='valid' style={!this.valid.questions[i].change? {visibility: 'hidden'}: null}>{this.valid.questions[i].notice= valid(questions[i].question,['require'])}</i>
                           </li>
                           <li>
                             <span className='del'
@@ -104,11 +115,18 @@ class AddVoice extends Component{
                         <span>关键词</span>
                         <input type='text' placeholder='请输入关键词，多个关键词之间用“／”间隔'
                           onChange={this.handleKeyword.bind(this,i)}
-                          value={(questions[i]||{}).keywords}
-                          />
+                          value={(questions[i]||{}).keyword}
+                        />
                       </li>
                       <li className='editor-voice-notice'>
                         <ul>
+                          <li>
+                            <i className='valid' style={!this.valid.keywords[i].change? {visibility: 'hidden'}: null}>{this.valid.keywords[i].notice= valid(questions[i].keyword,['require'])}</i>
+                          </li>
+                          <li>
+                            <span className='del'
+                              ></span>
+                          </li>
                         </ul>
                       </li>
                     </ul>
@@ -125,24 +143,25 @@ class AddVoice extends Component{
                       <input type='text' placeholder='请输入问题'
                         onChange={this.handleAnswer.bind(this, i)}
                         value={(answers[i]||{}).answer}
-                        />
+                      />
                     </li>
                     <li className='editor-voice-notice'>
                       <ul>
                         <li>
+                          <i className='valid' style={!this.valid.answers[i].change? {visibility: 'hidden'}: null}>{this.valid.answers[i].notice= valid(answers[i].answer,['require'])}</i>
                         </li>
                         <li>
                           <span className='del'
                             onClick={ this.delAnswer.bind(this, val.answer_id, i)}
-                            >删除</span>
+                          >删除</span>
                         </li>
                       </ul>
                     </li>
                     <li>
                       <span>权重</span>
                       <select
-                        onChange={this.handleSort.bind(this,i)}
-                        value={val.sort}
+                        onChange={this.handleWeight.bind(this,i)}
+                        value={val.weight}
                         >
                         <option value='0'>0</option>
                         <option value='1'>1</option>
@@ -162,7 +181,7 @@ class AddVoice extends Component{
                       <select
                         onChange={this.handleAge.bind(this,i)}
                         value={val.age}
-                        >
+                      >
                         <option value='0'>通用</option>
                         <option value='1'>入园前</option>
                         <option value='2'>幼小衔接</option>
@@ -194,6 +213,40 @@ class AddVoice extends Component{
     return arr
   }
   handleSubmit(){
+    const showNotice= ()=> {
+      const keys=Object.keys(this.valid)
+      for(let i of keys){
+        if(this.valid[i] instanceof Array){
+          for(let k of this.valid[i]){
+            k.change= true
+          }
+        }else{
+          this.valid[i].change= true
+        }
+      }
+    }
+    if(this.valid.secondScene.notice){
+      showNotice()
+      return this.forceUpdate()
+    }
+    for(let i of this.valid.answers){
+      if(!i.notice){
+        showNotice()
+        return this.forceUpdate()
+      }
+    }
+    for(let i of this.valid.keywords){
+      if(!i.notice){
+        showNotice()
+        return this.forceUpdate()
+      }
+    }
+    for(let i of this.valid.questions){
+      if(!i.notice){
+        showNotice()
+        return this.forceUpdate()
+      }
+    }
     const {addSubmit, is_scene_corpus} = this.props
     let {questions, answers, secondScene} = this.state
     questions= JSON.stringify(questions)
@@ -209,17 +262,28 @@ class AddVoice extends Component{
   }
   addAnswers(){
     let answers= [...this.state.answers]
-    answers.push({answer:'', sort:'0', age:'0'})
+    answers.push({answer:'', weight:'0', age:'0'})
+    let answers_valid= [...this.valid.answers]
+    answers_valid.push({change: false, notice:''})
+    Object.assign(this.valid, {answers: answers_valid})
     this.setState({answers})
   }
   addQuestions(){
+    let questions_valid= [...this.valid.questions]
+    questions_valid.push({change: false, notice:''})
+    Object.assign(this.valid, {questions: questions_valid})
+
+    let keywords_valid= [...this.valid.keywords]
+    keywords_valid.push({change: false, notice:''})
+    Object.assign(this.valid, {keywords: keywords_valid})
+
     let questions= [...this.state.questions]
     questions.push({question:'', keyword:''})
     this.setState({questions})
   }
   //初始化数据
   componentWillReceiveProps(nextProps){
-    if(nextProps.corpusList){
+    if(!this.state.checkbox){
       const checkbox = {}
       for( let i= 0; i<nextProps.corpusList.length; i++){
         Object.assign(checkbox, {[nextProps.corpusList[i].corpus_id]: false})
@@ -236,39 +300,54 @@ class AddVoice extends Component{
     this.props.dispatch(getAllSecondSceneList({f_scene_id: e.target.value}))
   }
   handleSecondScene(e){
+    this.valid.secondScene.change= true
     this.setState({secondScene: e.target.value})
   }
   handleQuestion(i,e){
-    const question = [...this.state.questions]
-    question[i].question= e.target.value
-    this.setState({question})
+    this.valid.questions[i].change= true
+    const questions = [...this.state.questions]
+    questions[i].question= e.target.value
+    this.setState({questions})
   }
   handleKeyword(i,e){
-    const question = [...this.state.questions]
-    question[i].keyword= e.target.value
-    this.setState({question})
+    this.valid.keywords[i].change= true
+    const questions = [...this.state.questions]
+    questions[i].keyword= e.target.value
+    this.setState({questions})
   }
   handleAnswer(i,e){
-    const answer = [...this.state.answers]
-    answer[i].answer= e.target.value
-    this.setState({answer})
+    this.valid.answers[i].change= true
+    const answers = [...this.state.answers]
+    answers[i].answer= e.target.value
+    this.setState({answers})
   }
   handleAge(i,e){
-    const answer = [...this.state.answers]
-    answer[i].age= e.target.value
-    this.setState({answer})
+    const answers = [...this.state.answers]
+    answers[i].age= e.target.value
+    this.setState({answers})
   }
-  handleSort(i,e){
-    const answer = [...this.state.answers]
-    answer[i].sort= e.target.value
-    this.setState({answer})
+  handleWeight(i,e){
+    const answers = [...this.state.answers]
+    answers[i].weight= e.target.value
+    this.setState({answers})
   }
   delQuestion(question_id, i){
+    let questions_valid= [...this.valid.questions]
+    let keywords_valid= [...this.valid.keywords]
+    questions_valid.splice(i,1)
+    keywords_valid.splice(i,1)
+    Object.assign(this.valid, {questions: questions_valid})
+    Object.assign(this.valid, {keywords: keywords_valid})
+
     const questions= [...this.state.questions]
     questions.splice(i,1)
     this.setState({questions})
   }
   delAnswer(answer_id, i){
+    let answers_valid= [...this.valid.answers]
+    answers_valid.splice(i,1)
+    Object.assign(this.valid, {answers: answers_valid})
+
     const answers= [...this.state.answers]
     answers.splice(i,1)
     this.setState({answers})

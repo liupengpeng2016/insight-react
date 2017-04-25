@@ -19,6 +19,10 @@ import EditorMusic from '../components/media/editorMusic/editorMusic.js'
 import EditorAlbum from '../components/media/editorAlbum/editorAlbum.js'
 import EditorTopic from '../components/media/editorTopic/editorTopic.js'
 import EditorBanner from '../components/media/editorBanner/editorBanner.js'
+import AlbumList from '../components/media/albumList/albumList.js'
+import MusicOfAlbum from '../components/media/musicOfAlbum/musicOfAlbum.js'
+import TopicList from '../components/media/topicList/topicList.js'
+import AlbumOfTopic from '../components/media/albumOfTopic/albumOfTopic.js'
 //habit
 import Habit from '../components/habit/root/habit.js'
 import ShowPlan from '../components/habit/showPlan/showPlan.js'
@@ -49,8 +53,16 @@ const router = (
         <Route path='mediaList' component={MediaList}>
           <IndexRedirect to='music'></IndexRedirect>
           <Route path='music' component={Music}></Route>
-          <Route path='album' component={Album}></Route>
-          <Route path='topic' component={Topic}></Route>
+          <Route path='album' component={Album}>
+            <IndexRedirect to='albumList'></IndexRedirect>
+            <Route path='albumList' component={AlbumList}/>
+            <Route path='musicOfAlbum' component={MusicOfAlbum}/>
+          </Route>
+          <Route path='topic' component={Topic}>
+            <IndexRedirect to='topicList'></IndexRedirect>
+            <Route path='topicList' component={TopicList}></Route>
+            <Route path='albumOfTopic' component={AlbumOfTopic}></Route>
+          </Route>
           <Route path='banner' component={Banner}></Route>
         </Route>
         <Route path='editorMusic' component={EditorMusic}></Route>

@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import {addHabitPlan} from '../../../redux/actions.js'
 import {connect} from 'react-redux'
+import {valid, validFile} from '../../../plugs/plugs.js'
 import fileUpload from '../../../fileUpload/fileUpload.js'
 class AddPlan extends Component{
   constructor(props){
@@ -14,11 +15,23 @@ class AddPlan extends Component{
       statusHide: false,
       fileUrl: '',
       file:'',
-      valid:{
-        file:undefined,
-        name:undefined,
-        desc:undefined,
-        time_interval: undefined
+    }
+    this.valid={
+      name:{
+        change:false,
+        notice:''
+      },
+      desc:{
+        change:false,
+        notice:''
+      },
+      time_interval:{
+        change:false,
+        notice:''
+      },
+      file:{
+        change:false,
+        notice:''
       }
     }
   }
@@ -31,12 +44,10 @@ class AddPlan extends Component{
           <li className='input-img'>
             <span>图标</span>
             <img src={this.state.fileUrl} alt=''/>
-            <i className='valid'
-              style={this.state.valid.file === false? null: {display:'none'}}
-              >图片不符合要求!</i>
+            <i className='valid' style={!this.valid.file.change? {display: 'none'}: null}>{this.valid.file.notice= validFile(this.state.file,{size: 2*1024*1024, name:[/\.jpg$/,/\.png$/,/\.jpeg/]})}</i>
             <input type='file'
               onChange={this.handleFile.bind(this)}
-              />
+            />
             <h1>选取文件</h1>
             <p>请提供应用图标，图片格式为jpg或png，大小为2M以内。</p>
           </li>
@@ -45,32 +56,16 @@ class AddPlan extends Component{
             <input type='text' placeholder='请输入计划名称'
               onChange={this.handleName.bind(this)}
               value={this.state.name}
-              />
-            <span className='valid'
-              style={(()=>{
-                if(this.state.valid.name ===false ){
-                  return null
-                }
-                return {display:'none'}
-              })()}
-              >1-15 个汉字!
-            </span>
+            />
+          <i className='valid' style={!this.valid.name.change? {display: 'none'}: null}>{this.valid.name.notice= valid(this.state.name,['require'])||this.moreValid_words(this.state.name,/^\S{1,15}$/u, 1, 15)}</i>
           </li>
           <li>
             <span>计划描述</span>
             <input type='text' placeholder='请输入描述信息'
               onChange={this.handleDesc.bind(this)}
               value={this.state.desc}
-              />
-            <span className='valid'
-              style={(()=>{
-                if(this.state.valid.desc ===false ){
-                  return null
-                }
-                return {display:'none'}
-              })()}
-              >1-25 个汉字!
-            </span>
+            />
+            <i className='valid' style={!this.valid.desc.change? {display: 'none'}: null}>{this.valid.desc.notice= valid(this.state.desc,['require'])||this.moreValid_words(this.state.desc,/^\S{1,25}$/u, 1, 25)}</i>
           </li>
           <li>
             <span>权重</span>
@@ -97,9 +92,7 @@ class AddPlan extends Component{
               onChange={this.handleTime.bind(this)}
               value={this.state.time_interval}
             /> 秒
-            <i className='valid'
-              style={this.state.valid.time_interval === false? null: {display:'none'}}
-              >间隔小于15分钟，且必须为数字！</i>
+            <i className='valid' style={!this.valid.time_interval.change? {display: 'none'}: null}>{this.valid.time_interval.notice= valid(this.state.time_interval,['require','number'])||this.moreValid_time(this.state.time_interval, 15*60)}</i>
           </li>
           <li>
             <span>状态</span>
@@ -119,24 +112,32 @@ class AddPlan extends Component{
       </div>
     )
   }
+  moreValid_time(target, time){
+    if(Number(target)>time){
+      return '间隔不能超过15分钟！'
+    }
+    return ''
+  }
+  moreValid_words(target, reg, min, max){
+    if(!reg.test(target)){
+      return '字数为'+min+'个到'+max +'个!'
+    }
+    return ''
+  }
   handleName(e){
-    const valid= Object.assign({}, this.state.valid)
-    valid.name= /^.{1,15}$/u.test(e.target.value)
-    this.setState({name: e.target.value, valid})
+    this.valid.name.change= true
+    this.setState({name: e.target.value})
   }
   handleDesc(e){
-    const valid= Object.assign({}, this.state.valid)
-    valid.desc= /^.{1,25}$/u.test(e.target.value)
-    this.setState({desc: e.target.value, valid})
+    this.valid.desc.change= true
+    this.setState({desc: e.target.value})
   }
   handleSort(e){
     this.setState({sort: e.target.value})
   }
   handleTime(e){
-    const userInput= e.target.value
-    const valid= Object.assign({}, this.state.valid)
-    valid.time_interval= /\d+/.test(userInput) && Number(userInput, 10)<15*60
-    this.setState({time_interval: userInput,valid})
+    this.valid.time_interval.change= true
+    this.setState({time_interval: e.target.value})
   }
   handleStatusShow(e){
     this.setState({statusShow: e.target.checked, statusHide: !e.target.checked})
@@ -145,11 +146,7 @@ class AddPlan extends Component{
     this.setState({statusShow: !e.target.checked, statusHide: e.target.checked})
   }
   handleFile(e){
-    const userInput= e.target.files[0]
-    const valid= Object.assign({}, this.state.valid)
-    valid.file= userInput.size>2*1024*1024? false: true
-    this.setState({file:userInput, valid})
-
+    this.valid.file.change= true
     const fileReader= new FileReader()
     fileReader.readAsDataURL(e.target.files[0])
     fileReader.onload= () => {
@@ -171,23 +168,13 @@ class AddPlan extends Component{
       }))
   }
   handleSubmit(){
-    const {name, desc, time_interval, file} = this.state.valid
-    const valid= Object.assign({}, this.state.valid)
-    if(!file){
-      valid.file= false
-      return this.setState({valid})
-    }
-    if(!name){
-      valid.name= false
-      return this.setState({valid})
-    }
-    if(!desc){
-      valid.desc= false
-      return this.setState({valid})
-    }
-    if(!time_interval){
-      valid.time_interval= false
-      return this.setState({valid})
+    const {name, desc, time_interval, file} = this.valid
+    if(name.notice||desc.notice||time_interval.notice||file.notice){
+      const keys=Object.keys(this.valid)
+      for(let i of keys){
+        this.valid[i].change= true
+      }
+      return this.forceUpdate()
     }
     fileUpload(this.state.file,this.dispatchEditor.bind(this))
   }

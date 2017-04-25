@@ -50,8 +50,6 @@ class ShowPlan extends Component{
   componentWillReceiveProps(nextProps){
     if(!this.state.activeId){
       this.setState({activeId: (nextProps.habitPlan[0]||[]).id})
-    }
-    if(!this.props.habitPlan[0]){
       const id= (nextProps.habitPlan[0]||[]).id
       if(id){
         this.props.dispatch(getHabitPlanEvent({default_plan_id: id}))

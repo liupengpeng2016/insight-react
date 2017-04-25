@@ -2,14 +2,25 @@ import React,{Component} from 'react'
 import './editorToyAction.css'
 import {connect} from 'react-redux'
 import {editorToyAction} from '../../../redux/actions.js'
+import {valid} from '../../../plugs/plugs.js'
 class EditorToyAction extends Component {
   constructor(){
     super()
     this.state= {
-      action: '',
+      action: 'shake',
       desc:'',
-      play_order:'',
+      play_order:'rand',
       name:''
+    }
+    this.valid={
+      desc:{
+        change: false,
+        notice: ''
+      },
+      name:{
+        change: false,
+        notice: ''
+      }
     }
   }
   render(){
@@ -24,7 +35,6 @@ class EditorToyAction extends Component {
               onChange={this.handleAction.bind(this)}
               value={this.state.action}
               >
-              <option value=''>请选择动作</option>
               <option value='shake'>摇一摇</option>
               <option value='pat'>拍一下</option>
               <option value='wakeup'>唤醒</option>
@@ -35,14 +45,16 @@ class EditorToyAction extends Component {
             <input type='text' placeholder='请输入动作名称'
               onChange={this.handleName.bind(this)}
               value={this.state.name}
-              />
+            />
+            <i className='valid' style={!this.valid.name.change? {display: 'none'}: null}>{this.valid.name.notice= valid(this.state.name,['require'])}</i>
           </li>
           <li>
             <span>动作描述</span>
             <input type='text' placeholder='请输入动作描述'
               onChange={this.handleDesc.bind(this)}
               value={this.state.desc}
-              />
+            />
+          <i className='valid' style={!this.valid.desc.change? {display: 'none'}: null}>{this.valid.desc.notice= valid(this.state.desc,['require'])}</i>
           </li>
           <li>
             <span>播放顺序</span>
@@ -50,7 +62,6 @@ class EditorToyAction extends Component {
               onChange={this.handlePlay_order.bind(this)}
               value={this.state.play_order}
               >
-              <option value='-1'>请选择播放顺序</option>
               <option value='rand'>顺序</option>
               <option value='sequence'>随机</option>
             </select>
@@ -61,6 +72,10 @@ class EditorToyAction extends Component {
         </ul>
       </div>
     )
+  }
+  componentDidMount(){
+    const action= this.props.location.state
+    this.setState({action})
   }
   handleAction(e){
     this.setState({action: e.target.value})
@@ -75,6 +90,13 @@ class EditorToyAction extends Component {
     this.setState({play_order: e.target.value})
   }
   handleSubmit(){
+    if(this.valid.name.notice||this.valid.desc.notice){
+      const keys=Object.keys(this.valid)
+      for(let i of keys){
+        this.valid[i].change= true
+      }
+      return this.forceUpdate()
+    }
     const {action, desc, play_order, name} = this.state
     this.props.dispatch(editorToyAction({
       action,

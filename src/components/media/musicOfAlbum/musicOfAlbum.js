@@ -1,15 +1,14 @@
-import React, {Component} from 'react'
-import './music.css'
-import AddTo from '../addTo/addTo.js'
-import {connect} from 'react-redux'
-import {Link} from 'react-router'
-import {formTime} from '../../../plugs/plugs.js'
+import React,{Component} from 'react'
+import { connect } from 'react-redux'
 import PageCtr from '../pageCtr/pageCtr.js'
+import {Link} from 'react-router'
+import AddTo from '../addTo/addTo.js'
+import './musicOfAlbum.css'
 import {
-  delMusicItem, toggleMusicStatus,
-  getLinkAlbumList, linkToAlbum,getMusicList
+  getMusicOfAlbum, delMusicItem, toggleMusicStatus, getLinkAlbumList, linkToAlbum
 } from '../../../redux/actions.js'
-class Music extends Component{
+import {formTime} from '../../../plugs/plugs.js'
+class Album extends Component{
   constructor(props){
     super(props)
     this.state={
@@ -20,39 +19,20 @@ class Music extends Component{
       showAllButton:false,
       buttonMode:'1',
       userInput:'',
-      page:1,
+      page:1
     }
   }
   render(){
-    const {musicList} = this.props
+    const {musicOfAlbum, location}= this.props
+    const {desc} = location.state
     return (
-      <div className='music-list'>
-        <div className='media-search'>
-          <p><span>已选歌曲列表</span></p>
+      <div className='music-of-album'>
+        <div className='album-desc'>
+          <p>专辑下歌曲列表</p>
           <p>
-            <input type='text' placeholder='请输入专题名或歌曲名'
-              onChange={this.handleUserInput.bind(this)}
-              value={this.state.userInput}
-              />
-            <input type='button' value='搜索已选歌曲'
-              onClick={this.searchMusic.bind(this)}
-              />
+            {desc}
           </p>
         </div>
-        <ul className='media-scope'>
-          <li>
-            <span>类型</span>
-            <select
-              onChange={this.handleCategory.bind(this)}
-              value={this.state.category}
-              >
-              <option value='0'>全部</option>
-              <option value='1'>儿童</option>
-              <option value='2'>音乐</option>
-              <option value='3'>教育</option>
-            </select>
-          </li>
-        </ul>
         <table className='media-list'>
           <tbody>
             <tr>
@@ -67,13 +47,13 @@ class Music extends Component{
               <td>上传时间</td>
               <td>操作</td>
             </tr>
-            {(musicList||[]).map((val, i) => (
+            {(musicOfAlbum.list||[]).map((val, i) => (
               <tr key={i}>
-                <td>{val.id}</td>
+                <td>{val.music_id}</td>
                 <td>{val.name}</td>
                 <td>{formTime(val.duration)}</td>
                 <td>{val.play_times}</td>
-                <td>{val.lyric}</td>
+                <td>{val.lyric? '是': '否'}</td>
                 <td>{val.age}</td>
                 <td>{parseInt(val.status, 10) === 1 ? '是'  : '否'}</td>
                 <td>{this.formOrigin(val.origin)}</td>
@@ -83,24 +63,23 @@ class Music extends Component{
                   this.state.buttonMode?(
                     <ul className='operate-buttons'>
                       <li ><Link to={{pathname:'/media/editorMusic',state: val}} style={{color:'#76cbe5'}}>编辑</Link></li>
-                      <li onClick={this.handleDel.bind(this,[val.id])} style={{color:'#fe6434'}}>删除</li>
-                      <li onClick={this.handleStatus.bind(this,val.status,[val.id])} style={{color:'#50ca71'}}>
+                      <li onClick={this.handleDel.bind(this,[val.music_id])} style={{color:'#fe6434'}}>删除</li>
+                      <li onClick={this.handleStatus.bind(this,val.status,[val.music_id])} style={{color:'#50ca71'}}>
                         {parseInt(val.status, 10)===1?<span style={{color:'#aaa'}}>下架</span>:<span>上架</span>}
                       </li>
-                      <li onClick={this.handleAdd.bind(this, val.id)} style={{color:'#76cbe5'}}>添加</li>
+                      <li onClick={this.handleAdd.bind(this, val.music_id)} style={{color:'#76cbe5'}}>添加</li>
                     </ul>
                   ):(
                     <ul className='operate-buttons'>
                       <li ><Link to={{pathname:'/media/editorMusic',state:val}} style={{color:'#76cbe5'}}>编辑</Link></li>
                       <li >
                         <input type='checkbox'
-                          onChange={this.handleChecked.bind(this,val.id)}
-                          checked={this.state.checkbox[val.id]||false}
+                          onChange={this.handleChecked.bind(this,val.music_id)}
+                          checked={this.state.checkbox[val.music_id]||false}
                           />
                       </li>
                     </ul>
                   )
-
                 }
                 </td>
               </tr>
@@ -128,10 +107,23 @@ class Music extends Component{
           addId={this.state.addId}
           options={this.props.linkAlbumList}
           addTo={this.dispatchLinkToAlbum.bind(this)}
-          />
-        <PageCtr total={this.props.total} buttons='10' changePage={this.changePage.bind(this)}/>
+        />
+        <PageCtr total={this.props.musicOfAlbum.pages} buttons='10' changePage={this.changePage.bind(this)}/>
       </div>
     )
+  }
+  getMusicOfAlbum(params= null){
+    const {page}= this.state
+    const id= this.props.location.state.id
+    params= Object.assign({page, id}, params)
+    this.props.dispatch(getMusicOfAlbum(params))
+  }
+  changePage(page){
+    this.getMusicOfAlbum({page})
+  }
+  //初始化数据
+  componentDidMount(){
+    this.getMusicOfAlbum()
   }
   formOrigin(origin){
     switch(origin){
@@ -146,34 +138,18 @@ class Music extends Component{
       default: return '其它'
     }
   }
-  changePage(page){
-    this.props.dispatch(getMusicList({page,category:this.state.category}))
-    this.setState({page})
-  }
-  componentDidMount(){
-    this.getMusicList()
-  }
   componentWillReceiveProps(nextProps){
-    const {musicList} = nextProps
-    if(musicList){
+    const {musicOfAlbum} = nextProps
+    if(musicOfAlbum){
       const checkbox= {}
-      for(let i of musicList){
-        Object.assign(checkbox, {[i.id]: false})
+      for(let i of musicOfAlbum.list){
+        Object.assign(checkbox, {[i.music_id]: false})
       }
       this.setState({checkbox})
     }
   }
   toggleButton(){
     this.setState({buttonMode: 0})
-  }
-  //用户搜索
-  searchMusic(){
-    this.props.dispatch(getMusicList({keywords:this.state.userInput}))
-  }
-  //获取列表
-  getMusicList(){
-    const {page, category} = this.state
-    this.props.dispatch(getMusicList({page, category}))
   }
   //批量处理按钮
   filterIds(obj){
@@ -188,15 +164,15 @@ class Music extends Component{
   }
   delAll(){
     this.props.dispatch(delMusicItem({ids: this.filterIds(this.state.checkbox)}))
-    setTimeout(this.getMusicList.bind(this),150)
+    setTimeout(this.getMusicOfAlbum.bind(this),150)
   }
   onAll(){
     this.props.dispatch(toggleMusicStatus({ids: this.filterIds(this.state.checkbox), status: 1}))
-    setTimeout(this.getMusicList.bind(this),150)
+    setTimeout(this.getMusicOfAlbum.bind(this),150)
   }
   offAll(){
     this.props.dispatch(toggleMusicStatus({ids: this.filterIds(this.state.checkbox), status: 0}))
-    setTimeout(this.getMusicList.bind(this),150)
+    setTimeout(this.getMusicOfAlbum.bind(this),150)
   }
   chooseAll(){
     const checkbox= Object.assign({},this.state.checkbox)
@@ -210,10 +186,6 @@ class Music extends Component{
   hidePanle(){
     this.setState({showPanel:false})
   }
-  //处理用户输入
-  handleUserInput(e){
-    this.setState({userInput: e.target.value})
-  }
   //编辑按钮操作
   handleAdd(id){
     this.props.dispatch(getLinkAlbumList({id}))
@@ -221,12 +193,12 @@ class Music extends Component{
   }
   handleDel(ids){
     this.props.dispatch(delMusicItem({ids}))
-    setTimeout(this.getMusicList.bind(this),150)
+    setTimeout(this.getMusicOfAlbum.bind(this),150)
   }
   handleStatus(status, ids){
     status = status === 1 ? 0 : 1
     this.props.dispatch(toggleMusicStatus({ids,status}))
-    setTimeout(this.getMusicList.bind(this),150)
+    setTimeout(this.getMusicOfAlbum.bind(this),150)
     return
   }
   toggleChecked(id, checked){
@@ -237,20 +209,16 @@ class Music extends Component{
   dispatchLinkToAlbum(id, album_id){
     this.props.dispatch(linkToAlbum({id, album_id}))
   }
-  handleCategory(e){
-    this.setState({category: e.target.value})
-    this.props.dispatch(getMusicList({category: e.target.value}))
-  }
   handleChecked(id,e){
     const checkbox= Object.assign({},this.state.checkbox, {[id]: e.target.checked})
     this.setState({checkbox})
   }
+
 }
-function mapStateToProps(state){
+function mapStateToProps({mediaData}){
   return {
-    musicList: state.mediaData.musicList.list,
-    linkAlbumList: state.mediaData.linkAlbumList,
-    total:state.mediaData.musicList.pages
+    musicOfAlbum: mediaData.musicOfAlbum,
+    linkAlbumList: mediaData.linkAlbumList
   }
 }
-export default connect(mapStateToProps)(Music)
+export default connect(mapStateToProps)(Album)

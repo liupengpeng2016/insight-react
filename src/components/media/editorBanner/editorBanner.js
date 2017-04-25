@@ -34,7 +34,6 @@ class EditorBanner extends Component{
     }
   }
   render(){
-    const {category, url, album_id}= this.state
     return (
       <div className='root-media-list'>
         <h1>葡萄听听>banner列表>编辑banner</h1>
@@ -65,19 +64,11 @@ class EditorBanner extends Component{
               <span></span>
               <input type='text' placeholder={this.state.category === '1'? '请输入专辑id':'请输入网络url'}
                 onChange={this.handleUrl.bind(this)}
-                value={(function(){
-                  switch(category){
-                    case '1':
-                    return album_id
-                    case '2':
-                    return url
-                    default: return 'hehe'
-                  }
-                })()}
+                value={this.state.url}
               />
               <i className='valid' style={!this.valid.url.change? {display: 'none'}: null}>
                 {
-                  this.valid.url.notice= this.state.content_url?
+                  this.valid.url.notice= this.state.category=== '2'?
                   valid(this.state.url,['require','url']):
                   valid(this.state.url,['require','number'])
                 }
@@ -149,7 +140,8 @@ class EditorBanner extends Component{
       sort: String(sort),
       statusShow: status? true : false,
       statusHide: !status? true: false,
-      fileUrl: pic
+      fileUrl: pic,
+      file:'ignore'
     })
   }
   handleLocation(e){

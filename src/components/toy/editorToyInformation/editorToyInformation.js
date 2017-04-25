@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {editorToyInformation} from '../../../redux/actions.js'
+import {valid, validFile} from '../../../plugs/plugs.js'
 import fileUpload from '../../../fileUpload/fileUpload.js'
 class EditorToyInformation extends Component{
   constructor(){
@@ -8,12 +9,27 @@ class EditorToyInformation extends Component{
     this.state={
       name:'',
       file:'',
-      desc:''
+      desc:'',
+      fileUrl:''
+    }
+    this.valid={
+      name:{
+        change:false,
+        notice:''
+      },
+      file:{
+        change:false,
+        notice:''
+      },
+      desc:{
+        change:false,
+        notice:''
+      }
     }
   }
   render(){
     return (
-      <div className='toy-plan'>
+      <div className='root-media-list'>
       <h1>玩偶设置>编辑玩偶</h1>
       <h2>编辑玩偶信息</h2>
       <ul className='add-item'>
@@ -23,6 +39,7 @@ class EditorToyInformation extends Component{
             onChange={this.handleName.bind(this)}
             value={this.state.name}
           />
+          <i className='valid' style={!this.valid.name.change? {display: 'none'}: null}>{this.valid.name.notice= valid(this.state.name,['require'])}</i>
         </li>
         <li>
           <span>描述</span>
@@ -30,14 +47,17 @@ class EditorToyInformation extends Component{
             onChange={this.handleDesc.bind(this)}
             value={this.state.desc}
           />
+        <i className='valid' style={!this.valid.desc.change? {display: 'none'}: null}>{this.valid.desc.notice= valid(this.state.desc,['require'])}</i>
         </li>
-        <li className='input-img' style={{paddingTop: 0}}>
-          <span style={{float:'left'}}>选择文件</span>
+        <li className='input-img'>
+          <span>专辑封面</span>
+          <img  src={this.state.imageUrl} alt=''/>
+          <i className='valid' style={!this.valid.file.change? {display: 'none'}: null}>{this.valid.file.notice= validFile(this.state.file,{size: 2*1024*1024, name:[/\.jpg$/,/\.png$/,/\.jpeg/]})}</i>
           <input type='file'
             onChange={this.handleFile.bind(this)}
-            />
-          <h1>选取文件</h1>
-          <p>音频格式为mp3或mp4，大小为20m以内。</p>
+          />
+          <h1>选择文件</h1>
+          <p>图片格式为JPG或PNG,大小为2M以内。</p>
         </li>
         <li onClick={this.handleSubmit.bind(this)}>
            提交
@@ -47,13 +67,21 @@ class EditorToyInformation extends Component{
     )
   }
   handleName(e){
+    this.valid.name.change= true
     this.setState({name:e.target.value})
   }
   handleDesc(e){
+    this.valid.desc.change= true
     this.setState({desc:e.target.value})
   }
   handleFile(e){
-    this.setState({file:e.target.files[0]})
+    this.valid.file.change= true
+    const imgReader = new FileReader()
+    this.setState({file: e.target.files[0]})
+    imgReader.readAsDataURL(e.target.files[0])
+    imgReader.onload=()=>{
+      this.setState({imageUrl: imgReader.result})
+    }
   }
   dispatchEditor(icon){
     const {name, desc} = this.state
@@ -64,8 +92,15 @@ class EditorToyInformation extends Component{
     }))
   }
   handleSubmit(){
-    const {file} = this.state
-    fileUpload(file,this.dispatchEditor.bind(this))
+    const {name, desc, file} = this.valid
+    if(name.notice||desc.notice||file.notice){
+      const keys=Object.keys(this.valid)
+      for(let i of keys){
+        this.valid[i].change= true
+      }
+      return this.forceUpdate()
+    }
+    fileUpload(this.state.file,this.dispatchEditor.bind(this))
   }
 }
 export default connect()(EditorToyInformation)
