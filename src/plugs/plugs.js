@@ -4,7 +4,7 @@ export const formTime = time => {
   return m + '分' + s + '秒';
 }
 export const valid= (target, rules, notice= []) => {
-  if(rules instanceof Array){
+  if(typeof(rules[0])=== 'string'){
     for(let i=0;i<rules.length; i++){
       if(rules[i] === 'require'&& !/\S+/.test(target)){
         return notice[i]||'内容不能为空！'
@@ -18,10 +18,9 @@ export const valid= (target, rules, notice= []) => {
     }
     return ''
   }else{
-    const keys= Object.keys(rules)
-    for(let i of keys){
+    for(let i= 0;i<rules.length; i++){
       if(!rules[i].test(target)){
-        return i
+        return notice[i]||''
       }
     }
     return ''

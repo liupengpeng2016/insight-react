@@ -43,3 +43,5 @@
       width: 22px;
       height: 22px;
       background: url(./32px.png) no-repeat -80px top; }
+    .scene-tree .scene-data li span {
+      cursor: pointer; }

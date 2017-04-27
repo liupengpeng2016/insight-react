@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import './addVoice.css'
 import {connect} from 'react-redux'
 import {valid} from '../../../plugs/plugs.js'
-import {getAllFirstSceneList, getAllSecondSceneList} from '../../../redux/actions.js'
+import {getAllSecondSceneList} from '../../../redux/actions.js'
 class AddVoice extends Component{
   constructor(){
     super()
@@ -15,6 +15,10 @@ class AddVoice extends Component{
     }
     this.valid={
       secondScene:{
+        change: false,
+        notice:''
+      },
+      checkbox:{
         change: false,
         notice:''
       },
@@ -45,14 +49,15 @@ class AddVoice extends Component{
                     return (
                       <p key={i}>
                         <input type='checkbox' id={`addVoice${i}`}
-                          onChange={this.handleChecked.bind(this, val.corpus_id)}
-                          checked={this.state.checkbox[val.corpus_id]|| false}
+                          onChange={this.handleChecked.bind(this, i)}
+                          checked={this.state.checkbox? this.state.checkbox[i].checked: false}
                         />
                         <label htmlFor={`addVoice${i}`}>{val.name}</label>
                       </p>
                     )
                   })
                 }
+                <i className='valid' style={!this.valid.checkbox.change? {visibility:'hidden'}: null}>{this.valid.checkbox.notice= this.valid_checkbox()}</i>
               </li>
               <li>
                 <span>场景</span>
@@ -202,15 +207,14 @@ class AddVoice extends Component{
       </div>
     )
   }
-  filterChecked(obj){
-    const keys= Object.keys(obj)
-    const arr= []
-    for(let i of keys){
-      if(obj[i]){
-        arr.push(i)
+  filterChecked(arr){
+    const new_arr= []
+    for(let i of arr){
+      if(i.checked){
+        new_arr.push(i.corpus_lib_id)
       }
     }
-    return arr
+    return new_arr
   }
   handleSubmit(){
     const showNotice= ()=> {
@@ -229,20 +233,24 @@ class AddVoice extends Component{
       showNotice()
       return this.forceUpdate()
     }
+    if(this.valid.checkbox.notice){
+      showNotice()
+      return this.forceUpdate()
+    }
     for(let i of this.valid.answers){
-      if(!i.notice){
+      if(i.notice){
         showNotice()
         return this.forceUpdate()
       }
     }
     for(let i of this.valid.keywords){
-      if(!i.notice){
+      if(i.notice){
         showNotice()
         return this.forceUpdate()
       }
     }
     for(let i of this.valid.questions){
-      if(!i.notice){
+      if(i.notice){
         showNotice()
         return this.forceUpdate()
       }
@@ -260,12 +268,23 @@ class AddVoice extends Component{
     }
     addSubmit(params)
   }
+  valid_checkbox(){
+    const checkbox= this.state.checkbox
+    let select= false
+    for(let i of checkbox){
+      if(i.checked){
+        select= true
+      }
+    }
+    return select? '': '必选！'
+  }
   addAnswers(){
-    let answers= [...this.state.answers]
-    answers.push({answer:'', weight:'0', age:'0'})
     let answers_valid= [...this.valid.answers]
     answers_valid.push({change: false, notice:''})
     Object.assign(this.valid, {answers: answers_valid})
+
+    let answers= [...this.state.answers]
+    answers.push({answer:'', weight:'0', age:'0'})
     this.setState({answers})
   }
   addQuestions(){
@@ -284,15 +303,14 @@ class AddVoice extends Component{
   //初始化数据
   componentWillReceiveProps(nextProps){
     if(!this.state.checkbox){
-      const checkbox = {}
+      const {checkbox}= nextProps
+      const checkbox_valid=[]
       for( let i= 0; i<nextProps.corpusList.length; i++){
-        Object.assign(checkbox, {[nextProps.corpusList[i].corpus_id]: false})
+        checkbox_valid.push({change: false, notice:''})
       }
+      this.valid.checkbox= checkbox_valid
       this.setState({checkbox})
     }
-  }
-  componentDidMount(){
-    this.props.dispatch(getAllFirstSceneList())
   }
   //表单处理
   handleFirseScene(e){
@@ -352,8 +370,10 @@ class AddVoice extends Component{
     answers.splice(i,1)
     this.setState({answers})
   }
-  handleChecked(corpus_id,e){
-    const checkbox = Object.assign({}, this.state.checkbox, {[corpus_id]: e.target.checked})
+  handleChecked(i, e){
+    this.valid.checkbox.change= true
+    const checkbox= this.state.checkbox
+    checkbox[i].checked= e.target.checked
     this.setState({checkbox})
   }
 }

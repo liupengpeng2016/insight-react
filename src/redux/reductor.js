@@ -8,7 +8,7 @@ import {
   SAVE_VOICE_LIST, SAVE_CORPUS_LIST,SAVE_FIRST_SCENE_LIST,
   SAVE_SECOND_SCENE_LIST,SCENE_TREE,SAVE_MUSIC_OF_ALBUM,
   SAVE_ALL_FIRST_SCENE_LIST, SAVE_ALL_SECOND_SCENE_LIST,
-  SAVE_ALBUM_OF_TOPIC
+  SAVE_ALBUM_OF_TOPIC, SAVE_ALL_SCENE
 } from './actionTypes.js'
 /********** visibility *********/
 function visibility(state={
@@ -116,7 +116,7 @@ function voiceData(state={
   secondSceneList: [],
   allFirstSceneList: [],
   allSecondSceneList: [],
-  sceneTree: {}
+  allScene:[]
 },action){
   switch(action.type){
     case SAVE_VOICE_LIST:
@@ -128,16 +128,11 @@ function voiceData(state={
     case SAVE_SECOND_SCENE_LIST:
     return Object.assign({}, state, {secondSceneList: action.data})
     case SAVE_ALL_FIRST_SCENE_LIST:
-    let sceneTree= {}
-    for(let i of action.data){
-      Object.assign(sceneTree, {[i.f_scene_id]: i})
-    }
-    return Object.assign({}, state, {sceneTree, allFirstSceneList: action.data})
+    return Object.assign({}, state, {allFirstSceneList: action.data})
     case SAVE_ALL_SECOND_SCENE_LIST:
-    const firstSceneItme= action.data[0]? Object.assign({},state.sceneTree[action.data[0].f_scene_id],{secondScene: action.data}): ''
-    sceneTree ={}
-    Object.assign(sceneTree, state.sceneTree, action.data[0]?{[action.data[0].f_scene_id]: firstSceneItme}: {})
-    return Object.assign({}, state, {sceneTree, allSecondSceneList: action.data})
+    return Object.assign({}, state, {allSecondSceneList: action.data})
+    case SAVE_ALL_SCENE:
+    return Object.assign({}, state, {allScene: action.data})
     default : return state
   }
 }

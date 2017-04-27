@@ -9,7 +9,7 @@ import {
   SAVE_VOICE_LIST, SAVE_CORPUS_LIST,
   SAVE_FIRST_SCENE_LIST, SAVE_SECOND_SCENE_LIST,
   SAVE_ALL_FIRST_SCENE_LIST, SAVE_ALL_SECOND_SCENE_LIST,
-  SAVE_ALBUM_OF_TOPIC
+  SAVE_ALBUM_OF_TOPIC, SAVE_ALL_SCENE
 } from './actionTypes.js'
 import {baseUrl} from '../config/config.js'
 import fetch from 'isomorphic-fetch'
@@ -264,9 +264,15 @@ export const delVoiceQuestion= params => dispatch =>
 //删除回答
 export const delVoiceAnswer= params => dispatch =>
   fetchData('/corpus/corpus/delAnswer', params, dispatch, null)
+//启用／弃用回答
+export const toggleAnswerStatus= params => dispatch =>
+  fetchData('/corpus/corpus/enableAnswer', params, dispatch, null)
 //获取一级场景
 export const getFirstSceneList= params => dispatch =>
   fetchData('/corpus/scene/firstSceneList', params, dispatch, saveFirstSceneList)
+//获取所有二级场景列表
+export const getAllSecondSceneList= params => dispatch =>
+  fetchData('/corpus/scene/allSecondScene', params, dispatch, saveAllSecondSceneList)
 //获取所有一级场景
 export const getAllFirstSceneList= params => dispatch =>
   fetchData('/corpus/scene/allFirstScene', params, dispatch, saveAllFirstSceneList)
@@ -285,9 +291,6 @@ export const addFirstSceneItem= params => dispatch =>
 //获取二级场景列表
 export const getSecondSceneList= params => dispatch =>
   fetchData('/corpus/scene/secondSceneList', params, dispatch, saveSecondSceneList)
-//获取所有二级场景列表
-export const getAllSecondSceneList= params => dispatch =>
-  fetchData('/corpus/scene/allSecondScene', params, dispatch, saveAllSecondSceneList)
 //编辑二级场景
 export const editorSecondSceneItem= params => dispatch =>
   fetchData('/corpus/scene/editSecondScene', params, dispatch, null)
@@ -300,3 +303,8 @@ export const delSecondSceneItem= params => dispatch =>
 //更改二级场景status
 export const toggleSecondSceneStatus= params => dispatch =>
   fetchData('/corpus/scene/enableSecondScene', params, dispatch, null)
+//存储场景树
+export const saveAllScene= data => ({type: SAVE_ALL_SCENE, data})
+//获取场景树
+export const getAllScene= params => dispatch =>
+  fetchData('/corpus/scene/allScene', params, dispatch, saveAllScene)

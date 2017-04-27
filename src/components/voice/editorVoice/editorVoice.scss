@@ -55,14 +55,14 @@
           margin-left:90px;
           color:#c8c8c8;
         }
-        li:last-child{
+       li:last-child{
           float:right;
           font-size:14px;
           margin-right:26px;
           span{
             padding-left:18px;
+            cursor:pointer;
           }
-          cursor:pointer;
           .on{
             color:#5cc1df;
           }

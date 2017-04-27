@@ -46,10 +46,10 @@
   .editor-voice .editor-voice-info .editor-voice-notice > ul li:last-child {
     float: right;
     font-size: 14px;
-    margin-right: 26px;
-    cursor: pointer; }
+    margin-right: 26px; }
     .editor-voice .editor-voice-info .editor-voice-notice > ul li:last-child span {
-      padding-left: 18px; }
+      padding-left: 18px;
+      cursor: pointer; }
     .editor-voice .editor-voice-info .editor-voice-notice > ul li:last-child .on {
       color: #5cc1df; }
     .editor-voice .editor-voice-info .editor-voice-notice > ul li:last-child .del {

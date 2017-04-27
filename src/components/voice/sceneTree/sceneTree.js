@@ -1,15 +1,14 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import './sceneTree.css'
-import {getAllFirstSceneList, getAllSecondSceneList, setVisibility} from '../../../redux/actions.js'
+import {getAllScene, setVisibility} from '../../../redux/actions.js'
 class SceneTree extends Component{
   constructor(){
     super()
     this.toggleSecondScene= this.toggleSecondScene.bind(this)
   }
   render(){
-    const {sceneTree, visibility}= this.props
-    const toggleSecondScene= this.toggleSecondScene
+    const {allScene, visibility}= this.props
     return (
       <div className='scene-tree'
         style={visibility.show? null : {display: 'none'}}
@@ -20,37 +19,21 @@ class SceneTree extends Component{
             >×</span></h1>
           <ul>
           {
-            (function(){
-              const keys= Object.keys(sceneTree)
-              const outPut= []
-              for(let i of keys){
-                const arrItem= (
-                  <li key={i}
-                    >
-                    <i></i>
-                    <span onClick={toggleSecondScene} id={i}>
-                      {sceneTree[i].name}
-                    </span>
+            allScene.map((val, i)=>{
+              return (
+                <ul key={i}>
+                  <li><i></i>
+                    <span onClick={this.toggleSecondScene}
+                    >{val.f_scene_name}({val.s_scene_list.length})</span>
                     <ul>
-                      {
-                        (function(){
-                          const outPut= []
-                          for(let j of (sceneTree[i].secondScene||[])){
-                            const arrItem=(
-                              <li key={j.s_scene_id}><i></i>{j.name}</li>
-                            )
-                            outPut.push(arrItem)
-                          }
-                          return outPut
-                        })()
-                      }
+                      {val.s_scene_list.map((val, i)=>{
+                        return <li key={i}><i></i>{val}</li>
+                      })}
                     </ul>
                   </li>
-                )
-                outPut.push(arrItem)
-              }
-              return outPut
-            })()
+                </ul>
+              )
+            })
           }
           </ul>
         </div>
@@ -59,24 +42,20 @@ class SceneTree extends Component{
   }
   componentDidMount(){
     const {dispatch} = this.props
-    dispatch(getAllFirstSceneList())
+    dispatch(getAllScene())
   }
   setVisibility(){
     this.props.dispatch(setVisibility({name:'SCENE_TREE', show:false}))
   }
-  getAllSecondSceneList(f_scene_id){
-    this.props.dispatch(getAllSecondSceneList({f_scene_id}))
-  }
   toggleSecondScene(e){
-    this.getAllSecondSceneList(e.target.id)
     const className= e.target.nextSibling.className
     return className? e.target.nextSibling.className= '': e.target.nextSibling.className= 'hide'
   }
 }
-function mapStateToProps(state){
+function mapStateToProps({voiceData, visibility}){
   return {
-    sceneTree: state.voiceData.sceneTree,
-    visibility: state.visibility.sceneTree
+    allScene: voiceData.allScene,
+    visibility: visibility.sceneTree
   }
 }
 export default connect(mapStateToProps)(SceneTree)

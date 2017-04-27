@@ -7,7 +7,8 @@ import {
   delVoiceItem, delVoiceAnswer,
   delVoiceQuestion, toggleVoiceStatus,
   getCorpusList, addVoiceItem,
-  setVisibility
+  setVisibility, getAllFirstSceneList,
+  getAllSecondSceneList
 } from '../../../redux/actions.js'
 import {connect} from 'react-redux'
 import PageCtr from '../../media/pageCtr/pageCtr.js'
@@ -21,14 +22,18 @@ class VoiceManage extends Component{
       questionNum_editor: 2,
       page:1,
       buttonMode:1,
-      editorData:1,
-      checkobx:{},
-      is_scene_corpus: 0
+      editorData:undefined,
+      checkbox:'',
+      is_scene_corpus: 0,
+      firstScene:'',
+      secondScene:'',
+      voice_checkbox:''
     }
+    this.getVoiceList= this.getVoiceList.bind(this)
     this.spreadDetail= this.spreadDetail.bind(this)
   }
   render(){
-    const {voiceList, corpusList} = this.props
+    const {voiceList, corpusList, allFirstSceneList, allSecondSceneList} = this.props
     return (
       <div className='voice-manage'>
         <EditorVoice
@@ -40,6 +45,7 @@ class VoiceManage extends Component{
           delVoiceQuestion={this.delVoiceQuestion.bind(this)}
           ></EditorVoice>
         <AddVoice
+          checkbox={this.state.checkbox}
           toggleAddVoice={this.state.toggleAddVoice}
           hideAddVoice={this.hideAddVoice.bind(this)}
           is_scene_corpus={this.state.is_scene_corpus}
@@ -51,9 +57,14 @@ class VoiceManage extends Component{
           <ul>
             {
               corpusList.map((val, i)=> {
+                console.log(1)
+                console.log(this.state.checkbox)
                 return (
                   <li key={i}>
-                    <input type='checkbox' id={`voiceManage${i}`}/>
+                    <input type='checkbox' id={`voiceManage${i}`}
+                      onChange={this.handleCheckbox.bind(this, i)}
+                      checked={this.state.checkbox? this.state.checkbox[i].checked: true}
+                    />
                     <label htmlFor={`voiceManage${i}`}>{val.name}</label>
                   </li>
                 )
@@ -67,8 +78,28 @@ class VoiceManage extends Component{
         </div>
         <div className='voice-manage-scope'>
           <span>场景</span>
+          <select style={{marginRight:0,borderRight:'none'}}
+            onChange={this.handleFirstScene.bind(this)}
+            value={this.state.firstScene}
+          >
+            <option>请选择一级场景</option>
+            {
+              allFirstSceneList.map((val, i)=> {
+                return (
+                  <option key={i} value={val.f_scene_id}>{val.name}</option>
+                )
+              })
+            }
+          </select>
           <select>
-            <option>请选择</option>
+            <option>请选择二级场景</option>
+            {
+              allSecondSceneList.map((val, i)=> {
+                return (
+                  <option key={i} value={val.f_scene_id}>{val.name}</option>
+                )
+              })
+            }
           </select>
           <span>权重</span>
           <select>
@@ -131,7 +162,11 @@ class VoiceManage extends Component{
                       </td>
                       <td>
                         {val.answers.map((val,i)=>{
-                          return <p key={i}>{val.answer}</p>
+                          return (
+                            <p key={i}
+                              style={val.status?{background:'#aaa'}: null}
+                            >{val.answer}</p>
+                          )
                         })}
                       </td>
                       <td>
@@ -152,9 +187,9 @@ class VoiceManage extends Component{
                             </ul>
                           ):(
                             <input type='checkbox'
-                              onChange={this.handleChecked.bind(this, val.group_id)}
-                              checked={this.state.checkbox[val.group_id]}
-                              />
+                              onChange={this.handleVoice_checkbox.bind(this, i)}
+                              checked={this.state.voice_checkbox? this.state.voice_checkbox[i].checked: false}
+                            />
                           )
                         }
                       </td>
@@ -163,8 +198,8 @@ class VoiceManage extends Component{
                       <td colSpan='7' className='voice-manage-list-detail'>
                         <p><span>语料库</span>{val.corpus_lib_name}</p>
                         <p><span>语料id</span>{val.group_id}</p>
-                        <p><span>创建时间</span>{}<span>创建作者</span>{}</p>
-                        <p><span>修改时间</span>{}<span>修改作者</span>{}</p>
+                        <p><span>创建时间</span>{val.create_time}<span>创建作者</span>{val.creator}</p>
+                        <p><span>修改时间</span>{val.editor_time}<span>修改作者</span>{val.editor}</p>
                       </td>
                     </tr>
                   </tbody>
@@ -203,6 +238,25 @@ class VoiceManage extends Component{
       </div>
     )
   }
+  handleCheckbox(i, e){
+    const checkbox= [...this.state.checkbox]
+    checkbox[i].checked= e.target.checked
+    this.setState({checkbox})
+    const corpus_lib_ids= []
+    for(let i of checkbox){
+      if(i.checked){
+        corpus_lib_ids.push(i.corpus_lib_id)
+      }
+    }
+    this.getVoiceList({corpus_lib_ids})
+  }
+  handleFirstScene(e){
+    this.setState({firstScene: e.target.value})
+    this.props.dispatch(getAllSecondSceneList({f_scene_id:e.target.value}))
+  }
+  handleSecondScene(e){
+    this.setState({secondScene: e.target.value})
+  }
   hideEditorVoice(){
     this.setState({toggleEditorVoice: false})
   }
@@ -211,8 +265,7 @@ class VoiceManage extends Component{
   }
   changePage(page){
     this.setState({page})
-    const {dispatch} = this.props
-    dispatch(getVoiceList({page}))
+    this.getVoiceList({page})
   }
   handleEditor(i){
     this.setState({
@@ -234,75 +287,107 @@ class VoiceManage extends Component{
     const {dispatch} = this.props
     status= status ? 0 : 1
     dispatch(toggleVoiceStatus({group_ids, status}))
-    setTimeout(()=>{this.props.dispatch(getVoiceList({page: this.state.page}))}, 150)
+    setTimeout(this.getVoiceList.bind(this), 150)
   }
   handelDelVoice(group_ids){
     const {dispatch} = this.props
     dispatch(delVoiceItem({group_ids}))
-
+    setTimeout(this.getVoiceList.bind(this), 150)
   }
   delVoiceAnswer(answer_id){
     this.props.dispatch(delVoiceAnswer({answer_id}))
+    setTimeout(this.getVoiceList.bind(this), 150)
+
   }
   delVoiceQuestion(question_id){
     this.props.dispatch(delVoiceQuestion({question_id}))
+    setTimeout(this.getVoiceList.bind(this), 150)
+
   }
-  handleChecked(group_id, e){
-    const checkbox= Object.assign({}, this.state.checkbox, {[group_id]: e.target.checked})
-    this.setState({checkbox})
+  handleVoice_checkbox(i, e){
+    const voice_checkbox= this.state.voice_checkbox
+    voice_checkbox[i].checked= e.target.checked
+    this.setState({voice_checkbox})
   }
   addSubmit(params){
     this.props.dispatch(addVoiceItem(params))
-    setTimeout(()=>this.refreshVoiceList(), 150)
+    setTimeout(this.getVoiceList.bind(this), 150)
   }
 //批量按钮
   chooseAll(){
-    const checkbox= Object.assign({}, this.state.checkbox)
-    const keys= Object.keys(checkbox)
-    const checked = checkbox[keys[0]] ? false : true
-    for(let i of keys){
-      checkbox[i]= checked
+    const voice_checkbox= this.state.voice_checkbox
+    const checked= !voice_checkbox[0].checked
+    for(let i= 0;i< voice_checkbox.length; i++){
+      voice_checkbox[i].checked= checked
     }
-    this.setState({checkbox})
+    this.setState({voice_checkbox})
   }
-  filterChecked(obj){
+  filterCheckbox(obj){
     const arr= []
-    const keys= Object.keys(obj)
-    for(let i of keys){
-      if(obj[i]){
-        arr.push(i)
+    for(let i of obj){
+      if(i.checked){
+        arr.push(i.corpus_lib_id)
       }
     }
     return arr
   }
+  filterVoice_checkbox(arr){
+    const ids=[]
+    const checkbox= this.state.voice_checkbox
+    for(let i= 0;i<checkbox.length; i++){
+      if(checkbox[i].checked){
+        ids.push(checkbox[i].group_id)
+      }
+    }
+    console.log(ids)
+    return ids
+  }
   onAll(){
     const {dispatch} = this.props
-    dispatch(toggleVoiceStatus({group_ids: this.filterChecked(this.state.checkbox), status: 1}))
-    setTimeout(()=> this.props.dispatch(getVoiceList({page:this.state.page})), 150)
+    dispatch(toggleVoiceStatus({group_ids: this.filterVoice_checkbox(this.state.voice_checkbox), status: 1}))
+    setTimeout(this.getVoiceList.bind(this), 150)
   }
   offAll(){
     const {dispatch} = this.props
-    dispatch(toggleVoiceStatus({group_ids: this.filterChecked(this.state.checkbox), status: 0}))
-    setTimeout(()=> this.props.dispatch(getVoiceList({page:this.state.page})), 150)
+    dispatch(toggleVoiceStatus({group_ids: this.filterVoice_checkbox(this.state.voice_checkbox), status: 0}))
+    setTimeout(this.getVoiceList.bind(this), 150)
   }
   delAll(){
     const {dispatch} = this.props
-    dispatch(delVoiceItem({group_ids: this.filterChecked(this.state.checkbox)}))
-    setTimeout(()=> this.props.dispatch(getVoiceList({page:this.state.page})), 150)
+    dispatch(delVoiceItem({group_ids: this.filterVoice_checkbox(this.state.voice_checkbox)}))
+    setTimeout(this.getVoiceList.bind(this), 150)
   }
 //初始化数据
   componentDidMount(){
     const {dispatch} = this.props
-    dispatch(getVoiceList())
     dispatch(getCorpusList())
+    dispatch(getAllFirstSceneList())
+  }
+  getVoiceList(params= null){
+    const {page}= this.state
+    const {dispatch}= this.props
+    const corpus_lib_ids= this.filterCheckbox(this.state.checkbox)
+    params= Object.assign({page, corpus_lib_ids}, params)
+    dispatch(getVoiceList(params))
   }
   componentWillReceiveProps(nextProps){
     const {voiceList}= nextProps
     if(voiceList.list){
-      const checkbox= {}
-      for(let i= 0; i<voiceList.list.length; i++){
-        Object.assign(checkbox, {[voiceList.list[i].group_id]: false})
+      const voice_checkbox= []
+      for(let i of voiceList.list){
+        voice_checkbox.push({checked: false, group_id: i.group_id})
       }
+      this.setState({voice_checkbox})
+    }
+    const {corpusList}= nextProps
+    if(!this.state.checkbox&& corpusList.length!== 0){
+      const checkbox= []
+      const corpus_lib_ids= []
+      for(let i= 0; i<corpusList.length; i++){
+        checkbox.push({checked:true, corpus_lib_id:corpusList[i].corpus_id})
+        corpus_lib_ids.push(corpusList[i].corpus_id)
+      }
+      this.getVoiceList({corpus_lib_ids})
       this.setState({checkbox})
     }
   }
@@ -312,19 +397,15 @@ class VoiceManage extends Component{
   editorSubmit(params){
     const {dispatch} = this.props
     dispatch(editorVoiceItem(params))
-    setTimeout(()=>this.refreshVoiceList(), 150)
-  }
-  refreshVoiceList(){
-    const {dispatch} = this.props
-    const {page} = this.state
-    dispatch(getVoiceList({page}))
+    setTimeout(this.getVoiceList.bind(this), 150)
   }
 }
 function mapStateToProps({voiceData}){
   return {
     voiceList: voiceData.voiceList,
     corpusList: voiceData.corpusList,
-    secondSceneList: voiceData.secondSceneList
+    allFirstSceneList: voiceData.allFirstSceneList,
+    allSecondSceneList: voiceData.allSecondSceneList
   }
 }
 export default connect(mapStateToProps)(VoiceManage)
