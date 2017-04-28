@@ -8,11 +8,16 @@ class LookDeviceInfo extends Component{
           <div>
             <span onClick={handleClick}>×</span>
             <h1>设备信息查看</h1>
-            <img src='' alt=''/>
+            <div id='qrcode'>
+
+            </div>
             <p><span>设备id</span>{device.device_id}</p>
           </div>
       </div>
     )
+  }
+  componentDidMount(){
+    // new QRCode(document.getElementById("qrcode"), "http://jindo.dev.naver.com/collie")
   }
 }
 export default LookDeviceInfo

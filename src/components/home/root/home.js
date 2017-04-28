@@ -77,20 +77,21 @@ class Home extends Component{
       searchType:'',
       membersShow: false,
       deviceInfoShow: false,
-      userInfo:{},
-      device: {}
+      device: {},
+      memberData_id:''
     }
   }
   render(){
     let {dataSituation, userList} = this.props
     dataSituation = dataSituation || {}
     userList = userList.list || []
+    console.log(userList)
     return (
       <div className='home content'>
         <LookMembers
+          memberData={this.state.memberData_id? userList[this.state.memberData_id[0]].members[this.state.memberData_id[1]]:''}
           isShow={this.state.membersShow}
           handleClick={this.hideMembers.bind(this)}
-          userInfo={this.state.userInfo}
           />
         <LookDeviceInfo
           isShow={this.state.deviceInfoShow}
@@ -200,9 +201,9 @@ class Home extends Component{
                       <td>{(
                           <ul className='home-list-members'>
                             {
-                              (val.members||[]).map((mem,i)=>{
-                                return <li key={i}
-                                  onClick={this.showMembers.bind(this, mem.nick, mem.gender, mem.role, mem.is_admin)}
+                              (val.members||[]).map((mem,k)=>{
+                                return <li key={k}
+                                  onClick={this.showMembers.bind(this, i, k)}
                                   >{mem.nick}</li>
                               })
                             }
@@ -268,10 +269,10 @@ class Home extends Component{
   handleSearchType(e){
     this.setState({searchType: e.target.value})
   }
-  showMembers(nick, gender, role, is_admin){
+  showMembers(i, k){
     this.setState({
       membersShow: true,
-      userInfo: {role, nick, gender, is_admin }
+      memberData_id:[i, k]
     })
   }
   hideMembers(){

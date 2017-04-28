@@ -107,7 +107,7 @@ class AddVoice extends Component{
                       <li className='editor-voice-notice'>
                         <ul>
                           <li>
-                            <i className='valid' style={!this.valid.questions[i].change? {visibility: 'hidden'}: null}>{this.valid.questions[i].notice= valid(questions[i].question,['require'])}</i>
+                            <i className='valid' style={!this.valid.questions[i].change? {visibility: 'hidden'}: null}>{this.valid.questions[i].notice= valid(this.state.questions[i].question,['require'])}</i>
                           </li>
                           <li>
                             <span className='del'

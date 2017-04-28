@@ -9,12 +9,13 @@ import {
   SAVE_VOICE_LIST, SAVE_CORPUS_LIST,
   SAVE_FIRST_SCENE_LIST, SAVE_SECOND_SCENE_LIST,
   SAVE_ALL_FIRST_SCENE_LIST, SAVE_ALL_SECOND_SCENE_LIST,
-  SAVE_ALBUM_OF_TOPIC, SAVE_ALL_SCENE
+  SAVE_ALBUM_OF_TOPIC, SAVE_ALL_SCENE, SET_VISIBILITY
 } from './actionTypes.js'
 import {baseUrl} from '../config/config.js'
 import fetch from 'isomorphic-fetch'
 //visibility
 export const setVisibility = data => ({type: data.name, show: data.show, msg: data.msg})
+export const setVisibility2 = data => ({type: SET_VISIBILITY, data})
 function fetchData(url, params, dispatch, action){
   let formParams= new FormData()
   if(params){
@@ -42,6 +43,9 @@ function fetchData(url, params, dispatch, action){
   }).then(res => res.json())
   .then(json => {
       if(action){
+        if(json.http_status_code !== 200 ){
+          dispatch(setVisibility({name:FETCH_NOTICE, show: true, msg: json.msg ||'操作失败'}))
+        }
         return dispatch(action(json.data))
       }else{
         return json.http_status_code === 200?

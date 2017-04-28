@@ -5,7 +5,7 @@ import {connect} from 'react-redux'
 import {
   getSecondSceneList, addSecondSceneItem,
   editorSecondSceneItem, toggleSecondSceneStatus,
-  delSecondSceneItem, setVisibility
+  delSecondSceneItem, setVisibility, setVisibility2
 } from '../../../redux/actions.js'
 import AddSecondScene from '../addSecondScene/addScendScene.js'
 import EditorSecondScene from '../editorSecondScene/editorSecondScene.js'
@@ -17,7 +17,8 @@ class SecondScene extends Component{
       isShow_add: false,
       f_scene_id:'',
       isShow_editor: false,
-      page:''
+      page:'',
+      editorData_id:''
     }
   }
   render(){
@@ -32,14 +33,15 @@ class SecondScene extends Component{
           hide={()=>this.setState({isShow_add: false})}
           addSecondSceneItem={
             this.addSecondSceneItem.bind(this)
-           }
+          }
         />
         <EditorSecondScene
           isShow={this.state.isShow_editor}
           f_scene_id={state}
           hide={()=>this.setState({isShow_editor: false})}
           editorSecondSceneItem={this.editorSecondSceneItem.bind(this)}
-          />
+          editorData={(secondSceneList.list||[])[this.state.editorData_id]}
+        />
         <h1>语料管理>{name} {ename}</h1>
         <h2>{name} {ename}</h2>
         <table className='scene-manage-list'>
@@ -63,14 +65,14 @@ class SecondScene extends Component{
                     <td>{val.status? '启用':'弃用'}</td>
                     <td>
                       <p
-                        onClick={()=> this.setState({isShow_editor: true, f_scene_id: state})}
+                        onClick={()=> this.setState({isShow_editor: true, f_scene_id: state, editorData_id: i})}
                         >编辑</p>
                       <p
                         onClick={this.toggleSecondSceneStatus.bind(this,val.s_scene_id, val.status)}
                         >{!val.status? '启用':'弃用'}
                       </p>
                       <p className='del'
-                        onClick={this.delSecondSceneItem.bind(this,val.s_scene_id)}
+                        onClick={this.handleDelSecondSceneItem.bind(this,val.s_scene_id)}
                         >删除</p>
                     </td>
                   </tr>
@@ -128,6 +130,9 @@ class SecondScene extends Component{
   delSecondSceneItem(s_scene_id){
     this.props.dispatch(delSecondSceneItem({s_scene_id}))
     setTimeout(()=>this.getSecondSceneList(), 150)
+  }
+  handleDelSecondSceneItem(s_scene_id){
+    this.props.dispatch(setVisibility2({secondConfirm:{show: true, msg:'确定要删除该场景吗？',callback:this.delSecondSceneItem.bind(this,s_scene_id)}}))
   }
   toggleDetail(e){
     const className= e.target.parentNode.nextSibling.className

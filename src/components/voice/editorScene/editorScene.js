@@ -1,15 +1,31 @@
 import React, {Component} from 'react'
 import './editorScene.css'
+import {valid} from '../../../plugs/plugs.js'
 class EditorScene extends Component {
   constructor(){
     super()
-    this.state={
+    this.state= {
       name:'',
-      desc:''
+      desc:'',
+      ename:''
+    }
+    this.valid= {
+      name:{
+        change: false,
+        notice:''
+      },
+      desc:{
+        change: false,
+        notice:''
+      },
+      ename:{
+        change: false,
+        notice:''
+      }
     }
   }
   render(){
-    const {isShow, hide, ename}= this.props
+    const {isShow, hide}= this.props
     return (
       <div className='editor-scene'
         style={isShow? null: {display:'none'}}
@@ -23,14 +39,16 @@ class EditorScene extends Component {
                 onChange={this.handleName.bind(this)}
                 value={this.state.name}
               />
+              <span></span><i className='valid' style={!this.valid.name.change? {visibility: 'hidden'}: null}>{this.valid.name.notice= valid(this.state.name,['require'])}</i>
               <p className='editor-scene-notice'></p>
             </li>
             <li>
               <span>场景英文</span>
               <input type='text' placeholder='请输入场景英文名称'
-                value={ename}
+                value={this.state.ename}
                 disabled
               />
+              <span></span><i className='valid' style={!this.valid.ename.change? {visibility: 'hidden'}: null}>{this.valid.ename.notice= valid(this.state.ename,['require'])}</i>
               <p className='editor-scene-notice'>场景英文(唯一不可变) (命名示例S_RULE)</p>
             </li>
             <li>
@@ -39,6 +57,7 @@ class EditorScene extends Component {
                 onChange={this.handleDesc.bind(this)}
                 value={this.state.desc}
               />
+              <span></span><i className='valid' style={!this.valid.desc.change? {visibility: 'hidden'}: null}>{this.valid.desc.notice= valid(this.state.desc,['require'])}</i>
               <p className='editor-scene-notice'></p>
             </li>
           </ul>
@@ -47,18 +66,37 @@ class EditorScene extends Component {
       </div>
     )
   }
+  componentWillReceiveProps(nextProps){
+    if((nextProps.sceneData||[]).f_scene_id!== (this.props.sceneData||[]).f_scene_id){
+      const {name, ename, desc}= nextProps.sceneData
+      this.setState({name, ename, desc})
+    }
+  }
   handleName(e){
+    this.valid.name.change= true
     this.setState({name: e.target.value})
   }
   handleDesc(e){
+    this.valid.desc.change= true
     this.setState({desc: e.target.value})
   }
+  handleEname(e){
+    this.valid.ename.change= true
+    this.setState({ename: e.target.value})
+  }
   handleSubmit(){
+    if(this.valid.name.notice||this.valid.ename.notice||this.valid.desc.notice){
+      const keys=Object.keys(this.valid)
+      for(let i of keys){
+        this.valid[i].change= true
+      }
+      return this.forceUpdate()
+    }
     const {editorSubmit,f_scene_id} = this.props
-    const {name, desc} = this.state
+    const {name, desc, ename} = this.state
     const params= {
       name,
-      ename:'',
+      ename,
       desc,
       f_scene_id
     }

@@ -16,6 +16,7 @@ export const SAVE_TOY_PLAN = 'SAVE_TOY_PLAN'
 //visibility
 export const FETCH_NOTICE = 'FETCH_NOTICE'
 export const SCENE_TREE = 'SCENE_TREE'
+export const SET_VISIBILITY = 'SET_VISIBILITY'
 //home
 export const SAVE_DATA_SITUATION = 'SAVE_DATA_SITUATION'
 export const SAVE_USER_LIST = 'SAVEZ_USER_LIST'

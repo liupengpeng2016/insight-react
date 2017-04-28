@@ -8,7 +8,7 @@ import {
   SAVE_VOICE_LIST, SAVE_CORPUS_LIST,SAVE_FIRST_SCENE_LIST,
   SAVE_SECOND_SCENE_LIST,SCENE_TREE,SAVE_MUSIC_OF_ALBUM,
   SAVE_ALL_FIRST_SCENE_LIST, SAVE_ALL_SECOND_SCENE_LIST,
-  SAVE_ALBUM_OF_TOPIC, SAVE_ALL_SCENE
+  SAVE_ALBUM_OF_TOPIC, SAVE_ALL_SCENE, SET_VISIBILITY
 } from './actionTypes.js'
 /********** visibility *********/
 function visibility(state={
@@ -25,6 +25,22 @@ function visibility(state={
     return Object.assign({}, state, {fetchNotice:{show: action.show, msg: action.msg}})
     case SCENE_TREE:
     return Object.assign({}, state, {sceneTree:{show: action.show, msg: action.msg}})
+    default:
+    return state
+  }
+}
+function visibility2(
+  state={
+    secondConfirm:{
+      show: false,
+      msg:'确认要删除吗？',
+      callback: function(){}
+    }
+  },action
+){
+  switch(action.type){
+    case SET_VISIBILITY:
+    return Object.assign({}, state, action.data)
     default:
     return state
   }
@@ -139,6 +155,7 @@ function voiceData(state={
 
 export default combineReducers({
   visibility,
+  visibility2,
   homeData,
   mediaData,
   habitData,

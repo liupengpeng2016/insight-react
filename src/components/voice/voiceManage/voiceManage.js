@@ -8,7 +8,7 @@ import {
   delVoiceQuestion, toggleVoiceStatus,
   getCorpusList, addVoiceItem,
   setVisibility, getAllFirstSceneList,
-  getAllSecondSceneList
+  getAllSecondSceneList, setVisibility2
 } from '../../../redux/actions.js'
 import {connect} from 'react-redux'
 import PageCtr from '../../media/pageCtr/pageCtr.js'
@@ -43,6 +43,7 @@ class VoiceManage extends Component{
           editorData={(voiceList.list||[])[this.state.editorData]}
           delVoiceAnswer={this.delVoiceAnswer.bind(this)}
           delVoiceQuestion={this.delVoiceQuestion.bind(this)}
+          refresh={this.getVoiceList.bind(this)}
           ></EditorVoice>
         <AddVoice
           checkbox={this.state.checkbox}
@@ -57,8 +58,6 @@ class VoiceManage extends Component{
           <ul>
             {
               corpusList.map((val, i)=> {
-                console.log(1)
-                console.log(this.state.checkbox)
                 return (
                   <li key={i}>
                     <input type='checkbox' id={`voiceManage${i}`}
@@ -164,7 +163,7 @@ class VoiceManage extends Component{
                         {val.answers.map((val,i)=>{
                           return (
                             <p key={i}
-                              style={val.status?{background:'#aaa'}: null}
+                              style={!val.status?{background:'#aaa'}: null}
                             >{val.answer}</p>
                           )
                         })}
@@ -289,10 +288,20 @@ class VoiceManage extends Component{
     dispatch(toggleVoiceStatus({group_ids, status}))
     setTimeout(this.getVoiceList.bind(this), 150)
   }
-  handelDelVoice(group_ids){
+  delVoiceItem(group_ids){
     const {dispatch} = this.props
     dispatch(delVoiceItem({group_ids}))
     setTimeout(this.getVoiceList.bind(this), 150)
+  }
+  handelDelVoice(group_ids){
+    const {dispatch} = this.props
+    dispatch(setVisibility2({
+      secondConfirm:{
+        show: true,
+        msg:'确认要删除吗？',
+        callback:this.delVoiceItem.bind(this, group_ids)
+       }
+    }))
   }
   delVoiceAnswer(answer_id){
     this.props.dispatch(delVoiceAnswer({answer_id}))
@@ -354,8 +363,14 @@ class VoiceManage extends Component{
   }
   delAll(){
     const {dispatch} = this.props
-    dispatch(delVoiceItem({group_ids: this.filterVoice_checkbox(this.state.voice_checkbox)}))
-    setTimeout(this.getVoiceList.bind(this), 150)
+    const group_ids= this.filterVoice_checkbox(this.state.voice_checkbox)
+    dispatch(setVisibility2({
+      secondConfirm:{
+        show: true,
+        msg:'确认要删除吗？',
+        callback:this.delVoiceItem.bind(this, group_ids)
+       }
+    }))
   }
 //初始化数据
   componentDidMount(){

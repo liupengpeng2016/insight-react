@@ -1,3 +1,46 @@
+.popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  font-size: 16px;
+  font-weight: bold; }
+  .popup > div {
+    width: 420px;
+    height: 312px;
+    border-radius: 10px;
+    background: white;
+    text-align: center;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto; }
+    .popup > div > span {
+      position: absolute;
+      width: 30px;
+      height: 30px;
+      font-size: 40px;
+      right: 10px;
+      top: 6px; }
+    .popup > div h1 {
+      line-height: 62px;
+      font-size: 18px; }
+    .popup > div img {
+      width: 80px;
+      height: 80px;
+      display: inline-block;
+      margin: 10px 0; }
+    .popup > div p {
+      line-height: 40px;
+      text-align: center; }
+      .popup > div p span {
+        margin: 0 18px;
+        color: #b1b1b1; }
+
 .home > h1 {
   line-height: 40px;
   color: #d0d0d0;

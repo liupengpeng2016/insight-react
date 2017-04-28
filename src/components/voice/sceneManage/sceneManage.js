@@ -3,7 +3,8 @@ import './sceneManage.css'
 import {
   getFirstSceneList,setVisibility,
   toggleFirstSceneStatus, delFirstSceneItem,
-  editorFirstSceneItem, addFirstSceneItem
+  editorFirstSceneItem, addFirstSceneItem,
+  setVisibility2
 } from '../../../redux/actions.js'
 import {Link} from 'react-router'
 import {connect} from 'react-redux'
@@ -17,7 +18,7 @@ class SceneManage extends Component{
       page: 1,
       isShow_editor: false,
       f_scene_id:'',
-      ename:'',
+      sceneData_id:'',
       isShow_add: false
     }
   }
@@ -30,7 +31,7 @@ class SceneManage extends Component{
           hide={()=>{this.setState({isShow_editor: false})}}
           editorSubmit={this.editorSubmit.bind(this)}
           f_scene_id={this.state.f_scene_id}
-          ename={this.state.ename}
+          sceneData={(firstSceneList.list||[])[this.state.sceneData_id]}
         />
         <AddScene
           isShow={this.state.isShow_add}
@@ -59,13 +60,13 @@ class SceneManage extends Component{
                     <td>{val.status === 1 ? '启用': '弃用'}</td>
                     <td>
                       <p
-                        onClick={this.handleEditor.bind(this,val.f_scene_id,val.ename)}
+                        onClick={this.handleEditor.bind(this,val.f_scene_id, i)}
                       >编辑</p>
                       <p
                         onClick={this.toggleFirstSceneStatus.bind(this, val.f_scene_id, val.status)}
                       >{val.status === 1? '弃用':  '启用'}</p>
                       <p className='del'
-                        onClick={this.delFirstSceneItem.bind(this,val.f_scene_id)}
+                        onClick={this.handleDelFirstSceneItem.bind(this,val.f_scene_id)}
                       >删除</p>
                     <p><Link to={{
                         pathname: '/voice/secondScene',
@@ -124,8 +125,11 @@ class SceneManage extends Component{
     this.props.dispatch(delFirstSceneItem({f_scene_id}))
     setTimeout(()=> this.getFirstSceneList() ,150)
   }
-  handleEditor(f_scene_id, ename){
-    this.setState({f_scene_id, ename,isShow_editor:true})
+  handleDelFirstSceneItem(f_scene_id){
+    this.props.dispatch(setVisibility2({secondConfirm:{show: true, msg:'确定要删除该场景吗？',callback:this.delFirstSceneItem.bind(this,f_scene_id)}}))
+  }
+  handleEditor(f_scene_id, i){
+    this.setState({f_scene_id, sceneData_id: i,isShow_editor:true})
   }
   editorSubmit(params){
     this.props.dispatch(editorFirstSceneItem(params))

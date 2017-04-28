@@ -36,7 +36,6 @@ class EditorVoice extends Component{
             <h3>
               <span
               onClick={()=>{
-                this.setState({questions:''})
                 hideEditorVoice()
               }}
               >×</span>
@@ -92,6 +91,7 @@ class EditorVoice extends Component{
                       <li className='editor-voice-notice'>
                         <ul>
                           <li style={this.state.questions[i].question_id? null: {display:'none'}} className='editor-info'>
+                            <i className='valid' style={!this.valid.questions[i].change? {visibility: 'hidden'}: null}>{this.valid.questions[i].notice= valid(this.state.questions[i].question,['require'])}</i>
                             <p>作者: {(questions[i]||{}).editor}</p>
                             <p>更新时间: {((questions[i]||{}).editor_time||'').slice(0, 10)}</p>
                           </li>
@@ -136,15 +136,17 @@ class EditorVoice extends Component{
                     <li className='editor-voice-notice'>
                       <ul>
                         <li>
+                          {console.log(!this.valid.answers[i].change)}
                           <i className='valid' style={!this.valid.answers[i].change? {visibility: 'hidden'}: null}>{this.valid.answers[i].notice= valid(this.state.answers[i].answer,['require'])}</i>
-                        </li>
-                        <li style={this.state.answers[i].answer_id? null: {display:'none'}}>
-                          <p>更新时间:{(answers||[]).editor_time}</p>
-                          <p>作者:{(answers||[]).editor}</p>
+                          <p style={this.state.answers[i].answer_id? null: {display:'none'}}>更新时间:{(answers[i]||[]).editor_time}</p>
+                          <p style={this.state.answers[i].answer_id? null: {display:'none'}}>作者:{(answers[i]||[]).editor}</p>
                         </li>
                         <li>
                           <span style={this.state.answers[i].answer_id? {color:'#5cc1df'}: {color:'#5cc1df',display:'none'}}
-                            onClick={()=> this.props.dispatch(toggleAnswerStatus({answer_id:answers[i].answer_id, status:answers[i]=== 1? 0: 1}))}
+                            onClick={()=> {
+                              this.props.dispatch(toggleAnswerStatus({answer_id:answers[i].answer_id, status:answers[i].status=== 1? 0: 1}))
+                              setTimeout(this.props.refresh, 150)
+                            }}
                           >
                             {(answers[i]||[]).status=== 1 ?'弃用':'启用'}
                           </span>
@@ -160,7 +162,6 @@ class EditorVoice extends Component{
                         onChange={this.handleWeight.bind(this,i)}
                         value={val.weight}
                         >
-                        <option value='0'>0</option>
                         <option value='1'>1</option>
                         <option value='2'>2</option>
                         <option value='3'>3</option>
@@ -179,7 +180,6 @@ class EditorVoice extends Component{
                         onChange={this.handleAge.bind(this,i)}
                         value={val.age}
                         >
-                        <option value='0'>通用</option>
                         <option value='1'>入园前</option>
                         <option value='2'>幼小衔接</option>
                         <option value='4'>小学</option>
@@ -192,7 +192,10 @@ class EditorVoice extends Component{
             })}
             <h2 onClick={this.addAnswers.bind(this)}>添加更多答案</h2>
             <div className='editor-voice-submit'>
-              <p onClick={hideEditorVoice}>取消</p>
+              <p onClick={()=>{
+                  hideEditorVoice()
+                }
+              }>取消</p>
               <p onClick={this.handleSubmit.bind(this)}>保存</p>
             </div>
           </div>
@@ -200,11 +203,12 @@ class EditorVoice extends Component{
     )
   }
   componentWillReceiveProps(nextProps){
-    if(!this.state.questions && nextProps.editorData){
+    if((nextProps.editorData||[]).group_id !== (this.props.editorData||[]).group_id){
       const questions_valid= [],keywords_valid= [], answers_valid= []
       const nextQuestions= nextProps.editorData.questions;
       const nextAnswers= nextProps.editorData.answers;
       let questions= [], answers= []
+      const firstScene= nextProps.editorData.f_scene_id, secondScene= nextProps.editorData.s_scene_id
       for(let i= 0; i<nextQuestions.length; i++){
         questions.push({
           question: nextQuestions[i].question,
@@ -223,8 +227,15 @@ class EditorVoice extends Component{
         })
         answers_valid.push({change: false, notice:''})
       }
+      this.props.dispatch(getAllSecondSceneList({f_scene_id: firstScene}))
       Object.assign(this.valid, {questions:questions_valid, answers: answers_valid, keywords: keywords_valid})
-      this.setState({answers, questions})
+      this.setState({answers, questions, firstScene, secondScene})
+    }
+  }
+  componentWillUpdate(nextProps){
+    if(nextProps.allSecondSceneList.length!== 0&& this.state.secondScene !== nextProps.editorData.s_scene_id){
+      this.forceUpdate()
+      console.log('forceUpdate')
     }
   }
   handleSubmit(){
@@ -249,6 +260,7 @@ class EditorVoice extends Component{
       if(i.notice){
         console.log('answers')
         showNotice()
+        console.log(this.valid.answers)
         return this.forceUpdate()
       }
     }
@@ -285,10 +297,10 @@ class EditorVoice extends Component{
     let answers_valid= [...this.valid.answers]
     answers_valid.push({change: false, notice:''})
     Object.assign(this.valid, {answers: answers_valid})
-
     let answers= [...this.state.answers]
-    answers.push({answer:'', weight:'0', age:'0', answer_id:''})
+    answers.push({answer:'', weight:'1', age:'1', answer_id:''})
     this.setState({answers})
+
   }
   addQuestions(){
     let questions_valid= [...this.valid.questions]
@@ -337,7 +349,9 @@ class EditorVoice extends Component{
   }
   handleWeight(i,e){
     const answers = [...this.state.answers]
+    console.log(answers)
     answers[i].weight= e.target.value
+    console.log(answers)
     this.setState({answers})
   }
   delQuestion(question_id, i){
@@ -351,6 +365,7 @@ class EditorVoice extends Component{
     const questions= [...this.state.questions]
     if(questions[i].question_id){
       this.props.delVoiceQuestion(question_id)
+      setTimeout(this.props.refresh, 150)
     }
     questions.splice(i,1)
     this.setState({questions})
@@ -363,6 +378,7 @@ class EditorVoice extends Component{
     const answers= [...this.state.answers]
     if(answers[i].answer_id){
       this.props.delVoiceAnswer(answer_id)
+      setTimeout(this.props.refresh, 150)
     }
     answers.splice(i,1)
     this.setState({answers})
