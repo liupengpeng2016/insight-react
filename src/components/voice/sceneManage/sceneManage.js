@@ -4,7 +4,7 @@ import {
   getFirstSceneList,setVisibility,
   toggleFirstSceneStatus, delFirstSceneItem,
   editorFirstSceneItem, addFirstSceneItem,
-  setVisibility2
+  setVisibility2, getAllScene
 } from '../../../redux/actions.js'
 import {Link} from 'react-router'
 import {connect} from 'react-redux'
@@ -138,7 +138,9 @@ class SceneManage extends Component{
     setTimeout(()=> this.getFirstSceneList() ,150)
   }
   showSceneTree(){
-    this.props.dispatch(setVisibility({name: 'SCENE_TREE', show: true}))
+    const {dispatch}= this.props
+    dispatch(getAllScene())
+    dispatch(setVisibility({name: 'SCENE_TREE', show: true}))
   }
 }
 

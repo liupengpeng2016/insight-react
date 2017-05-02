@@ -41,6 +41,16 @@
     }
     &>li:first-child{
       border:none;
+      line-height: 110px;
+      span{
+        display: inline-block;
+        line-height: 50px;
+        vertical-align: top;
+      }
+      img{
+        width:80px;
+        height:80px;
+      }
     }
   }
   &>p{

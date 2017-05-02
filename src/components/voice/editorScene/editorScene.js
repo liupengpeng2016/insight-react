@@ -14,10 +14,6 @@ class EditorScene extends Component {
         change: false,
         notice:''
       },
-      desc:{
-        change: false,
-        notice:''
-      },
       ename:{
         change: false,
         notice:''
@@ -57,7 +53,6 @@ class EditorScene extends Component {
                 onChange={this.handleDesc.bind(this)}
                 value={this.state.desc}
               />
-              <span></span><i className='valid' style={!this.valid.desc.change? {visibility: 'hidden'}: null}>{this.valid.desc.notice= valid(this.state.desc,['require'])}</i>
               <p className='editor-scene-notice'></p>
             </li>
           </ul>
@@ -77,7 +72,6 @@ class EditorScene extends Component {
     this.setState({name: e.target.value})
   }
   handleDesc(e){
-    this.valid.desc.change= true
     this.setState({desc: e.target.value})
   }
   handleEname(e){
@@ -85,7 +79,7 @@ class EditorScene extends Component {
     this.setState({ename: e.target.value})
   }
   handleSubmit(){
-    if(this.valid.name.notice||this.valid.ename.notice||this.valid.desc.notice){
+    if(this.valid.name.notice||this.valid.ename.notice){
       const keys=Object.keys(this.valid)
       for(let i of keys){
         this.valid[i].change= true

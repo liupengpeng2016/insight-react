@@ -5,7 +5,8 @@ import {connect} from 'react-redux'
 import {
   getSecondSceneList, addSecondSceneItem,
   editorSecondSceneItem, toggleSecondSceneStatus,
-  delSecondSceneItem, setVisibility, setVisibility2
+  delSecondSceneItem, setVisibility, setVisibility2,
+  getAllScene
 } from '../../../redux/actions.js'
 import AddSecondScene from '../addSecondScene/addScendScene.js'
 import EditorSecondScene from '../editorSecondScene/editorSecondScene.js'
@@ -139,7 +140,9 @@ class SecondScene extends Component{
      e.target.parentNode.nextSibling.className='hide'
   }
   showSceneTree(){
-    this.props.dispatch(setVisibility({name: 'SCENE_TREE', show: true}))
+    const {dispatch}= this.props
+    dispatch(getAllScene())
+    dispatch(setVisibility({name: 'SCENE_TREE', show: true}))
   }
 
 }

@@ -6,7 +6,7 @@ import {
   getVoiceList, editorVoiceItem,
   delVoiceItem, delVoiceAnswer,
   delVoiceQuestion, toggleVoiceStatus,
-  getCorpusList, addVoiceItem,
+  getCorpusList, addVoiceItem, getAllScene,
   setVisibility, getAllFirstSceneList,
   getAllSecondSceneList, setVisibility2
 } from '../../../redux/actions.js'
@@ -407,7 +407,9 @@ class VoiceManage extends Component{
     }
   }
   showSceneTree(){
-    this.props.dispatch(setVisibility({name: 'SCENE_TREE', show: true}))
+    const {dispatch}= this.props
+    dispatch(getAllScene())
+    dispatch(setVisibility({name: 'SCENE_TREE', show: true}))
   }
   editorSubmit(params){
     const {dispatch} = this.props
