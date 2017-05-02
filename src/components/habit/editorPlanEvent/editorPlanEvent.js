@@ -59,7 +59,7 @@ class EditorEvent extends Component{
               onChange={this.handleName.bind(this)}
               value={this.state.name}
             />
-            <i className='valid' style={!this.valid.name.change? {display: 'none'}: null}>{this.valid.name.notice= valid(this.state.name,['require'])}</i>
+          <i className='valid' style={!this.valid.name.change? {display: 'none'}: null}>{this.valid.name.notice= valid(this.state.name,['require','maxLength:15'])}</i>
           </li>
           <li>
             <span>提醒时间</span>
@@ -98,7 +98,7 @@ class EditorEvent extends Component{
               onChange={this.handleVoice.bind(this)}
               value={this.state.voice_name}
             />
-            <i className='valid' style={!this.valid.voice_name.change? {display: 'none'}: null}>{this.valid.voice_name.notice= valid(this.state.voice_name,['require'])}</i>
+          <i className='valid' style={!this.valid.voice_name.change? {display: 'none'}: null}>{this.valid.voice_name.notice= valid(this.state.voice_name,['require', 'maxLength:25'])}</i>
           </li>
           <li>
             <span>提醒次数</span>

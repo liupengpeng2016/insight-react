@@ -93,10 +93,10 @@ class AddVoice extends Component{
                   <i className='valid' style={!this.valid.secondScene.change? {visibility:'hidden'}: null}>{this.valid.secondScene.notice= valid(this.state.secondScene,['require'],['必选！'])}</i>
               </li>
             </ul>
-              {
-                questions.map((val, i)=>{
+                {
+                  questions.map((val, i)=>{
                   return (
-                    <ul key={i}>
+                    <ul key={i} style={is_scene_corpus? {display:'none'}: null}>
                       <li>
                         <span>问题{i+1}</span>
                         <input type='text' placeholder='请输入问题'
@@ -138,7 +138,9 @@ class AddVoice extends Component{
                   )
                 })
               }
-            <h2 onClick={this.addQuestions.bind(this)}>添加相似问题</h2>
+              <h2 onClick={this.addQuestions.bind(this)}
+                style={is_scene_corpus? {display:'none'}: null}
+              >添加相似问题</h2>
             {
               answers.map((val, i)=>{
                 return (
@@ -229,34 +231,44 @@ class AddVoice extends Component{
     }
     if(this.valid.secondScene.notice){
       showNotice()
+      console.log('secondScene')
       return this.forceUpdate()
     }
     if(this.valid.checkbox.notice){
       showNotice()
+      console.log('checkbox')
       return this.forceUpdate()
     }
     for(let i of this.valid.answers){
       if(i.notice){
         showNotice()
+        console.log('answers')
         return this.forceUpdate()
       }
     }
-    for(let i of this.valid.keywords){
-      if(i.notice){
-        showNotice()
-        return this.forceUpdate()
+    if(!this.props.is_scene_corpus){
+      for(let i of this.valid.keywords){
+        if(i.notice){
+          console.log('keywords')
+          showNotice()
+          return this.forceUpdate()
+        }
       }
-    }
-    for(let i of this.valid.questions){
-      if(i.notice){
-        showNotice()
-        return this.forceUpdate()
+      for(let i of this.valid.questions){
+        if(i.notice){
+          console.log('questions')
+          showNotice()
+          return this.forceUpdate()
+        }
       }
     }
     const {addSubmit, is_scene_corpus} = this.props
     let {questions, answers, secondScene} = this.state
     questions= JSON.stringify(questions)
     answers= JSON.stringify(answers)
+    if(this.props.is_scene_corpus){
+      questions= ''
+    }
     const params= {
       s_scene_id: secondScene,
       corpus_lib_ids: this.filterChecked(this.state.checkbox),
