@@ -10,7 +10,7 @@ class AddVoice extends Component{
       checkbox:'',
       firstScene: '',
       secondScene:'',
-      answers:[{answer: '', weight: '0', age: '0'}],
+      answers:[{answer: '', weight: '1', age: '1'}],
       questions:[{question: '', keyword: ''}]
     }
     this.valid={
@@ -168,7 +168,6 @@ class AddVoice extends Component{
                         onChange={this.handleWeight.bind(this,i)}
                         value={val.weight}
                         >
-                        <option value='0'>0</option>
                         <option value='1'>1</option>
                         <option value='2'>2</option>
                         <option value='3'>3</option>
@@ -187,7 +186,6 @@ class AddVoice extends Component{
                         onChange={this.handleAge.bind(this,i)}
                         value={val.age}
                       >
-                        <option value='0'>通用</option>
                         <option value='1'>入园前</option>
                         <option value='2'>幼小衔接</option>
                         <option value='4'>小学</option>
@@ -284,7 +282,7 @@ class AddVoice extends Component{
     Object.assign(this.valid, {answers: answers_valid})
 
     let answers= [...this.state.answers]
-    answers.push({answer:'', weight:'0', age:'0'})
+    answers.push({answer:'', weight:'1', age:'1'})
     this.setState({answers})
   }
   addQuestions(){

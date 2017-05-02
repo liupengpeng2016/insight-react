@@ -26,6 +26,7 @@ class EditorVoice extends Component{
     let {hideEditorVoice, toggleEditorVoice,
        editorData, allFirstSceneList, allSecondSceneList} = this.props
     let {questions, answers} = editorData||{}
+    const {is_scene_corpus} = editorData||{}
     questions= questions||[]
     answers= answers||[]
     return (
@@ -41,7 +42,7 @@ class EditorVoice extends Component{
               >×</span>
             </h3>
           <h1
-            >编辑语料</h1>
+            >编辑{is_scene_corpus? '场景': ''}语料</h1>
             <ul>
               <li>
                 <span>场景</span>
@@ -136,7 +137,6 @@ class EditorVoice extends Component{
                     <li className='editor-voice-notice'>
                       <ul>
                         <li>
-                          {console.log(!this.valid.answers[i].change)}
                           <i className='valid' style={!this.valid.answers[i].change? {visibility: 'hidden'}: null}>{this.valid.answers[i].notice= valid(this.state.answers[i].answer,['require'])}</i>
                           <p style={this.state.answers[i].answer_id? null: {display:'none'}}>更新时间:{(answers[i]||[]).editor_time}</p>
                           <p style={this.state.answers[i].answer_id? null: {display:'none'}}>作者:{(answers[i]||[]).editor}</p>
@@ -254,7 +254,6 @@ class EditorVoice extends Component{
       if(i.notice){
         console.log('answers')
         showNotice()
-        console.log(this.valid.answers)
         return this.forceUpdate()
       }
     }

@@ -17,7 +17,6 @@ class SceneManage extends Component{
     this.state= {
       page: 1,
       isShow_editor: false,
-      f_scene_id:'',
       sceneData_id:'',
       isShow_add: false
     }
@@ -30,7 +29,6 @@ class SceneManage extends Component{
           isShow={this.state.isShow_editor}
           hide={()=>{this.setState({isShow_editor: false})}}
           editorSubmit={this.editorSubmit.bind(this)}
-          f_scene_id={this.state.f_scene_id}
           sceneData={(firstSceneList.list||[])[this.state.sceneData_id]}
         />
         <AddScene
