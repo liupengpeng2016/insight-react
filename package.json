@@ -6,6 +6,7 @@
     "isomorphic-fetch": "^2.2.1",
     "jquery": "^3.2.1",
     "jstree": "^3.3.4",
+    "qrcode.react": "^0.7.1",
     "react": "^15.4.2",
     "react-dom": "^15.4.2",
     "react-redux": "^5.0.3",

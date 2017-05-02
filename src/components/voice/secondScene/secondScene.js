@@ -18,7 +18,7 @@ class SecondScene extends Component{
       f_scene_id:'',
       isShow_editor: false,
       page:'',
-      editorData_id:''
+      editorData_id:'',
     }
   }
   render(){
@@ -37,7 +37,6 @@ class SecondScene extends Component{
         />
         <EditorSecondScene
           isShow={this.state.isShow_editor}
-          f_scene_id={state}
           hide={()=>this.setState({isShow_editor: false})}
           editorSecondSceneItem={this.editorSecondSceneItem.bind(this)}
           editorData={(secondSceneList.list||[])[this.state.editorData_id]}

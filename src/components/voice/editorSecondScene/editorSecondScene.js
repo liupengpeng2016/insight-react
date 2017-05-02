@@ -93,14 +93,14 @@ class EditorSecondScene extends Component {
       return this.forceUpdate()
     }
 
-    const {f_scene_id, editorSecondSceneItem} = this.props
-    console.log(this.props)
+    const {editorData, editorSecondSceneItem} = this.props
+    const {s_scene_id}= editorData
     const {name, desc, ename} = this.state
     const params= {
       name,
       ename,
       desc,
-      f_scene_id
+      s_scene_id
     }
     editorSecondSceneItem(params)
   }

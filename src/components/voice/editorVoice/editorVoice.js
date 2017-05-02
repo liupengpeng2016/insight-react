@@ -205,7 +205,7 @@ class EditorVoice extends Component{
   componentWillReceiveProps(nextProps){
     if((nextProps.editorData||[]).group_id !== (this.props.editorData||[]).group_id){
       const questions_valid= [],keywords_valid= [], answers_valid= []
-      const nextQuestions= nextProps.editorData.questions;
+      const nextQuestions= (nextProps.editorData||[]).questions;
       const nextAnswers= nextProps.editorData.answers;
       let questions= [], answers= []
       const firstScene= nextProps.editorData.f_scene_id, secondScene= nextProps.editorData.s_scene_id
@@ -230,12 +230,6 @@ class EditorVoice extends Component{
       this.props.dispatch(getAllSecondSceneList({f_scene_id: firstScene}))
       Object.assign(this.valid, {questions:questions_valid, answers: answers_valid, keywords: keywords_valid})
       this.setState({answers, questions, firstScene, secondScene})
-    }
-  }
-  componentWillUpdate(nextProps){
-    if(nextProps.allSecondSceneList.length!== 0&& this.state.secondScene !== nextProps.editorData.s_scene_id){
-      this.forceUpdate()
-      console.log('forceUpdate')
     }
   }
   handleSubmit(){

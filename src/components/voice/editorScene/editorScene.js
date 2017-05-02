@@ -92,7 +92,8 @@ class EditorScene extends Component {
       }
       return this.forceUpdate()
     }
-    const {editorSubmit,f_scene_id} = this.props
+    const {editorSubmit, sceneData} = this.props
+    const {f_scene_id} = sceneData
     const {name, desc, ename} = this.state
     const params= {
       name,

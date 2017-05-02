@@ -77,7 +77,7 @@ class Home extends Component{
       searchType:'',
       membersShow: false,
       deviceInfoShow: false,
-      device: {},
+      device:[],
       memberData_id:''
     }
   }
@@ -85,7 +85,6 @@ class Home extends Component{
     let {dataSituation, userList} = this.props
     dataSituation = dataSituation || {}
     userList = userList.list || []
-    console.log(userList)
     return (
       <div className='home content'>
         <LookMembers
@@ -243,7 +242,10 @@ class Home extends Component{
       max_age: age.split('-')[1]||'',
       active_begin: computedTime(activeTime)[1]||'',
       active_end: computedTime(activeTime)[0]||''
-    }, {[searchType]: userInput},params)
+    },params)
+    if(searchType){
+      Object.assign(newParams, {[searchType]: userInput})
+    }
       dispatch(getUserList(newParams))
   }
   handleSearch(){
