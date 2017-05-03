@@ -1,13 +1,13 @@
 .aside {
   float: left;
-  height: 1166px;
-  width: 160px;
+  height: 0.97167rem;
+  width: 0.13333rem;
   background: #434c6c;
   color: white;
   font-size: 16px;
-  line-height: 60px;
+  line-height: 0.05rem;
   text-align: center; }
   .aside li {
-    margin: 20px 0; }
+    margin: 0.01667rem 0; }
     .aside li a {
       color: white; }

@@ -1,6 +1,9 @@
+@function px($a){
+  @return $a/1200*1rem;
+}
 .add-item{
   .notice-hours~span{
-    margin:0 10px;
+    margin:0 px(10);
     display:inline;
   }
 }

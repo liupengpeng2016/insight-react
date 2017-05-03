@@ -1,3 +1,6 @@
+@function px($a){
+  @return $a/1200*1rem;
+}
 .editor-scene{
   width:100%;
   height:100%;
@@ -6,8 +9,8 @@
   top:0;
   left:0;
   .editor-scene-data{
-    width:420px;
-    height:400px;
+    width:px(420);
+    height:px(400);
     background: white;
     position: absolute;
     top:0;
@@ -16,54 +19,54 @@
     bottom:0;
     margin:auto;
     color:#b2b2b2;
-    border-radius: 10px;
+    border-radius: px(10);
     &>h1{
-      line-height: 62px;
+      line-height: px(62);
       text-align: center;
       font-size: 18px;
       color:black;
       span{
         position: absolute;
-        right:10px;
+        right:px(10);
         top:0;
         font-size: 30px;
-        line-height: 30px;
+        line-height: px(30);
       }
     }
     li{
-      margin-bottom:22px;
+      margin-bottom:px(22);
       span{
-        width:66px;
-        margin-left:24px;
+        width:px(66);
+        margin-left:px(24);
         display: inline-block;
         vertical-align: middle;
       }
       input{
-        width:290px;
-        height:38px;
+        width:px(290);
+        height:px(38);
         vertical-align: middle;
         border:1px solid #dbdbdb;
-        padding-left:16px;
+        padding-left:px(16);
       }
       .editor-scene-detail{
-        line-height: 24px;
+        line-height: px(24);
         font-size: 12px;
       }
       .editor-scene-notice{
-        padding-left:90px;
+        padding-left:px(90);
         font-size: 12px;
-        line-height: 20px;
+        line-height: px(20);
       }
     }
     &>p{
-      line-height: 40px;
-      width:206px;
+      line-height: px(40);
+      width:px(206);
       background: #5cc1df;
       color:white;
       text-align: center;
       font-size: 18px;
       margin:0 auto;
-      border-radius: 5px;
+      border-radius: px(5);
     }
   }
 }

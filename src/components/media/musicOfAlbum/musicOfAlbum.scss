@@ -1,7 +1,10 @@
+@function px($a){
+  @return $a/1200*1rem;
+}
 .album-desc{
-  height:60px;
-  padding:0 16px;
+  height:px(60);
+  padding:0 px(16);
   &>p{
-    line-height: 30px;
+    line-height: px(30);
   }
 }

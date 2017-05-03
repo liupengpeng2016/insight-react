@@ -10,4 +10,12 @@ import router from './router/router.js'
 window.addEventListener("hashchange", function(){
   window.scrollTo(0,0)
 })
+function setSize(){
+  const c_width= window.innerWidth
+  if(c_width>1200){
+    document.querySelector('html').style.fontSize= c_width+ 'px'
+  }
+}
+setSize()
+window.onresize= setSize
 render(<Provider store={store}>{router}</Provider>,document.querySelector('#root'))

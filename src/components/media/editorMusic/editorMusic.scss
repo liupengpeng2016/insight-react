@@ -1,6 +1,9 @@
+@function px($a){
+  @return $a/1200*1rem;
+}
 .editor-music{
   .age{
-    width:30px;
+    width:px(30);
     text-align: center;
   }
 }

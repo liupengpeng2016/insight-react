@@ -6,8 +6,8 @@
   top: 0;
   left: 0; }
   .editor-scene .editor-scene-data {
-    width: 420px;
-    height: 400px;
+    width: 0.35rem;
+    height: 0.33333rem;
     background: white;
     position: absolute;
     top: 0;
@@ -16,44 +16,44 @@
     bottom: 0;
     margin: auto;
     color: #b2b2b2;
-    border-radius: 10px; }
+    border-radius: 0.00833rem; }
     .editor-scene .editor-scene-data > h1 {
-      line-height: 62px;
+      line-height: 0.05167rem;
       text-align: center;
       font-size: 18px;
       color: black; }
       .editor-scene .editor-scene-data > h1 span {
         position: absolute;
-        right: 10px;
+        right: 0.00833rem;
         top: 0;
         font-size: 30px;
-        line-height: 30px; }
+        line-height: 0.025rem; }
     .editor-scene .editor-scene-data li {
-      margin-bottom: 22px; }
+      margin-bottom: 0.01833rem; }
       .editor-scene .editor-scene-data li span {
-        width: 66px;
-        margin-left: 24px;
+        width: 0.055rem;
+        margin-left: 0.02rem;
         display: inline-block;
         vertical-align: middle; }
       .editor-scene .editor-scene-data li input {
-        width: 290px;
-        height: 38px;
+        width: 0.24167rem;
+        height: 0.03167rem;
         vertical-align: middle;
         border: 1px solid #dbdbdb;
-        padding-left: 16px; }
+        padding-left: 0.01333rem; }
       .editor-scene .editor-scene-data li .editor-scene-detail {
-        line-height: 24px;
+        line-height: 0.02rem;
         font-size: 12px; }
       .editor-scene .editor-scene-data li .editor-scene-notice {
-        padding-left: 90px;
+        padding-left: 0.075rem;
         font-size: 12px;
-        line-height: 20px; }
+        line-height: 0.01667rem; }
     .editor-scene .editor-scene-data > p {
-      line-height: 40px;
-      width: 206px;
+      line-height: 0.03333rem;
+      width: 0.17167rem;
       background: #5cc1df;
       color: white;
       text-align: center;
       font-size: 18px;
       margin: 0 auto;
-      border-radius: 5px; }
+      border-radius: 0.00417rem; }

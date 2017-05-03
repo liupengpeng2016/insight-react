@@ -26,7 +26,24 @@ class AddSecondScene extends Component {
         style={isShow ? null: {display:'none'}}
       >
         <div className='editor-scene-data'>
-          <h1>添加二级场景<span onClick={hide}>×</span></h1>
+          <h1>添加二级场景<span onClick={()=>{
+            hide()
+            this.setState({
+              name:'',
+              desc:'',
+              ename:''
+            })
+            this.valid= {
+              name:{
+                change: false,
+                notice:''
+              },
+              ename:{
+                change: false,
+                notice:''
+              }
+            }
+          }}>×</span></h1>
           <ul>
             <li>
               <span>场景名</span>
@@ -90,6 +107,21 @@ class AddSecondScene extends Component {
     }
     this.props.hide()
     addSecondSceneItem(params)
+    this.setState({
+      name:'',
+      desc:'',
+      ename:''
+    })
+    this.valid= {
+      name:{
+        change: false,
+        notice:''
+      },
+      ename:{
+        change: false,
+        notice:''
+      }
+    }
   }
 }
 export default AddSecondScene

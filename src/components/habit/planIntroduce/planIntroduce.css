@@ -1,45 +1,45 @@
 .sleep-plan-introduce {
-  padding-left: 16px;
-  padding-right: 16px;
-  padding-bottom: 24px;
+  padding-left: 0.01333rem;
+  padding-right: 0.01333rem;
+  padding-bottom: 0.02rem;
   border-bottom: 1px #dbdbdb dashed; }
   .sleep-plan-introduce > h1 {
-    line-height: 40px;
+    line-height: 0.03333rem;
     color: #dbdbdb;
-    font-size: 12px; }
+    font-size: 0.01rem; }
   .sleep-plan-introduce > ul {
     font-size: 12px;
     border: 1px solid #b0b0b0;
-    line-height: 50px;
-    margin-bottom: 26px; }
+    line-height: 0.04167rem;
+    margin-bottom: 0.02167rem; }
     .sleep-plan-introduce > ul > li {
       border-top: 1px solid #b0b0b0; }
       .sleep-plan-introduce > ul > li > span {
         display: inline-block;
-        width: 118px;
+        width: 0.09833rem;
         color: #b0b0b0;
-        padding-left: 12px; }
+        padding-left: 0.01rem; }
       .sleep-plan-introduce > ul > li > img {
-        height: 40px;
+        height: 0.03333rem;
         display: inline-block;
         vertical-align: middle; }
     .sleep-plan-introduce > ul > li:first-child {
       border: none;
-      line-height: 110px; }
+      line-height: 0.09167rem; }
       .sleep-plan-introduce > ul > li:first-child span {
         display: inline-block;
-        line-height: 50px;
+        line-height: 0.04167rem;
         vertical-align: top; }
       .sleep-plan-introduce > ul > li:first-child img {
-        width: 80px;
-        height: 80px; }
+        width: 0.06667rem;
+        height: 0.06667rem; }
   .sleep-plan-introduce > p {
-    line-height: 52px;
-    width: 340px;
-    font-size: 20px;
+    line-height: 0.04333rem;
+    width: 0.28333rem;
+    font-size: 0.01667rem;
     text-align: center;
     margin: 0 auto;
-    border-radius: 5px;
+    border-radius: 0.00417rem;
     background: #5cc1df; }
     .sleep-plan-introduce > p a {
       color: white; }

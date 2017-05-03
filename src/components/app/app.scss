@@ -1,4 +1,10 @@
+@function px($a){
+  @return $a/1200*1rem;
+}
 /*reset public-css start*/
+html{
+  font-size:1200px;
+}
 body, ol, ul, h1, h2, h3, h4, h5, h6, p, th, td, dl, dd, form, fieldset, legend, input, textarea, select {
   margin: 0;
   padding: 0;
@@ -9,7 +15,6 @@ body {
   line-height: 1;
   -webkit-tap-highlight-color: transparent;
   background: #f4f4f4;
-  padding-bottom: 0.46875rem;
   font-size: 14px;
 }
 
@@ -35,7 +40,7 @@ select {
   -ms-appearance:none;
   -moz-appearance:none;
   -webkit-appearance:none;
-  padding:0 16px;
+  padding:0 px(16);
   border-radius:0;
   background: url("http://ourjs.github.io/static/2015/arrow.png") no-repeat scroll right center transparent;
 }
@@ -45,7 +50,7 @@ select {
   display:none;
 }
 .container{
-  width:1190px;
+  width:px(1190);
   margin:0 auto;
   overflow: hidden;
 }

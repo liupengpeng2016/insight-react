@@ -1,14 +1,17 @@
+@function px($a){
+  @return $a/1200*1rem;
+}
 .aside{
   float:left;
-  height:1166px;
-  width:160px;
+  height:px(1166);
+  width:px(160);
   background:#434c6c;
   color:white;
   font-size:16px;
-  line-height:60px;
+  line-height:px(60);
   text-align:center;
   li{
-    margin:20px 0;
+    margin:px(20) 0;
     a{
       color:white;
     }

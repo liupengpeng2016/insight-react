@@ -1,22 +1,25 @@
+@function px($a){
+  @return $a/1200*1rem;
+}
 .tingting-search{
   select{
     float:left;
-    width:76px;
-    height:40px;
+    width:px(76);
+    height:px(40);
     background:#faf9fd;
   }
 }
 .tingting-scope{
-  padding:16px;
+  padding:px(16);
   overflow: hidden;
   li{
     float:left;
     margin:{
-      right:13px;
+      right:px(13);
     }
     overflow: hidden;
     span,input,select{
-      height:30px;
+      height:px(30);
       float:left;
       border:1px solid #ebebeb;
       font:{
@@ -25,17 +28,17 @@
     }
     span{
       background:#f9f9fd;
-      line-height: 30px;
+      line-height: px(30);
       text-align:center;
-      padding: 0 10px;
+      padding: 0 px(10);
       border-right:none;
     }
     select{
-      height:32px;
+      height:px(32);
     }
     input{
       padding:{
-        left:22px;
+        left:px(22);
       }
       border-right:none;
     }
@@ -46,19 +49,19 @@
     color:white;
     border:none;
     float:left;
-    line-height: 32px;
-    height:32px;
+    line-height: px(32);
+    height:px(32);
   }
 }
 .tingting-notice{
   padding:{
-    left:16px;
+    left:px(16);
   }
 }
 .tingting-list-button{
   &>span{
     color:#5cc1df;
-    padding: 0 12px;
+    padding: 0 px(12);
     cursor: pointer;
   }
   .off{
@@ -66,7 +69,7 @@
     cursor: pointer;
     span{
       color:#ababab;
-      margin-left:10px;
+      margin-left:px(10);
       cursor:auto;
     }
   }

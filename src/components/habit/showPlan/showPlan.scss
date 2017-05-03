@@ -1,23 +1,26 @@
+@function px($a){
+  @return $a/1200*1rem;
+}
 .habit-sub-tabs{
-  padding-left:16px;
+  padding-left:px(16);
   border-bottom:1px solid #f7f7f7;
   overflow:hidden;
   li{
-    line-height: 46px;
+    line-height: px(46);
     float:left;
     text-align:center;
-    margin: 0 12px;
+    margin: 0 px(12);
   }
   &>li:last-child{
-    width:104px;
-    line-height:30px;
+    width:px(104);
+    line-height:px(30);
     border:1px solid #5cc1df;
-    border-radius:5px;
+    border-radius:px(5);
     float:right;
     a{
       color:#5cc1df;
     }
-    margin:{top:6px;}
+    margin:{top:px(6);}
   }
   &>li:last-child:before{
     content:'+';

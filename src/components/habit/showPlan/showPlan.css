@@ -1,19 +1,19 @@
 .habit-sub-tabs {
-  padding-left: 16px;
+  padding-left: 0.01333rem;
   border-bottom: 1px solid #f7f7f7;
   overflow: hidden; }
   .habit-sub-tabs li {
-    line-height: 46px;
+    line-height: 0.03833rem;
     float: left;
     text-align: center;
-    margin: 0 12px; }
+    margin: 0 0.01rem; }
   .habit-sub-tabs > li:last-child {
-    width: 104px;
-    line-height: 30px;
+    width: 0.08667rem;
+    line-height: 0.025rem;
     border: 1px solid #5cc1df;
-    border-radius: 5px;
+    border-radius: 0.00417rem;
     float: right;
-    margin-top: 6px; }
+    margin-top: 0.005rem; }
     .habit-sub-tabs > li:last-child a {
       color: #5cc1df; }
   .habit-sub-tabs > li:last-child:before {

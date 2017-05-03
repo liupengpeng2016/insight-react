@@ -170,7 +170,7 @@ class VoiceManage extends Component{
                       </td>
                       <td>
                         {val.answers.map((val,i)=>{
-                          return <p key={i}>{`${val.weight}/${val.age}`}</p>
+                          return <p key={i}>{`${val.weight? val.weight: '无'}/${this.formAge(val.age)}`}</p>
                         })}
                       </td>
                       <td>{val.status? '启用':'弃用'}</td>
@@ -236,6 +236,23 @@ class VoiceManage extends Component{
         <PageCtr total={voiceList.pages} buttons='10' changePage={this.changePage.bind(this)}/>
       </div>
     )
+  }
+  formAge(age){
+    switch(age){
+      case 0:
+      return '无'
+      case 1:
+      return '入园前'
+      case 2:
+      return '幼小衔接'
+      case 4:
+      return '小学'
+      case 8:
+      return '初中'
+      case 16:
+      return '成人'
+      default:return ''
+    }
   }
   handleCheckbox(i, e){
     const checkbox= [...this.state.checkbox]

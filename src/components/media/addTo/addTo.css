@@ -8,8 +8,8 @@
   left: 0;
   color: #b6b6b6; }
   .add-to .add-to-panel {
-    width: 426px;
-    height: 326px;
+    width: 0.355rem;
+    height: 0.27167rem;
     background: white;
     position: absolute;
     top: 0;
@@ -19,45 +19,45 @@
     margin: auto; }
     .add-to .add-to-panel > span {
       position: absolute;
-      width: 56px;
-      height: 56px;
+      width: 0.04667rem;
+      height: 0.04667rem;
       text-align: center;
       transform: rotate(45deg);
       top: 0;
       right: 0;
-      line-height: 56px; }
+      line-height: 0.04667rem; }
     .add-to .add-to-panel > span:after {
       content: '+';
       display: block;
       font-size: 42px;
       text-align: center; }
     .add-to .add-to-panel > h1 {
-      line-height: 60px;
-      margin-bottom: 14px;
+      line-height: 0.05rem;
+      margin-bottom: 0.01167rem;
       font-size: 16px;
       color: black;
       text-align: center; }
     .add-to .add-to-panel > p {
-      margin-left: 25px; }
+      margin-left: 0.02083rem; }
       .add-to .add-to-panel > p span {
         display: inline-block;
-        width: 70px;
-        height: 38px; }
+        width: 0.05833rem;
+        height: 0.03167rem; }
       .add-to .add-to-panel > p select, .add-to .add-to-panel > p input {
         color: #b6b6b6;
-        width: 304px;
-        height: 38px;
-        margin-bottom: 21px;
-        padding-left: 16px; }
+        width: 0.25333rem;
+        height: 0.03167rem;
+        margin-bottom: 0.0175rem;
+        padding-left: 0.01333rem; }
       .add-to .add-to-panel > p input {
-        width: 286px; }
+        width: 0.23833rem; }
     .add-to .add-to-panel > h2 {
-      width: 202px;
-      line-height: 40px;
+      width: 0.16833rem;
+      line-height: 0.03333rem;
       background: #5cc1df;
       color: white;
       font-size: 18px;
       text-align: center;
       margin: 0 auto;
-      border-radius: 5px;
-      margin-top: 20px; }
+      border-radius: 0.00417rem;
+      margin-top: 0.01667rem; }

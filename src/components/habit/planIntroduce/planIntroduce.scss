@@ -1,14 +1,17 @@
+@function px($a){
+  @return $a/1200*1rem;
+}
 .sleep-plan-introduce{
   padding:{
-    left:16px;
-    right:16px;
-    bottom:24px;
+    left:px(16);
+    right:px(16);
+    bottom:px(24);
   }
   &>h1{
-    line-height: 40px;
+    line-height: px(40);
     color:#dbdbdb;
     font:{
-      size:12px;
+      size:px(12);
     }
   }
   border:{
@@ -19,52 +22,52 @@
       size:12px;
     }
     border:1px solid #b0b0b0;
-    line-height: 50px;
+    line-height: px(50);
     margin:{
-      bottom:26px;
+      bottom:px(26);
     }
     &>li{
       border-top:1px solid #b0b0b0;
       &>span{
         display: inline-block;
-        width:118px;
+        width:px(118);
         color:#b0b0b0;
         padding:{
-          left:12px;
+          left:px(12);
         }
       }
       &>img{
-        height:40px;
+        height:px(40);
         display:inline-block;
         vertical-align: middle;
       }
     }
     &>li:first-child{
       border:none;
-      line-height: 110px;
+      line-height: px(110);
       span{
         display: inline-block;
-        line-height: 50px;
+        line-height: px(50);
         vertical-align: top;
       }
       img{
-        width:80px;
-        height:80px;
+        width:px(80);
+        height:px(80);
       }
     }
   }
   &>p{
-    line-height: 52px;
-    width:340px;
+    line-height: px(52);
+    width:px(340);
     font:{
-      size:20px;
+      size:px(20);
     }
     a{
       color:white;
     }
     text-align:center;
     margin: 0 auto;
-    border-radius:5px;
+    border-radius:px(5);
     background:#5cc1df;
   }
 }

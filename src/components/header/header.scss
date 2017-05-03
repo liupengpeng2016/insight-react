@@ -1,14 +1,17 @@
+@function px($a){
+  @return $a/1200*1rem;
+}
 .header{
   background: #434c6c;
-  line-height: 36px;
+  line-height: px(36);
   p{
     float:right;
-    margin-right:8px;
+    margin-right:px(8);
     color:#abaeb6;
   }
   span{
     float:right;
-    margin-left:26px;
+    margin-left:px(26);
     color:#f6f7f8;
   }
 }

@@ -1,6 +1,9 @@
+@function px($a){
+  @return $a/1200*1rem;
+}
 .content .add-plan-interval{
   input[type='text']{
-    width:52px;
-    margin-right:12px;
+    width:px(52);
+    margin-right:px(12);
   }
 }

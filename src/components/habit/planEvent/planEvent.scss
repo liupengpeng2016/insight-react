@@ -1,17 +1,20 @@
+@function px($a){
+  @return $a/1200*1rem;
+}
 .sleep-plan-list{
-  padding: 0 16px;
+  padding: 0 px(16);
   &>h1{
-    line-height: 54px;
+    line-height: px(54);
     font-size:12px;
   }
   &>table{
     width:100%;
     text-align: center;
     font-size:14px;
-    line-height: 42px;
+    line-height: px(42);
     border-collapse:collapse;
     margin:{
-      bottom:25px;
+      bottom:px(25);
     }
     td{
       border:1px solid #dbdbdb;
@@ -22,7 +25,7 @@
       img{
         display:inline-block;
         vertical-align: middle;
-        height:30px;
+        height:px(30);
       }
     }
     tr:nth-child(2n){
@@ -38,14 +41,14 @@
     &>ul{
       li{
         float:right;
-        margin:0 12px;
-        line-height: 28px;
-        padding:0 22px;
-        border-radius:5px;
+        margin:0 px(12);
+        line-height: px(28);
+        padding:0 px(22);
+        border-radius:px(5);
       }
       overflow: hidden;
       margin:{
-        bottom:25px;
+        bottom:px(25);
       }
       li:nth-child(2){
         color:#5cc1df;
@@ -57,22 +60,22 @@
       }
     }
     &>h1{
-      width:98px;
-      line-height:30px;
+      width:px(98);
+      line-height:px(30);
       color:#5cc1df;
       border:1px solid;
-      border-radius:5px;
+      border-radius:px(5);
       font-size:16px;
       float:right;
     }
     &>h2{
-      width:340px;
-      line-height:52px;
+      width:px(340);
+      line-height:px(52);
       background:#5cc1df;
 
       margin: 0 auto;
       font-size:20px;
-      border-radius:5px;
+      border-radius:px(5);
       a{
         color:white;
       }
@@ -80,10 +83,10 @@
   }
 }
 .ctr-buttons{
-  width:150px;
+  width:px(150);
   margin:0 auto;
   li{
-    padding:0 16px;
+    padding:0 px(16);
     float:left;
   }
   li:first-child{

@@ -95,6 +95,7 @@ class EditorScene extends Component {
       desc,
       f_scene_id
     }
+    this.props.hide()
     editorSubmit(params)
   }
 }

@@ -1,57 +1,60 @@
+@function px($a){
+  @return $a/1200*1rem;
+}
 .toy-plan-item{
   &>li{
-    border-bottom:24px solid #f4f4f4;
+    border-bottom:px(24) solid #f4f4f4;
     padding:{
-      bottom:22px;
+      bottom:px(22);
     }
     h1{
-      line-height: 40px;
+      line-height: px(40);
       font:{
         size:12px;
       }
-      padding-left:16px;
+      padding-left:px(16);
     }
     h2{
-      line-height: 40px;
+      line-height: px(40);
       border-top:1px solid #f7f7f7;
-      padding-left:16px;
+      padding-left:px(16);
       color:#a9a9a9;
       font:{
         size:12px;
       }
     }
     h2+span{
-      width:50px;
-      line-height:30px;
+      width:px(50);
+      line-height:px(30);
       background:#faf9fd;
       margin:{
-        bottom:16px;
-        left:16px;
+        bottom:px(16);
+        left:px(16);
       }
       text-align:center;
       font-size:12px;
       display:inline-block;
     }
     h2+span+select{
-      width:104px;
-      height:30px;
+      width:px(104);
+      height:px(30);
       border:none;
     }
   }
 
   table{
-    width:982px;
+    width:px(982);
     font:{
       size:14px;
     }
     td{
       border:1px solid #f0f0f0;
     }
-    line-height: 42px;
+    line-height: px(42);
     border-collapse:collapse;
     border:1px solid #f0f0f0;
-    border-radius:5px;
-    margin: 0 auto 26px;
+    border-radius:px(5);
+    margin: 0 auto px(26);
     text-align:center;
     tr:nth-child(2n+1){
       background:#fafafa;
@@ -62,8 +65,8 @@
     }
   }
   p.submit{
-    width:340px;
-    line-height:50px;
+    width:px(340);
+    line-height:px(50);
     display:block;
     margin:0 auto;
     text-align: center;
@@ -71,7 +74,7 @@
     font:{
       size:20px;
     }
-    border-radius:5px;
+    border-radius:px(5);
     border:none;
     a{
       color:white;
@@ -84,7 +87,7 @@
     table{
       text-align: left;
       td{
-        padding-left: 12px;
+        padding-left: px(12);
       }
     }
   }
@@ -94,7 +97,7 @@
       td{
         border:none;
         p{
-          line-height:24px;
+          line-height:px(24);
         }
       }
 
@@ -104,12 +107,12 @@
     overflow: hidden;
     li,+P{
       float:right;
-      line-height: 30px;
-      padding: 0 12px;
+      line-height: px(30);
+      padding: 0 px(12);
       border:1px solid;
-      margin-right: 16px;
+      margin-right: px(16);
       text-align:center;
-      border-radius:5px;
+      border-radius:px(5);
     }
     li:first-child{
       background:#fe6636;
@@ -125,17 +128,17 @@
   }
 }
 .button-operate-all{
-  margin-bottom: 26px;
+  margin-bottom: px(26);
   overflow: hidden;
   li{
     float: right;
     font-size: 16px;
-    line-height: 30px;
+    line-height: px(30);
     text-align: center;
-    margin-right: 16px;
-    border-radius: 5px;
+    margin-right: px(16);
+    border-radius: px(5);
     border: 1px solid;
-    padding: 0 24px;
+    padding: 0 px(24);
   }
   .choose-all{
     color: #c4d1c8;
@@ -145,21 +148,21 @@
   }
 }
 .button-change-mode{
-  width: 98px;
-  line-height: 30px;
+  width: px(98);
+  line-height: px(30);
   color: #5cc1df;
   border: 1px solid;
-  border-radius: 5px;
+  border-radius: px(5);
   font-size: 16px;
   float: right;
   text-align: center;
   margin:{
-    right:16px;
+    right:px(16);
   }
 }
 .operate-button{
   &>span,&>input{
-    margin: 0 12px;
+    margin: 0 px(12);
   }
   &>.editor-button{
     color:#5cc1df;
@@ -173,15 +176,15 @@
 }
 .toy-plan{
   &>h1{
-    line-height:40px;
+    line-height:px(40);
     color:#d0d0d0;
     font-size:14px;
     background:#f4f4f4;
   }
   &>h2{
-    line-height: 40px;
+    line-height: px(40);
     margin:{
-      left:16px;
+      left:px(16);
     }
     font:{
       size:15px;
@@ -189,15 +192,15 @@
   }
 }
 .toy-plan-tabs{
-  padding-left:16px;
+  padding-left:px(16);
   border-bottom:1px solid #f7f7f7;
   overflow:hidden;
   li{
-    line-height: 46px;
-    width:114px;
+    line-height: px(46);
+    width:px(114);
     float:left;
     text-align:center;
-    margin: 0 12px;
+    margin: 0 px(12);
     a{
       display:block;
       width:100%;

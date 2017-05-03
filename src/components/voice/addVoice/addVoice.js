@@ -10,7 +10,7 @@ class AddVoice extends Component{
       checkbox:'',
       firstScene: '',
       secondScene:'',
-      answers:[{answer: '', weight: '1', age: '1'}],
+      answers:[{answer: '', weight: '', age: ''}],
       questions:[{question: '', keyword: ''}]
     }
     this.valid={
@@ -23,7 +23,6 @@ class AddVoice extends Component{
         notice:''
       },
       questions:[{change: false, notice:''}],
-      keywords:[{change: false, notice:''}],
       answers:[{change: false, notice:''}]
     }
   }
@@ -37,7 +36,28 @@ class AddVoice extends Component{
           <div className='editor-voice-info'>
             <h3>
               <span
-              onClick={hideAddVoice}
+              onClick={()=>{
+                hideAddVoice()
+                this.setState({
+                  checkbox:'',
+                  firstScene: '',
+                  secondScene:'',
+                  answers:[{answer: '', weight: '', age: ''}],
+                  questions:[{question: '', keyword: ''}]
+                })
+                this.valid={
+                  secondScene:{
+                    change: false,
+                    notice:''
+                  },
+                  checkbox:{
+                    change: false,
+                    notice:''
+                  },
+                  questions:[{change: false, notice:''}],
+                  answers:[{change: false, notice:''}]
+                }
+              }}
               >×</span>
             </h3>
             <h1>{'新增'+ (is_scene_corpus? '场景':'') +'语料'}</h1>
@@ -126,7 +146,6 @@ class AddVoice extends Component{
                       <li className='editor-voice-notice'>
                         <ul>
                           <li>
-                            <i className='valid' style={!this.valid.keywords[i].change? {visibility: 'hidden'}: null}>{this.valid.keywords[i].notice= valid(questions[i].keyword,['require'])}</i>
                           </li>
                           <li>
                             <span className='del'
@@ -170,6 +189,7 @@ class AddVoice extends Component{
                         onChange={this.handleWeight.bind(this,i)}
                         value={val.weight}
                         >
+                        <option value=''>请选择权重</option>
                         <option value='1'>1</option>
                         <option value='2'>2</option>
                         <option value='3'>3</option>
@@ -188,6 +208,7 @@ class AddVoice extends Component{
                         onChange={this.handleAge.bind(this,i)}
                         value={val.age}
                       >
+                        <option value=''>请选择年龄</option>
                         <option value='1'>入园前</option>
                         <option value='2'>幼小衔接</option>
                         <option value='4'>小学</option>
@@ -247,13 +268,6 @@ class AddVoice extends Component{
       }
     }
     if(!this.props.is_scene_corpus){
-      for(let i of this.valid.keywords){
-        if(i.notice){
-          console.log('keywords')
-          showNotice()
-          return this.forceUpdate()
-        }
-      }
       for(let i of this.valid.questions){
         if(i.notice){
           console.log('questions')
@@ -277,6 +291,26 @@ class AddVoice extends Component{
       answers
     }
     addSubmit(params)
+    this.props.hideAddVoice()
+    this.setState({
+      checkbox:'',
+      firstScene: '',
+      secondScene:'',
+      answers:[{answer: '', weight: '', age: ''}],
+      questions:[{question: '', keyword: ''}]
+    })
+    this.valid={
+      secondScene:{
+        change: false,
+        notice:''
+      },
+      checkbox:{
+        change: false,
+        notice:''
+      },
+      questions:[{change: false, notice:''}],
+      answers:[{change: false, notice:''}]
+    }
   }
   valid_checkbox(){
     const checkbox= this.state.checkbox
@@ -294,17 +328,13 @@ class AddVoice extends Component{
     Object.assign(this.valid, {answers: answers_valid})
 
     let answers= [...this.state.answers]
-    answers.push({answer:'', weight:'1', age:'1'})
+    answers.push({answer:'', weight:'', age:''})
     this.setState({answers})
   }
   addQuestions(){
     let questions_valid= [...this.valid.questions]
     questions_valid.push({change: false, notice:''})
     Object.assign(this.valid, {questions: questions_valid})
-
-    let keywords_valid= [...this.valid.keywords]
-    keywords_valid.push({change: false, notice:''})
-    Object.assign(this.valid, {keywords: keywords_valid})
 
     let questions= [...this.state.questions]
     questions.push({question:'', keyword:''})
@@ -338,7 +368,6 @@ class AddVoice extends Component{
     this.setState({questions})
   }
   handleKeyword(i,e){
-    this.valid.keywords[i].change= true
     const questions = [...this.state.questions]
     questions[i].keyword= e.target.value
     this.setState({questions})
@@ -361,11 +390,8 @@ class AddVoice extends Component{
   }
   delQuestion(question_id, i){
     let questions_valid= [...this.valid.questions]
-    let keywords_valid= [...this.valid.keywords]
     questions_valid.splice(i,1)
-    keywords_valid.splice(i,1)
     Object.assign(this.valid, {questions: questions_valid})
-    Object.assign(this.valid, {keywords: keywords_valid})
 
     const questions= [...this.state.questions]
     questions.splice(i,1)

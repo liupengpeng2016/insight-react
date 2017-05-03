@@ -1,10 +1,13 @@
+@function px($a){
+  @return $a/1200*1rem;
+}
 .otherPlatform{
   padding:{
-    left:16px;
+    left:px(16);
   }
-  line-height: 40px;
+  line-height: px(40);
   &>h1{
-    line-height: 44px;
+    line-height: px(44);
     border:{
       bottom:1px dashed #c1c1c1;
     }
@@ -14,27 +17,27 @@
   }
   &>p{
     padding:{
-      top:22px;
+      top:px(22);
     }
-    line-height: 40px;
+    line-height: px(40);
     span,select,input{
-      height:40px;
+      height:px(40);
       color:#c1c1c1;
     }
     span{
-      width:120px;
+      width:px(120);
       display:inline-block;
     }
     input{
       padding:{
-        left:14px;
+        left:px(14);
       }
-      width:340px;
+      width:px(340);
     }
   }
   &>input[type='button']{
-    width:338px;
-    height:42px;
+    width:px(338);
+    height:px(42);
     background:#5dd1cf;
     color:white;
     border:none;
@@ -42,15 +45,15 @@
       size:20px;
     }
     display: block;
-    margin:26px auto 6px;
+    margin:px(26) auto px(6);
   }
   &>h2{
     font:{
       size:12px;
     }
     margin:0 auto;
-    width:338px;
-    line-height: 20px;
+    width:px(338);
+    line-height: px(20);
     color:#c1c1c1;
   }
   .platform-status{
@@ -60,8 +63,8 @@
     }
     label{
       margin:{
-        left:6px;
-        right:16px;
+        left:px(6);
+        right:px(16);
       }
     }
   }

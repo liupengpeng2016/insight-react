@@ -89,6 +89,7 @@ class PageCtr extends Component{
     this.move(pageTo-middlePage)
     this.setState({active:pageTo})
     this.props.changePage(pageTo)
+    window.scrollTo(0,0)
   }
 }
 export default PageCtr

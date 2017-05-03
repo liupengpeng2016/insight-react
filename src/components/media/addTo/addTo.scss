@@ -1,3 +1,6 @@
+@function px($a){
+  @return $a/1200*1rem;
+}
 .add-to{
   position:fixed;
   width:100%;
@@ -8,8 +11,8 @@
   left:0;
   color:#b6b6b6;
   .add-to-panel{
-    width:426px;
-    height:326px;
+    width:px(426);
+    height:px(326);
     background: white;
     position:absolute;
     top:0;
@@ -19,13 +22,13 @@
     margin:auto;
     &>span{
       position:absolute;
-      width:56px;
-      height:56px;
+      width:px(56);
+      height:px(56);
       text-align: center;
       transform:rotate(45deg);
       top:0;
       right:0;
-      line-height: 56px;
+      line-height: px(56);
     }
     &>span:after{
       content:'+';
@@ -36,9 +39,9 @@
       text-align:center;
     }
     &>h1{
-      line-height: 60px;
+      line-height: px(60);
       margin:{
-        bottom:14px;
+        bottom:px(14);
       }
       font:{
         size:16px;
@@ -48,31 +51,31 @@
     }
     &>p{
       margin:{
-        left:25px;
+        left:px(25);
       }
       span{
         display:inline-block;
-        width:70px;
-        height:38px;
+        width:px(70);
+        height:px(38);
       }
       select,input{
         color:#b6b6b6;
-        width:304px;
-        height:38px;
+        width:px(304);
+        height:px(38);
         margin:{
-          bottom:21px;
+          bottom:px(21);
         }
         padding:{
-          left:16px;
+          left:px(16);
         }
       }
       input{
-        width:286px;
+        width:px(286);
       }
     }
     &>h2{
-      width:202px;
-      line-height:40px;
+      width:px(202);
+      line-height:px(40);
       background:#5cc1df;
       color:white;
       font:{
@@ -80,9 +83,9 @@
       }
       text-align:center;
       margin:0 auto;
-      border-radius:5px;
+      border-radius:px(5);
       margin:{
-        top:20px;
+        top:px(20);
       }
     }
   }

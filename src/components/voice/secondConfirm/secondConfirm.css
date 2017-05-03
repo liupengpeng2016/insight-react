@@ -6,8 +6,8 @@
   top: 0;
   left: 0; }
   .second-confirm > div {
-    width: 420px;
-    height: 306px;
+    width: 0.35rem;
+    height: 0.255rem;
     background: white;
     position: absolute;
     top: 0;
@@ -18,27 +18,27 @@
     text-align: center; }
     .second-confirm > div h1 {
       font-size: 18px;
-      line-height: 74px;
+      line-height: 0.06167rem;
       position: relative; }
       .second-confirm > div h1 span {
         position: absolute;
-        right: 20px;
+        right: 0.01667rem;
         font-size: 20px;
-        line-height: 60px; }
+        line-height: 0.05rem; }
     .second-confirm > div p {
       font-size: 14px;
-      margin-top: 42px;
-      padding: 0 30px; }
+      margin-top: 0.035rem;
+      padding: 0 0.025rem; }
     .second-confirm > div h2 {
       position: absolute;
-      bottom: 20px;
+      bottom: 0.01667rem;
       width: 100%; }
       .second-confirm > div h2 span {
         display: inline-block;
         font-size: 18px;
-        line-height: 40px;
-        width: 100px;
+        line-height: 0.03333rem;
+        width: 0.08333rem;
         color: white;
         background: #5cc1df;
-        border-radius: 5px;
-        margin: 0 16px; }
+        border-radius: 0.00417rem;
+        margin: 0 0.01333rem; }

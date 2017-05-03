@@ -1,6 +1,9 @@
+@function px($a){
+  @return $a/1200*1rem;
+}
 .voice-manage-search{
   padding:{
-    left:16px;
+    left:px(16);
   }
   overflow: hidden;
   border-bottom: 1px dashed #f0f0f0;
@@ -9,30 +12,30 @@
     color:#cdcdcd;
     float:left;
     margin:{
-      top:22px;
+      top:px(22);
     }
   }
   &>ul{
     float:right;
-    line-height: 68px;
+    line-height: px(68);
     overflow: hidden;
     li{
       float:left;
       margin:{
-        right:24px;
+        right:px(24);
       }
       [type='checkbox']{
-        width:18px;
-        height:18px;
-        margin:0 5px;
+        width:px(18);
+        height:px(18);
+        margin:0 px(5);
         vertical-align: middle;
       }
     }
     li:last-child{
-      margin-right:16px;
+      margin-right:px(16);
       &>span{
-        width:85px;
-        line-height:36px;
+        width:px(85);
+        line-height:px(36);
         display:inline-block;
         color:white;
         text-align: center;
@@ -43,10 +46,10 @@
       &>input{
         vertical-align: middle;
         border:1px solid #e7e7e7;
-        width:298px;
-        height:34px;
+        width:px(298);
+        height:px(34);
         padding:{
-          left:36px;
+          left:px(36);
         }
       }
     }
@@ -54,12 +57,12 @@
 }
 .voice-manage-scope{
   padding:{
-    left:16px;
+    left:px(16);
   }
-  line-height: 60px;
+  line-height: px(60);
   &>span{
-    width:50px;
-    line-height:32px;
+    width:px(50);
+    line-height:px(32);
     display:inline-block;
     text-align: center;
     background: #faf9fd;
@@ -70,20 +73,20 @@
   &>select{
     vertical-align: middle;
     margin:{
-      right:16px;
+      right:px(16);
     }
-    height:34px;
+    height:px(34);
     border:1px solid #ebebeb;
   }
 }
 .voice-manage-list{
   margin:{
-    left:16px;
+    left:px(16);
   }
-  width:986px;
+  width:px(986);
   border:1px solid #f0f0f0;
   border-collapse:collapse;
-  line-height: 40px;
+  line-height: px(40);
   text-align: center;
   thead{
     tr:first-child{
@@ -112,26 +115,26 @@
         span{
           text-align: left;
           display:inline-block;
-          width:80px;
-          margin-left:16px;
+          width:px(80);
+          margin-left:px(16);
         }
       }
   }
 }
 .voice-manage-buttons{
-  padding:16px 0;
+  padding:px(16) 0;
   li{
-    width:96px;
-    line-height:30px;
+    width:px(96);
+    line-height:px(30);
     color:#5cc1df;
     text-align: center;
     float:right;
     border: 1px solid;
     margin:{
-      right:16px;
+      right:px(16);
     }
     cursor:pointer;
-    border-radius:5px;
+    border-radius:px(5);
   }
   overflow:hidden;
 }
@@ -139,12 +142,12 @@
   text-align: center;
   p{
     display: inline-block;
-    width:204px;
-    line-height:40px;
+    width:px(204);
+    line-height:px(40);
     background: #5cc1df;
     font-size:18px;
-    margin: 0 13px;
-    border-radius:5px;
+    margin: 0 px(13);
+    border-radius:px(5);
     color:white;
     cursor:pointer;
   }
@@ -160,7 +163,7 @@
   vertical-align: middle;
   li{
     float:left;
-    margin:0 12px;
+    margin:0 px(12);
     cursor:pointer;
   }
   li:nth-child(1){
@@ -182,7 +185,7 @@
   border-top-color:black;
   display:inline-block;
   vertical-align: middle;
-  margin-left:10px;
+  margin-left:px(10);
 }
 .spread-array-shrink:after{
   content:'';
@@ -190,5 +193,5 @@
   border-right-color:black;
   display:inline-block;
   vertical-align: middle;
-  margin-left:10px;
+  margin-left:px(10);
 }

@@ -1,5 +1,5 @@
 .album-desc {
-  height: 60px;
-  padding: 0 16px; }
+  height: 0.05rem;
+  padding: 0 0.01333rem; }
   .album-desc > p {
-    line-height: 30px; }
+    line-height: 0.025rem; }

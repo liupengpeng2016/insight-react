@@ -1,40 +1,40 @@
 .otherPlatform {
-  padding-left: 16px;
-  line-height: 40px; }
+  padding-left: 0.01333rem;
+  line-height: 0.03333rem; }
   .otherPlatform > h1 {
-    line-height: 44px;
+    line-height: 0.03667rem;
     border-bottom: 1px dashed #c1c1c1;
     font-size: 12px; }
   .otherPlatform > p {
-    padding-top: 22px;
-    line-height: 40px; }
+    padding-top: 0.01833rem;
+    line-height: 0.03333rem; }
     .otherPlatform > p span, .otherPlatform > p select, .otherPlatform > p input {
-      height: 40px;
+      height: 0.03333rem;
       color: #c1c1c1; }
     .otherPlatform > p span {
-      width: 120px;
+      width: 0.1rem;
       display: inline-block; }
     .otherPlatform > p input {
-      padding-left: 14px;
-      width: 340px; }
+      padding-left: 0.01167rem;
+      width: 0.28333rem; }
   .otherPlatform > input[type='button'] {
-    width: 338px;
-    height: 42px;
+    width: 0.28167rem;
+    height: 0.035rem;
     background: #5dd1cf;
     color: white;
     border: none;
     font-size: 20px;
     display: block;
-    margin: 26px auto 6px; }
+    margin: 0.02167rem auto 0.005rem; }
   .otherPlatform > h2 {
     font-size: 12px;
     margin: 0 auto;
-    width: 338px;
-    line-height: 20px;
+    width: 0.28167rem;
+    line-height: 0.01667rem;
     color: #c1c1c1; }
   .otherPlatform .platform-status input {
     width: auto;
     vertical-align: middle; }
   .otherPlatform .platform-status label {
-    margin-left: 6px;
-    margin-right: 16px; }
+    margin-left: 0.005rem;
+    margin-right: 0.01333rem; }

@@ -96,6 +96,7 @@ class EditorSecondScene extends Component {
       desc,
       s_scene_id
     }
+    this.props.hide()
     editorSecondSceneItem(params)
   }
 }

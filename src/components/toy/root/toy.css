@@ -1,38 +1,38 @@
 .toy-plan-item > li {
-  border-bottom: 24px solid #f4f4f4;
-  padding-bottom: 22px; }
+  border-bottom: 0.02rem solid #f4f4f4;
+  padding-bottom: 0.01833rem; }
   .toy-plan-item > li h1 {
-    line-height: 40px;
+    line-height: 0.03333rem;
     font-size: 12px;
-    padding-left: 16px; }
+    padding-left: 0.01333rem; }
   .toy-plan-item > li h2 {
-    line-height: 40px;
+    line-height: 0.03333rem;
     border-top: 1px solid #f7f7f7;
-    padding-left: 16px;
+    padding-left: 0.01333rem;
     color: #a9a9a9;
     font-size: 12px; }
   .toy-plan-item > li h2 + span {
-    width: 50px;
-    line-height: 30px;
+    width: 0.04167rem;
+    line-height: 0.025rem;
     background: #faf9fd;
-    margin-bottom: 16px;
-    margin-left: 16px;
+    margin-bottom: 0.01333rem;
+    margin-left: 0.01333rem;
     text-align: center;
     font-size: 12px;
     display: inline-block; }
   .toy-plan-item > li h2 + span + select {
-    width: 104px;
-    height: 30px;
+    width: 0.08667rem;
+    height: 0.025rem;
     border: none; }
 
 .toy-plan-item table {
-  width: 982px;
+  width: 0.81833rem;
   font-size: 14px;
-  line-height: 42px;
+  line-height: 0.035rem;
   border-collapse: collapse;
   border: 1px solid #f0f0f0;
-  border-radius: 5px;
-  margin: 0 auto 26px;
+  border-radius: 0.00417rem;
+  margin: 0 auto 0.02167rem;
   text-align: center; }
   .toy-plan-item table td {
     border: 1px solid #f0f0f0; }
@@ -43,14 +43,14 @@
     color: #b3b2b3; }
 
 .toy-plan-item p.submit {
-  width: 340px;
-  line-height: 50px;
+  width: 0.28333rem;
+  line-height: 0.04167rem;
   display: block;
   margin: 0 auto;
   text-align: center;
   background: #5cc1df;
   font-size: 20px;
-  border-radius: 5px;
+  border-radius: 0.00417rem;
   border: none; }
   .toy-plan-item p.submit a {
     color: white; }
@@ -61,25 +61,25 @@
 .toy-plan-item > li:nth-child(1) table, .toy-plan-item > li:nth-child(3) table {
   text-align: left; }
   .toy-plan-item > li:nth-child(1) table td, .toy-plan-item > li:nth-child(3) table td {
-    padding-left: 12px; }
+    padding-left: 0.01rem; }
 
 .toy-plan-item > li:last-child {
   border-bottom: none; }
   .toy-plan-item > li:last-child table td {
     border: none; }
     .toy-plan-item > li:last-child table td p {
-      line-height: 24px; }
+      line-height: 0.02rem; }
 
 .toy-plan-item .toy-operate-buttons {
   overflow: hidden; }
   .toy-plan-item .toy-operate-buttons li, .toy-plan-item .toy-operate-buttons + P {
     float: right;
-    line-height: 30px;
-    padding: 0 12px;
+    line-height: 0.025rem;
+    padding: 0 0.01rem;
     border: 1px solid;
-    margin-right: 16px;
+    margin-right: 0.01333rem;
     text-align: center;
-    border-radius: 5px; }
+    border-radius: 0.00417rem; }
   .toy-plan-item .toy-operate-buttons li:first-child {
     background: #fe6636;
     color: white; }
@@ -89,35 +89,35 @@
     color: #5cc1df; }
 
 .button-operate-all {
-  margin-bottom: 26px;
+  margin-bottom: 0.02167rem;
   overflow: hidden; }
   .button-operate-all li {
     float: right;
     font-size: 16px;
-    line-height: 30px;
+    line-height: 0.025rem;
     text-align: center;
-    margin-right: 16px;
-    border-radius: 5px;
+    margin-right: 0.01333rem;
+    border-radius: 0.00417rem;
     border: 1px solid;
-    padding: 0 24px; }
+    padding: 0 0.02rem; }
   .button-operate-all .choose-all {
     color: #c4d1c8; }
   .button-operate-all .del-all {
     color: #56cc76; }
 
 .button-change-mode {
-  width: 98px;
-  line-height: 30px;
+  width: 0.08167rem;
+  line-height: 0.025rem;
   color: #5cc1df;
   border: 1px solid;
-  border-radius: 5px;
+  border-radius: 0.00417rem;
   font-size: 16px;
   float: right;
   text-align: center;
-  margin-right: 16px; }
+  margin-right: 0.01333rem; }
 
 .operate-button > span, .operate-button > input {
-  margin: 0 12px; }
+  margin: 0 0.01rem; }
 
 .operate-button > .editor-button {
   color: #5cc1df; }
@@ -128,26 +128,26 @@
   color: #fe6434; }
 
 .toy-plan > h1 {
-  line-height: 40px;
+  line-height: 0.03333rem;
   color: #d0d0d0;
   font-size: 14px;
   background: #f4f4f4; }
 
 .toy-plan > h2 {
-  line-height: 40px;
-  margin-left: 16px;
+  line-height: 0.03333rem;
+  margin-left: 0.01333rem;
   font-size: 15px; }
 
 .toy-plan-tabs {
-  padding-left: 16px;
+  padding-left: 0.01333rem;
   border-bottom: 1px solid #f7f7f7;
   overflow: hidden; }
   .toy-plan-tabs li {
-    line-height: 46px;
-    width: 114px;
+    line-height: 0.03833rem;
+    width: 0.095rem;
     float: left;
     text-align: center;
-    margin: 0 12px; }
+    margin: 0 0.01rem; }
     .toy-plan-tabs li a {
       display: block;
       width: 100%; }

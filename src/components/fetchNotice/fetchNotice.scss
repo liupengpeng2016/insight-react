@@ -1,3 +1,6 @@
+@function px($a){
+  @return $a/1200*1rem;
+}
 .fetch-notice{
   position:fixed;
   background: rgba(0,0,0,0.6);
@@ -5,8 +8,8 @@
   height:100%;
   top:0;
   &>div{
-    width:420px;
-    height:306px;
+    width:px(420);
+    height:px(306);
     background: white;
     position:absolute;
     top:0;
@@ -17,34 +20,34 @@
     text-align: center;
     h1{
       font-size:18px;
-      line-height: 74px;
+      line-height: px(74);
       position:relative;
       span{
         position:absolute;
-        right:20px;
-        font-size: 20px;
-        line-height: 60px;
+        right:px(20);
+        font-size: px(20);
+        line-height: px(60);
       }
     }
     p{
       font-size:14px;
       margin:{
-        top:42px;
+        top:px(42);
       }
-      padding:0 30px;
+      padding:0 px(30);
     }
     h2{
       font-size:18px;
-      line-height: 40px;
-      width:202px;
+      line-height: px(40);
+      width:px(202);
       color:white;
       background:#5cc1df;
       position:absolute;
-      border-radius:5px;
+      border-radius:px(5);
       left:0;
       right:0;
       margin:0 auto;
-      bottom:25px;
+      bottom:px(25);
     }
   }
 }

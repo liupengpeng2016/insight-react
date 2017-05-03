@@ -1,46 +1,49 @@
+@function px($a){
+  @return $a/1200*1rem;
+}
 .editor-voice{
   .editor-voice-info{
     &>h2{
-      width:205px;
-      line-height:40px;
+      width:px(205);
+      line-height:px(40);
       background:#5cc1df;
       text-align: center;
       color:white;
       font-size:18px;
-      border-radius:5px;
-      margin:20px auto 0;
+      border-radius:px(5);
+      margin:px(20) auto 0;
       cursor:pointer;
     }
     &>ul{
-      line-height: 42px;
+      line-height: px(42);
       &>li{
         text-align: left;
-        padding: 11px 0;
+        padding: px(11) 0;
         &>span{
-          width:66px;
+          width:px(66);
           display:inline-block;
           color:#c7c7c7;
           margin:{
-            left:26px;
+            left:px(26);
           }
         }
         [type='checkbox']{
-          width:16px;
-          height:16px;
-          margin-right:8px;
+          width:px(16);
+          height:px(16);
+          margin-right:px(8);
           vertical-align: middle;
         }
         label{
-          margin-right:22px;
+          margin-right:px(22);
         }
         select{
-          height:38px;
+          height:px(38);
         }
         [type='text']{
-          height:38px;
-          width:286px;
+          height:px(38);
+          width:px(286);
           border:1px solid #f0f0f0;
-          padding-left:18px;
+          padding-left:px(18);
         }
       }
     }
@@ -52,15 +55,15 @@
       &>ul{
         li:first-child{
           float:left;
-          margin-left:90px;
+          margin-left:px(90);
           color:#c8c8c8;
         }
        li:last-child{
           float:right;
           font-size:14px;
-          margin-right:26px;
+          margin-right:px(26);
           span{
-            padding-left:18px;
+            padding-left:px(18);
             cursor:pointer;
           }
           .on{
@@ -77,22 +80,22 @@
 .editor-voice-submit{
   overflow: hidden;
   padding:{
-    left:37px;
+    left:px(37);
   }
-  margin:40px 0;
+  margin:px(40) 0;
   &>p{
-    width:140px;
-    line-height:52px;
+    width:px(140);
+    line-height:px(52);
     float:left;
     text-align: center;
     font-size:20px;
     color:white;
-    border-radius:5px;
+    border-radius:px(5);
     cursor:pointer;
   }
   &>p:first-child{
     background:#dbdbdb;
-    margin-right:60px;
+    margin-right:px(60);
   }
   &>p:last-child{
     background:#5cc1df;

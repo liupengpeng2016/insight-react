@@ -1,21 +1,21 @@
 .editor-music > h1 {
-  line-height: 40px;
+  line-height: 0.03333rem;
   color: #d0d0d0;
   font-size: 14px;
   background: #f4f4f4; }
 
 .editor-music > h2 {
-  line-height: 40px;
-  margin-left: 16px;
-  font-size: 15px; }
+  line-height: 0.03333rem;
+  margin-left: 0.01333rem;
+  font-size: 0.0125rem; }
 
 .operate-buttons {
   overflow: hidden;
   margin: 0 auto;
-  width: 160px; }
+  width: 0.13333rem; }
   .operate-buttons > li {
-    width: 40px;
+    width: 0.03333rem;
     float: left;
-    line-height: 18px;
+    line-height: 0.015rem;
     font-size: 14px;
     text-align: center; }

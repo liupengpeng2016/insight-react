@@ -5,8 +5,8 @@
   height: 100%;
   top: 0; }
   .fetch-notice > div {
-    width: 420px;
-    height: 306px;
+    width: 0.35rem;
+    height: 0.255rem;
     background: white;
     position: absolute;
     top: 0;
@@ -17,26 +17,26 @@
     text-align: center; }
     .fetch-notice > div h1 {
       font-size: 18px;
-      line-height: 74px;
+      line-height: 0.06167rem;
       position: relative; }
       .fetch-notice > div h1 span {
         position: absolute;
-        right: 20px;
-        font-size: 20px;
-        line-height: 60px; }
+        right: 0.01667rem;
+        font-size: 0.01667rem;
+        line-height: 0.05rem; }
     .fetch-notice > div p {
       font-size: 14px;
-      margin-top: 42px;
-      padding: 0 30px; }
+      margin-top: 0.035rem;
+      padding: 0 0.025rem; }
     .fetch-notice > div h2 {
       font-size: 18px;
-      line-height: 40px;
-      width: 202px;
+      line-height: 0.03333rem;
+      width: 0.16833rem;
       color: white;
       background: #5cc1df;
       position: absolute;
-      border-radius: 5px;
+      border-radius: 0.00417rem;
       left: 0;
       right: 0;
       margin: 0 auto;
-      bottom: 25px; }
+      bottom: 0.02083rem; }

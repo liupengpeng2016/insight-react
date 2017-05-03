@@ -1,11 +1,11 @@
 .header {
   background: #434c6c;
-  line-height: 36px; }
+  line-height: 0.03rem; }
   .header p {
     float: right;
-    margin-right: 8px;
+    margin-right: 0.00667rem;
     color: #abaeb6; }
   .header span {
     float: right;
-    margin-left: 26px;
+    margin-left: 0.02167rem;
     color: #f6f7f8; }

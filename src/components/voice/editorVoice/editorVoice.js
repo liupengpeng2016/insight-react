@@ -18,7 +18,6 @@ class EditorVoice extends Component{
         notice:''
       },
       questions:[{change: false, notice:''}],
-      keywords:[{change: false, notice:''}],
       answers:[{change: false, notice:''}]
     }
   }
@@ -113,7 +112,6 @@ class EditorVoice extends Component{
                       <li className='editor-voice-notice'>
                         <ul>
                           <li>
-                            <i className='valid' style={!this.valid.keywords[i].change? {visibility: 'hidden'}: null}>{this.valid.keywords[i].notice= valid(this.state.questions[i].keyword,['require'])}</i>
                           </li>
                           <li>
                           </li>
@@ -161,7 +159,8 @@ class EditorVoice extends Component{
                       <select
                         onChange={this.handleWeight.bind(this,i)}
                         value={val.weight}
-                        >
+                      >
+                        <option value=''>请选择权重</option>
                         <option value='1'>1</option>
                         <option value='2'>2</option>
                         <option value='3'>3</option>
@@ -180,6 +179,7 @@ class EditorVoice extends Component{
                         onChange={this.handleAge.bind(this,i)}
                         value={val.age}
                         >
+                        <option value=''>请选择年龄</option>
                         <option value='1'>入园前</option>
                         <option value='2'>幼小衔接</option>
                         <option value='4'>小学</option>
@@ -206,9 +206,9 @@ class EditorVoice extends Component{
     if((nextProps.editorData||[]).group_id !== (this.props.editorData||[]).group_id){
       const questions_valid= [],keywords_valid= [], answers_valid= []
       const nextQuestions= (nextProps.editorData||[]).questions;
-      const nextAnswers= nextProps.editorData.answers;
+      const nextAnswers= (nextProps.editorData||[]).answers;
       let questions= [], answers= []
-      const firstScene= nextProps.editorData.f_scene_id, secondScene= nextProps.editorData.s_scene_id
+      const firstScene= (nextProps.editorData||[]).f_scene_id, secondScene= (nextProps.editorData||[]).s_scene_id
       for(let i= 0; i<nextQuestions.length; i++){
         questions.push({
           question: nextQuestions[i].question,
@@ -257,13 +257,6 @@ class EditorVoice extends Component{
         return this.forceUpdate()
       }
     }
-    for(let i of this.valid.keywords){
-      if(i.notice){
-        console.log('keywords')
-        showNotice()
-        return this.forceUpdate()
-      }
-    }
     for(let i of this.valid.questions){
       if(i.notice){
         console.log('questions')
@@ -271,7 +264,6 @@ class EditorVoice extends Component{
         return this.forceUpdate()
       }
     }
-
     const { editorData, editorSubmit} = this.props
     let {questions, answers, secondScene} = this.state
     questions= JSON.stringify(questions)
@@ -285,13 +277,14 @@ class EditorVoice extends Component{
       answers
     }
     editorSubmit(params)
+    this.props.hideEditorVoice()
   }
   addAnswers(){
     let answers_valid= [...this.valid.answers]
     answers_valid.push({change: false, notice:''})
     Object.assign(this.valid, {answers: answers_valid})
     let answers= [...this.state.answers]
-    answers.push({answer:'', weight:'1', age:'1', answer_id:''})
+    answers.push({answer:'', weight:'', age:'', answer_id:''})
     this.setState({answers})
 
   }
@@ -299,10 +292,6 @@ class EditorVoice extends Component{
     let questions_valid= [...this.valid.questions]
     questions_valid.push({change: false, notice:''})
     Object.assign(this.valid, {questions: questions_valid})
-
-    let keywords_valid= [...this.valid.keywords]
-    keywords_valid.push({change: false, notice:''})
-    Object.assign(this.valid, {keywords: keywords_valid})
 
     let questions= [...this.state.questions]
     questions.push({question:'', keyword:'', question_id:''})
@@ -323,14 +312,12 @@ class EditorVoice extends Component{
     this.setState({questions})
   }
   handleKeyword(i,e){
-    this.valid.keywords[i].change= true
     const questions = [...this.state.questions]
     questions[i].keyword= e.target.value
     this.setState({questions})
   }
   handleAnswer(i,e){
     this.valid.answers[i].change= true
-    console.log(this.state.answers)
     const answers = [...this.state.answers]
     answers[i].answer= e.target.value
     this.setState({answers})
@@ -342,18 +329,13 @@ class EditorVoice extends Component{
   }
   handleWeight(i,e){
     const answers = [...this.state.answers]
-    console.log(answers)
     answers[i].weight= e.target.value
-    console.log(answers)
     this.setState({answers})
   }
   delQuestion(question_id, i){
     let questions_valid= [...this.valid.questions]
-    let keywords_valid= [...this.valid.keywords]
     questions_valid.splice(i,1)
-    keywords_valid.splice(i,1)
     Object.assign(this.valid, {questions: questions_valid})
-    Object.assign(this.valid, {keywords: keywords_valid})
 
     const questions= [...this.state.questions]
     if(questions[i].question_id){

@@ -1,6 +1,9 @@
+@function px($a){
+  @return $a/1200*1rem;
+}
 .pageCtr{
   text-align: center;
-  margin:20px 0;
+  margin:px(20) 0;
   color:#c7c7c7;
   ul{
     display:inline-block;
@@ -11,15 +14,15 @@
       size:12px;
     }
     text-align: center;
-    line-height: 32px;
-    margin:0 4px;
-    width:32px;
+    line-height: px(32);
+    margin:0 px(4);
+    width:px(32);
     float:left;
   }
   li:first-child{
-    width:80px;
+    width:px(80);
   }
   li:last-child{
-    width:80px;
+    width:px(80);
   }
 }
