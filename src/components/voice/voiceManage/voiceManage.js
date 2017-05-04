@@ -258,6 +258,7 @@ class VoiceManage extends Component{
     const checkbox= [...this.state.checkbox]
     checkbox[i].checked= e.target.checked
     this.setState({checkbox})
+    localStorage.setItem('voiceCheck', JSON.stringify(checkbox))
     const corpus_lib_ids= []
     for(let i of checkbox){
       if(i.checked){
@@ -365,7 +366,6 @@ class VoiceManage extends Component{
         ids.push(checkbox[i].group_id)
       }
     }
-    console.log(ids)
     return ids
   }
   onAll(){
@@ -413,13 +413,23 @@ class VoiceManage extends Component{
     }
     const {corpusList}= nextProps
     if(!this.state.checkbox&& corpusList.length!== 0){
-      const checkbox= []
-      const corpus_lib_ids= []
+      let checkbox= []
       for(let i= 0; i<corpusList.length; i++){
         checkbox.push({checked:true, corpus_lib_id:corpusList[i].corpus_id})
-        corpus_lib_ids.push(corpusList[i].corpus_id)
       }
-      this.getVoiceList({corpus_lib_ids})
+
+      const localCheckbox= JSON.parse(localStorage.getItem('voiceCheck'))
+      localStorage.removeItem('voiceCheck')
+      for(let i of localCheckbox){
+        for(let k of checkbox){
+          if(i.corpus_lib_id=== k.corpus_lib_id){
+              k.checked= i.checked
+          }
+        }
+      }
+
+      this.getVoiceList({corpus_lib_ids: this.filterCheckbox(checkbox)})
+      localStorage.setItem('voiceCheck', JSON.stringify(checkbox))
       this.setState({checkbox})
     }
   }

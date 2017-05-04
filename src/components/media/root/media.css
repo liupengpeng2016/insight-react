@@ -13,9 +13,37 @@
   overflow: hidden;
   margin: 0 auto;
   width: 0.13333rem; }
-  .operate-buttons > li {
-    width: 0.03333rem;
-    float: left;
-    line-height: 0.015rem;
-    font-size: 14px;
-    text-align: center; }
+
+.operate-buttons > li {
+  width: 0.03333rem;
+  float: left;
+  line-height: 0.015rem;
+  font-size: 14px;
+  text-align: center; }
+
+.root-media-list {
+  background: white;
+  padding-bottom: 0.05rem;
+  min-height: 700px; }
+
+.root-media-list > h1 {
+  line-height: 0.03333rem;
+  color: #d0d0d0;
+  font-size: 14px;
+  background: #f4f4f4; }
+
+.root-media-list > h2 {
+  line-height: 0.03333rem;
+  margin-left: 0.01333rem;
+  font-size: 15px; }
+
+.root-media-list .sub-tabs {
+  padding-left: 0.01333rem;
+  border-bottom: 1px solid #f7f7f7;
+  overflow: hidden; }
+
+.root-media-list .sub-tabs li {
+  width: 0.09333rem;
+  line-height: 0.03833rem;
+  float: left;
+  text-align: center; }

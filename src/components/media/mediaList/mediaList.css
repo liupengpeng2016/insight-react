@@ -1,0 +1,18 @@
+.media-list {
+  width: 97%;
+  line-height: 0.035rem;
+  border: 1px solid #f0f0f0;
+  text-align: center;
+  border-collapse: collapse;
+  margin: 0 auto;
+  margin-bottom: 0.01333rem;
+  font-size: 14px; }
+
+.media-list tr:nth-child(2n+1) {
+  background: #fafafa; }
+
+.media-list tr:first-child {
+  background: #faf9fd; }
+
+.media-list td {
+  border: 1px solid #f0f0f0; }

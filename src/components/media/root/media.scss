@@ -33,3 +33,34 @@
     text-align: center;
   }
 }
+.root-media-list{
+  background: white;
+  padding-bottom:px(60);
+  min-height:700px;
+  &>h1{
+    line-height:px(40);
+    color:#d0d0d0;
+    font-size:14px;
+    background:#f4f4f4;
+  }
+  &>h2{
+    line-height: px(40);
+    margin:{
+      left:px(16);
+    }
+    font:{
+      size:15px;
+    }
+  }
+  .sub-tabs{
+    padding-left:px(16);
+    border-bottom:1px solid #f7f7f7;
+    overflow:hidden;
+    li{
+      width:px(112);
+      line-height: px(46);
+      float:left;
+      text-align:center;
+    }
+  }
+}

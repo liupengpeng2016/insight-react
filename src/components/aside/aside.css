@@ -1,13 +1,15 @@
 .aside {
   float: left;
-  height: 0.97167rem;
-  width: 0.13333rem;
+  /* height:px(1166); */
+  width: 0.11667rem;
   background: #434c6c;
   color: white;
   font-size: 16px;
   line-height: 0.05rem;
   text-align: center; }
-  .aside li {
-    margin: 0.01667rem 0; }
-    .aside li a {
-      color: white; }
+
+.aside li {
+  margin: 0.01667rem 0; }
+
+.aside li a {
+  color: white; }

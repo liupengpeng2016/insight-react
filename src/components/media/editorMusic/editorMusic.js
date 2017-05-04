@@ -55,7 +55,7 @@ class EditorMusic extends Component{
   }
   render(){
     return (
-      <div className='editor-music'>
+      <div className='toy-plan'>
         <h1>多媒体库>音乐列表>编辑音乐</h1>
         <h2>编辑音乐</h2>
         <ul className='add-item'>

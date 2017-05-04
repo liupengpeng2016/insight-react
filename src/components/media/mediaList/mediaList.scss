@@ -1,0 +1,22 @@
+@function px($a){
+  @return $a/1200*1rem;
+}
+.media-list{
+  width:97%;
+  line-height:px(42);
+  border:1px solid #f0f0f0;
+  text-align:center;
+  border-collapse: collapse;
+  margin:0 auto;
+  margin-bottom:px(16);
+  font-size:14px;
+}
+.media-list tr:nth-child(2n+1){
+  background:#fafafa;
+}
+.media-list tr:first-child{
+  background:#faf9fd;
+}
+.media-list td{
+  border:1px solid #f0f0f0;
+}

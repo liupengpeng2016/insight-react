@@ -59,7 +59,7 @@ class OtherPlatform extends Component{
   }
   render(){
     return (
-      <div className='content'>
+      <div >
         <ul className='add-item'>
           <li>
             <span>歌曲类别</span>

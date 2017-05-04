@@ -29,7 +29,7 @@ class EditorToyInformation extends Component{
   }
   render(){
     return (
-      <div className='root-media-list'>
+      <div className='toy-plan'>
       <h1>玩偶设置>编辑玩偶</h1>
       <h2>编辑玩偶信息</h2>
       <ul className='add-item'>

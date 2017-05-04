@@ -53,6 +53,8 @@
 }
 
 .home{
+  background: white;
+  min-height: px(700);
   &>h1{
     line-height:px(40);
     color:#d0d0d0;
@@ -160,7 +162,7 @@
     .home-user-list{
       margin: 0 auto;
       border:1px solid #f0f0f0;
-      width:px(986);
+      width:97%;
       border-collapse: collapse;
       line-height: px(44);
       text-align: center;
@@ -260,25 +262,6 @@
       }
     }
   }
-}
-.media-list{
-  width:px(986);
-  line-height: px(42);
-  border:1px solid #f0f0f0;;
-  text-align:center;
-  border-collapse: collapse;
-  margin-left:px(15);
-  margin-bottom:px(16);
-  font-size:14px;
-}
-.media-list tr:nth-child(2n+1){
-  background:#fafafa;
-}
-.media-list tr:first-child{
-  background:#faf9fd;
-}
-.media-list td{
-  border:1px solid #f0f0f0;
 }
 .editor-button-all{
   overflow: hidden;
@@ -461,43 +444,5 @@
     margin:px(24) auto 0;
     border-radius:px(5);
     padding:0;
-  }
-}
-
-.content{
-  float:left;
-  width: px(1016);
-  height:px(1166);
-  margin:{
-    left:px(14);
-  }
-  background:white;
-}
-.root-media-list{
-  &>h1{
-    line-height:px(40);
-    color:#d0d0d0;
-    font-size:14px;
-    background:#f4f4f4;
-  }
-  &>h2{
-    line-height: px(40);
-    margin:{
-      left:px(16);
-    }
-    font:{
-      size:15px;
-    }
-  }
-  .sub-tabs{
-    padding-left:px(16);
-    border-bottom:1px solid #f7f7f7;
-    overflow:hidden;
-    li{
-      width:px(112);
-      line-height: px(46);
-      float:left;
-      text-align:center;
-    }
   }
 }

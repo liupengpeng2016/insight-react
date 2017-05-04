@@ -43,7 +43,7 @@
   }
 
   table{
-    width:px(982);
+    width:96%;
     font:{
       size:14px;
     }
@@ -175,6 +175,9 @@
   }
 }
 .toy-plan{
+  background: white;
+  padding-bottom:px(60);
+  min-height:px(600);
   &>h1{
     line-height:px(40);
     color:#d0d0d0;

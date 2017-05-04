@@ -28,21 +28,7 @@ class AddScene extends Component {
         <div className='editor-scene-data'>
           <h1>添加一级场景<span onClick={()=>{
               hide()
-              this.setState({
-                name:'',
-                desc:'',
-                ename:''
-              })
-              this.valid= {
-                name:{
-                  change: false,
-                  notice:''
-                },
-                ename:{
-                  change: false,
-                  notice:''
-                }
-              }
+              this.resetComponent()
           }}>×</span></h1>
           <ul>
             <li>
@@ -88,6 +74,23 @@ class AddScene extends Component {
   handleDesc(e){
     this.setState({desc: e.target.value})
   }
+  resetComponent(){
+    this.setState({
+      name:'',
+      desc:'',
+      ename:''
+    })
+    this.valid= {
+      name:{
+        change: false,
+        notice:''
+      },
+      ename:{
+        change: false,
+        notice:''
+      }
+    }
+  }
   handleSubmit(){
     if(this.valid.name.notice||this.valid.ename.notice){
       const keys=Object.keys(this.valid)
@@ -105,21 +108,7 @@ class AddScene extends Component {
     }
     this.props.hide()
     addSubmit(params)
-    this.setState({
-      name:'',
-      desc:'',
-      ename:''
-    })
-    this.valid= {
-      name:{
-        change: false,
-        notice:''
-      },
-      ename:{
-        change: false,
-        notice:''
-      }
-    }
+    this.resetComponent()
   }
 }
 export default AddScene

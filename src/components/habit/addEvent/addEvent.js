@@ -40,7 +40,7 @@ class AddEvent extends Component{
   }
   render(){
     return (
-      <div className='habit-plan'>
+      <div className='toy-plan'>
         <h1>习惯养成>新增提醒</h1>
         <h2>设置提醒信息</h2>
         <ul className='add-item'>

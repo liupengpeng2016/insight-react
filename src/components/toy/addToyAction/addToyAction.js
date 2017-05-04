@@ -25,7 +25,7 @@ class AddToyAction extends Component{
   }
   render(){
     return (
-      <div className='root-media-list'>
+      <div className='toy-plan'>
         <h1>玩偶设置>新增动作内容</h1>
         <h2>新增动作内容</h2>
         <ul className='add-item'>

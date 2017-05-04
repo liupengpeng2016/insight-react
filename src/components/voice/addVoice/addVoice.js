@@ -38,25 +38,7 @@ class AddVoice extends Component{
               <span
               onClick={()=>{
                 hideAddVoice()
-                this.setState({
-                  checkbox:'',
-                  firstScene: '',
-                  secondScene:'',
-                  answers:[{answer: '', weight: '', age: ''}],
-                  questions:[{question: '', keyword: ''}]
-                })
-                this.valid={
-                  secondScene:{
-                    change: false,
-                    notice:''
-                  },
-                  checkbox:{
-                    change: false,
-                    notice:''
-                  },
-                  questions:[{change: false, notice:''}],
-                  answers:[{change: false, notice:''}]
-                }
+                this.resetComponent()
               }}
               >×</span>
             </h3>
@@ -221,7 +203,7 @@ class AddVoice extends Component{
             })}
             <h2 onClick={this.addAnswers.bind(this)}>添加更多答案</h2>
             <div className='editor-voice-submit'>
-              <p onClick={hideAddVoice}>取消</p>
+              <p onClick={()=>{hideAddVoice(); this.resetComponent()}}>取消</p>
               <p onClick={this.handleSubmit.bind(this)}>保存</p>
             </div>
           </div>
@@ -292,25 +274,7 @@ class AddVoice extends Component{
     }
     addSubmit(params)
     this.props.hideAddVoice()
-    this.setState({
-      checkbox:'',
-      firstScene: '',
-      secondScene:'',
-      answers:[{answer: '', weight: '', age: ''}],
-      questions:[{question: '', keyword: ''}]
-    })
-    this.valid={
-      secondScene:{
-        change: false,
-        notice:''
-      },
-      checkbox:{
-        change: false,
-        notice:''
-      },
-      questions:[{change: false, notice:''}],
-      answers:[{change: false, notice:''}]
-    }
+    this.resetComponent()
   }
   valid_checkbox(){
     const checkbox= this.state.checkbox
@@ -343,13 +307,35 @@ class AddVoice extends Component{
   //初始化数据
   componentWillReceiveProps(nextProps){
     if(!this.state.checkbox){
-      const {checkbox}= nextProps
+      let checkbox= JSON.stringify(nextProps.checkbox)
+      checkbox= JSON.parse(checkbox)
       const checkbox_valid=[]
       for( let i= 0; i<nextProps.corpusList.length; i++){
         checkbox_valid.push({change: false, notice:''})
       }
       this.valid.checkbox= checkbox_valid
       this.setState({checkbox})
+    }
+  }
+  resetComponent(){
+    this.setState({
+      checkbox:'',
+      firstScene: '',
+      secondScene:'',
+      answers:[{answer: '', weight: '', age: ''}],
+      questions:[{question: '', keyword: ''}]
+    })
+    this.valid={
+      secondScene:{
+        change: false,
+        notice:''
+      },
+      checkbox:{
+        change: false,
+        notice:''
+      },
+      questions:[{change: false, notice:''}],
+      answers:[{change: false, notice:''}]
     }
   }
   //表单处理

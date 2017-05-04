@@ -15,6 +15,12 @@ export const valid= (target, rules, notice= []) => {
       if(rules[i]=== 'url'&& !/(^http:\/\/\S+)|(^https:\/\/\S+)/.test(target)){
         return notice[i]||'请输入正确网址！'
       }
+      if(rules[i]=== 'chinese'&& !/^[u4E00-u9FA5]*$/u.test(target)){
+        return notice[i]|| '只能为汉字！'
+      }
+      if(rules[i]=== 'english'&& !/^\w*$/.test(target)){
+        return notice[i]|| '只能为英文，数字，下划线的组合！'
+      }
       if(rules[i].match(/^maxLength/)){
         let length= Number(rules[i].split(':')[1])
         let reg= new RegExp('^.{0,'+length+'}$','u')

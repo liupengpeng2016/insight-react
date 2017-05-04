@@ -35,7 +35,7 @@ class EditorBanner extends Component{
   }
   render(){
     return (
-      <div className='root-media-list'>
+      <div className='toy-plan'>
         <h1>葡萄听听>banner列表>编辑banner</h1>
         <h2>编辑banner</h2>
         <ul className='add-item'>

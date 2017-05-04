@@ -50,10 +50,21 @@ select {
   display:none;
 }
 .container{
-  width:px(1190);
+  width:px(1160);
   margin:0 auto;
   overflow: hidden;
+  background:#434c6c;
 }
+.content{
+  float:left;
+  background:#f4f4f4;
+  width: px(990);
+  min-height: px(700);
+  /* height:px(1166); */
+  overflow: hidden;
+  padding:0 px(15);
+}
+
 .a-link-active{
   display:block;
   width:100%;

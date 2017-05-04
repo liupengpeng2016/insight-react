@@ -46,9 +46,19 @@ select {
   display: none; }
 
 .container {
-  width: 0.99167rem;
+  width: 0.96667rem;
   margin: 0 auto;
-  overflow: hidden; }
+  overflow: hidden;
+  background: #434c6c; }
+
+.content {
+  float: left;
+  background: #f4f4f4;
+  width: 0.825rem;
+  min-height: 0.58333rem;
+  /* height:px(1166); */
+  overflow: hidden;
+  padding: 0 0.0125rem; }
 
 .a-link-active {
   display: block;

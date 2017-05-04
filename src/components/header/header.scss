@@ -4,6 +4,11 @@
 .header{
   background: #434c6c;
   line-height: px(36);
+  &>div{
+    width:1100px;
+    margin:0 auto;
+    overflow: hidden;
+  }
   p{
     float:right;
     margin-right:px(8);
