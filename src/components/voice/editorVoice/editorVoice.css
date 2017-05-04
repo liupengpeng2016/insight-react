@@ -33,6 +33,12 @@
       width: 0.23833rem;
       border: 1px solid #f0f0f0;
       padding-left: 0.015rem; }
+  .editor-voice .editor-voice-info > ul .answer-age {
+    padding-left: 0.02333rem; }
+    .editor-voice .editor-voice-info > ul .answer-age span:first-child {
+      margin-left: 0; }
+    .editor-voice .editor-voice-info > ul .answer-age label {
+      font-size: 12px; }
 
 .editor-voice .editor-voice-info .editor-voice-notice {
   overflow: hidden;

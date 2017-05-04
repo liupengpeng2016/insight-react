@@ -46,7 +46,7 @@ class AddScene extends Component {
                 onChange={this.handleEname.bind(this)}
                 value={this.state.ename}
               />
-              <span></span><i className='valid' style={!this.valid.ename.change? {visibility: 'hidden'}: null}>{this.valid.ename.notice= valid(this.state.ename,['require'])}</i>
+            <span></span><i className='valid' style={!this.valid.ename.change? {visibility: 'hidden'}: null}>{this.valid.ename.notice= valid(this.state.ename,['require','english'])}</i>
               <p className='editor-scene-notice'>场景英文(唯一不可变) (命名示例S_RULE)</p>
             </li>
             <li>
@@ -102,9 +102,9 @@ class AddScene extends Component {
     const {addSubmit} = this.props
     const {name, desc, ename} = this.state
     const params= {
-      name,
-      ename,
-      desc
+      name:name.replace(/(^\s+)|(\s+$)/g,''),
+      ename:ename.replace(/(^\s+)|(\s+$)/g,''),
+      desc:desc.replace(/(^\s+)|(\s+$)/g,'')
     }
     this.props.hide()
     addSubmit(params)

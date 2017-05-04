@@ -16,6 +16,7 @@
     }
     &>ul{
       line-height: px(42);
+
       &>li{
         text-align: left;
         padding: px(11) 0;
@@ -44,6 +45,15 @@
           width:px(286);
           border:1px solid #f0f0f0;
           padding-left:px(18);
+        }
+      }
+      .answer-age{
+        padding-left:px(28);
+        span:first-child{
+          margin-left:0;
+        }
+        label{
+          font-size: 12px;
         }
       }
     }

@@ -11,7 +11,7 @@ class EditorVoice extends Component{
       secondScene:'',
       answers:'',
       questions:'',
-      ages:''
+      ages:[]
     }
     this.valid={
       secondScene:{
@@ -174,7 +174,7 @@ class EditorVoice extends Component{
                         <option value='10'>10</option>
                       </select>
                     </li>
-                    <li>
+                    <li className='answer-age'>
                       <span>年龄段：</span>
                       <input type='checkbox' id='age1'
                          onChange={this.handleAge.bind(this,i,0,1)}
@@ -225,7 +225,7 @@ class EditorVoice extends Component{
       const questions_valid= [],keywords_valid= [], answers_valid= []
       const nextQuestions= (nextProps.editorData||[]).questions;
       const nextAnswers= (nextProps.editorData||[]).answers;
-      let questions= [], answers= []
+      let questions= [], answers= [], ages= []
       const firstScene= (nextProps.editorData||[]).f_scene_id, secondScene= (nextProps.editorData||[]).s_scene_id
       for(let i= 0; i<nextQuestions.length; i++){
         questions.push({
@@ -236,7 +236,37 @@ class EditorVoice extends Component{
         questions_valid.push({change: false, notice:''})
         keywords_valid.push({change: false, notice:''})
       }
+      function getCheckedData(age){
+        const arr=[]
+        if((age&1) === 1){
+          arr.push(1)
+        }else{
+          arr.push(0)
+        }
+        if((age&2) === 2){
+          arr.push(2)
+        }else{
+          arr.push(0)
+        }
+        if((age&4) === 4){
+          arr.push(4)
+        }else{
+          arr.push(0)
+        }
+        if((age&8) === 8){
+          arr.push(8)
+        }else{
+          arr.push(0)
+        }
+        if((age&16) === 16){
+          arr.push(16)
+        }else{
+          arr.push(0)
+        }
+        return arr
+      }
       for(let i= 0; i<nextAnswers.length; i++){
+        ages.push(getCheckedData(nextAnswers[i].age))
         answers.push({
           answer:nextAnswers[i].answer,
           weight:nextAnswers[i].weight,
@@ -247,7 +277,7 @@ class EditorVoice extends Component{
       }
       this.props.dispatch(getAllSecondSceneList({f_scene_id: firstScene}))
       Object.assign(this.valid, {questions:questions_valid, answers: answers_valid, keywords: keywords_valid})
-      this.setState({answers, questions, firstScene, secondScene})
+      this.setState({answers, questions, firstScene, secondScene, ages})
     }
   }
   handleSubmit(){
@@ -301,9 +331,14 @@ class EditorVoice extends Component{
     let answers_valid= [...this.valid.answers]
     answers_valid.push({change: false, notice:''})
     Object.assign(this.valid, {answers: answers_valid})
+
     let answers= [...this.state.answers]
     answers.push({answer:'', weight:'', age:'', answer_id:''})
-    this.setState({answers})
+
+    let ages= [...this.state.ages]
+    ages.push([0,0,0,0,0])
+
+    this.setState({answers, ages})
 
   }
   addQuestions(){
@@ -350,7 +385,6 @@ class EditorVoice extends Component{
       ages[i][j]= 0
     }
     for(let l of ages[i]){
-      console.log(l)
       age|= l
     }
     answers[i].age= age
@@ -385,7 +419,11 @@ class EditorVoice extends Component{
       setTimeout(this.props.refresh, 150)
     }
     answers.splice(i,1)
-    this.setState({answers})
+
+    let ages= [...this.state.ages]
+    ages.splice(i,1)
+
+    this.setState({answers, ages})
   }
 }
 function mapStateToProps({voiceData}){

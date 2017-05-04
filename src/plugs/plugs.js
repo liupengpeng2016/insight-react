@@ -19,7 +19,7 @@ export const valid= (target, rules, notice= []) => {
         return notice[i]|| '只能为汉字！'
       }
       if(rules[i]=== 'english'&& !/^\w*$/.test(target)){
-        return notice[i]|| '只能为英文，数字，下划线的组合！'
+        return notice[i]|| '只能为数字，字母或下划线！'
       }
       if(rules[i].match(/^maxLength/)){
         let length= Number(rules[i].split(':')[1])

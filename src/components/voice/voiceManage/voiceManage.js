@@ -173,7 +173,7 @@ class VoiceManage extends Component{
                               >{val.answer}
                               </span>
                               <span>
-                                {`${val.weight? val.weight: '无'}/${this.formAge(val.age)}`}
+                                {`${val.weight? val.weight: '无'}/${this.getAgeData(val.age)}`}
                               </span>
                             </p>
                           )
@@ -243,23 +243,6 @@ class VoiceManage extends Component{
         <PageCtr total={voiceList.pages} buttons='10' changePage={this.changePage.bind(this)}/>
       </div>
     )
-  }
-  formAge(age){
-    switch(age){
-      case 0:
-      return '无'
-      case 1:
-      return '入园前'
-      case 2:
-      return '幼小衔接'
-      case 4:
-      return '小学'
-      case 8:
-      return '初中'
-      case 16:
-      return '成人'
-      default:return ''
-    }
   }
   handleCheckbox(i, e){
     const checkbox= [...this.state.checkbox]
@@ -451,6 +434,25 @@ class VoiceManage extends Component{
     dispatch(editorVoiceItem(params))
     setTimeout(this.getVoiceList.bind(this), 150)
   }
+  getAgeData(age){
+      let str= ''
+      if((age&1) === 1){
+        str+= '入园前、'
+      }
+      if((age&2) === 2){
+        str+= '幼小衔接、'
+      }
+      if((age&4) === 4){
+        str+= '小学、'
+      }
+      if((age&8) === 8){
+        str+= '初中、'
+      }
+      if((age&16) === 16){
+        str+= '成人、'
+      }
+      return str.slice(0, -1)|| '无'
+    }
 }
 function mapStateToProps({voiceData}){
   return {
