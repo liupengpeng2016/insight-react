@@ -1,30 +1,26 @@
 .habit-plan {
   background: white;
   padding-bottom: 0.05rem; }
-
-.habit-plan > h1 {
-  line-height: 0.03333rem;
-  color: #d0d0d0;
-  font-size: 14px;
-  background: #f4f4f4; }
-
-.habit-plan > h2 {
-  line-height: 0.03333rem;
-  margin-left: 0.01333rem;
-  font-size: 15px; }
-
-.habit-plan > ul .two-buttons {
-  width: auto;
-  text-align: center;
-  background: none; }
-
-.habit-plan > ul .two-buttons > p {
-  display: inline-block;
-  width: 0.125rem;
-  line-height: 0.03333rem;
-  text-align: center;
-  color: white;
-  font-size: 18px;
-  background: #5cc1df;
-  border-radius: 0.00417rem;
-  margin: 0 0.01667rem; }
+  .habit-plan > h1 {
+    line-height: 0.03333rem;
+    color: #d0d0d0;
+    font-size: 14px;
+    background: #f4f4f4; }
+  .habit-plan > h2 {
+    line-height: 0.03333rem;
+    margin-left: 0.01333rem;
+    font-size: 15px; }
+  .habit-plan > ul .two-buttons {
+    width: auto;
+    text-align: center;
+    background: none; }
+    .habit-plan > ul .two-buttons > p {
+      display: inline-block;
+      width: 0.125rem;
+      line-height: 0.03333rem;
+      text-align: center;
+      color: white;
+      font-size: 18px;
+      background: #5cc1df;
+      border-radius: 0.00417rem;
+      margin: 0 0.01667rem; }

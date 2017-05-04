@@ -195,3 +195,48 @@
   vertical-align: middle;
   margin-left:px(10);
 }
+.voice-manage-list{
+  .answer:after{
+    content:'';
+    height:100%;
+    border-right:1px solid #f0f0f0;
+    position:absolute;
+    top:0;
+    left:79%;
+  }
+  .answer{
+    position: relative;
+    max-width:px(300);
+    line-height: px(30);
+    text-align: left;
+    span{
+      display:inline-block;
+      vertical-align: middle;
+      height:100%;
+      text-align: center;
+    }
+    span:first-child{
+      width:79%;
+      border-right:1px solid #f0f0f0;
+      text-align: left;
+    }
+    span:last-child{
+      width:20%;
+      text-align: center;
+    }
+  }
+}
+.voice－answer{
+  span{
+    display:inline-block;
+    vertical-align: middle;
+    text-align: center;
+  }
+  span:first-child{
+    width:79%;
+    border-right:1px solid #f0f0f0;
+  }
+  span:last-child{
+    width:20%;
+  }
+}

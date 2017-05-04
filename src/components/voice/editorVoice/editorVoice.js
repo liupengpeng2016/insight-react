@@ -10,7 +10,8 @@ class EditorVoice extends Component{
       firstScene: '',
       secondScene:'',
       answers:'',
-      questions:''
+      questions:'',
+      ages:''
     }
     this.valid={
       secondScene:{
@@ -174,18 +175,32 @@ class EditorVoice extends Component{
                       </select>
                     </li>
                     <li>
-                      <span>年龄段</span>
-                      <select
-                        onChange={this.handleAge.bind(this,i)}
-                        value={val.age}
-                        >
-                        <option value=''>请选择年龄</option>
-                        <option value='1'>入园前</option>
-                        <option value='2'>幼小衔接</option>
-                        <option value='4'>小学</option>
-                        <option value='8'>初中</option>
-                        <option value='16'>成人</option>
-                      </select>
+                      <span>年龄段：</span>
+                      <input type='checkbox' id='age1'
+                         onChange={this.handleAge.bind(this,i,0,1)}
+                         checked={(this.state.ages[i]||[])[0]? true : false}
+                      />
+                      <label htmlFor='age1'>入园前</label>
+                      <input type='checkbox' id='age2'
+                        onChange={this.handleAge.bind(this,i,1,2)}
+                        checked={(this.state.ages[i]||[])[1]? true : false}
+                      />
+                      <label htmlFor='age2'>幼小衔接</label>
+                      <input type='checkbox' id='age3'
+                        onChange={this.handleAge.bind(this,i,2,4)}
+                        checked={(this.state.ages[i]||[])[2]? true : false}
+                      />
+                      <label htmlFor='age3'>小学</label>
+                      <input type='checkbox' id='age4'
+                        onChange={this.handleAge.bind(this,i,3,8)}
+                        checked={(this.state.ages[i]||[])[3]? true : false}
+                      />
+                      <label htmlFor='age4'>初中</label>
+                      <input type='checkbox' id='age5'
+                        onChange={this.handleAge.bind(this,i,4,16)}
+                        checked={(this.state.ages[i]||[])[4]? true : false}
+                      />
+                      <label htmlFor='age5'>成人</label>
                     </li>
                   </ul>
                 )
@@ -203,6 +218,9 @@ class EditorVoice extends Component{
     )
   }
   componentWillReceiveProps(nextProps){
+    if(!nextProps.editorData){
+      return
+    }
     if((nextProps.editorData||[]).group_id !== (this.props.editorData||[]).group_id){
       const questions_valid= [],keywords_valid= [], answers_valid= []
       const nextQuestions= (nextProps.editorData||[]).questions;
@@ -322,10 +340,21 @@ class EditorVoice extends Component{
     answers[i].answer= e.target.value
     this.setState({answers})
   }
-  handleAge(i,e){
+  handleAge(i,j,k,e){
     const answers = [...this.state.answers]
-    answers[i].age= e.target.value
-    this.setState({answers})
+    const ages= [...this.state.ages]
+    let age= 0
+    if(e.target.checked){
+      ages[i][j]= k
+    }else{
+      ages[i][j]= 0
+    }
+    for(let l of ages[i]){
+      console.log(l)
+      age|= l
+    }
+    answers[i].age= age
+    this.setState({answers, ages})
   }
   handleWeight(i,e){
     const answers = [...this.state.answers]

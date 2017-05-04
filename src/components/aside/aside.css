@@ -7,9 +7,7 @@
   font-size: 16px;
   line-height: 0.05rem;
   text-align: center; }
-
-.aside li {
-  margin: 0.01667rem 0; }
-
-.aside li a {
-  color: white; }
+  .aside li {
+    margin: 0.01667rem 0; }
+    .aside li a {
+      color: white; }

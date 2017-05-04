@@ -40,7 +40,7 @@ class VoiceManage extends Component{
           toggleEditorVoice={this.state.toggleEditorVoice}
           hideEditorVoice={this.hideEditorVoice.bind(this)}
           editorSubmit={this.editorSubmit.bind(this)}
-          editorData={(voiceList.list||[])[this.state.editorData]}
+          editorData={(voiceList.list||[])[this.state.editorData]||''}
           delVoiceAnswer={this.delVoiceAnswer.bind(this)}
           delVoiceQuestion={this.delVoiceQuestion.bind(this)}
           refresh={this.getVoiceList.bind(this)}
@@ -57,7 +57,7 @@ class VoiceManage extends Component{
           <h1>语料列表</h1>
           <ul>
             {
-              corpusList.map((val, i)=> {
+              !corpusList.length? '': corpusList.map((val, i)=> {
                 return (
                   <li key={i}>
                     <input type='checkbox' id={`voiceManage${i}`}
@@ -135,8 +135,12 @@ class VoiceManage extends Component{
               <td>场景</td>
               <td>问题</td>
               <td>关键词</td>
-              <td>答案</td>
-              <td>答案属性</td>
+              <td colSpan='2'
+                className='voice－answer'
+              >
+                <span>答案</span>
+                <span>答案属性</span>
+              </td>
               <td>问答对状态</td>
               <td>操作</td>
             </tr>
@@ -148,7 +152,8 @@ class VoiceManage extends Component{
                     <tr>
                       <td className='spread-array-shrink'
                         onClick={this.spreadDetail}
-                        >{val.s_scene}</td>
+                        >{val.s_scene}
+                      </td>
                       <td>
                         {val.questions.map((val,i)=>{
                           return <p key={i}>{val.question}</p>
@@ -159,18 +164,19 @@ class VoiceManage extends Component{
                           return <p key={i}>{val.keywords}</p>
                         })}
                       </td>
-                      <td>
+                      <td className='answer' colSpan='2'>
                         {val.answers.map((val,i)=>{
                           return (
-                            <p key={i}
-                              style={!val.status?{background:'#aaa'}: null}
-                            >{val.answer}</p>
+                            <p key={i}>
+                              <span
+                                style={!val.status?{background:'#aaa'}: null}
+                              >{val.answer}
+                              </span>
+                              <span>
+                                {`${val.weight? val.weight: '无'}/${this.formAge(val.age)}`}
+                              </span>
+                            </p>
                           )
-                        })}
-                      </td>
-                      <td>
-                        {val.answers.map((val,i)=>{
-                          return <p key={i}>{`${val.weight? val.weight: '无'}/${this.formAge(val.age)}`}</p>
                         })}
                       </td>
                       <td>{val.status? '启用':'弃用'}</td>
@@ -221,6 +227,7 @@ class VoiceManage extends Component{
           <li onClick={this.offAll.bind(this)}>批量弃用</li>
           <li onClick={this.onAll.bind(this)}>批量启用</li>
           <li onClick={this.chooseAll.bind(this)}>全选</li>
+          <li onClick={()=> this.setState({buttonMode: 1})}>退出</li>
         </ul>
         <div className='voice-manage-add'>
           <p
@@ -388,6 +395,7 @@ class VoiceManage extends Component{
         callback:this.delVoiceItem.bind(this, group_ids)
        }
     }))
+    setTimeout(this.getVoiceList.bind(this), 150)
   }
 //初始化数据
   componentDidMount(){

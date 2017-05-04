@@ -15,7 +15,7 @@ export const valid= (target, rules, notice= []) => {
       if(rules[i]=== 'url'&& !/(^http:\/\/\S+)|(^https:\/\/\S+)/.test(target)){
         return notice[i]||'请输入正确网址！'
       }
-      if(rules[i]=== 'chinese'&& !/^[u4E00-u9FA5]*$/u.test(target)){
+      if(rules[i]=== 'chinese'&& !/^[\u4E00-\u9FFF]*$/u.test(target)){
         return notice[i]|| '只能为汉字！'
       }
       if(rules[i]=== 'english'&& !/^\w*$/.test(target)){
