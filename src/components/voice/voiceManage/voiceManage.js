@@ -293,13 +293,11 @@ class VoiceManage extends Component{
   toggleVoiceStatus(group_ids, status){
     const {dispatch} = this.props
     status= status ? 0 : 1
-    dispatch(toggleVoiceStatus({group_ids, status}))
-    setTimeout(this.getVoiceList.bind(this), 150)
+    dispatch(toggleVoiceStatus({group_ids, status},this.getVoiceList.bind(this)))
   }
   delVoiceItem(group_ids){
     const {dispatch} = this.props
-    dispatch(delVoiceItem({group_ids}))
-    setTimeout(this.getVoiceList.bind(this), 150)
+    dispatch(delVoiceItem({group_ids},this.getVoiceList.bind(this)))
   }
   handelDelVoice(group_ids){
     const {dispatch} = this.props
@@ -312,13 +310,11 @@ class VoiceManage extends Component{
     }))
   }
   delVoiceAnswer(answer_id){
-    this.props.dispatch(delVoiceAnswer({answer_id}))
-    setTimeout(this.getVoiceList.bind(this), 150)
+    this.props.dispatch(delVoiceAnswer({answer_id},this.getVoiceList.bind(this)))
 
   }
   delVoiceQuestion(question_id){
-    this.props.dispatch(delVoiceQuestion({question_id}))
-    setTimeout(this.getVoiceList.bind(this), 150)
+    this.props.dispatch(delVoiceQuestion({question_id},this.getVoiceList.bind(this)))
 
   }
   handleVoice_checkbox(i, e){
@@ -327,8 +323,7 @@ class VoiceManage extends Component{
     this.setState({voice_checkbox})
   }
   addSubmit(params){
-    this.props.dispatch(addVoiceItem(params))
-    setTimeout(this.getVoiceList.bind(this), 150)
+    this.props.dispatch(addVoiceItem(params,this.getVoiceList.bind(this)))
   }
 //批量按钮
   chooseAll(){
@@ -360,13 +355,11 @@ class VoiceManage extends Component{
   }
   onAll(){
     const {dispatch} = this.props
-    dispatch(toggleVoiceStatus({group_ids: this.filterVoice_checkbox(this.state.voice_checkbox), status: 1}))
-    setTimeout(this.getVoiceList.bind(this), 150)
+    dispatch(toggleVoiceStatus({group_ids: this.filterVoice_checkbox(this.state.voice_checkbox), status: 1},this.getVoiceList.bind(this)))
   }
   offAll(){
     const {dispatch} = this.props
-    dispatch(toggleVoiceStatus({group_ids: this.filterVoice_checkbox(this.state.voice_checkbox), status: 0}))
-    setTimeout(this.getVoiceList.bind(this), 150)
+    dispatch(toggleVoiceStatus({group_ids: this.filterVoice_checkbox(this.state.voice_checkbox), status: 0},this.getVoiceList.bind(this)))
   }
   delAll(){
     const {dispatch} = this.props
@@ -377,8 +370,7 @@ class VoiceManage extends Component{
         msg:'确认要删除吗？',
         callback:this.delVoiceItem.bind(this, group_ids)
        }
-    }))
-    setTimeout(this.getVoiceList.bind(this), 150)
+    },this.getVoiceList.bind(this)))
   }
 //初始化数据
   componentDidMount(){
@@ -432,8 +424,7 @@ class VoiceManage extends Component{
   }
   editorSubmit(params){
     const {dispatch} = this.props
-    dispatch(editorVoiceItem(params))
-    setTimeout(this.getVoiceList.bind(this), 150)
+    dispatch(editorVoiceItem(params),this.getVoiceList.bind(this))
   }
   getAgeData(age){
       let str= ''

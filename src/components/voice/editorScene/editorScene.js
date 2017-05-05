@@ -35,7 +35,7 @@ class EditorScene extends Component {
                 onChange={this.handleName.bind(this)}
                 value={this.state.name}
               />
-              <span></span><i className='valid' style={!this.valid.name.change? {visibility: 'hidden'}: null}>{this.valid.name.notice= valid(this.state.name,['require'])}</i>
+            <span></span><i className='valid' style={!this.valid.name.change? {visibility: 'hidden'}: null}>{this.valid.name.notice= valid(this.state.name,['require','maxLength:6'])}</i>
               <p className='editor-scene-notice'></p>
             </li>
             <li>
@@ -44,7 +44,7 @@ class EditorScene extends Component {
                 value={this.state.ename}
                 disabled
               />
-            <span></span><i className='valid' style={!this.valid.ename.change? {visibility: 'hidden'}: null}>{this.valid.ename.notice= valid(this.state.ename,['require','english'])}</i>
+            <span></span><i className='valid' style={!this.valid.ename.change? {visibility: 'hidden'}: null}>{this.valid.ename.notice= valid(this.state.ename,['require','english','maxLength:20'])}</i>
               <p className='editor-scene-notice'>场景英文(唯一不可变) (命名示例S_RULE)</p>
             </li>
             <li>

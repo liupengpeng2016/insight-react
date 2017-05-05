@@ -16,31 +16,12 @@ import fetch from 'isomorphic-fetch'
 //visibility
 export const setVisibility = data => ({type: data.name, show: data.show, msg: data.msg})
 export const setVisibility2 = data => ({type: SET_VISIBILITY, data})
-function fetchData(url, params, dispatch, action){
-  // let formParams= new FormData()
-  // if(params){
-  //   if(params instanceof FormData){
-  //     formParams= params
-  //   }else{
-  //     const keys=Object.keys(params)
-  //     for(let i of keys){
-  //       if(params[i] instanceof Array){
-  //         for(let k=0; k<params[i].length; k++){
-  //           formParams.append(i+ '['+ k +']', params[i][k])
-  //         }
-  //       }else{
-  //         formParams.append(i, params[i])
-  //       }
-  //     }
-  //   }
-  // }else{
-  //   formParams=null
-  // }
+function fetchData(url, params, dispatch, action, callback){
+  console.log(callback)
   const headers= new Headers()
   headers.append('Content-Type', 'application/x-www-form-urlencoded')
   let formParams= {}
   let newParams= ''
-
   if(params){
     const keys=Object.keys(params)
     for(let i of keys){
@@ -67,16 +48,18 @@ function fetchData(url, params, dispatch, action){
     headers
   }).then(res => res.json())
   .then(json => {
+    if(json.http_status_code === 200 ){
       if(action){
-        if(json.http_status_code !== 200 ){
-          dispatch(setVisibility({name:FETCH_NOTICE, show: true, msg: json.msg ||'操作失败'}))
-        }
-        return dispatch(action(json.data))
+        dispatch(action(json.data))
       }else{
-        return json.http_status_code === 200?
-        dispatch(setVisibility({name:FETCH_NOTICE, show: true, msg:'操作成功'})):
-        dispatch(setVisibility({name:FETCH_NOTICE, show: true, msg: json.msg ||'操作失败'}))
+        dispatch(setVisibility({name:FETCH_NOTICE, show: true, msg:'操作成功'}))
       }
+      if(callback){
+        callback()
+      }
+    }else{
+      dispatch(setVisibility({name:FETCH_NOTICE, show: true, msg: json.msg ||'操作失败'}))
+    }
   }).catch(error => {
     dispatch(setVisibility({name:FETCH_NOTICE, show: true, msg: '获取数据失败'}))
   })
@@ -270,70 +253,72 @@ export const saveSecondSceneList = data => ({type: SAVE_SECOND_SCENE_LIST, data}
 export const saveAllFirstSceneList = data => ({type: SAVE_ALL_FIRST_SCENE_LIST, data})
 export const saveAllSecondSceneList = data => ({type: SAVE_ALL_SECOND_SCENE_LIST, data})
 //获取语料库列表
-export const getCorpusList= params => dispatch =>
- fetchData('/corpus/corpus/getCorpusLibraries', params, dispatch, saveCorpusList)
+export const getCorpusList= (params, callback) => dispatch =>
+ fetchData('/corpus/corpus/getCorpusLibraries', params, dispatch, saveCorpusList, callback)
 //获取语料列表
-export const getVoiceList= params => dispatch =>
- fetchData('/corpus/corpus/getCorpusList', params, dispatch, saveVoiceList)
+export const getVoiceList= (params, callback) => dispatch =>{
+  console.log(callback)
+  return fetchData('/corpus/corpus/getCorpusList', params, dispatch, saveVoiceList, callback)
+}
 //编辑语料
-export const editorVoiceItem= params => dispatch =>
- fetchData('/corpus/corpus/editCorpus', params, dispatch, null)
+export const editorVoiceItem= (params, callback) => dispatch =>
+ fetchData('/corpus/corpus/editCorpus', params, dispatch, null, callback)
 //删除语料
-export const delVoiceItem= params => dispatch =>
- fetchData('/corpus/corpus/delCorpus', params, dispatch, null)
+export const delVoiceItem= (params, callback) => dispatch =>
+ fetchData('/corpus/corpus/delCorpus', params, dispatch, null, callback)
 //添加语料
-export const addVoiceItem= params => dispatch =>
- fetchData('/corpus/corpus/addCorpus', params, dispatch, null)
+export const addVoiceItem= (params, callback) => dispatch =>
+ fetchData('/corpus/corpus/addCorpus', params, dispatch, null, callback)
 //启用／弃用语料
-export const toggleVoiceStatus= params => dispatch =>
- fetchData('/corpus/corpus/enableCorpus', params, dispatch, null)
+export const toggleVoiceStatus= (params, callback) => dispatch =>
+ fetchData('/corpus/corpus/enableCorpus', params, dispatch, null, callback)
 //删除问题
-export const delVoiceQuestion= params => dispatch =>
-  fetchData('/corpus/corpus/delQuestion', params, dispatch, null)
+export const delVoiceQuestion= (params, callback) => dispatch =>
+  fetchData('/corpus/corpus/delQuestion', params, dispatch, null, callback)
 //删除回答
-export const delVoiceAnswer= params => dispatch =>
-  fetchData('/corpus/corpus/delAnswer', params, dispatch, null)
+export const delVoiceAnswer= (params, callback) => dispatch =>
+  fetchData('/corpus/corpus/delAnswer', params, dispatch, null, callback)
 //启用／弃用回答
-export const toggleAnswerStatus= params => dispatch =>
-  fetchData('/corpus/corpus/enableAnswer', params, dispatch, null)
+export const toggleAnswerStatus= (params, callback) => dispatch =>
+  fetchData('/corpus/corpus/enableAnswer', params, dispatch, null, callback)
 //获取一级场景
-export const getFirstSceneList= params => dispatch =>
-  fetchData('/corpus/scene/firstSceneList', params, dispatch, saveFirstSceneList)
+export const getFirstSceneList= (params, callback) => dispatch =>
+  fetchData('/corpus/scene/firstSceneList', params, dispatch, saveFirstSceneList, callback)
 //获取所有二级场景列表
-export const getAllSecondSceneList= params => dispatch =>
-  fetchData('/corpus/scene/allSecondScene', params, dispatch, saveAllSecondSceneList)
+export const getAllSecondSceneList= (params, callback) => dispatch =>
+  fetchData('/corpus/scene/allSecondScene', params, dispatch, saveAllSecondSceneList, callback)
 //获取所有一级场景
-export const getAllFirstSceneList= params => dispatch =>
-  fetchData('/corpus/scene/allFirstScene', params, dispatch, saveAllFirstSceneList)
+export const getAllFirstSceneList= (params, callback) => dispatch =>
+  fetchData('/corpus/scene/allFirstScene', params, dispatch, saveAllFirstSceneList, callback)
 //更改一级场景status
-export const toggleFirstSceneStatus= params => dispatch =>
-  fetchData('/corpus/scene/enableFirstScene', params, dispatch, null)
+export const toggleFirstSceneStatus= (params, callback) => dispatch =>
+  fetchData('/corpus/scene/enableFirstScene', params, dispatch, null, callback)
 //删除一级场景
-export const delFirstSceneItem= params => dispatch =>
-  fetchData('/corpus/scene/delFirstScene', params, dispatch, null)
+export const delFirstSceneItem= (params, callback) => dispatch =>
+  fetchData('/corpus/scene/delFirstScene', params, dispatch, null, callback)
 //编辑一级场景
-export const editorFirstSceneItem= params => dispatch =>
-  fetchData('/corpus/scene/editFirstScene', params, dispatch, null)
+export const editorFirstSceneItem= (params, callback) => dispatch =>
+  fetchData('/corpus/scene/editFirstScene', params, dispatch, null, callback)
 //添加一级场景
-export const addFirstSceneItem= params => dispatch =>
-  fetchData('/corpus/scene/addFirstScene', params, dispatch, null)
+export const addFirstSceneItem= (params, callback) => dispatch =>
+  fetchData('/corpus/scene/addFirstScene', params, dispatch, null, callback)
 //获取二级场景列表
-export const getSecondSceneList= params => dispatch =>
-  fetchData('/corpus/scene/secondSceneList', params, dispatch, saveSecondSceneList)
+export const getSecondSceneList= (params, callback)=> dispatch =>
+  fetchData('/corpus/scene/secondSceneList', params, dispatch, saveSecondSceneList, callback)
 //编辑二级场景
-export const editorSecondSceneItem= params => dispatch =>
-  fetchData('/corpus/scene/editSecondScene', params, dispatch, null)
+export const editorSecondSceneItem= (params, callback) => dispatch =>
+  fetchData('/corpus/scene/editSecondScene', params, dispatch, null, callback)
 //添加二级场景
-export const addSecondSceneItem= params => dispatch =>
-  fetchData('/corpus/scene/addSecondScene', params, dispatch, null)
+export const addSecondSceneItem= (params, callback) => dispatch =>
+  fetchData('/corpus/scene/addSecondScene', params, dispatch, null, callback)
 //删除二级场景
-export const delSecondSceneItem= params => dispatch =>
-  fetchData('/corpus/scene/delSecondScene', params, dispatch, null)
+export const delSecondSceneItem= (params, callback) => dispatch =>
+  fetchData('/corpus/scene/delSecondScene', params, dispatch, null, callback)
 //更改二级场景status
-export const toggleSecondSceneStatus= params => dispatch =>
-  fetchData('/corpus/scene/enableSecondScene', params, dispatch, null)
+export const toggleSecondSceneStatus= (params, callback) => dispatch =>
+  fetchData('/corpus/scene/enableSecondScene', params, dispatch, null, callback)
 //存储场景树
 export const saveAllScene= data => ({type: SAVE_ALL_SCENE, data})
 //获取场景树
-export const getAllScene= params => dispatch =>
-  fetchData('/corpus/scene/allScene', params, dispatch, saveAllScene)
+export const getAllScene= (params, callback) => dispatch =>
+  fetchData('/corpus/scene/allScene', params, dispatch, saveAllScene, callback)
