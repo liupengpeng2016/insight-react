@@ -17,29 +17,54 @@ import fetch from 'isomorphic-fetch'
 export const setVisibility = data => ({type: data.name, show: data.show, msg: data.msg})
 export const setVisibility2 = data => ({type: SET_VISIBILITY, data})
 function fetchData(url, params, dispatch, action){
-  let formParams= new FormData()
+  // let formParams= new FormData()
+  // if(params){
+  //   if(params instanceof FormData){
+  //     formParams= params
+  //   }else{
+  //     const keys=Object.keys(params)
+  //     for(let i of keys){
+  //       if(params[i] instanceof Array){
+  //         for(let k=0; k<params[i].length; k++){
+  //           formParams.append(i+ '['+ k +']', params[i][k])
+  //         }
+  //       }else{
+  //         formParams.append(i, params[i])
+  //       }
+  //     }
+  //   }
+  // }else{
+  //   formParams=null
+  // }
+  const headers= new Headers()
+  headers.append('Content-Type', 'application/x-www-form-urlencoded')
+  let formParams= {}
+  let newParams= ''
+
   if(params){
-    if(params instanceof FormData){
-      formParams= params
-    }else{
-      const keys=Object.keys(params)
-      for(let i of keys){
-        if(params[i] instanceof Array){
-          for(let k=0; k<params[i].length; k++){
-            formParams.append(i+ '['+ k +']', params[i][k])
-          }
-        }else{
-          formParams.append(i, params[i])
+    const keys=Object.keys(params)
+    for(let i of keys){
+      if(params[i] instanceof Array){
+        for(let k= 0;k<params[i].length; k++){
+            Object.assign(formParams, {[i + '['+ k +']']: params[i][k]})
         }
+      }else{
+        Object.assign(formParams, {[i]: params[i]})
       }
     }
+    const keys2= Object.keys(formParams)
+    for(let i of keys2){
+        newParams+= (i + '='+ formParams[i]+ '&')
+    }
+    newParams= newParams.slice(0, -1)
   }else{
     formParams=null
   }
   fetch(baseUrl + url, {
     method: 'post',
-    body: formParams,
-    mode: 'cors'
+    body: newParams,
+    mode: 'cors',
+    headers
   }).then(res => res.json())
   .then(json => {
       if(action){

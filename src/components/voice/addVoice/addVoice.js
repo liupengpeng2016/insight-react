@@ -185,7 +185,7 @@ class AddVoice extends Component{
                         <option value='10'>10</option>
                       </select>
                     </li>
-                    <li>
+                    <li className='answer-age'>
                       <span>年龄段：</span>
                       <input type='checkbox' id='age1'
                          onChange={this.handleAge.bind(this,i,0,1)}

@@ -411,14 +411,15 @@ class VoiceManage extends Component{
 
       const localCheckbox= JSON.parse(localStorage.getItem('voiceCheck'))
       localStorage.removeItem('voiceCheck')
-      for(let i of localCheckbox){
-        for(let k of checkbox){
-          if(i.corpus_lib_id=== k.corpus_lib_id){
-              k.checked= i.checked
+      if(localCheckbox){
+        for(let i of localCheckbox){
+          for(let k of checkbox){
+            if(i.corpus_lib_id=== k.corpus_lib_id){
+                k.checked= i.checked
+            }
           }
         }
       }
-
       this.getVoiceList({corpus_lib_ids: this.filterCheckbox(checkbox)})
       localStorage.setItem('voiceCheck', JSON.stringify(checkbox))
       this.setState({checkbox})
