@@ -21,6 +21,7 @@ class EditorVoice extends Component{
       questions:[{change: false, notice:''}],
       answers:[{change: false, notice:''}]
     }
+    this.dels=[]
   }
   render(){
     let {hideEditorVoice, toggleEditorVoice,

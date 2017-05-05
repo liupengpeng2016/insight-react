@@ -43,7 +43,7 @@ class SceneManage extends Component{
               <td>场景</td>
               <td>场景英文</td>
               <td>场景描述</td>
-              <td>状态</td>
+              {/*<td>状态</td>*/}
               <td>操作</td>
             </tr>
           </thead>
@@ -55,14 +55,14 @@ class SceneManage extends Component{
                     <td onClick={this.toggleDetail.bind(this)}>{val.name}</td>
                     <td>{val.ename}</td>
                     <td>{val.desc}</td>
-                    <td>{val.status === 1 ? '启用': '弃用'}</td>
+                    {/*<td>{val.status === 1 ? '启用': '弃用'}</td>*/}
                     <td>
                       <p
                         onClick={this.handleEditor.bind(this,val.f_scene_id, i)}
                       >编辑</p>
-                      <p
+                    {/*<p
                         onClick={this.toggleFirstSceneStatus.bind(this, val.f_scene_id, val.status)}
-                      >{val.status === 1? '弃用':  '启用'}</p>
+                      >{val.status === 1? '弃用':  '启用'}</p>*/}
                       <p className='del'
                         onClick={this.handleDelFirstSceneItem.bind(this,val.f_scene_id)}
                       >删除</p>
@@ -111,8 +111,7 @@ class SceneManage extends Component{
   toggleFirstSceneStatus(f_scene_id, status){
     const {dispatch} = this.props
     status= status? 0 : 1
-    dispatch(toggleFirstSceneStatus({f_scene_id, status}))
-    setTimeout(()=> this.getFirstSceneList() ,150)
+    dispatch(toggleFirstSceneStatus({f_scene_id, status}, ()=> this.getFirstSceneList()))
   }
   toggleDetail(e){
     const className= e.target.parentNode.nextSibling.className
@@ -120,8 +119,7 @@ class SceneManage extends Component{
      e.target.parentNode.nextSibling.className='hide'
   }
   delFirstSceneItem(f_scene_id){
-    this.props.dispatch(delFirstSceneItem({f_scene_id}))
-    setTimeout(()=> this.getFirstSceneList() ,150)
+    this.props.dispatch(delFirstSceneItem({f_scene_id}, ()=> this.getFirstSceneList()))
   }
   handleDelFirstSceneItem(f_scene_id){
     this.props.dispatch(setVisibility2({secondConfirm:{show: true, msg:'确定要删除该场景吗？',callback:this.delFirstSceneItem.bind(this,f_scene_id)}}))
@@ -130,12 +128,10 @@ class SceneManage extends Component{
     this.setState({f_scene_id, sceneData_id: i,isShow_editor:true})
   }
   editorSubmit(params){
-    this.props.dispatch(editorFirstSceneItem(params))
-    setTimeout(()=> this.getFirstSceneList() ,150)
+    this.props.dispatch(editorFirstSceneItem(params, ()=> this.getFirstSceneList()))
   }
   addSubmit(params){
-    this.props.dispatch(addFirstSceneItem(params))
-    setTimeout(()=> this.getFirstSceneList() ,150)
+    this.props.dispatch(addFirstSceneItem(params,()=> this.getFirstSceneList()))
   }
   showSceneTree(){
     const {dispatch}= this.props

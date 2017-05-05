@@ -131,13 +131,23 @@
   .button-mode1 li:nth-child(3) {
     color: #fe6737; }
 
+.spread-array-spread, .spread-array-shrink {
+  position: relative;
+  padding-right: 0.01667rem; }
+
 .spread-array-spread:after {
   content: '';
   border: 6px solid transparent;
   border-top-color: black;
   display: inline-block;
   vertical-align: middle;
-  margin-left: 0.00833rem; }
+  position: absolute;
+  right: 0.005rem;
+  top: 0;
+  bottom: 0;
+  margin: auto 0;
+  width: 0;
+  height: 0; }
 
 .spread-array-shrink:after {
   content: '';
@@ -145,7 +155,13 @@
   border-right-color: black;
   display: inline-block;
   vertical-align: middle;
-  margin-left: 0.00833rem; }
+  position: absolute;
+  right: 0.005rem;
+  top: 0;
+  bottom: 0;
+  margin: auto 0;
+  width: 0;
+  height: 0; }
 
 .voice-manage-list .answer:after {
   content: '';
@@ -153,12 +169,12 @@
   border-right: 1px solid #f0f0f0;
   position: absolute;
   top: 0;
-  left: 79%; }
+  left: 79.3%; }
 
 .voice-manage-list .answer {
   position: relative;
   max-width: 0.25rem;
-  line-height: 0.025rem;
+  line-height: 0.02333rem;
   text-align: left; }
   .voice-manage-list .answer span {
     display: inline-block;
@@ -167,11 +183,30 @@
     text-align: center; }
   .voice-manage-list .answer span:first-child {
     width: 79%;
-    border-right: 1px solid #f0f0f0;
     text-align: left; }
   .voice-manage-list .answer span:last-child {
     width: 20%;
     text-align: center; }
+
+.voice-manage-list .questions-keywords {
+  line-height: 0.02167rem;
+  position: relative; }
+  .voice-manage-list .questions-keywords > p:after {
+    content: '';
+    display: inline-block;
+    height: 100%;
+    border-right: 1px solid #f0f0f0;
+    position: absolute;
+    top: 0;
+    left: 70%; }
+  .voice-manage-list .questions-keywords > p span {
+    display: inline-block;
+    text-align: center;
+    vertical-align: middle; }
+  .voice-manage-list .questions-keywords > p span:first-child {
+    width: 70%; }
+  .voice-manage-list .questions-keywords > p span:last-child {
+    width: 30%; }
 
 .voice－answer span {
   display: inline-block;

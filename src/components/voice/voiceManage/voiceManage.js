@@ -133,16 +133,20 @@ class VoiceManage extends Component{
           <thead>
             <tr>
               <td>场景</td>
-              <td>问题</td>
-              <td>关键词</td>
-              <td colSpan='2'
+              <td className='questions-keywords'>
+                <p>
+                  <span>问题</span>
+                  <span>关键词</span>
+                </p>
+              </td>
+              <td
                 className='voice－answer'
               >
                 <span>答案</span>
                 <span>答案属性</span>
               </td>
               <td>问答对状态</td>
-              <td>操作</td>
+              <td style={{width:'0.1083rem'}}>操作</td>
             </tr>
           </thead>
             {
@@ -154,17 +158,18 @@ class VoiceManage extends Component{
                         onClick={this.spreadDetail}
                         >{val.s_scene}
                       </td>
-                      <td>
+                      <td className='questions-keywords'>
                         {val.questions.map((val,i)=>{
-                          return <p key={i}>{val.question}</p>
-                        })}
+                            return (
+                              <p key={i}>
+                                <span>{val.question}</span>
+                                <span>{val.keywords}</span>
+                              </p>
+                            )
+                          })
+                        }
                       </td>
-                      <td>
-                        {val.questions.map((val,i)=>{
-                          return <p key={i}>{val.keywords}</p>
-                        })}
-                      </td>
-                      <td className='answer' colSpan='2'>
+                      <td className='answer'>
                         {val.answers.map((val,i)=>{
                           return (
                             <p key={i}>
@@ -172,7 +177,7 @@ class VoiceManage extends Component{
                                 style={!val.status?{background:'#aaa'}: null}
                               >{val.answer}
                               </span>
-                              <span>
+                              <span style={{lineHeight:'0.0166rem'}}>
                                 {`${val.weight? val.weight: '无'}/${this.getAgeData(val.age)}`}
                               </span>
                             </p>
@@ -255,7 +260,7 @@ class VoiceManage extends Component{
         corpus_lib_ids.push(i.corpus_lib_id)
       }
     }
-    this.getVoiceList({corpus_lib_ids})
+    this.getVoiceList({corpus_lib_ids, page: 1})
   }
   handleFirstScene(e){
     this.setState({firstScene: e.target.value})
@@ -265,6 +270,7 @@ class VoiceManage extends Component{
     this.setState({secondScene: e.target.value})
   }
   hideEditorVoice(){
+    document.querySelector('.editor-voice-info').scrollTop= 0
     this.setState({toggleEditorVoice: false})
   }
   hideAddVoice(){
@@ -424,7 +430,7 @@ class VoiceManage extends Component{
   }
   editorSubmit(params){
     const {dispatch} = this.props
-    dispatch(editorVoiceItem(params),this.getVoiceList.bind(this))
+    dispatch(editorVoiceItem(params, this.getVoiceList.bind(this)))
   }
   getAgeData(age){
       let str= ''

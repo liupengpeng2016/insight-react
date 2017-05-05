@@ -50,7 +50,7 @@ class SecondScene extends Component{
               <td>场景</td>
               <td>场景英文</td>
               <td>场景描述</td>
-              <td>状态</td>
+              {/*<td>状态</td>*/}
               <td>操作</td>
             </tr>
           </thead>
@@ -62,15 +62,15 @@ class SecondScene extends Component{
                     <td onClick={this.toggleDetail.bind(this)}>{val.name}</td>
                     <td>{val.ename}</td>
                     <td>{val.desc}</td>
-                    <td>{val.status? '启用':'弃用'}</td>
+                    {/*<td>{val.status? '启用':'弃用'}</td>*/}
                     <td>
                       <p
                         onClick={()=> this.setState({isShow_editor: true, f_scene_id: state, editorData_id: i})}
                         >编辑</p>
-                      <p
+                      {/*<p
                         onClick={this.toggleSecondSceneStatus.bind(this,val.s_scene_id, val.status)}
                         >{!val.status? '启用':'弃用'}
-                      </p>
+                      </p>*/}
                       <p className='del'
                         onClick={this.handleDelSecondSceneItem.bind(this,val.s_scene_id)}
                         >删除</p>
@@ -115,21 +115,17 @@ class SecondScene extends Component{
     this.props.dispatch(getSecondSceneList(params))
   }
   addSecondSceneItem(params){
-    this.props.dispatch(addSecondSceneItem(params))
-    setTimeout(()=>this.getSecondSceneList(), 150)
+    this.props.dispatch(addSecondSceneItem(params, ()=>this.getSecondSceneList()))
   }
   editorSecondSceneItem(params){
-    this.props.dispatch(editorSecondSceneItem(params))
-    setTimeout(()=>this.getSecondSceneList(), 150)
+    this.props.dispatch(editorSecondSceneItem(params, ()=>this.getSecondSceneList()))
   }
   toggleSecondSceneStatus(s_scene_id,status){
     status= status? 0 : 1
-    this.props.dispatch(toggleSecondSceneStatus({s_scene_id, status}))
-    setTimeout(()=>this.getSecondSceneList(), 150)
+    this.props.dispatch(toggleSecondSceneStatus({s_scene_id, status}, ()=>this.getSecondSceneList()))
   }
   delSecondSceneItem(s_scene_id){
-    this.props.dispatch(delSecondSceneItem({s_scene_id}))
-    setTimeout(()=>this.getSecondSceneList(), 150)
+    this.props.dispatch(delSecondSceneItem({s_scene_id}, ()=>this.getSecondSceneList()))
   }
   handleDelSecondSceneItem(s_scene_id){
     this.props.dispatch(setVisibility2({secondConfirm:{show: true, msg:'确定要删除该场景吗？',callback:this.delSecondSceneItem.bind(this,s_scene_id)}}))
