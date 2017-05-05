@@ -240,18 +240,19 @@
       text-align: center;
     }
   }
+  .questions-keywords:after{
+    content:'';
+    display:inline-block;
+    height:100%;
+    border-right:1px solid #f0f0f0;
+    position:absolute;
+    top:0;
+    left:70%;
+  }
   .questions-keywords{
     line-height: px(26);
     position:relative;
-    &>p:after{
-      content:'';
-      display:inline-block;
-      height:100%;
-      border-right:1px solid #f0f0f0;
-      position:absolute;
-      top:0;
-      left:70%;
-    }
+
     &>p{
       span{
         display: inline-block;

@@ -17,7 +17,7 @@ class AddEvent extends Component{
       music_id:'',
       file:'',
       fileUrl:'',
-      loop:''
+      loop:'0000000'
     }
     this.valid={
       name:{

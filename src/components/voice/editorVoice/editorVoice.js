@@ -92,10 +92,10 @@ class EditorVoice extends Component{
                       </li>
                       <li className='editor-voice-notice'>
                         <ul>
-                          <li style={this.state.questions[i].question_id? null: {display:'none'}} className='editor-info'>
+                          <li className='editor-info'>
                             <i className='valid' style={!this.valid.questions[i].change? {visibility: 'hidden'}: null}>{this.valid.questions[i].notice= valid(this.state.questions[i].question,['require'])}</i>
-                            <p>作者: {(questions[i]||{}).editor}</p>
-                            <p>更新时间: {((questions[i]||{}).editor_time||'').slice(0, 10)}</p>
+                            <p style={this.state.questions[i].question_id? null: {display:'none'}}>作者: {(questions[i]||{}).editor}</p>
+                            <p style={this.state.questions[i].question_id? null: {display:'none'}}>更新时间: {((questions[i]||{}).editor_time||'').slice(0, 10)}</p>
                           </li>
                           <li>
                             <span className='del'
@@ -144,8 +144,7 @@ class EditorVoice extends Component{
                         <li>
                           <span style={this.state.answers[i].answer_id? {color:'#5cc1df'}: {color:'#5cc1df',display:'none'}}
                             onClick={()=> {
-                              this.props.dispatch(toggleAnswerStatus({answer_id:answers[i].answer_id, status:answers[i].status=== 1? 0: 1}))
-                              setTimeout(this.props.refresh, 150)
+                              this.props.dispatch(toggleAnswerStatus({answer_id:answers[i].answer_id, status:answers[i].status=== 1? 0: 1}, this.props.refresh))
                             }}
                           >
                             {(answers[i]||[]).status=== 1 ?'弃用':'启用'}
@@ -403,8 +402,7 @@ class EditorVoice extends Component{
 
     const questions= [...this.state.questions]
     if(questions[i].question_id){
-      this.props.delVoiceQuestion(question_id)
-      setTimeout(this.props.refresh, 150)
+      this.props.delVoiceQuestion(question_id, this.props.refresh)
     }
     questions.splice(i,1)
     this.setState({questions})
@@ -416,8 +414,7 @@ class EditorVoice extends Component{
 
     const answers= [...this.state.answers]
     if(answers[i].answer_id){
-      this.props.delVoiceAnswer(answer_id)
-      setTimeout(this.props.refresh, 150)
+      this.props.delVoiceAnswer(answer_id, this.props.refresh)
     }
     answers.splice(i,1)
 

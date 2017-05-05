@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import './addVoice.css'
 import {connect} from 'react-redux'
 import {valid} from '../../../plugs/plugs.js'
-import {getAllSecondSceneList} from '../../../redux/actions.js'
+import {getAllSecondSceneList, setVisibility} from '../../../redux/actions.js'
 class AddVoice extends Component{
   constructor(){
     super()
@@ -272,6 +272,9 @@ class AddVoice extends Component{
           return this.forceUpdate()
         }
       }
+    }
+    if(this.state.answers.length< 1 || this.state.questions.length< 1){
+      return this.props.dispatch(setVisibility({name:'FETCH_NOTICE', show: true, msg:'新建语料至少包含一个问答对！'}))
     }
     const {addSubmit, is_scene_corpus} = this.props
     let {questions, answers, secondScene} = this.state

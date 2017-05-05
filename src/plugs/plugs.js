@@ -24,7 +24,6 @@ export const valid= (target, rules, notice= []) => {
       if(rules[i].match(/^maxLength/)){
         let length= Number(rules[i].split(':')[1])
         let reg= new RegExp('^.{0,'+length+'}$','u')
-        console.log(length)
         if(!reg.test(target)){
           return notice[i]||'字符个数不能超过'+ length+ '个！'
         }

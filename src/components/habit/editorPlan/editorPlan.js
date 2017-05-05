@@ -121,7 +121,6 @@ class EditorPlan extends Component{
   }
   componentDidMount(){
     const {name, desc, time_interval, sort, status, icon} = this.props.location.state
-    console.log(this.props.location.state)
     this.setState({
       name,
       desc,
