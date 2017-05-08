@@ -345,7 +345,8 @@ class AddVoice extends Component{
       firstScene: '',
       secondScene:'',
       answers:[{answer: '', weight: '', age: ''}],
-      questions:[{question: '', keyword: ''}]
+      questions:[{question: '', keyword: ''}],
+      ages:[[0,0,0,0,0]]
     })
     this.valid={
       secondScene:{

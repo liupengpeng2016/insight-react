@@ -45,21 +45,30 @@ class PageCtr extends Component{
       </div>
     )
   }
-  componentWillReceiveProps(nextProps){
-    let {total, buttons} =this.props
-    if(nextProps.total){
+  initArr(total, buttons){
       const arr=[]
-      total=parseInt(nextProps.total,10)
-      buttons=parseInt(nextProps.buttons,10)
+      if(!(total&&buttons)){
+        return arr
+      }
+      total=parseInt(total,10)
+      buttons=parseInt(buttons,10)
       buttons = total>buttons ? buttons :total
       for(let i=0;i<buttons;i++){
-        arr[i]=i+1
-      }
-      this.arr=arr
+        arr[i]= i+1
       this.setState({arr})
+      }
+      return arr
     }
-  }
-  move(step){
+    componentDidMount(){
+      const {total, buttons} =this.props
+      this.initArr(total, buttons)
+    }
+    componentWillReceiveProps(nextProps){
+      const {total, buttons} =this.props
+      if(!total || !buttons ){
+        this.initArr(nextProps.total, nextProps.buttons)
+      }
+    }  move(step){
     let {total, buttons} =this.props
     total=parseInt(total,10)
     buttons=parseInt(buttons,10)
