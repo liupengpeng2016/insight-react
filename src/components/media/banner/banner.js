@@ -94,6 +94,7 @@ class Banner extends Component{
             <li onClick={this.onAll.bind(this)}>批量上架</li>
             <li onClick={this.delAll.bind(this)}>批量删除</li>
             <li onClick={this.chooseAll.bind(this)}>全选</li>
+            <li onClick={()=> this.setState({buttonMode:1})}>退出</li>
           </ul>
           <p><Link to='/media/addBanner'>新增banner</Link></p>
           <h1
@@ -137,14 +138,11 @@ class Banner extends Component{
   }
 //button按钮事件
   handleDel(ids){
-    this.props.dispatch(delBannerItem({ids}))
-    setTimeout(this.getBannerList.bind(this),150)
+    this.props.dispatch(delBannerItem({ids},this.getBannerList.bind(this)))
   }
   handleStatus(status, ids){
     status = status === 1 ? 0 : 1
-    this.props.dispatch(toggleBannerStatus({ids,status}))
-    setTimeout(this.getBannerList.bind(this),150)
-
+    this.props.dispatch(toggleBannerStatus({ids,status},this.getBannerList.bind(this)))
   }
 //批量处理按钮
   filterIds(obj){
@@ -158,17 +156,13 @@ class Banner extends Component{
     return ids
   }
   delAll(){
-    this.props.dispatch(delBannerItem({ids: this.filterIds(this.state.checkbox)}))
-    setTimeout(this.getBannerList.bind(this),150)
+    this.props.dispatch(delBannerItem({ids: this.filterIds(this.state.checkbox)},this.getBannerList.bind(this)))
   }
   onAll(){
-    this.props.dispatch(toggleBannerStatus({ids: this.filterIds(this.state.checkbox), status: 1}))
-    setTimeout(this.getBannerList.bind(this),150)
-
+    this.props.dispatch(toggleBannerStatus({ids: this.filterIds(this.state.checkbox), status: 1},this.getBannerList.bind(this)))
   }
   offAll(){
-    this.props.dispatch(toggleBannerStatus({ids: this.filterIds(this.state.checkbox), status: 0}))
-    setTimeout(this.getBannerList.bind(this),150)
+    this.props.dispatch(toggleBannerStatus({ids: this.filterIds(this.state.checkbox), status: 0},this.getBannerList.bind(this)))
   }
   chooseAll(){
     const checkbox= Object.assign({},this.state.checkbox)

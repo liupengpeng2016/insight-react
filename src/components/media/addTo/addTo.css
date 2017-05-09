@@ -29,12 +29,12 @@
     .add-to .add-to-panel > span:after {
       content: '+';
       display: block;
-      font-size: 42px;
+      font-size: 0.035rem;
       text-align: center; }
     .add-to .add-to-panel > h1 {
       line-height: 0.05rem;
       margin-bottom: 0.01167rem;
-      font-size: 16px;
+      font-size: 0.01333rem;
       color: black;
       text-align: center; }
     .add-to .add-to-panel > p {
@@ -56,7 +56,7 @@
       line-height: 0.03333rem;
       background: #5cc1df;
       color: white;
-      font-size: 18px;
+      font-size: 0.015rem;
       text-align: center;
       margin: 0 auto;
       border-radius: 0.00417rem;

@@ -151,13 +151,11 @@ class AlbumOfTopic extends Component{
     this.setState({showPanel:true, addId: id})
   }
   handleDel(ids){
-    this.props.dispatch(delAlbumItem({ids}))
-    setTimeout(this.getAlbumOfTopic.bind(this),150)
+    this.props.dispatch(delAlbumItem({ids},this.getAlbumOfTopic.bind(this)))
   }
   handleStatus(status, ids){
     status = status === 1 ? 0 : 1
-    this.props.dispatch(toggleAlbumStatus({ids,status}))
-    setTimeout(this.getAlbumOfTopic.bind(this),150)
+    this.props.dispatch(toggleAlbumStatus({ids,status},this.getAlbumOfTopic.bind(this)))
     return
   }
   //批量处理按钮
@@ -172,16 +170,13 @@ class AlbumOfTopic extends Component{
     return ids
   }
   delAll(){
-    this.props.dispatch(delAlbumItem({ids: this.filterIds(this.state.checkbox)}))
-    setTimeout(this.getAlbumOfTopic.bind(this),150)
+    this.props.dispatch(delAlbumItem({ids: this.filterIds(this.state.checkbox)},this.getAlbumOfTopic.bind(this)))
   }
   onAll(){
-    this.props.dispatch(toggleAlbumStatus({ids: this.filterIds(this.state.checkbox), status: 1}))
-    setTimeout(this.getAlbumOfTopic.bind(this),150)
+    this.props.dispatch(toggleAlbumStatus({ids: this.filterIds(this.state.checkbox), status: 1},this.getAlbumOfTopic.bind(this)))
   }
   offAll(){
-    this.props.dispatch(toggleAlbumStatus({ids: this.filterIds(this.state.checkbox), status: 0}))
-    setTimeout(this.getAlbumOfTopic.bind(this),150)
+    this.props.dispatch(toggleAlbumStatus({ids: this.filterIds(this.state.checkbox), status: 0},this.getAlbumOfTopic.bind(this)))
   }
   chooseAll(){
     const checkbox= Object.assign({},this.state.checkbox)

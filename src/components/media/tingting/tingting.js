@@ -96,8 +96,7 @@ class Tingting extends Component{
                   <td className='tingting-list-button'>{!val.is_add? <span onClick={this.handleAdd.bind(this, this.state.type, val.id)}>添加</span>:
                      <span className='off'
                        onClick={()=> {
-                         this.props.dispatch(delMusicItem({ids: [val.local_id]}))
-                         setTimeout(this.search.bind(this), 100)
+                         this.props.dispatch(delMusicItem({ids: [val.local_id]},this.search.bind(this)))
                      }}
                     >移除<span>已添加</span></span>}</td>
                 </tr>
@@ -134,8 +133,7 @@ class Tingting extends Component{
     this.setState({userInput: e.target.value})
   }
   handleAdd(type, id){
-    this.props.dispatch(addToOwnMusicList({type, id}))
-    setTimeout(()=> {this.search()}, 100)
+    this.props.dispatch(addToOwnMusicList({type, id},()=> {this.search()}))
   }
 }
 function mapStateToProps (state) {

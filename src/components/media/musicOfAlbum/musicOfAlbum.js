@@ -163,16 +163,13 @@ class Album extends Component{
     return ids
   }
   delAll(){
-    this.props.dispatch(delMusicItem({ids: this.filterIds(this.state.checkbox)}))
-    setTimeout(this.getMusicOfAlbum.bind(this),150)
+    this.props.dispatch(delMusicItem({ids: this.filterIds(this.state.checkbox)},this.getMusicOfAlbum.bind(this)))
   }
   onAll(){
-    this.props.dispatch(toggleMusicStatus({ids: this.filterIds(this.state.checkbox), status: 1}))
-    setTimeout(this.getMusicOfAlbum.bind(this),150)
+    this.props.dispatch(toggleMusicStatus({ids: this.filterIds(this.state.checkbox), status: 1},this.getMusicOfAlbum.bind(this)))
   }
   offAll(){
-    this.props.dispatch(toggleMusicStatus({ids: this.filterIds(this.state.checkbox), status: 0}))
-    setTimeout(this.getMusicOfAlbum.bind(this),150)
+    this.props.dispatch(toggleMusicStatus({ids: this.filterIds(this.state.checkbox), status: 0},this.getMusicOfAlbum.bind(this)))
   }
   chooseAll(){
     const checkbox= Object.assign({},this.state.checkbox)
@@ -192,13 +189,11 @@ class Album extends Component{
     this.setState({showPanel:true, addId: id})
   }
   handleDel(ids){
-    this.props.dispatch(delMusicItem({ids}))
-    setTimeout(this.getMusicOfAlbum.bind(this),150)
+    this.props.dispatch(delMusicItem({ids},this.getMusicOfAlbum.bind(this)))
   }
   handleStatus(status, ids){
     status = status === 1 ? 0 : 1
-    this.props.dispatch(toggleMusicStatus({ids,status}))
-    setTimeout(this.getMusicOfAlbum.bind(this),150)
+    this.props.dispatch(toggleMusicStatus({ids,status},this.getMusicOfAlbum.bind(this)))
     return
   }
   toggleChecked(id, checked){

@@ -7,22 +7,25 @@
   color:#c7c7c7;
   ul{
     display:inline-block;
+    overflow: hidden;
   }
   li{
     border:1px solid;
+    cursor:pointer;
     font:{
-      size:12px;
+      size:px(12);
     }
     text-align: center;
     line-height: px(32);
     margin:0 px(4);
-    width:px(32);
+    padding:0 px(10);
+    /* width:px(32); */
     float:left;
   }
-  li:first-child{
-    width:px(80);
-  }
-  li:last-child{
-    width:px(80);
-  }
+/*   li:first-child{
+  width:px(80);
 }
+li:last-child{
+  width:px(80);
+}
+ */}

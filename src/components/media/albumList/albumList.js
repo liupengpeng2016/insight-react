@@ -115,6 +115,7 @@ class Album extends Component{
             <li onClick={this.onAll.bind(this)}>批量上架</li>
             <li onClick={this.delAll.bind(this)}>批量删除</li>
             <li onClick={this.chooseAll.bind(this)}>全选</li>
+            <li onClick={()=> this.setState({buttonMode:1})}>退出</li>
           </ul>
           <p><Link to='/media/addAlbum'>新增专辑</Link></p>
           <h1
@@ -179,13 +180,11 @@ class Album extends Component{
     this.setState({showPanel:true, addId: id})
   }
   handleDel(ids){
-    this.props.dispatch(delAlbumItem({ids}))
-    setTimeout(this.getAlbumList.bind(this),150)
+    this.props.dispatch(delAlbumItem({ids},this.getAlbumList.bind(this)))
   }
   handleStatus(status, ids){
     status = status === 1 ? 0 : 1
-    this.props.dispatch(toggleAlbumStatus({ids,status}))
-    setTimeout(this.getAlbumList.bind(this),150)
+    this.props.dispatch(toggleAlbumStatus({ids,status},this.getAlbumList.bind(this)))
     return
   }
   //批量处理按钮
@@ -200,16 +199,13 @@ class Album extends Component{
     return ids
   }
   delAll(){
-    this.props.dispatch(delAlbumItem({ids: this.filterIds(this.state.checkbox)}))
-    setTimeout(this.getAlbumList.bind(this),150)
+    this.props.dispatch(delAlbumItem({ids: this.filterIds(this.state.checkbox)},this.getAlbumList.bind(this)))
   }
   onAll(){
-    this.props.dispatch(toggleAlbumStatus({ids: this.filterIds(this.state.checkbox), status: 1}))
-    setTimeout(this.getAlbumList.bind(this),150)
+    this.props.dispatch(toggleAlbumStatus({ids: this.filterIds(this.state.checkbox), status: 1},this.getAlbumList.bind(this)))
   }
   offAll(){
-    this.props.dispatch(toggleAlbumStatus({ids: this.filterIds(this.state.checkbox), status: 0}))
-    setTimeout(this.getAlbumList.bind(this),150)
+    this.props.dispatch(toggleAlbumStatus({ids: this.filterIds(this.state.checkbox), status: 0},this.getAlbumList.bind(this)))
   }
   chooseAll(){
     const checkbox= Object.assign({},this.state.checkbox)

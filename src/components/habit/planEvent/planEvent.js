@@ -108,21 +108,19 @@ class PlanEvent extends Component {
           <ul style={this.state.mode? {display: 'none'} : null}>
             <li onClick={this.delAll.bind(this)}>批量删除</li>
             <li onClick={this.chooseAll.bind(this)}>全选</li>
+            <li onClick={()=> this.setState({mode:1})}>退出</li>
           </ul>
           <h1 onClick={this.changeMode.bind(this)}
             style={this.state.mode? null : {display: 'none'}}
           >批量管理</h1>
-        <h2><Link to={{pathname:'/habit/addEvent', state: this.props.activeId}}>新增提醒</Link></h2>
+        <h2><Link to={this.props.activeId? {pathname:'/habit/addEvent', state: this.props.activeId}:''}>新增提醒</Link></h2>
         </div>
       </div>
     )
   }
   //props
   delItem(id){
-    setTimeout(()=>{
-      this.props.refresh()
-    },150)
-    this.props.dispatch(delHabitPlanEvent({default_plan_event_ids:id}))
+    this.props.dispatch(delHabitPlanEvent({default_plan_event_ids:id},this.props.refresh))
   }
   componentWillReceiveProps(nextProps){
       let {planEvent} = nextProps
@@ -157,10 +155,7 @@ class PlanEvent extends Component {
       }
     }
     ids.slice(0, -1)
-    this.props.dispatch(delHabitPlanEvent({default_plan_event_ids:ids}))
-    setTimeout(()=>{
-      this.props.refresh()
-    },150)
+    this.props.dispatch(delHabitPlanEvent({default_plan_event_ids:ids},this.props.refresh))
   }
   changeMode(){
     this.setState({mode: 0})

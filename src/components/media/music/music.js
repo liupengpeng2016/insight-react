@@ -114,6 +114,7 @@ class Music extends Component{
             <li onClick={this.onAll.bind(this)}>批量上架</li>
             <li onClick={this.delAll.bind(this)}>批量删除</li>
             <li onClick={this.chooseAll.bind(this)}>全选</li>
+            <li onClick={()=> this.setState({buttonMode:1})}>退出</li>
           </ul>
           <p><Link to='/media/addMusic'>新增歌曲</Link></p>
           <h1
@@ -187,16 +188,13 @@ class Music extends Component{
     return ids
   }
   delAll(){
-    this.props.dispatch(delMusicItem({ids: this.filterIds(this.state.checkbox)}))
-    setTimeout(this.getMusicList.bind(this),150)
+    this.props.dispatch(delMusicItem({ids: this.filterIds(this.state.checkbox)},this.getMusicList.bind(this)))
   }
   onAll(){
-    this.props.dispatch(toggleMusicStatus({ids: this.filterIds(this.state.checkbox), status: 1}))
-    setTimeout(this.getMusicList.bind(this),150)
+    this.props.dispatch(toggleMusicStatus({ids: this.filterIds(this.state.checkbox), status: 1},this.getMusicList.bind(this)))
   }
   offAll(){
-    this.props.dispatch(toggleMusicStatus({ids: this.filterIds(this.state.checkbox), status: 0}))
-    setTimeout(this.getMusicList.bind(this),150)
+    this.props.dispatch(toggleMusicStatus({ids: this.filterIds(this.state.checkbox), status: 0},this.getMusicList.bind(this)))
   }
   chooseAll(){
     const checkbox= Object.assign({},this.state.checkbox)
@@ -220,13 +218,11 @@ class Music extends Component{
     this.setState({showPanel:true, addId: id})
   }
   handleDel(ids){
-    this.props.dispatch(delMusicItem({ids}))
-    setTimeout(this.getMusicList.bind(this),150)
+    this.props.dispatch(delMusicItem({ids},this.getMusicList.bind(this)))
   }
   handleStatus(status, ids){
     status = status === 1 ? 0 : 1
-    this.props.dispatch(toggleMusicStatus({ids,status}))
-    setTimeout(this.getMusicList.bind(this),150)
+    this.props.dispatch(toggleMusicStatus({ids,status},this.getMusicList.bind(this)))
     return
   }
   toggleChecked(id, checked){

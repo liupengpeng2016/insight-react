@@ -101,6 +101,7 @@ class Topic extends Component{
             <li onClick={this.onAll.bind(this)}>批量上架</li>
             <li onClick={this.delAll.bind(this)}>批量删除</li>
             <li onClick={this.chooseAll.bind(this)}>全选</li>
+            <li onClick={()=> this.setState({buttonMode:1})}>退出</li>
           </ul>
           <p><Link to='/media/addTopic'>新增专题</Link></p>
           <h1
@@ -163,13 +164,11 @@ class Topic extends Component{
   }
 //button按钮事件
   handleDel(ids){
-    this.props.dispatch(delTopicItem({ids}))
-    setTimeout(this.getTopicList.bind(this),150)
+    this.props.dispatch(delTopicItem({ids},this.getTopicList.bind(this)))
   }
   handleStatus(status, ids){
     status = status === 1 ? 0 : 1
-    this.props.dispatch(toggleTopicStatus({ids,status}))
-    setTimeout(this.getTopicList.bind(this),150)
+    this.props.dispatch(toggleTopicStatus({ids,status},this.getTopicList.bind(this)))
   }
   //批量处理按钮
   filterIds(obj){
@@ -183,16 +182,13 @@ class Topic extends Component{
     return ids
   }
   delAll(){
-    this.props.dispatch(delTopicItem({ids: this.filterIds(this.state.checkbox)}))
-    setTimeout(this.getTopicList.bind(this),150)
+    this.props.dispatch(delTopicItem({ids: this.filterIds(this.state.checkbox)},this.getTopicList.bind(this)))
   }
   onAll(){
-    this.props.dispatch(toggleTopicStatus({ids: this.filterIds(this.state.checkbox), status: 1}))
-    setTimeout(this.getTopicList.bind(this),150)
+    this.props.dispatch(toggleTopicStatus({ids: this.filterIds(this.state.checkbox), status: 1},this.getTopicList.bind(this)))
   }
   offAll(){
-    this.props.dispatch(toggleTopicStatus({ids: this.filterIds(this.state.checkbox), status: 0}))
-    setTimeout(this.getTopicList.bind(this),150)
+    this.props.dispatch(toggleTopicStatus({ids: this.filterIds(this.state.checkbox), status: 0},this.getTopicList.bind(this)))
   }
   chooseAll(){
     const checkbox= Object.assign({},this.state.checkbox)

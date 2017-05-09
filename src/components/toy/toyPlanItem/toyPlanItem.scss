@@ -1,0 +1,10 @@
+@function px($a){
+  @return $a/1200*1rem;
+}
+.toy-introduce{
+  img{
+    height:px(50);
+    margin:px(10) 0;
+    vertical-align: middle;
+  }
+}

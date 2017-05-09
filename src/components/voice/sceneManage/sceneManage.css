@@ -2,7 +2,7 @@
   line-height: 0.03667rem;
   margin: 0 0.01333rem;
   border-bottom: 1px dashed #f0f0f0;
-  font-size: 12px;
+  font-size: 0.01rem;
   color: #b9b9b9; }
 
 .scene-manage .scene-manage-button {
@@ -15,12 +15,12 @@
     cursor: pointer;
     text-align: center;
     background: #5cc1df;
-    font-size: 18px;
+    font-size: 0.015rem;
     margin-right: 0.01167rem;
     border-radius: 0.00417rem; }
   .scene-manage .scene-manage-button span {
     vertical-align: bottom;
-    font-size: 10px;
+    font-size: 0.00833rem;
     color: #5cc1df;
     cursor: pointer; }
 

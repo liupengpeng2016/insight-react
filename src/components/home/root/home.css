@@ -5,7 +5,7 @@
   width: 100%;
   height: 100%;
   background: rgba(0, 0, 0, 0.6);
-  font-size: 16px;
+  font-size: 0.01333rem;
   font-weight: bold; }
   .popup > div {
     width: 0.35rem;
@@ -23,12 +23,12 @@
       position: absolute;
       width: 0.025rem;
       height: 0.025rem;
-      font-size: 40px;
+      font-size: 0.03333rem;
       right: 0.00833rem;
       top: 0.005rem; }
     .popup > div h1 {
       line-height: 0.05167rem;
-      font-size: 18px; }
+      font-size: 0.015rem; }
     .popup > div img {
       width: 0.06667rem;
       height: 0.06667rem;
@@ -47,12 +47,12 @@
   .home > h1 {
     line-height: 0.03333rem;
     color: #d0d0d0;
-    font-size: 14px;
+    font-size: 0.01167rem;
     background: #f4f4f4; }
   .home > h2 {
     line-height: 0.03333rem;
     margin-left: 0.01333rem;
-    font-size: 15px; }
+    font-size: 0.0125rem; }
   .home .data-situation {
     height: 0.105rem;
     padding-left: 0.0375rem;
@@ -64,14 +64,14 @@
       margin-right: 0.09167rem; }
       .home .data-situation li > h1 {
         line-height: 0.04667rem;
-        font-size: 15px; }
+        font-size: 0.0125rem; }
       .home .data-situation li > p {
         line-height: 1;
-        font-size: 30px; }
+        font-size: 0.025rem; }
   .home .user-situation > h1 {
     line-height: 0.06rem;
     margin-left: 0.01333rem;
-    font-size: 15px; }
+    font-size: 0.0125rem; }
     .home .user-situation > h1 > span {
       float: right;
       margin-right: 0.01333rem;
@@ -166,7 +166,7 @@
 
 .media-scope {
   padding: 0.01333rem;
-  font-size: 12px;
+  font-size: 0.01rem;
   height: 0.025rem;
   text-align: center;
   line-height: 0.025rem; }
@@ -184,7 +184,7 @@
       height: 0.02667rem;
       float: left;
       border: 1px solid #ebebeb;
-      font-size: 12px; }
+      font-size: 0.01rem; }
 
 .editor-button-all {
   overflow: hidden;
@@ -218,64 +218,8 @@
 .editor-button-part input {
   margin-right: 0.01667rem; }
 
-.batch-process {
-  position: relative; }
-
-.batch-process > ul {
-  overflow: hidden;
-  margin-bottom: 0.02167rem; }
-
-.batch-process > ul > li {
-  float: right;
-  font-size: 16px;
-  line-height: 0.03rem;
-  text-align: center;
-  margin-right: 0.01333rem;
-  border: 1px solid;
-  border-radius: 0.00417rem;
-  padding: 0 0.02rem; }
-
-.batch-process li:nth-child(1) {
-  color: #8ad3e8; }
-
-.batch-process li:nth-child(2) {
-  color: #ff855e; }
-
-.batch-process li:nth-child(3) {
-  color: #56cc76; }
-
-.batch-process li:nth-child(4) {
-  color: #c4d1c8; }
-
-.batch-process > p {
-  width: 0.28333rem;
-  height: 0.04167rem;
-  color: white;
-  text-align: center;
-  font-size: 18px;
-  background: #5cc1df;
-  margin: 0 auto;
-  line-height: 0.04167rem;
-  border-radius: 0.00833rem; }
-
-.batch-process > p > a {
-  color: white; }
-
-.batch-process > h1 {
-  position: absolute;
-  right: 0.01333rem;
-  bottom: 0.01833rem;
-  color: #5cc1df;
-  border: 1px solid;
-  font-size: 16px;
-  text-align: center;
-  line-height: 0.025rem;
-  width: 0.08167rem;
-  height: 0.025rem;
-  border-radius: 0.00417rem; }
-
 .add-item {
-  font-size: 14px;
+  font-size: 0.01167rem;
   padding-left: 0.01333rem;
   color: #ababab; }
   .add-item li {
@@ -314,7 +258,7 @@
       z-index: 1;
       opacity: 0; }
     .add-item .input-img p {
-      font-size: 10px;
+      font-size: 0.00833rem;
       padding-left: 0.09583rem; }
     .add-item .input-img h1 {
       position: absolute;
@@ -326,13 +270,13 @@
       color: white;
       text-align: center;
       line-height: 0.03333rem;
-      font-size: 16px; }
+      font-size: 0.01333rem; }
   .add-item li:last-child {
     width: 0.28333rem;
     line-height: 0.03333rem;
     text-align: center;
     color: white;
-    font-size: 18px;
+    font-size: 0.015rem;
     background: #5cc1df;
     margin: 0.02rem auto 0;
     border-radius: 0.00417rem;

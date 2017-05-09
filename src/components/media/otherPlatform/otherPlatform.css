@@ -4,7 +4,7 @@
   .otherPlatform > h1 {
     line-height: 0.03667rem;
     border-bottom: 1px dashed #c1c1c1;
-    font-size: 12px; }
+    font-size: 0.01rem; }
   .otherPlatform > p {
     padding-top: 0.01833rem;
     line-height: 0.03333rem; }
@@ -23,11 +23,11 @@
     background: #5dd1cf;
     color: white;
     border: none;
-    font-size: 20px;
+    font-size: 0.01667rem;
     display: block;
     margin: 0.02167rem auto 0.005rem; }
   .otherPlatform > h2 {
-    font-size: 12px;
+    font-size: 0.01rem;
     margin: 0 auto;
     width: 0.28167rem;
     line-height: 0.01667rem;

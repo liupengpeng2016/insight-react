@@ -4,7 +4,7 @@
   background: #5cc1df;
   text-align: center;
   color: white;
-  font-size: 18px;
+  font-size: 0.015rem;
   border-radius: 0.00417rem;
   margin: 0.01667rem auto 0;
   cursor: pointer; }
@@ -38,12 +38,12 @@
     .editor-voice .editor-voice-info > ul .answer-age span:first-child {
       margin-left: 0; }
     .editor-voice .editor-voice-info > ul .answer-age label {
-      font-size: 12px; }
+      font-size: 0.01rem; }
 
 .editor-voice .editor-voice-info .editor-voice-notice {
   overflow: hidden;
   padding: 0;
-  font-size: 12px;
+  font-size: 0.01rem;
   line-height: 1; }
   .editor-voice .editor-voice-info .editor-voice-notice > ul li:first-child {
     float: left;
@@ -51,7 +51,7 @@
     color: #c8c8c8; }
   .editor-voice .editor-voice-info .editor-voice-notice > ul li:last-child {
     float: right;
-    font-size: 14px;
+    font-size: 0.01167rem;
     margin-right: 0.02167rem; }
     .editor-voice .editor-voice-info .editor-voice-notice > ul li:last-child span {
       padding-left: 0.015rem;
@@ -70,7 +70,7 @@
     line-height: 0.04333rem;
     float: left;
     text-align: center;
-    font-size: 20px;
+    font-size: 0.01667rem;
     color: white;
     border-radius: 0.00417rem;
     cursor: pointer; }

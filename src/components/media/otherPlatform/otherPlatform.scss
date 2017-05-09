@@ -12,7 +12,7 @@
       bottom:1px dashed #c1c1c1;
     }
     font:{
-      size:12px;
+      size:px(12);
     }
   }
   &>p{
@@ -42,14 +42,14 @@
     color:white;
     border:none;
     font:{
-      size:20px;
+      size:px(20);
     }
     display: block;
     margin:px(26) auto px(6);
   }
   &>h2{
     font:{
-      size:12px;
+      size:px(12);
     }
     margin:0 auto;
     width:px(338);

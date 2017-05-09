@@ -165,12 +165,15 @@ class EditorMusic extends Component{
     )
   }
   componentDidMount(){
-    const {name, age, sort, duration, singer, status}= this.props.location.state
+    const {name, age, sort, duration, singer, status, desc, tags, icon}= this.props.location.state
     this.setState({
       name,
       age,
       sort,
       singer,
+      desc,
+      tags,
+      fileUrl: icon,
       file: 'ignore',
       duration: Number(duration)/1000,
       status_show: status? true : false,

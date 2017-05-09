@@ -55,6 +55,7 @@ class AddToyAction extends Component{
           >
             <span>上传歌曲</span>
             <i className='valid' style={!this.valid.file.change? {display: 'none'}: null}>{this.valid.file.notice= validFile(this.state.file,{ name:[/\.mp3$/,/\.m4a$/]})}</i>
+            <p>{(this.state.file||{}).name}</p>
             <input type='file'
               onChange={this.handleFile.bind(this)}
             />

@@ -29,9 +29,6 @@ class FetchNotice extends Component{
     if(/addEvent/.test(harsh)){
       return history.back()
     }
-    if(/other/.test(harsh)){
-      return history.back()
-    }
     if(/addAlbum/.test(harsh)){
       return history.back()
     }

@@ -17,20 +17,21 @@
     margin: auto;
     text-align: center; }
     .fetch-notice > div h1 {
-      font-size: 18px;
+      font-size: 0.015rem;
       line-height: 0.06167rem;
       position: relative; }
       .fetch-notice > div h1 span {
+        cursor: pointer;
         position: absolute;
         right: 0.01667rem;
         font-size: 0.01667rem;
         line-height: 0.05rem; }
     .fetch-notice > div p {
-      font-size: 14px;
+      font-size: 0.01167rem;
       margin-top: 0.035rem;
       padding: 0 0.025rem; }
     .fetch-notice > div h2 {
-      font-size: 18px;
+      font-size: 0.015rem;
       line-height: 0.03333rem;
       width: 0.16833rem;
       color: white;
@@ -40,4 +41,5 @@
       left: 0;
       right: 0;
       margin: 0 auto;
-      bottom: 0.02083rem; }
+      bottom: 0.02083rem;
+      cursor: pointer; }

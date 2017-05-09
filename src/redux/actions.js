@@ -17,7 +17,6 @@ import fetch from 'isomorphic-fetch'
 export const setVisibility = data => ({type: data.name, show: data.show, msg: data.msg})
 export const setVisibility2 = data => ({type: SET_VISIBILITY, data})
 function fetchData(url, params, dispatch, action, callback){
-  console.log(callback)
   const headers= new Headers()
   headers.append('Content-Type', 'application/x-www-form-urlencoded')
   let formParams= {}
@@ -86,165 +85,165 @@ const saveMusicOfAlbum = data => ({type: SAVE_MUSIC_OF_ALBUM, data})
 const saveAlbumOfTopic = data => ({type: SAVE_ALBUM_OF_TOPIC, data})
 //获取music列表
 export const getMusicList =
-  params =>
-    dispatch => fetchData('/tingting/music/lists', params, dispatch, saveMusicList)
+  (params, callback) =>
+    dispatch => fetchData('/tingting/music/lists', params, dispatch, saveMusicList, callback)
 export const getAlbumList =
-  params =>
-    dispatch => fetchData('/tingting/album/lists', params, dispatch, saveAlbumList)
+  (params, callback) =>
+    dispatch => fetchData('/tingting/album/lists', params, dispatch, saveAlbumList, callback)
 export const getTopicList =
-  params =>
-    dispatch => fetchData('/tingting/subject/lists', params, dispatch, saveTopicList)
+  (params, callback) =>
+    dispatch => fetchData('/tingting/subject/lists', params, dispatch, saveTopicList, callback)
 export const getBannerList =
- params =>
-  dispatch => fetchData('/tingting/banner/lists', params, dispatch, saveBannerList)
+ (params, callback) =>
+  dispatch => fetchData('/tingting/banner/lists', params, dispatch, saveBannerList, callback)
   //获取关联专辑列表
 export const getLinkAlbumList =
-  params =>
-    dispatch => fetchData('/tingting/music/getCanAssociateAlbums', params,dispatch,saveLinkAlbumList)
+  (params, callback) =>
+    dispatch => fetchData('/tingting/music/getCanAssociateAlbums', params,dispatch,saveLinkAlbumList, callback)
 //删除music列表项
 export const delMusicItem =
-  params =>
-    dispatch => fetchData('/tingting/music/delete', params, dispatch, null)
+  (params, callback) =>
+    dispatch => fetchData('/tingting/music/delete', params, dispatch, null, callback)
 //修改music列表项状态
 export const toggleMusicStatus =
-  params =>
-    dispatch => fetchData('/tingting/music/modifyStatus',params, dispatch, null)
+  (params, callback) =>
+    dispatch => fetchData('/tingting/music/modifyStatus',params, dispatch, null, callback)
 //歌曲关联专辑
 export const linkToAlbum =
-  params =>
-    dispatch => fetchData('/tingting/music/associateAlbum', params, dispatch, null)
+  (params, callback) =>
+    dispatch => fetchData('/tingting/music/associateAlbum', params, dispatch, null, callback)
 //编辑歌曲信息
 export const editorMusic =
-  params =>
-    dispatch => fetchData('/tingting/music/edit', params, dispatch, null)
+  (params, callback) =>
+    dispatch => fetchData('/tingting/music/edit', params, dispatch, null, callback)
 //获取搜索音乐列表
 export const getSearchMusicList =
-  params =>
-    dispatch => fetchData('/tingting/music/searchMusic', params, dispatch, saveSearchMusicList)
+  (params, callback) =>
+    dispatch => fetchData('/tingting/music/searchMusic', params, dispatch, saveSearchMusicList, callback)
 //添加搜索音乐到自己音乐列表
 export const addToOwnMusicList =
-  params =>
-    dispatch => fetchData('/tingting/music/addMusic', params, dispatch, null)
+  (params, callback) =>
+    dispatch => fetchData('/tingting/music/addMusic', params, dispatch, null, callback)
 //添加歌曲
 export const addOtherPlatformMusic =
-  params =>
-    dispatch => fetchData('/tingting/music/create', params, dispatch, null)
+  (params, callback) =>
+    dispatch => fetchData('/tingting/music/create', params, dispatch, null, callback)
 //删除专辑
 export const delAlbumItem =
-  params =>
-    dispatch => fetchData('/tingting/album/delete', params, dispatch, null)
+  (params, callback) =>
+    dispatch => fetchData('/tingting/album/delete', params, dispatch, null, callback)
 //新增专辑
 export const addAlbumItem =
-  params =>
-    dispatch => fetchData('/tingting/album/create', params, dispatch, null)
+  (params, callback) =>
+    dispatch => fetchData('/tingting/album/create', params, dispatch, null, callback)
 //切换编辑状态
 export const toggleAlbumStatus =
-  params =>
-    dispatch => fetchData('/tingting/album/modifyStatus', params, dispatch, null)
+  (params, callback) =>
+    dispatch => fetchData('/tingting/album/modifyStatus', params, dispatch, null, callback)
 //获取专辑关联专题
 export const getLinkTopicList =
-  params =>
-    dispatch => fetchData('/tingting/album/getCanAssociateSubjects', params, dispatch, saveLinkTopicList)
+  (params, callback) =>
+    dispatch => fetchData('/tingting/album/getCanAssociateSubjects', params, dispatch, saveLinkTopicList, callback)
 //编辑专辑
 export const editorAlbum =
-  params =>
-    dispatch => fetchData('/tingting/album/edit', params, dispatch, null)
+  (params, callback) =>
+    dispatch => fetchData('/tingting/album/edit', params, dispatch, null, callback)
 //关联专辑到专题
 export const linkToTopic =
-  params =>
-    dispatch => fetchData('/tingting/album/associateSubject', params, dispatch, null)
+  (params, callback) =>
+    dispatch => fetchData('/tingting/album/associateSubject', params, dispatch, null, callback)
 //获取专辑下的音乐
 export const getMusicOfAlbum =
-  params =>
-    dispatch => fetchData('/tingting/album/musics', params, dispatch, saveMusicOfAlbum)
+  (params, callback) =>
+    dispatch => fetchData('/tingting/album/musics', params, dispatch, saveMusicOfAlbum, callback)
 //删除专题项
 export const delTopicItem =
-  params =>
-    dispatch => fetchData('/tingting/subject/delete', params, dispatch, null)
+  (params, callback) =>
+    dispatch => fetchData('/tingting/subject/delete', params, dispatch, null, callback)
 //添加专题项
 export const addTopicItem =
-  params =>
-    dispatch => fetchData('/tingting/subject/create', params, dispatch, null)
+  (params, callback) =>
+    dispatch => fetchData('/tingting/subject/create', params, dispatch, null, callback)
 //修改专题status
 export const toggleTopicStatus =
-  params =>
-    dispatch => fetchData('/tingting/subject/modifyStatus', params, dispatch, null)
+  (params, callback) =>
+    dispatch => fetchData('/tingting/subject/modifyStatus', params, dispatch, null, callback)
 //编辑专题
 export const editorTopic =
-  params =>
-    dispatch => fetchData('/tingting/subject/edit', params, dispatch, null)
+  (params, callback) =>
+    dispatch => fetchData('/tingting/subject/edit', params, dispatch, null, callback)
 //获取专题下的专辑列表
 export const getAlbumOfTopic =
-  params =>
-    dispatch => fetchData('/tingting/subject/albums', params, dispatch, saveAlbumOfTopic)
+  (params, callback) =>
+    dispatch => fetchData('/tingting/subject/albums', params, dispatch, saveAlbumOfTopic, callback)
 //banner删除
 export const delBannerItem =
-  params =>
-    dispatch => fetchData('/tingting/banner/delete', params, dispatch, null)
+  (params, callback) =>
+    dispatch => fetchData('/tingting/banner/delete', params, dispatch, null, callback)
 //banner添加
 export const addBannerItem =
-  params =>
-    dispatch => fetchData('/tingting/banner/create', params, dispatch, null)
+  (params, callback) =>
+    dispatch => fetchData('/tingting/banner/create', params, dispatch, null, callback)
 //banner status
 export const toggleBannerStatus =
-  params =>
-    dispatch => fetchData('/tingting/banner/modifyStatus', params, dispatch, null)
+  (params, callback) =>
+    dispatch => fetchData('/tingting/banner/modifyStatus', params, dispatch, null, callback)
 //banner编辑
 export const editorBanner =
-  params =>
-    dispatch => fetchData('/tingting/banner/edit', params, dispatch, null)
+  (params, callback) =>
+    dispatch => fetchData('/tingting/banner/edit', params, dispatch, null, callback)
 /********** habit part **********/
 const saveHabitPlan = data => ({type: SAVE_HABIT_PLAN, data})
 const saveHabitPlanEvent = data => ({type: SAVE_HABIT_PLAN_EVENT, data})
 //计划列表
 export const getHabitPlan =
-  params =>
-    dispatch => fetchData('/plan/defaultPlan/planList', params, dispatch, saveHabitPlan)
+  (params, callback) =>
+    dispatch => fetchData('/plan/defaultPlan/planList', params, dispatch, saveHabitPlan, callback)
 //计划事件
 export const getHabitPlanEvent =
-  params =>
-    dispatch => fetchData('/plan/defaultPlan/planEventList', params, dispatch, saveHabitPlanEvent)
+  (params, callback) =>
+    dispatch => fetchData('/plan/defaultPlan/planEventList', params, dispatch, saveHabitPlanEvent, callback)
 //添加计划
 export const addHabitPlan =
-  params =>
-    dispatch => fetchData('/plan/defaultPlan/addPlan', params, dispatch, null)
+  (params, callback) =>
+    dispatch => fetchData('/plan/defaultPlan/addPlan', params, dispatch, null, callback)
 //添加事件
 export const addHabitPlanEvent =
-  params =>
-    dispatch => fetchData('/plan/defaultPlan/addPlanEvent', params, dispatch, null)
+  (params, callback) =>
+    dispatch => fetchData('/plan/defaultPlan/addPlanEvent', params, dispatch, null, callback)
 //删除计划
 export const delHabitPlan =
-  params =>
-    dispatch => fetchData('/plan/defaultPlan/deletePlan', params, dispatch, null)
+  (params, callback) =>
+    dispatch => fetchData('/plan/defaultPlan/deletePlan', params, dispatch, null, callback)
 //删除事件
 export const delHabitPlanEvent =
-  params =>
-    dispatch => fetchData('/plan/defaultPlan/deletePlanEvent', params, dispatch, null)
+  (params, callback) =>
+    dispatch => fetchData('/plan/defaultPlan/deletePlanEvent', params, dispatch, null, callback)
 //编辑计划
 export const editorHabitPlan =
-  params =>
-    dispatch => fetchData('/plan/defaultPlan/updatePlan', params, dispatch, null)
+  (params, callback) =>
+    dispatch => fetchData('/plan/defaultPlan/updatePlan', params, dispatch, null, callback)
 //编辑事件
 export const editorHabitPlanEvent =
-  params =>
-    dispatch => fetchData('/plan/defaultPlan/updatePlanEvent', params, dispatch, null)
+  (params, callback) =>
+    dispatch => fetchData('/plan/defaultPlan/updatePlanEvent', params, dispatch, null, callback)
 /************* toy part **************/
 export const saveToyPlan= data => ({type: SAVE_TOY_PLAN, data})
 export const getToyPlan =
-  params =>
-    dispatch => fetchData('/toy/toy/index', params, dispatch, saveToyPlan)
+  (params, callback) =>
+    dispatch => fetchData('/toy/toy/index', params, dispatch, saveToyPlan, callback)
 export const addToyAction =
-  params =>
-    dispatch => fetchData('/toy/toy/addActionContent', params, dispatch, null)
+  (params, callback) =>
+    dispatch => fetchData('/toy/toy/addActionContent', params, dispatch, null, callback)
 export const editorToyAction =
-  params =>
-    dispatch => fetchData('/toy/toy/editAction', params, dispatch, null)
+  (params, callback) =>
+    dispatch => fetchData('/toy/toy/editAction', params, dispatch, null, callback)
 export const editorToyInformation =
-  params =>
-        dispatch => fetchData('/toy/toy/edit', params, dispatch, null)
+  (params, callback) =>
+        dispatch => fetchData('/toy/toy/edit', params, dispatch, null, callback)
 export const delToyAction =
-  params =>
-    dispatch => fetchData('/toy/toy/delActionContent', params, dispatch, null)
+  (params, callback) =>
+    dispatch => fetchData('/toy/toy/delActionContent', params, dispatch, null, callback)
 /************** voice part ***************/
 export const saveVoiceList = data => ({type: SAVE_VOICE_LIST, data})
 export const saveCorpusList = data => ({type: SAVE_CORPUS_LIST, data})
@@ -257,7 +256,6 @@ export const getCorpusList= (params, callback) => dispatch =>
  fetchData('/corpus/corpus/getCorpusLibraries', params, dispatch, saveCorpusList, callback)
 //获取语料列表
 export const getVoiceList= (params, callback) => dispatch =>{
-  console.log(callback)
   return fetchData('/corpus/corpus/getCorpusList', params, dispatch, saveVoiceList, callback)
 }
 //编辑语料

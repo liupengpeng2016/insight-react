@@ -3,14 +3,14 @@
   padding-bottom: 0.01833rem; }
   .toy-plan-item > li h1 {
     line-height: 0.03333rem;
-    font-size: 12px;
+    font-size: 0.01rem;
     padding-left: 0.01333rem; }
   .toy-plan-item > li h2 {
     line-height: 0.03333rem;
     border-top: 1px solid #f7f7f7;
     padding-left: 0.01333rem;
     color: #a9a9a9;
-    font-size: 12px; }
+    font-size: 0.01rem; }
   .toy-plan-item > li h2 + span {
     width: 0.04167rem;
     line-height: 0.025rem;
@@ -18,7 +18,7 @@
     margin-bottom: 0.01333rem;
     margin-left: 0.01333rem;
     text-align: center;
-    font-size: 12px;
+    font-size: 0.01rem;
     display: inline-block; }
   .toy-plan-item > li h2 + span + select {
     width: 0.08667rem;
@@ -27,7 +27,7 @@
 
 .toy-plan-item table {
   width: 96%;
-  font-size: 14px;
+  font-size: 0.01167rem;
   line-height: 0.035rem;
   border-collapse: collapse;
   border: 1px solid #f0f0f0;
@@ -49,7 +49,7 @@
   margin: 0 auto;
   text-align: center;
   background: #5cc1df;
-  font-size: 20px;
+  font-size: 0.01667rem;
   border-radius: 0.00417rem;
   border: none; }
   .toy-plan-item p.submit a {
@@ -92,14 +92,18 @@
   margin-bottom: 0.02167rem;
   overflow: hidden; }
   .button-operate-all li {
+    cursor: pointer;
     float: right;
-    font-size: 16px;
+    font-size: 0.01333rem;
     line-height: 0.025rem;
     text-align: center;
     margin-right: 0.01333rem;
     border-radius: 0.00417rem;
     border: 1px solid;
     padding: 0 0.02rem; }
+  .button-operate-all li:last-child {
+    border: 1px solid;
+    color: #5cc1df; }
   .button-operate-all .choose-all {
     color: #c4d1c8; }
   .button-operate-all .del-all {
@@ -107,11 +111,12 @@
 
 .button-change-mode {
   width: 0.08167rem;
+  cursor: pointer;
   line-height: 0.025rem;
   color: #5cc1df;
   border: 1px solid;
   border-radius: 0.00417rem;
-  font-size: 16px;
+  font-size: 0.01333rem;
   float: right;
   text-align: center;
   margin-right: 0.01333rem; }
@@ -134,12 +139,12 @@
   .toy-plan > h1 {
     line-height: 0.03333rem;
     color: #d0d0d0;
-    font-size: 14px;
+    font-size: 0.01167rem;
     background: #f4f4f4; }
   .toy-plan > h2 {
     line-height: 0.03333rem;
     margin-left: 0.01333rem;
-    font-size: 15px; }
+    font-size: 0.0125rem; }
 
 .toy-plan-tabs {
   padding-left: 0.01333rem;

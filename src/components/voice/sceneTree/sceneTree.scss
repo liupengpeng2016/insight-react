@@ -9,13 +9,13 @@
     &>h1{
       line-height: 40px;
       text-align: center;
-      font-size: 20px;
+      font-size: px(20);
       background: white;
       span{
         position: absolute;
         right:10px;;
         top:0;
-        font-size: 30px;
+        font-size: px(30);
         line-height: 30px;
       }
       position:fixed;

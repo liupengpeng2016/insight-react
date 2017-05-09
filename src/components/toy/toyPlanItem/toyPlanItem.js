@@ -12,9 +12,9 @@ class ToyPlanItem extends Component{
     }
   }
   render(){
-    let {itemData} = this.props
-    console.log(this.props)
+    let {itemData, toyPlan} = this.props
     itemData= itemData||{}
+    const {name, icon, desc} = toyPlan
     return (
       <ul className='toy-plan-item'>
         <li>
@@ -89,6 +89,7 @@ class ToyPlanItem extends Component{
             <li className='choose-all'
               onClick={this.chooseAll.bind(this)}
               >全选</li>
+            <li onClick={()=> this.setState({buttonMode:1})}>退出</li>
           </ul>
           <p className='button-change-mode'
             onClick={this.handleButtonMode.bind(this)}
@@ -99,17 +100,20 @@ class ToyPlanItem extends Component{
             <Link to='/toy/addToyAction'>新增动作内容</Link>
           </p>
         </li>
-        <li>
+        <li className='toy-introduce'>
           <h1>玩偶简介</h1>
           <table>
             <tbody>
               <tr>
-                <td>玩偶简介</td>
-                <td></td>
+                <td>玩偶名称</td>
+                <td>{name}</td>
+              </tr><tr>
+                <td>玩偶描述</td>
+                <td>{desc}</td>
               </tr>
               <tr>
                 <td>图标</td>
-                <td></td>
+                <td><img src={icon} alt=''/></td>
               </tr>
               <tr>
                 <td>玩偶简介</td>
@@ -148,10 +152,7 @@ class ToyPlanItem extends Component{
     this.setState({checkbox})
   }
   handleDel(id){
-    this.props.dispatch(delToyAction({ids: [id]}))
-    setTimeout(()=>{
-      this.props.dispatch(getToyPlan())
-    },150)
+    this.props.dispatch(delToyAction({ids: [id]},this.props.dispatch(getToyPlan())))
   }
   handleDelAll(){
     const {checkbox} = this.state
@@ -178,4 +179,9 @@ class ToyPlanItem extends Component{
     e.target.previousSibling.play()
   }
 }
-export default connect()(ToyPlanItem)
+function mapStateToProps ({toyData}){
+  return {
+    toyPlan: toyData.toyPlan
+  }
+}
+export default connect(mapStateToProps)(ToyPlanItem)

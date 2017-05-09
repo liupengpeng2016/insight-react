@@ -18,5 +18,5 @@
       color: #5cc1df; }
   .habit-sub-tabs > li:last-child:before {
     content: '+';
-    font-size: 20px;
+    font-size: 0.01667rem;
     color: #5cc1df; }

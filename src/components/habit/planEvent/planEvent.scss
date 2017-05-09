@@ -5,12 +5,12 @@
   padding: 0 px(16);
   &>h1{
     line-height: px(54);
-    font-size:12px;
+    font-size:px(12);
   }
   &>table{
     width:100%;
     text-align: center;
-    font-size:14px;
+    font-size:px(14);
     line-height: px(42);
     border-collapse:collapse;
     margin:{
@@ -45,12 +45,13 @@
         line-height: px(28);
         padding:0 px(22);
         border-radius:px(5);
+        cursor:pointer;
       }
       overflow: hidden;
       margin:{
         bottom:px(25);
       }
-      li:nth-child(2){
+      li:nth-child(2),li:nth-child(3){
         color:#5cc1df;
         border:1px solid;
       }
@@ -60,12 +61,13 @@
       }
     }
     &>h1{
+      cursor:pointer;
       width:px(98);
       line-height:px(30);
       color:#5cc1df;
       border:1px solid;
       border-radius:px(5);
-      font-size:16px;
+      font-size:px(16);
       float:right;
     }
     &>h2{
@@ -74,7 +76,7 @@
       background:#5cc1df;
 
       margin: 0 auto;
-      font-size:20px;
+      font-size:px(20);
       border-radius:px(5);
       a{
         color:white;

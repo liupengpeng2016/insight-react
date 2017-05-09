@@ -25,7 +25,7 @@
   &>li:last-child:before{
     content:'+';
     font:{
-      size:20px;
+      size:px(20);
     }
     color:#5cc1df;
   }

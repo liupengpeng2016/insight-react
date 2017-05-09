@@ -15,6 +15,10 @@ class PageCtr extends Component{
         >
         <ul>
           <li
+            onClick={this.handleClick.bind(this, 1)}
+          >首页
+          </li>
+          <li
             style={this.state.arr[0] === this.state.active? {display:'none'}: null}
             onClick={
               ()=>{
@@ -41,6 +45,10 @@ class PageCtr extends Component{
             }
           }
         >下一页</li>
+        <li
+          onClick={this.handleClick.bind(this, this.props.total)}
+        >末页
+        </li>
         </ul>
       </div>
     )

@@ -146,7 +146,7 @@ class AddBanner extends Component{
     this.setState({url:e.target.value})
   }
   handleDesc(e){
-    this.valid.url.change= true
+    this.valid.desc.change= true
     this.setState({desc:e.target.value})
   }
   handleSort(e){

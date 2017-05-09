@@ -17,16 +17,16 @@
     margin: auto;
     text-align: center; }
     .second-confirm > div h1 {
-      font-size: 18px;
+      font-size: 0.015rem;
       line-height: 0.06167rem;
       position: relative; }
       .second-confirm > div h1 span {
         position: absolute;
         right: 0.01667rem;
-        font-size: 20px;
+        font-size: 0.01667rem;
         line-height: 0.05rem; }
     .second-confirm > div p {
-      font-size: 14px;
+      font-size: 0.01167rem;
       margin-top: 0.035rem;
       padding: 0 0.025rem; }
     .second-confirm > div h2 {
@@ -35,7 +35,7 @@
       width: 100%; }
       .second-confirm > div h2 span {
         display: inline-block;
-        font-size: 18px;
+        font-size: 0.015rem;
         line-height: 0.03333rem;
         width: 0.08333rem;
         color: white;

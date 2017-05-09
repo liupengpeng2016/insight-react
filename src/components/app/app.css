@@ -11,7 +11,7 @@ body {
   line-height: 1;
   -webkit-tap-highlight-color: transparent;
   background: #f4f4f4;
-  font-size: 14px; }
+  font-size: 0.01167rem; }
 
 a {
   color: black;
@@ -67,7 +67,7 @@ select {
 
 .valid {
   color: red;
-  font-size: 12px;
+  font-size: 0.01rem;
   line-height: normal;
   vertical-align: bottom; }
 

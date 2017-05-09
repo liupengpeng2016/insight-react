@@ -10,7 +10,7 @@
     h1{
       line-height: px(40);
       font:{
-        size:12px;
+        size:px(12);
       }
       padding-left:px(16);
     }
@@ -20,7 +20,7 @@
       padding-left:px(16);
       color:#a9a9a9;
       font:{
-        size:12px;
+        size:px(12);
       }
     }
     h2+span{
@@ -32,7 +32,7 @@
         left:px(16);
       }
       text-align:center;
-      font-size:12px;
+      font-size:px(12);
       display:inline-block;
     }
     h2+span+select{
@@ -45,7 +45,7 @@
   table{
     width:96%;
     font:{
-      size:14px;
+      size:px(14);
     }
     td{
       border:1px solid #f0f0f0;
@@ -72,7 +72,7 @@
     text-align: center;
     background:#5cc1df;
     font:{
-      size:20px;
+      size:px(20);
     }
     border-radius:px(5);
     border:none;
@@ -131,14 +131,19 @@
   margin-bottom: px(26);
   overflow: hidden;
   li{
+    cursor:pointer;
     float: right;
-    font-size: 16px;
+    font-size: px(16);
     line-height: px(30);
     text-align: center;
     margin-right: px(16);
     border-radius: px(5);
     border: 1px solid;
     padding: 0 px(24);
+  }
+  li:last-child{
+    border:1px solid;
+    color:#5cc1df;
   }
   .choose-all{
     color: #c4d1c8;
@@ -149,11 +154,12 @@
 }
 .button-change-mode{
   width: px(98);
+  cursor:pointer;
   line-height: px(30);
   color: #5cc1df;
   border: 1px solid;
   border-radius: px(5);
-  font-size: 16px;
+  font-size: px(16);
   float: right;
   text-align: center;
   margin:{
@@ -181,7 +187,7 @@
   &>h1{
     line-height:px(40);
     color:#d0d0d0;
-    font-size:14px;
+    font-size:px(14);
     background:#f4f4f4;
   }
   &>h2{
@@ -190,7 +196,7 @@
       left:px(16);
     }
     font:{
-      size:15px;
+      size:px(15);
     }
   }
 }

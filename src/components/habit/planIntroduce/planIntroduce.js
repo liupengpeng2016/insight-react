@@ -16,18 +16,14 @@ class PlanIntroduce extends Component{
           <li><span>间隔时间</span>{formTime(planIntroduce.time_interval)}</li>
           <li><span>上架状态</span>{planIntroduce.status?'上架':'下架'}</li>
         </ul>
-        <p
-          onClick={this.handleEditor.bind(this)}
-          ><Link to={{
+        <p>
+          <Link to={planIntroduce.icon? {
             pathname:'/habit/editorPlan',
             state:planIntroduce
-          }}>编辑信息</Link>
+          }: ''}>编辑信息</Link>
         </p>
       </div>
     )
-  }
-  handleEditor(){
-
   }
 }
 export default PlanIntroduce

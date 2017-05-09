@@ -23,13 +23,13 @@
     &>h1{
       line-height: px(62);
       text-align: center;
-      font-size: 18px;
+      font-size: px(18);
       color:black;
       span{
         position: absolute;
         right:px(10);
         top:0;
-        font-size: 30px;
+        font-size: px(30);
         line-height: px(30);
       }
     }
@@ -50,11 +50,11 @@
       }
       .editor-scene-detail{
         line-height: px(24);
-        font-size: 12px;
+        font-size: px(12);
       }
       .editor-scene-notice{
         padding-left:px(90);
-        font-size: 12px;
+        font-size: px(12);
         line-height: px(20);
       }
     }
@@ -64,7 +64,7 @@
       background: #5cc1df;
       color:white;
       text-align: center;
-      font-size: 18px;
+      font-size: px(18);
       margin:0 auto;
       border-radius: px(5);
     }

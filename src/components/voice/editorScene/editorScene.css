@@ -20,13 +20,13 @@
     .editor-scene .editor-scene-data > h1 {
       line-height: 0.05167rem;
       text-align: center;
-      font-size: 18px;
+      font-size: 0.015rem;
       color: black; }
       .editor-scene .editor-scene-data > h1 span {
         position: absolute;
         right: 0.00833rem;
         top: 0;
-        font-size: 30px;
+        font-size: 0.025rem;
         line-height: 0.025rem; }
     .editor-scene .editor-scene-data li {
       margin-bottom: 0.01833rem; }
@@ -43,10 +43,10 @@
         padding-left: 0.01333rem; }
       .editor-scene .editor-scene-data li .editor-scene-detail {
         line-height: 0.02rem;
-        font-size: 12px; }
+        font-size: 0.01rem; }
       .editor-scene .editor-scene-data li .editor-scene-notice {
         padding-left: 0.075rem;
-        font-size: 12px;
+        font-size: 0.01rem;
         line-height: 0.01667rem; }
     .editor-scene .editor-scene-data > p {
       line-height: 0.03333rem;
@@ -54,6 +54,6 @@
       background: #5cc1df;
       color: white;
       text-align: center;
-      font-size: 18px;
+      font-size: 0.015rem;
       margin: 0 auto;
       border-radius: 0.00417rem; }

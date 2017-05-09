@@ -7,7 +7,7 @@
   &>h1{
     line-height:px(40);
     color:#d0d0d0;
-    font-size:14px;
+    font-size:px(14);
     background:#f4f4f4;
   }
   &>h2{
@@ -16,7 +16,7 @@
       left:px(16);
     }
     font:{
-      size:15px;
+      size:px(15);
     }
   }
 
@@ -30,7 +30,7 @@
       line-height: px(40);
       text-align: center;
       color: white;
-      font-size: 18px;
+      font-size: px(18);
       background: #5cc1df;
       border-radius: px(5);
       margin:0 px(20);

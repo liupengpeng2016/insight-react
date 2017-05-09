@@ -77,10 +77,14 @@ class EditorToyInformation extends Component{
   handleFile(e){
     this.valid.file.change= true
     const imgReader = new FileReader()
-    this.setState({file: e.target.files[0]})
-    imgReader.readAsDataURL(e.target.files[0])
-    imgReader.onload=()=>{
-      this.setState({imageUrl: imgReader.result})
+    this.setState({file: e.target.files[0]||''})
+    if(e.target.files[0]){
+      imgReader.readAsDataURL(e.target.files[0])
+      imgReader.onload=()=>{
+        this.setState({imageUrl: imgReader.result})
+      }
+    }else{
+      this.setState({imageUrl: ''})
     }
   }
   dispatchEditor(icon){
