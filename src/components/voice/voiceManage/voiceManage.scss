@@ -218,9 +218,10 @@
     border-right:1px solid #f0f0f0;
     position:absolute;
     top:0;
-    left:79.3%;
+    left:70%;
   }
   .answer{
+    padding-left:px(10);
     position: relative;
     max-width:px(300);
     line-height: px(28);
@@ -232,11 +233,11 @@
       text-align: center;
     }
     span:first-child{
-      width:79%;
+      width:70%;
       text-align: left;
     }
     span:last-child{
-      width:20%;
+      width:30%;
       text-align: center;
     }
   }
@@ -268,17 +269,25 @@
     }
   }
 }
-.voice－answer{
+.voice-answer{
+  position: relative;
   span{
     display:inline-block;
     vertical-align: middle;
     text-align: center;
   }
   span:first-child{
-    width:79%;
-    border-right:1px solid #f0f0f0;
+    width:70%;
   }
   span:last-child{
-    width:20%;
+    width:30%;
   }
+}
+.voice-answer:after{
+  content:'';
+  border-right:1px solid #f0f0f0;
+  position:absolute;
+  height:100%;
+  top:0;
+  left:70%;
 }

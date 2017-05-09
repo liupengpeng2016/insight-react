@@ -140,7 +140,7 @@ class VoiceManage extends Component{
                 </p>
               </td>
               <td
-                className='voice－answer'
+                className='voice-answer'
               >
                 <span>答案</span>
                 <span>答案属性</span>
