@@ -9,11 +9,17 @@
   color:white;
   font-size:px(16);
   line-height:px(60);
-  text-align:center;
+  text-align: center;
   li{
+    text-align:left;
     margin:px(20) 0;
     a{
+      img{
+        display: inline-block;
+        vertical-align: middle;
+      }
       color:white;
+      padding-left: px(16);
     }
   }
 }

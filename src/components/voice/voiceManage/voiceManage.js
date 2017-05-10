@@ -153,7 +153,7 @@ class VoiceManage extends Component{
               (voiceList.list||[]).map((val,i)=>{
                 return (
                   <tbody  key={i}
-                    style={val.status? null: {background:'#dbdbdb'}}
+                    style={val.status? null: {background:'#dbdbdb',color:'#c2c2c2'}}
                   >
                     <tr>
                       <td className='spread-array-shrink'
@@ -175,7 +175,7 @@ class VoiceManage extends Component{
                         {val.answers.map((val,i)=>{
                           return (
                             <p key={i}
-                              style={!val.status?{background:'#dbdbdb'}: null}
+                              style={!val.status?{background:'#dbdbdb',color:'#c2c2c2'}: null}
                             >
                               <span
                               >{val.answer}
@@ -207,7 +207,7 @@ class VoiceManage extends Component{
                         }
                       </td>
                     </tr>
-                    <tr className='hide' style={{background: 'white'}}>
+                    <tr className='hide' style={{background: 'white',color:'#c2c2c2'}}>
                       <td colSpan='7' className='voice-manage-list-detail'>
                         <p><span>语料库</span>{val.corpus_lib_name}</p>
                         <p><span>语料id</span>{val.group_id}</p>
