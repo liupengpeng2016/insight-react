@@ -1,3 +1,6 @@
+.editor-voice .editor-voice-info > h3 {
+  cursor: pointer; }
+
 .editor-voice .editor-voice-info .add-voice-scope > li {
   overflow: hidden;
   padding-left: 0.01667rem; }

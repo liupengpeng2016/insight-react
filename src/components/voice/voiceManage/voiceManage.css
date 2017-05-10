@@ -177,7 +177,7 @@
   text-align: left;
   line-height: 0.02167rem; }
   .voice-manage-list .answer > p {
-    padding-left: 0.00833rem; }
+    padding: 0 0.00833rem; }
   .voice-manage-list .answer span {
     display: inline-block;
     vertical-align: middle;

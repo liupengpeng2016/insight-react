@@ -3,6 +3,9 @@
 }
 .editor-voice{
   .editor-voice-info{
+    &>h3{
+      cursor:pointer;
+    }
     .add-voice-scope{
       &>li{
         overflow: hidden;
