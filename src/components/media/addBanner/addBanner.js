@@ -70,7 +70,7 @@ class AddBanner extends Component{
             </label>
             <p>
               <span></span>
-              <input type='text' placeholder='请输入歌曲专辑ID或网络url'
+              <input type='text' placeholder={this.state.content_url?'请输入网络URL':'请输入歌曲专辑ID'}
                 onChange={this.handleUrl.bind(this)}
                 value={this.state.url}
               />

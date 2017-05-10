@@ -57,6 +57,7 @@
 
 .voice-manage-list {
   margin-left: 0.01333rem;
+  font-size: 0.01rem;
   width: 97%;
   border: 1px solid #f0f0f0;
   border-collapse: collapse;

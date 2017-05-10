@@ -12,7 +12,7 @@ export const valid= (target, rules, notice= []) => {
       if(rules[i]=== 'number'&& !/^\d+$/.test(target)){
         return notice[i]||'只能为数字!'
       }
-      if(rules[i]=== 'url'&& !/(^http:\/\/\S+)|(^https:\/\/\S+)/.test(target)){
+      if(rules[i]=== 'url'&& !/(^http:\/\/\S+)|(^https:\/\/\S+)|(^ftp:\/\/\S+)/.test(target)){
         return notice[i]||'请输入正确网址！'
       }
       if(rules[i]=== 'chinese'&& !/^[\u4E00-\u9FFF]*$/u.test(target)){

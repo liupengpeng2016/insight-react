@@ -60,7 +60,10 @@ class ToyPlanItem extends Component{
                         }</td>
                       <td>
                         <input type='text' value={val.audio_url}
-                          style={{display:'none'}} readOnly
+                          style={{
+                            position:'absolute',
+                            zIndex:'-3'
+                          }} readOnly
                         />
                       <span
                         style={{color:'#5cc1df',cursor:'pointer'}}

@@ -25,7 +25,7 @@ class PageCtr extends Component{
                 this.handleClick(this.state.active-1)
               }
             }
-          >上一页</li>
+          >&lt; 上一页</li>
           {
               this.state.arr.map((val,i)=>{
                 return (
@@ -44,7 +44,7 @@ class PageCtr extends Component{
               this.handleClick(this.state.active+1)
             }
           }
-        >下一页</li>
+        >下一页 &gt;</li>
         <li
           onClick={this.handleClick.bind(this, this.props.total)}
         >末页
