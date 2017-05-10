@@ -34,7 +34,7 @@ class AddVoice extends Component{
       <div className='voice-popup editor-voice'
         style={toggleAddVoice? null:{display:'none'}}
       >
-          <div className='editor-voice-info'>
+          <div className='editor-voice-info' id='add-voice'>
             <h3>
               <span
               onClick={()=>{
@@ -360,6 +360,7 @@ class AddVoice extends Component{
       questions:[{change: false, notice:''}],
       answers:[{change: false, notice:''}]
     }
+    document.querySelector('#add-voice').scrollTop= 0
   }
   //表单处理
   handleFirseScene(e){

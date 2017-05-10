@@ -449,7 +449,6 @@ class VoiceManage extends Component{
       if((age&8) === 8){
         str+= '初'
       }
-      console.log(age&16)
       if((age&16) === 16){
         str+= '成'
       }
