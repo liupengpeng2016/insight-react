@@ -152,7 +152,9 @@ class VoiceManage extends Component{
             {
               (voiceList.list||[]).map((val,i)=>{
                 return (
-                  <tbody  key={i}>
+                  <tbody  key={i}
+                    style={val.status? null: {background:'#dbdbdb'}}
+                  >
                     <tr>
                       <td className='spread-array-shrink'
                         onClick={this.spreadDetail}
@@ -172,9 +174,10 @@ class VoiceManage extends Component{
                       <td className='answer'>
                         {val.answers.map((val,i)=>{
                           return (
-                            <p key={i}>
+                            <p key={i}
+                              style={!val.status?{background:'#dbdbdb'}: null}
+                            >
                               <span
-                                style={!val.status?{background:'#aaa'}: null}
                               >{val.answer}
                               </span>
                               <span style={{lineHeight:'0.0166rem'}}>
@@ -435,21 +438,22 @@ class VoiceManage extends Component{
   getAgeData(age){
       let str= ''
       if((age&1) === 1){
-        str+= '入园前、'
+        str+= '前'
       }
       if((age&2) === 2){
-        str+= '幼小衔接、'
+        str+= '幼'
       }
       if((age&4) === 4){
-        str+= '小学、'
+        str+= '小'
       }
       if((age&8) === 8){
-        str+= '初中、'
+        str+= '初'
       }
+      console.log(age&16)
       if((age&16) === 16){
-        str+= '成人、'
+        str+= '成'
       }
-      return str.slice(0, -1)|| '无'
+      return str|| '无'
     }
 }
 function mapStateToProps({voiceData}){

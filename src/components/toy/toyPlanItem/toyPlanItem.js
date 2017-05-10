@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import {Link} from 'react-router'
 import './toyPlanItem.css'
 import {connect} from 'react-redux'
-import {delToyAction, getToyPlan} from '../../../redux/actions.js'
+import {delToyAction, getToyPlan, setVisibility} from '../../../redux/actions.js'
 class ToyPlanItem extends Component{
   constructor(){
     super()
@@ -36,6 +36,7 @@ class ToyPlanItem extends Component{
               <tr>
                 <td>序号</td>
                 <td>动作内容</td>
+                <td>音频试听</td>
                 <td>音频地址</td>
                 <td>更新时间</td>
                 <td>操作</td>
@@ -52,9 +53,20 @@ class ToyPlanItem extends Component{
                           <audio src={val.audio_url}></audio>
                           <p
                             style={{color:'#5cc1df',cursor:'pointer'}}
-                            onClick={this.handleMusic.bind(this)}>点击试听</p>
+                            onClick={this.handleMusic.bind(this)}>
+                            点击试听
+                          </p>
                         </div>
                         }</td>
+                      <td>
+                        <input type='text' value={val.audio_url}
+                          style={{display:'none'}} readOnly
+                        />
+                      <span
+                        style={{color:'#5cc1df',cursor:'pointer'}}
+                        onClick={this.copyUrl.bind(this)}
+                      >点击复制</span>
+                      </td>
                       <td>{val.updated_at.slice(0,10)}</td>
                       <td>
                         {
@@ -164,6 +176,11 @@ class ToyPlanItem extends Component{
       }
     }
     this.props.dispatch(delToyAction({ids}))
+  }
+  copyUrl(e){
+    e.target.previousSibling.select()
+    document.execCommand('Copy')
+    this.props.dispatch(setVisibility({name:'FETCH_NOTICE',show: true, msg:'复制成功！'}))
   }
   componentWillReceiveProps(nextProps){
     let {itemData} = nextProps

@@ -221,11 +221,13 @@
     left:70%;
   }
   .answer{
-    padding-left:px(10);
     position: relative;
     max-width:px(300);
-    line-height: px(28);
     text-align: left;
+    line-height: px(26);
+    &>p{
+      padding-left:px(10);
+    }
     span{
       display:inline-block;
       vertical-align: middle;

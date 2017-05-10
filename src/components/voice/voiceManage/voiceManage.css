@@ -196,11 +196,13 @@
   left: 70%; }
 
 .voice-manage-list .answer {
-  padding-left: 0.00833rem;
   position: relative;
   max-width: 0.25rem;
-  line-height: 0.02333rem;
-  text-align: left; }
+  text-align: left;
+  line-height: 0.02167rem; }
+
+.voice-manage-list .answer > p {
+  padding-left: 0.00833rem; }
 
 .voice-manage-list .answer span {
   display: inline-block;
