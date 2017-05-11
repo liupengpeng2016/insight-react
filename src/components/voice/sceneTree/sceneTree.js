@@ -46,6 +46,7 @@ class SceneTree extends Component{
   }
   setVisibility(){
     this.props.dispatch(setVisibility({name:'SCENE_TREE', show:false}))
+    document.querySelector('.scene-data').scrollTop= 0
   }
   toggleSecondScene(e){
     const className= e.target.nextSibling.className

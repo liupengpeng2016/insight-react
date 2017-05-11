@@ -30,7 +30,7 @@ class ToyPlanItem extends Component{
           <p className='submit'><Link to={{pathname: '/toy/editorToyAction', state: this.props.target}}>编辑玩偶动作</Link></p>
         </li>
         <li>
-          <h2>语音播放顺序：顺序播放</h2>
+          <h2>语音播放顺序：{itemData.play_order=== 'rand'? '顺序播放': '随机播放'}</h2>
           <table>
             <tbody>
               <tr>

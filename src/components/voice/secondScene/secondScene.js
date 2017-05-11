@@ -78,7 +78,7 @@ class SecondScene extends Component{
                   </tr>
                   <tr className='hide'>
                     <td colSpan='5' className='scene-manage-detail'>
-                      <span>二级场景id</span>{val.s_scene_id}
+                      <span>二级场景id: </span>{val.s_scene_id}
                     </td>
                   </tr>
                 </tbody>

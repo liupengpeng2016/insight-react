@@ -8,9 +8,9 @@ class EditorToyAction extends Component {
   constructor(){
     super()
     this.state= {
-      action: 'shake',
+      action: '',
       desc:'',
-      play_order:'rand',
+      play_order:'',
       name:''
     }
     this.valid={
@@ -79,10 +79,10 @@ class EditorToyAction extends Component {
   }
   componentDidMount(){
     const action= this.props.location.state
-    this.setState({action})
-  }
-  componentWillReceiveProps(nextProps){
-
+    const {toyPlan}= this.props
+    console.log(this.props)
+    const {name, desc, play_order}= toyPlan.actions[action]
+    this.setState({action, name, desc, play_order})
   }
   handleAction(e){
     this.setState({action: e.target.value})
@@ -113,4 +113,9 @@ class EditorToyAction extends Component {
     }))
   }
 }
-export default connect()(EditorToyAction)
+function mapStateToProps ({toyData}){
+  return {
+    toyPlan: toyData.toyPlan
+  }
+}
+export default connect(mapStateToProps)(EditorToyAction)

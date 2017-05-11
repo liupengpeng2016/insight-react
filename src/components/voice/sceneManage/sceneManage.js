@@ -75,7 +75,7 @@ class SceneManage extends Component{
                   </tr>
                   <tr className='hide'>
                     <td colSpan='5' className='scene-manage-detail'>
-                      <span>一级场景id</span>{val.f_scene_id}
+                      <span>一级场景id: </span>{val.f_scene_id}
                     </td>
                   </tr>
                 </tbody>
