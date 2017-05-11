@@ -1,6 +1,7 @@
 import React,{Component} from 'react'
 import './editorToyAction.css'
 import {connect} from 'react-redux'
+import {Link} from 'react-router'
 import {editorToyAction} from '../../../redux/actions.js'
 import {valid} from '../../../plugs/plugs.js'
 class EditorToyAction extends Component {
@@ -26,7 +27,10 @@ class EditorToyAction extends Component {
   render(){
     return (
       <div className='add-toy-action toy-plan'>
-        <h1>玩偶设置>编辑动作</h1>
+        <h1>
+          <Link to='/toy/toyPlan/shake' className='media-title'>玩偶设置></Link>
+          编辑动作
+        </h1>
         <h2>编辑动作信息</h2>
         <ul className='add-item'>
           <li>

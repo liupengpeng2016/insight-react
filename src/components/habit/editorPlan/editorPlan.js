@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import {editorHabitPlan, delHabitPlan} from '../../../redux/actions.js'
 import {connect} from 'react-redux'
+import {Link} from 'react-router'
 import {valid, validFile} from '../../../plugs/plugs.js'
 import fileUpload from '../../../fileUpload/fileUpload.js'
 class EditorPlan extends Component{
@@ -38,7 +39,10 @@ class EditorPlan extends Component{
   render(){
     return (
       <div className='habit-plan'>
-        <h1>习惯养成>编辑计划</h1>
+        <h1>
+          <Link to='/habit/showPlan' className='media-title'>习惯养成></Link>
+          编辑计划
+        </h1>
         <h2>编辑计划信息</h2>
         <ul className='add-item'>
           <li className='input-img'>

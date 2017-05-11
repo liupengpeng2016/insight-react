@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
+import {Link} from 'react-router'
 import {editorToyInformation} from '../../../redux/actions.js'
 import {valid, validFile} from '../../../plugs/plugs.js'
 import fileUpload from '../../../fileUpload/fileUpload.js'
@@ -30,7 +31,10 @@ class EditorToyInformation extends Component{
   render(){
     return (
       <div className='toy-plan'>
-      <h1>玩偶设置>编辑玩偶</h1>
+      <h1>
+        <Link to='/toy/toyPlan/shake' className='media-title'>玩偶设置></Link>
+        编辑玩偶
+      </h1>
       <h2>编辑玩偶信息</h2>
       <ul className='add-item'>
         <li>

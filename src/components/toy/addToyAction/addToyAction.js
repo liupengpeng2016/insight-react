@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import {addToyAction}  from '../../../redux/actions.js'
 import {connect} from 'react-redux'
+import {Link} from 'react-router'
 import {valid, validFile} from '../../../plugs/plugs.js'
 import fileUpload from '../../../fileUpload/fileUpload.js'
 class AddToyAction extends Component{
@@ -26,7 +27,10 @@ class AddToyAction extends Component{
   render(){
     return (
       <div className='toy-plan'>
-        <h1>玩偶设置>新增动作内容</h1>
+        <h1>
+          <Link to='/toy/toyPlan/shake' className='media-title'>玩偶设置></Link>
+          新增动作内容
+        </h1>
         <h2>新增动作内容</h2>
         <ul className='add-item'>
           <li>

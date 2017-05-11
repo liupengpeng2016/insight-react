@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import './addEvent.css'
 import {addHabitPlanEvent} from '../../../redux/actions.js'
 import {connect} from 'react-redux'
+import {Link} from 'react-router'
 import {valid, validFile} from '../../../plugs/plugs.js'
 import fileUpload from '../../../fileUpload/fileUpload.js'
 class AddEvent extends Component{
@@ -41,7 +42,10 @@ class AddEvent extends Component{
   render(){
     return (
       <div className='toy-plan'>
-        <h1>习惯养成>新增提醒</h1>
+        <h1>
+          <Link to='/habit/showPlan' className='media-title'>习惯养成></Link>
+          新增提醒
+        </h1>
         <h2>设置提醒信息</h2>
         <ul className='add-item'>
           <li className='input-img'>

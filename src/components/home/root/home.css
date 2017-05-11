@@ -23,9 +23,11 @@
       position: absolute;
       width: 0.025rem;
       height: 0.025rem;
-      font-size: 0.03333rem;
+      font-size: 0.025rem;
       right: 0.00833rem;
-      top: 0.005rem; }
+      top: 0.005rem;
+      cursor: pointer;
+      font-weight: 300; }
     .popup > div h1 {
       line-height: 0.05167rem;
       font-size: 0.015rem; }

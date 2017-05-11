@@ -58,8 +58,8 @@ class EditorMusic extends Component{
     return (
       <div className='toy-plan'>
         <h1>
-          <Link to='/media/mediaList/music' className='media-title'>多媒体库></Link>
-          <Link to='/media/mediaList/music' className='media-title'>音乐列表></Link>
+          <Link to='/media/mediaList/music' className='media-title'>葡萄听听></Link>
+          <Link to='/media/mediaList/music' className='media-title'>我的歌曲></Link>
           编辑音乐
         </h1>
         <h2>编辑音乐</h2>
