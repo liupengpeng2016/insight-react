@@ -76,4 +76,98 @@ select {
   line-height: normal;
   vertical-align: bottom;
 }
+
+.add-item{
+  font:{
+    size:px(14);
+  }
+  padding:{
+    left:px(16);
+  }
+  color:#ababab;
+  li{
+    padding:{
+      top:px(24);
+    }
+    line-height: px(42);
+    span{
+      display:inline-block;
+      width:px(120);
+    }
+    select,input{
+      height:px(42);
+      color:#ababab;
+      vertical-align: middle;
+    }
+    [type='checkbox']{
+      width:px(18);
+      height:px(18);
+    }
+    input[type='text']{
+      padding:{
+        left:px(14);
+      }
+      width:px(328);
+    }
+    label{
+      color:black;
+      margin: 0 px(26) 0 px(10);
+    }
+  }
+  .input-img{
+    position:relative;
+    img{
+      width:px(116);
+      height:px(116);
+      display:inline-block;
+      vertical-align:top;
+    }
+    [type='file']{
+      display:block;
+      margin:px(16) px(118) 0;
+      width:px(204);
+      height:px(40);
+      border:1px solid;
+      position:relative;
+      z-index: 1;
+      opacity:0;
+    }
+    p{
+      font:{
+        size:px(10);
+      }
+      padding:{
+        left:px(115);
+      }
+    }
+    h1{
+      position:absolute;
+      width:px(206);
+      height:px(42);
+      bottom:px(42);
+      left:px(118);
+      background:#5cc1df;
+      color:white;
+      text-align:center;
+      line-height:px(40);
+      font:{
+        size:px(16);
+      }
+    }
+  }
+  li:last-child{
+    width:px(340);
+    line-height:px(40);
+    text-align:center;
+    color:white;
+    font:{
+      size:px(18);
+    }
+    background:#5cc1df;
+    margin:px(24) auto 0;
+    border-radius:px(5);
+    padding:0;
+    cursor:pointer;
+  }
+}
 /*public-css over*/

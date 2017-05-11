@@ -58,7 +58,7 @@ class AddToyAction extends Component{
             style={this.state.content_type=== '1'? {display:'none'}: null}
           >
             <span>上传歌曲</span>
-            <i className='valid' style={!this.valid.file.change? {display: 'none'}: null}>{this.valid.file.notice= validFile(this.state.file,{ name:[/\.mp3$/,/\.m4a$/]})}</i>
+            <i className='valid' style={!this.valid.file.change? {display: 'none'}: null}>{this.valid.file.notice= validFile(this.state.file,{ size: 2*1024*1024, name:[/\.mp3$/,/\.m4a$/]})}</i>
             <p>{(this.state.file||{}).name}</p>
             <input type='file'
               onChange={this.handleFile.bind(this)}
@@ -76,7 +76,7 @@ class AddToyAction extends Component{
             />
             <i className='valid' style={!this.valid.content.change? {display: 'none'}: null}>{this.valid.content.notice= valid(this.state.content,['require'])}</i>
           </li>
-          <li onClick={this.handleSubmit.bind(this)}>提交</li>
+          <li onClick={this.handleSubmit.bind(this)} style={{cursor:'pointer'}}>提交</li>
         </ul>
       </div>
     )

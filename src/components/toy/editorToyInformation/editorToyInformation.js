@@ -9,7 +9,7 @@ class EditorToyInformation extends Component{
     super()
     this.state={
       name:'',
-      file:'',
+      file:'ignore',
       desc:'',
       fileUrl:''
     }
@@ -55,7 +55,7 @@ class EditorToyInformation extends Component{
         </li>
         <li className='input-img'>
           <span>专辑封面</span>
-          <img  src={this.state.imageUrl} alt=''/>
+          <img  src={this.state.fileUrl} alt=''/>
           <i className='valid' style={!this.valid.file.change? {display: 'none'}: null}>{this.valid.file.notice= validFile(this.state.file,{size: 2*1024*1024, name:[/\.jpg$/,/\.png$/,/\.jpeg/]})}</i>
           <input type='file'
             onChange={this.handleFile.bind(this)}
@@ -69,6 +69,14 @@ class EditorToyInformation extends Component{
       </ul>
       </div>
     )
+  }
+  componentDidMount(){
+    if(!this.state.name){
+      console.log(this.props)
+      const editorData= this.props.location.state
+      const {name, desc, icon}= editorData
+      this.setState({name,desc,fileUrl: icon})
+    }
   }
   handleName(e){
     this.valid.name.change= true
@@ -85,10 +93,10 @@ class EditorToyInformation extends Component{
     if(e.target.files[0]){
       imgReader.readAsDataURL(e.target.files[0])
       imgReader.onload=()=>{
-        this.setState({imageUrl: imgReader.result})
+        this.setState({fileUrl: imgReader.result})
       }
     }else{
-      this.setState({imageUrl: ''})
+      this.setState({fileUrl: ''})
     }
   }
   dispatchEditor(icon){

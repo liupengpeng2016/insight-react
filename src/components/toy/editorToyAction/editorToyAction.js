@@ -81,6 +81,9 @@ class EditorToyAction extends Component {
     const action= this.props.location.state
     this.setState({action})
   }
+  componentWillReceiveProps(nextProps){
+
+  }
   handleAction(e){
     this.setState({action: e.target.value})
   }

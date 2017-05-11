@@ -77,6 +77,7 @@ class ToyPlanItem extends Component{
                             <div className='operate-button'>
                               <span className='del-button'
                                 onClick={this.handleDel.bind(this, val.id)}
+                                style={{cursor:'pointer'}}
                                 >删除</span>
                             </div>
                           ) : (
@@ -145,7 +146,12 @@ class ToyPlanItem extends Component{
               </tr>
             </tbody>
           </table>
-          <p className='submit'><Link to='/toy/editorToyInformation'>编辑玩偶信息</Link></p>
+          <p className='submit'><Link to={
+              {
+                pathname:'/toy/editorToyInformation',
+                state:{name,desc,icon}
+              }
+            }>编辑玩偶信息</Link></p>
         </li>
       </ul>
     )

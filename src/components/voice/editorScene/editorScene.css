@@ -23,6 +23,7 @@
       font-size: 0.015rem;
       color: black; }
       .editor-scene .editor-scene-data > h1 span {
+        cursor: pointer;
         position: absolute;
         right: 0.00833rem;
         top: 0;
@@ -56,4 +57,5 @@
       text-align: center;
       font-size: 0.015rem;
       margin: 0 auto;
+      cursor: pointer;
       border-radius: 0.00417rem; }
