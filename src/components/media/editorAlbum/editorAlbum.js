@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
+import {Link} from 'react-router'
 import {editorAlbum} from '../../../redux/actions.js'
 import fileUpload from '../../../fileUpload/fileUpload.js'
 import {valid, validFile} from '../../../plugs/plugs.js'
@@ -44,7 +45,11 @@ class EditorAlbum extends Component{
   render(){
     return (
       <div className='toy-plan'>
-        <h1>多媒体库>专辑列表>编辑专辑</h1>
+        <h1>
+          <Link to='/media/mediaList/music' className='media-title'>葡萄听听></Link>
+          <Link to='/media/mediaList/album/albumList' className='media-title'>专辑列表></Link>
+          编辑专辑
+        </h1>
         <h2>编辑专辑</h2>
         <ul className='add-item'>
           <li>

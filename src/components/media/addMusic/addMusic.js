@@ -8,7 +8,7 @@ class AddMusic extends Component{
     }
     return (
       <div className='root-media-list'>
-        <h1>葡萄听听>歌曲列表</h1>
+        <h1><Link className='media-title' to='/media/mediaList/music'>葡萄听听></Link><Link className='media-title' to='/media/mediaList/music'>我的歌曲></Link>新增歌曲</h1>
         <h2>选择歌曲来源</h2>
         <ul className='sub-tabs'>
           <li><Link to='/media/addMusic/tingting' activeClassName='a-link-active' activeStyle={activeCSS}>葡萄听听</Link></li>

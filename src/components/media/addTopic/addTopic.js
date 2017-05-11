@@ -1,4 +1,5 @@
 import React, {Component} from 'react'
+import {Link} from 'react-router'
 import './addTopic.css'
 import {addTopicItem} from '../../../redux/actions.js'
 import {valid} from '../../../plugs/plugs.js'
@@ -25,7 +26,11 @@ class AddTopic extends Component{
   render(){
     return (
       <div className='root-media-list'>
-        <h1>葡萄听听>专题列表>新增专题</h1>
+        <h1>
+          <Link to='/media/mediaList/music' className='media-title'>葡萄听听></Link>
+          <Link to='/media/mediaList/topic/topicList' className='media-title'>专题列表></Link>
+          新增专题
+        </h1>
         <h2>新增专题</h2>
         <ul className='add-item'>
           <li>

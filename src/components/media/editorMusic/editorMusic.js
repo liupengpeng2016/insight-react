@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import './editorMusic.css'
 import {connect} from 'react-redux'
+import {Link} from 'react-router'
 import {editorMusic} from '../../../redux/actions.js'
 import {valid, validFile} from '../../../plugs/plugs.js'
 import fileUpload from '../../../fileUpload/fileUpload.js'
@@ -56,7 +57,11 @@ class EditorMusic extends Component{
   render(){
     return (
       <div className='toy-plan'>
-        <h1>多媒体库>音乐列表>编辑音乐</h1>
+        <h1>
+          <Link to='/media/mediaList/music' className='media-title'>多媒体库></Link>
+          <Link to='/media/mediaList/music' className='media-title'>音乐列表></Link>
+          编辑音乐
+        </h1>
         <h2>编辑音乐</h2>
         <ul className='add-item'>
           <li>

@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import './addBanner.css'
 import {addBannerItem} from '../../../redux/actions.js'
 import {connect} from 'react-redux'
+import {Link} from 'react-router'
 import {valid, validFile} from '../../../plugs/plugs.js'
 import fileUpload from '../../../fileUpload/fileUpload.js'
 class AddBanner extends Component{
@@ -37,7 +38,11 @@ class AddBanner extends Component{
   render(){
     return (
       <div className='root-media-list'>
-        <h1>葡萄听听>banner列表>新增banner</h1>
+        <h1>
+          <Link to='/media/mediaList/music' className='media-title'>葡萄听听></Link>
+          <Link to='/media/mediaList/banner' className='media-title'>banner列表></Link>
+          新增banner
+        </h1>
         <h2>新增banner</h2>
         <ul className='add-item'>
           <li>

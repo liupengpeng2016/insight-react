@@ -24,7 +24,8 @@
         position: absolute;
         right: 0.01667rem;
         font-size: 0.01667rem;
-        line-height: 0.05rem; }
+        line-height: 0.05rem;
+        cursor: pointer; }
     .second-confirm > div p {
       font-size: 0.01167rem;
       margin-top: 0.035rem;
@@ -41,4 +42,5 @@
         color: white;
         background: #5cc1df;
         border-radius: 0.00417rem;
-        margin: 0 0.01333rem; }
+        margin: 0 0.01333rem;
+        cursor: pointer; }

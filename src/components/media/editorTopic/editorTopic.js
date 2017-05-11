@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {valid} from '../../../plugs/plugs.js'
+import {Link } from 'react-router'
 
 import {editorTopic} from '../../../redux/actions.js'
 class EditorTopic extends Component{
@@ -24,7 +25,11 @@ class EditorTopic extends Component{
   render(){
     return (
       <div className='toy-plan'>
-        <h1>多媒体库>专题列表>编辑专题</h1>
+        <h1>
+          <Link to='/media/mediaList/music' className='media-title'>葡萄听听></Link>
+          <Link to='/media/mediaList/topic/topicList' className='media-title'>专题列表></Link>
+          编辑专题
+        </h1>
         <h2>编辑专题</h2>
         <ul className='add-item'>
           <li>

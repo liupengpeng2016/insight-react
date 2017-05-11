@@ -4,6 +4,7 @@ import {addAlbumItem} from '../../../redux/actions.js'
 import fileUpload from '../../../fileUpload/fileUpload.js'
 import {valid, validFile} from '../../../plugs/plugs.js'
 import {connect} from 'react-redux'
+import {Link} from 'react-router'
 class AddAlbum extends Component{
   constructor(props){
     super(props)
@@ -45,7 +46,11 @@ class AddAlbum extends Component{
   render(){
     return (
       <div className='root-media-list'>
-        <h1>葡萄听听>专辑列表>新增专辑</h1>
+        <h1>
+          <Link to='/media/mediaList/music' className='media-title'>葡萄听听></Link>
+          <Link to='/media/mediaList/album/albumList' className='media-title'>专辑列表></Link>
+          新增专辑
+        </h1>
         <h2>新增专辑</h2>
         <ul className='add-item'>
           <li>
