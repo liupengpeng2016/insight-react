@@ -15,6 +15,7 @@ class PageCtr extends Component{
         >
         <ul>
           <li
+            style={this.state.active=== 1? {display:'none'}: null}
             onClick={this.handleClick.bind(this, 1)}
           >首页
           </li>
@@ -46,6 +47,7 @@ class PageCtr extends Component{
           }
         >下一页 &gt;</li>
         <li
+          style={this.state.active=== this.props.total? {display:'none'}: null}
           onClick={this.handleClick.bind(this, this.props.total)}
         >末页
         </li>
@@ -76,29 +78,30 @@ class PageCtr extends Component{
       if(!total || !buttons ){
         this.initArr(nextProps.total, nextProps.buttons)
       }
-    }  move(step){
-    let {total, buttons} =this.props
-    total=parseInt(total,10)
-    buttons=parseInt(buttons,10)
-    buttons=total>buttons? buttons :total
-    const arr= this.state.arr.map((val, i)=>{
-      return val+step
-    })
-    if(arr[0]<1){
-      for(let i=0;i<buttons;i++){
-        arr[i]=i+1
+    }
+    move(step){
+      let {total, buttons} =this.props
+      total=parseInt(total,10)
+      buttons=parseInt(buttons,10)
+      buttons=total>buttons? buttons :total
+      const arr= this.state.arr.map((val, i)=>{
+        return val+step
+      })
+      if(arr[0]<1){
+        for(let i=0;i<buttons;i++){
+          arr[i]=i+1
+        }
+        this.setState({arr})
+        return
+      }
+      if(arr[buttons-1]>total){
+        for(let i=0;i<buttons;i++){
+          arr[i]=total-buttons + 1 + i
+        }
+        this.setState({arr})
+        return
       }
       this.setState({arr})
-      return
-    }
-    if(arr[buttons-1]>total){
-      for(let i=0;i<buttons;i++){
-        arr[i]=total-buttons + 1 + i
-      }
-      this.setState({arr})
-      return
-    }
-    this.setState({arr})
   }
   handleClick(pageTo){
     const arr=this.state.arr

@@ -12,7 +12,7 @@ class ToyPlanItem extends Component{
     }
   }
   render(){
-    let {itemData, toyPlan} = this.props
+    let {itemData, toyPlan, target} = this.props
     itemData= itemData||{}
     const {name, icon, desc} = toyPlan
     return (
@@ -113,7 +113,10 @@ class ToyPlanItem extends Component{
             >批量管理
           </p>
           <p className='submit'>
-            <Link to='/toy/addToyAction'>新增动作内容</Link>
+            <Link to={{
+                pathname:'/toy/addToyAction',
+                state:target
+              }}>新增动作内容</Link>
           </p>
         </li>
         <li className='toy-introduce'>

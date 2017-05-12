@@ -73,7 +73,7 @@ class Music extends Component{
                 <td>{val.name}</td>
                 <td>{formTime(val.duration)}</td>
                 <td>{val.play_times}</td>
-                <td>{val.lyric}</td>
+                <td>{val.lyric? '是': '否'}</td>
                 <td>{val.age}</td>
                 <td>{parseInt(val.status, 10) === 1 ? '是'  : '否'}</td>
                 <td>{this.formOrigin(val.origin)}</td>

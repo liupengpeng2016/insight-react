@@ -110,3 +110,60 @@
 
 .media-title:hover {
   text-decoration: underline; }
+
+.media-search {
+  overflow: hidden; }
+
+.media-search {
+  padding-top: 0.015rem;
+  padding-bottom: 0.01333rem;
+  border-bottom: 1px dashed #ebebeb; }
+  .media-search > p:nth-child(1) {
+    float: left;
+    overflow: hidden;
+    margin-top: 0.02rem;
+    margin-left: 0.01333rem;
+    font-size: 0.01rem;
+    color: #d9d9d9;
+    line-height: 1; }
+  .media-search > p:nth-child(2) {
+    float: right;
+    overflow: hidden; }
+    .media-search > p:nth-child(2) [type] {
+      float: left;
+      height: 0.03083rem; }
+    .media-search > p:nth-child(2) [type=text] {
+      height: 0.02917rem;
+      width: 0.245rem;
+      border: 1px solid #e7e7e7;
+      border-right: none;
+      padding-left: 0.03167rem; }
+    .media-search > p:nth-child(2) [type=button] {
+      cursor: pointer;
+      width: 0.095rem;
+      margin-right: 0.01417rem;
+      background: #33c9dd;
+      border: none;
+      color: white; }
+
+.media-scope {
+  padding: 0.01333rem;
+  font-size: 0.01rem;
+  height: 0.025rem;
+  text-align: center;
+  line-height: 0.025rem; }
+  .media-scope > li {
+    float: left;
+    margin-right: 0.01333rem;
+    overflow: hidden; }
+    .media-scope > li > span {
+      float: left;
+      background: #faf9fd;
+      padding: 0 0.01rem;
+      border: 1px solid #ebebeb;
+      border-right: none; }
+    .media-scope > li > select {
+      height: 0.02667rem;
+      float: left;
+      border: 1px solid #ebebeb;
+      font-size: 0.01rem; }

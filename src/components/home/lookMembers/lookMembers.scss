@@ -1,0 +1,9 @@
+@function px($a){
+  @return $a/1200*1rem;
+}
+.popup .member-info{
+  p{
+    text-align: left;
+    margin-left: px(120);
+  }
+}

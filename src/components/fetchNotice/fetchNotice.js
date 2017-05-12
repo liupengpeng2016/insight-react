@@ -32,6 +32,9 @@ class FetchNotice extends Component{
     if(/addAlbum/.test(harsh)){
       return history.back()
     }
+    if(/addMusic\/other/.test(harsh)){
+      return location.hash='#/media/mediaList/music'
+    }
     if(/addTopic/.test(harsh)){
       return history.back()
     }

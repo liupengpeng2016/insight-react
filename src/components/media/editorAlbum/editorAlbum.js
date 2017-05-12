@@ -143,12 +143,14 @@ class EditorAlbum extends Component{
     )
   }
   componentDidMount(){
-    const {name, category, age, sort, status, cover} = this.props.location.state
+    const {name, category, age, sort, status, cover, desc, tags} = this.props.location.state
     this.setState({
       name,
       category,
       age,
       sort,
+      desc,
+      tags,
       fileUrl:cover,
       file:'ignore',
       status_show: status? true: false,

@@ -20,11 +20,12 @@ class AlbumOfTopic extends Component{
     }
   }
   render(){
-    const {albumOfTopic} = this.props
+    const {albumOfTopic, location} = this.props
+    const {name}= location.state
     return (
       <div className='album'>
         <div className='album-desc'>
-          <p>专题下专辑列表</p>
+          <p>专题{'"'+ name + '"'}下专辑列表</p>
         </div>
         <table className='media-list'>
           <tbody>
@@ -46,7 +47,7 @@ class AlbumOfTopic extends Component{
                     <td>{val.album_id}</td>
                     <td>{val.category === 1? '儿童':(val.category ===2 ? '音乐': '教育')}</td>
                     <td>
-                      <Link to={{pathname:'/media/mediaList/album/musicOfAlbum', state:{id: val.album_id, desc: val.desc}}} style={{color:'#5cc1df'}}>{val.name}</Link>
+                      <Link to={{pathname:'/media/mediaList/album/musicOfAlbum', state:{id: val.album_id, name: val.name}}} style={{color:'#5cc1df'}}>{val.name}</Link>
                     </td>
                     <td><img src={val.cover} alt=''
                       style={{height:'30px',lineHeight:'normal',verticalAlign:'middle',display:'inline-block'}}
@@ -92,7 +93,7 @@ class AlbumOfTopic extends Component{
             <li onClick={this.delAll.bind(this)}>批量删除</li>
             <li onClick={this.chooseAll.bind(this)}>全选</li>
           </ul>
-          <p><Link to='/media/addAlbum'>新增专辑</Link></p>
+          <p onClick={()=> history.back()} style={{cursor:'pointer'}}>返回上级</p>
           <h1
             onClick={this.toggleButton.bind(this)}
             style={!this.state.buttonMode? {display:'none'}: null}
@@ -118,7 +119,7 @@ class AlbumOfTopic extends Component{
   //获取列表
   getAlbumOfTopic(){
     const {page} = this.state
-    const id= this.props.location.state
+    const {id}= this.props.location.state
     this.props.dispatch(getAlbumOfTopic({page, id}))
   }
   toggleButton(){

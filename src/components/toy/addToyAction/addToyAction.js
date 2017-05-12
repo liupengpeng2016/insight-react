@@ -8,7 +8,7 @@ class AddToyAction extends Component{
   constructor(props){
     super(props)
     this.state={
-      action: 'shake',
+      action: '',
       content_type:'1',
       content:'',
       file:''
@@ -80,6 +80,10 @@ class AddToyAction extends Component{
         </ul>
       </div>
     )
+  }
+  componentDidMount(){
+    const target= this.props.location.state
+    this.setState({action: target})
   }
   handleFile(e){
     this.valid.file.change= true

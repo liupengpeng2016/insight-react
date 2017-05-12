@@ -108,7 +108,7 @@ class Tingting extends Component{
         <PageCtr
           buttons='10'
           total={(searchMusicList||[]).pages}
-          changePage={ page=> this.handleSearch({page})}
+          changePage={ page=> this.search({page})}
           />
       </div>
     )

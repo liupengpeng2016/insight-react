@@ -133,3 +133,82 @@
 .media-title:hover{
   text-decoration: underline;
 }
+.media-search{
+  overflow: hidden;
+}
+.media-search{
+  padding:{
+    top:px(18);
+    bottom:px(16);
+  }
+  border:{
+    bottom:1px dashed #ebebeb;
+  }
+  &>p:nth-child(1){
+    float:left;
+    overflow: hidden;
+    margin:{
+      top:px(24);
+      left:px(16);
+    }
+    font:{
+      size:px(12);
+    }
+    color:#d9d9d9;
+    line-height: 1;
+  }
+  &>p:nth-child(2){
+    float:right;
+    overflow: hidden;
+    [type]{
+      float:left;
+      height:px(37);
+    }
+    [type=text]{
+      height:px(35);
+      width:px(294);
+      border:1px solid #e7e7e7;
+      border-right:none;
+      padding-left:px(38);
+    }
+    [type=button]{
+      cursor:pointer;
+      width:px(114);
+      margin-right:px(17);
+      background:#33c9dd;
+      border:none;
+      color:white;
+    }
+  }
+}
+.media-scope{
+  padding: px(16);
+  font:{
+    size:px(12);
+  }
+  height:px(30);
+  text-align: center;
+  line-height: px(30);
+  &>li{
+    float:left;
+    margin:{
+      right:px(16);
+    }
+    overflow:hidden;
+    &>span{
+      float:left;
+      background:#faf9fd;
+      padding:0 px(12);
+      border:1px solid #ebebeb;
+      border-right:none;
+    }
+    &>select{
+      height:px(32);
+      float:left;
+      border:1px solid #ebebeb;
+      font:{
+        size:px(12);
+      }
+    }
+  }
+}

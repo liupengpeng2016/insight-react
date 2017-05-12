@@ -24,14 +24,11 @@ class Album extends Component{
   }
   render(){
     const {musicOfAlbum, location}= this.props
-    const {desc} = location.state
+    const {name} = location.state
     return (
       <div className='music-of-album'>
         <div className='album-desc'>
-          <p>专辑下歌曲列表</p>
-          <p>
-            {desc}
-          </p>
+          <p>专辑{'"'+ name+'"'}下歌曲列表</p>
         </div>
         <table className='media-list'>
           <tbody>
@@ -94,7 +91,7 @@ class Album extends Component{
             <li onClick={this.delAll.bind(this)}>批量删除</li>
             <li onClick={this.chooseAll.bind(this)}>全选</li>
           </ul>
-          <p><Link to='/media/addMusic'>新增歌曲</Link></p>
+          <p onClick={()=> history.back()} style={{cursor:'pointer'}}>返回上级</p>
           <h1
             onClick={this.toggleButton.bind(this)}
             style={!this.state.buttonMode? {display:'none'}: null}

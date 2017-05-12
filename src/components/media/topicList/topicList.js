@@ -58,7 +58,7 @@ class Topic extends Component{
                   <tr key={i}>
                     <td>{val.id}</td>
                     <td>
-                      <Link to={{pathname:'/media/mediaList/topic/albumOfTopic', state: val.id}}
+                      <Link to={{pathname:'/media/mediaList/topic/albumOfTopic', state:{id: val.id, name: val.name}}}
                         style={{color:'#5cc1df'}}
                       >{val.name}
                       </Link>

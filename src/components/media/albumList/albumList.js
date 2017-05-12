@@ -70,7 +70,7 @@ class Album extends Component{
                     <td>{val.id}</td>
                     <td>{val.category === 1? '儿童':(val.category ===2 ? '音乐': '教育')}</td>
                     <td>
-                      <Link to={{pathname:'/media/mediaList/album/musicOfAlbum', state:{id: val.id, desc: val.desc}}} style={{color:'#5cc1df'}}>{val.name}</Link>
+                      <Link to={{pathname:'/media/mediaList/album/musicOfAlbum', state:{id: val.id, name: val.name}}} style={{color:'#5cc1df'}}>{val.name}</Link>
                     </td>
                     <td><img src={val.cover} alt=''
                       style={{height:'30px',lineHeight:'normal',verticalAlign:'middle',display:'inline-block'}}

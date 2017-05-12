@@ -6,7 +6,7 @@ class LookMembers extends Component{
     console.log(memberData)
     return (
       <div className='popup' style={!isShow? {display: 'none'}: null}>
-          <div>
+          <div className='member-info'>
             <span onClick={handleClick}>×</span>
             <h1>微信用户查看</h1>
             <img src={memberData.avatar} alt=''/>
