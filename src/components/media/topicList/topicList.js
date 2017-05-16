@@ -2,7 +2,8 @@ import React,{Component} from 'react'
 import {Link} from 'react-router'
 import AddTo from '../addTo/addTo.js'
 import {connect} from 'react-redux'
-import {getTopicList, toggleTopicStatus, delTopicItem} from '../../../redux/actions.js'
+import {getTopicList, toggleTopicStatus,
+ delTopicItem, setVisibility} from '../../../redux/actions.js'
 import PageCtr from '../pageCtr/pageCtr.js'
 
 class Topic extends Component{
@@ -70,7 +71,7 @@ class Topic extends Component{
                     <td>
                         {this.state.buttonMode?(
                           <ul className='operate-buttons'>
-                            <li ><Link to={{pathname:'/media/editorTopic',state:val}} style={{color:'#76cbe5'}}>编辑</Link></li>
+                            <li ><Link to={{pathname:'/media/editorTopic',state:val, query:{location: val.location}}} style={{color:'#76cbe5'}}>编辑</Link></li>
                             <li onClick={this.handleDel.bind(this,[val.id])} style={{color:'#fe6434'}}>删除</li>
                             <li onClick={this.handleStatus.bind(this,val.status,[val.id])} style={{color:'#50ca71'}}>
                               {parseInt(val.status, 10)===1?<span style={{color:'#aaa'}}>下架</span>:<span>上架</span>}
@@ -182,13 +183,25 @@ class Topic extends Component{
     return ids
   }
   delAll(){
-    this.props.dispatch(delTopicItem({ids: this.filterIds(this.state.checkbox)},this.getTopicList.bind(this)))
+    const ids= this.filterIds(this.state.checkbox)
+    if(!ids.length){
+      return this.props.dispatch(setVisibility({name:'FETCH_NOTICE', show: true, msg:'请选择一个或多个内容！'}))
+    }
+    this.props.dispatch(delTopicItem({ids},this.getTopicList.bind(this)))
   }
   onAll(){
-    this.props.dispatch(toggleTopicStatus({ids: this.filterIds(this.state.checkbox), status: 1},this.getTopicList.bind(this)))
+    const ids= this.filterIds(this.state.checkbox)
+    if(!ids.length){
+      return this.props.dispatch(setVisibility({name:'FETCH_NOTICE', show: true, msg:'请选择一个或多个内容！'}))
+    }
+    this.props.dispatch(toggleTopicStatus({ids, status: 1},this.getTopicList.bind(this)))
   }
   offAll(){
-    this.props.dispatch(toggleTopicStatus({ids: this.filterIds(this.state.checkbox), status: 0},this.getTopicList.bind(this)))
+    const ids= this.filterIds(this.state.checkbox)
+    if(!ids.length){
+      return this.props.dispatch(setVisibility({name:'FETCH_NOTICE', show: true, msg:'请选择一个或多个内容！'}))
+    }
+    this.props.dispatch(toggleTopicStatus({ids, status: 0},this.getTopicList.bind(this)))
   }
   chooseAll(){
     const checkbox= Object.assign({},this.state.checkbox)

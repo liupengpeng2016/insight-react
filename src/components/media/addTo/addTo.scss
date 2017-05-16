@@ -29,6 +29,7 @@
       top:0;
       right:0;
       line-height: px(56);
+      cursor:pointer;
     }
     &>span:after{
       content:'+';
@@ -81,6 +82,7 @@
       font:{
         size:px(18);
       }
+      cursor:pointer;
       text-align:center;
       margin:0 auto;
       border-radius:px(5);

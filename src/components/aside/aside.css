@@ -7,6 +7,19 @@
   font-size: 0.01333rem;
   line-height: 0.05rem;
   text-align: center; }
+  .aside .user-img {
+    text-align: center;
+    background: white;
+    width: 0.08333rem;
+    height: 0.08333rem;
+    border-radius: 50%;
+    margin: 0 auto;
+    line-height: 0.08333rem; }
+    .aside .user-img img {
+      width: 80%;
+      height: 80%;
+      display: inline-block;
+      vertical-align: middle; }
   .aside li {
     text-align: left;
     margin: 0.01667rem 0; }

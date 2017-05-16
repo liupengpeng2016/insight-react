@@ -89,6 +89,7 @@
       padding-left: 0.02833rem;
       width: 0.28917rem;
       height: 0.02833rem;
+      background: url(../../../images/ic-search.png) no-repeat 0.00833rem center;
       border: 1px solid #f0f0f0; }
     .home .user-situation > h1 > select {
       float: right;

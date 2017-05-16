@@ -187,6 +187,9 @@ class ToyPlanItem extends Component{
         ids.push(i)
       }
     }
+    if(!ids.length){
+      return this.props.dispatch(setVisibility({name:'FETCH_NOTICE', show: true, msg:'请选择一个或多个内容！'}))
+    }
     this.props.dispatch(delToyAction({ids}))
   }
   copyUrl(e){

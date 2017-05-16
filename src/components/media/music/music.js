@@ -6,7 +6,7 @@ import {Link} from 'react-router'
 import {formTime} from '../../../plugs/plugs.js'
 import PageCtr from '../pageCtr/pageCtr.js'
 import {
-  delMusicItem, toggleMusicStatus,
+  delMusicItem, toggleMusicStatus, setVisibility,
   getLinkAlbumList, linkToAlbum,getMusicList
 } from '../../../redux/actions.js'
 class Music extends Component{
@@ -33,10 +33,10 @@ class Music extends Component{
             <input type='text' placeholder='请输入专题名或歌曲名'
               onChange={this.handleUserInput.bind(this)}
               value={this.state.userInput}
-              />
+            />
             <input type='button' value='搜索已选歌曲'
               onClick={this.searchMusic.bind(this)}
-              />
+            />
           </p>
         </div>
         <ul className='media-scope'>
@@ -82,7 +82,7 @@ class Music extends Component{
                 {
                   this.state.buttonMode?(
                     <ul className='operate-buttons'>
-                      <li ><Link to={{pathname:'/media/editorMusic',state: val}} style={{color:'#76cbe5'}}>编辑</Link></li>
+                      <li ><Link to={{pathname:'/media/editorMusic',state: val, query:{type: this.state.category}}} style={{color:'#76cbe5'}}>编辑</Link></li>
                       <li onClick={this.handleDel.bind(this,[val.id])} style={{color:'#fe6434'}}>删除</li>
                       <li onClick={this.handleStatus.bind(this,val.status,[val.id])} style={{color:'#50ca71'}}>
                         {parseInt(val.status, 10)===1?<span style={{color:'#aaa'}}>下架</span>:<span>上架</span>}
@@ -188,13 +188,25 @@ class Music extends Component{
     return ids
   }
   delAll(){
-    this.props.dispatch(delMusicItem({ids: this.filterIds(this.state.checkbox)},this.getMusicList.bind(this)))
+    const ids= this.filterIds(this.state.checkbox)
+    if(!ids.length){
+      return this.props.dispatch(setVisibility({name:'FETCH_NOTICE', show: true, msg:'请选择一个或多个内容！'}))
+    }
+    this.props.dispatch(delMusicItem({ids},this.getMusicList.bind(this)))
   }
   onAll(){
-    this.props.dispatch(toggleMusicStatus({ids: this.filterIds(this.state.checkbox), status: 1},this.getMusicList.bind(this)))
+    const ids= this.filterIds(this.state.checkbox)
+    if(!ids.length){
+      return this.props.dispatch(setVisibility({name:'FETCH_NOTICE', show: true, msg:'请选择一个或多个内容！'}))
+    }
+    this.props.dispatch(toggleMusicStatus({ids, status: 1},this.getMusicList.bind(this)))
   }
   offAll(){
-    this.props.dispatch(toggleMusicStatus({ids: this.filterIds(this.state.checkbox), status: 0},this.getMusicList.bind(this)))
+    const ids= this.filterIds(this.state.checkbox)
+    if(!ids.length){
+      return this.props.dispatch(setVisibility({name:'FETCH_NOTICE', show: true, msg:'请选择一个或多个内容！'}))
+    }
+    this.props.dispatch(toggleMusicStatus({ids, status: 0},this.getMusicList.bind(this)))
   }
   chooseAll(){
     const checkbox= Object.assign({},this.state.checkbox)

@@ -10,7 +10,7 @@ class EditorTopic extends Component{
     this.state={
       name:'',
       sort:'0',
-      location:'1',
+      location:'',
       statusShow:true,
       statusHide:false
     }
@@ -91,7 +91,8 @@ class EditorTopic extends Component{
   }
   componentDidMount(){
     const {name, sort, status} = this.props.location.state
-    this.setState({name, sort, statusShow: status? true: false, statusHide: !status? true: false})
+    const {location}= this.props.location.query
+    this.setState({name, sort, location, statusShow: status? true: false, statusHide: !status? true: false})
   }
   changeName(e){
     this.valid.name.change= true

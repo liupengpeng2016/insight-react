@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import './planEvent.css'
-import {delHabitPlanEvent} from '../../../redux/actions.js'
+import {delHabitPlanEvent, setVisibility} from '../../../redux/actions.js'
 import {Link} from 'react-router'
 import {connect} from 'react-redux'
 class PlanEvent extends Component {
@@ -154,7 +154,10 @@ class PlanEvent extends Component {
         ids+= i+ ','
       }
     }
-    ids.slice(0, -1)
+    ids= ids.slice(0, -1)
+    if(!ids.length){
+      return this.props.dispatch(setVisibility({name:'FETCH_NOTICE', show: true, msg:'请选择一个或多个内容！'}))
+    }
     this.props.dispatch(delHabitPlanEvent({default_plan_event_ids:ids},this.props.refresh))
   }
   changeMode(){

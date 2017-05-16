@@ -137,7 +137,8 @@
       width: 0.245rem;
       border: 1px solid #e7e7e7;
       border-right: none;
-      padding-left: 0.03167rem; }
+      padding-left: 0.03167rem;
+      background: url(../../../images/ic-search.png) no-repeat 0.01167rem center; }
     .media-search > p:nth-child(2) [type=button] {
       cursor: pointer;
       width: 0.095rem;

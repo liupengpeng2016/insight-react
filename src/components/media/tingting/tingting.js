@@ -1,8 +1,11 @@
 import React, {Component} from 'react'
 import './tingting.css'
 import {connect} from 'react-redux'
-import {getSearchMusicList, addToOwnMusicList, delMusicItem} from '../../../redux/actions.js'
+import {getSearchMusicList,
+  addToOwnMusicList, delMusicItem,
+  getLinkAlbumList, linkToAlbum} from '../../../redux/actions.js'
 import PageCtr from '../pageCtr/pageCtr.js'
+import AddTo from '../addTo/addTo.js'
 const formTime = time => {
   const m = parseInt(time/1000/60, 10);
   const s = parseInt(time/1000%60, 10);
@@ -25,7 +28,9 @@ class Tingting extends Component{
       type: 'tingting',
       category: '1',
       userInput:'',
-      page: 1
+      page: 1,
+      showPanel: false,
+      addId:''
     }
   }
   render(){
@@ -85,7 +90,9 @@ class Tingting extends Component{
                 <tr key={i}>
                   <td>{val.id}</td>
                   <td>{val.category === 1? '故事' : (val.category === 2? '儿歌': '音乐')}</td>
-                  <td>{val.name}</td>
+                  <td
+                    style={{maxWidth:'0.1666rem','lineHeight':'0.0166rem'}}
+                  >{val.name}</td>
                   <td>{formTime(val.duration)}</td>
                   <td>{val.play_times}</td>
                   <td>{val.lyric === 1 ? '是': '否'}</td>
@@ -94,17 +101,34 @@ class Tingting extends Component{
                   <td>{formOrigin(val.origin)}</td>
                   <td>{val.created_at.slice(0,10)}</td>
                   <td className='tingting-list-button'>{!val.is_add? <span onClick={this.handleAdd.bind(this, this.state.type, val.id)}>添加</span>:
-                     <span className='off'
-                       onClick={()=> {
-                         this.props.dispatch(delMusicItem({ids: [val.local_id]},this.search.bind(this)))
-                     }}
-                    >移除<span>已添加</span></span>}</td>
+                     <p className='off'>
+                      <span
+                        onClick={()=> {
+                          this.props.dispatch(delMusicItem({ids: [val.local_id]},this.search.bind(this)))
+                        }}
+                      >移除</span>
+                      <span>已添加</span>
+                      <span
+                        onClick={this.handleAddToAlbum.bind(this, val.local_id)}
+                        >添加到专辑
+                      </span>
+                    </p>
+                  }
+                  </td>
                 </tr>
               )
             })}
           </tbody>
         </table>
         <p className='tingting-notice' style={searchMusicList === undefined ? {display: "none"} : ((searchMusicList.list||[]).length === 0 ? null: {display: 'none'})}>没有找到相应内容!</p>
+        <AddTo
+          target='专辑'
+          isShow={this.state.showPanel}
+          hidePanle={()=> this.setState({showPanel: false})}
+          addId={this.state.addId}
+          options={this.props.linkAlbumList}
+          addTo={this.dispatchLinkToAlbum.bind(this)}
+          />
         <PageCtr
           buttons='10'
           total={(searchMusicList||[]).pages}
@@ -135,10 +159,18 @@ class Tingting extends Component{
   handleAdd(type, id){
     this.props.dispatch(addToOwnMusicList({type, id},()=> {this.search()}))
   }
+  handleAddToAlbum(id){
+    this.props.dispatch(getLinkAlbumList({id}))
+    this.setState({showPanel:true, addId: id})
+  }
+  dispatchLinkToAlbum(id, album_id){
+    this.props.dispatch(linkToAlbum({id, album_id}))
+  }
 }
 function mapStateToProps (state) {
   return {
-    searchMusicList: state.mediaData.searchMusicList
+    searchMusicList: state.mediaData.searchMusicList,
+    linkAlbumList: state.mediaData.linkAlbumList
   }
 }
 export default connect(mapStateToProps)(Tingting)

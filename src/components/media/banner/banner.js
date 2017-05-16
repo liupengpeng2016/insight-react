@@ -2,7 +2,8 @@ import React,{Component} from 'react'
 import {Link} from 'react-router'
 import AddTo from '../addTo/addTo.js'
 import {connect} from 'react-redux'
-import {getBannerList, toggleBannerStatus, delBannerItem} from '../../../redux/actions.js'
+import {getBannerList, toggleBannerStatus,
+ delBannerItem, setVisibility} from '../../../redux/actions.js'
 import PageCtr from '../pageCtr/pageCtr.js'
 
 class Banner extends Component{
@@ -156,13 +157,25 @@ class Banner extends Component{
     return ids
   }
   delAll(){
-    this.props.dispatch(delBannerItem({ids: this.filterIds(this.state.checkbox)},this.getBannerList.bind(this)))
+    const ids= this.filterIds(this.state.checkbox)
+    if(!ids.length){
+      return this.props.dispatch(setVisibility({name:'FETCH_NOTICE', show: true, msg:'请选择一个或多个内容！'}))
+    }
+    this.props.dispatch(delBannerItem({ids},this.getBannerList.bind(this)))
   }
   onAll(){
-    this.props.dispatch(toggleBannerStatus({ids: this.filterIds(this.state.checkbox), status: 1},this.getBannerList.bind(this)))
+    const ids= this.filterIds(this.state.checkbox)
+    if(!ids.length){
+      return this.props.dispatch(setVisibility({name:'FETCH_NOTICE', show: true, msg:'请选择一个或多个内容！'}))
+    }
+    this.props.dispatch(toggleBannerStatus({ids, status: 1},this.getBannerList.bind(this)))
   }
   offAll(){
-    this.props.dispatch(toggleBannerStatus({ids: this.filterIds(this.state.checkbox), status: 0},this.getBannerList.bind(this)))
+    const ids= this.filterIds(this.state.checkbox)
+    if(!ids.length){
+      return this.props.dispatch(setVisibility({name:'FETCH_NOTICE', show: true, msg:'请选择一个或多个内容！'}))
+    }
+    this.props.dispatch(toggleBannerStatus({ids, status: 0},this.getBannerList.bind(this)))
   }
   chooseAll(){
     const checkbox= Object.assign({},this.state.checkbox)

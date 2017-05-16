@@ -5,7 +5,7 @@ import {getAlbumList} from '../../../redux/actions.js'
 import { connect } from 'react-redux'
 import PageCtr from '../pageCtr/pageCtr.js'
 import {
-  getLinkTopicList, delAlbumItem,
+  getLinkTopicList, delAlbumItem, setVisibility,
   toggleAlbumStatus, linkToTopic
 } from '../../../redux/actions.js'
 class Album extends Component{
@@ -199,13 +199,25 @@ class Album extends Component{
     return ids
   }
   delAll(){
-    this.props.dispatch(delAlbumItem({ids: this.filterIds(this.state.checkbox)},this.getAlbumList.bind(this)))
+    const ids= this.filterIds(this.state.checkbox)
+    if(!ids.length){
+      return this.props.dispatch(setVisibility({name:'FETCH_NOTICE', show: true, msg:'请选择一个或多个内容！'}))
+    }
+    this.props.dispatch(delAlbumItem({ids},this.getAlbumList.bind(this)))
   }
   onAll(){
-    this.props.dispatch(toggleAlbumStatus({ids: this.filterIds(this.state.checkbox), status: 1},this.getAlbumList.bind(this)))
+    const ids= this.filterIds(this.state.checkbox)
+    if(!ids.length){
+      return this.props.dispatch(setVisibility({name:'FETCH_NOTICE', show: true, msg:'请选择一个或多个内容！'}))
+    }
+    this.props.dispatch(toggleAlbumStatus({ids, status: 1},this.getAlbumList.bind(this)))
   }
   offAll(){
-    this.props.dispatch(toggleAlbumStatus({ids: this.filterIds(this.state.checkbox), status: 0},this.getAlbumList.bind(this)))
+    const ids= this.filterIds(this.state.checkbox)
+    if(!ids.length){
+      return this.props.dispatch(setVisibility({name:'FETCH_NOTICE', show: true, msg:'请选择一个或多个内容！'}))
+    }
+    this.props.dispatch(toggleAlbumStatus({ids, status: 0},this.getAlbumList.bind(this)))
   }
   chooseAll(){
     const checkbox= Object.assign({},this.state.checkbox)

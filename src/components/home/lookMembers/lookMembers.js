@@ -3,7 +3,6 @@ import './lookMembers.css'
 class LookMembers extends Component{
   render(){
     const {isShow, handleClick, memberData} = this.props
-    console.log(memberData)
     return (
       <div className='popup' style={!isShow? {display: 'none'}: null}>
           <div className='member-info'>

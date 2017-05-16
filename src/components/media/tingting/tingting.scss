@@ -38,9 +38,11 @@
     }
     input{
       padding:{
-        left:px(22);
+        left:px(30);
       }
+      width:px(300);
       border-right:none;
+      background: url(../../../images/ic-search.png) no-repeat px(10) center;
     }
 
   }
@@ -67,11 +69,16 @@
   }
   .off{
     color:#ff9979;
-    cursor: pointer;
     span{
+      cursor: pointer;
       color:#ababab;
       margin-left:px(10);
+    }
+    span:nth-child(2){
       cursor:auto;
+    }
+    span:last-child{
+      color:#5cc1df;
     }
   }
 }

@@ -11,16 +11,16 @@ class PageCtr extends Component{
   render(){
     return (
       <div className='pageCtr'
-        style={!this.props.total || this.props.total === 1 ? {display: 'none'} : null}
+        style={!this.props.total || this.props.total <= 1 ? {display: 'none'} : null}
         >
         <ul>
           <li
-            style={this.state.active=== 1? {display:'none'}: null}
+            style={this.state.active<= 1? {display:'none'}: null}
             onClick={this.handleClick.bind(this, 1)}
           >首页
           </li>
           <li
-            style={this.state.arr[0] === this.state.active? {display:'none'}: null}
+            style={this.state.active<= 1? {display:'none'}: null}
             onClick={
               ()=>{
                 this.handleClick(this.state.active-1)
@@ -39,7 +39,7 @@ class PageCtr extends Component{
               })
           }
         <li
-          style={this.state.arr[this.state.arr.length-1] === this.state.active? {display:'none'}: null}
+          style={this.state.active>= this.props.total? {display:'none'}: null}
           onClick={
             ()=>{
               this.handleClick(this.state.active+1)
@@ -47,7 +47,7 @@ class PageCtr extends Component{
           }
         >下一页 &gt;</li>
         <li
-          style={this.state.active=== this.props.total? {display:'none'}: null}
+          style={this.state.active>= this.props.total? {display:'none'}: null}
           onClick={this.handleClick.bind(this, this.props.total)}
         >末页
         </li>
@@ -56,27 +56,33 @@ class PageCtr extends Component{
     )
   }
   initArr(total, buttons){
-      const arr=[]
       if(!(total&&buttons)){
-        return arr
+        return
       }
+      const arr=[]
       total=parseInt(total,10)
       buttons=parseInt(buttons,10)
       buttons = total>buttons ? buttons :total
       for(let i=0;i<buttons;i++){
         arr[i]= i+1
-      this.setState({arr})
       }
-      return arr
+      this.setState({arr})
     }
     componentDidMount(){
       const {total, buttons} =this.props
       this.initArr(total, buttons)
     }
     componentWillReceiveProps(nextProps){
+      //初始化数组
       const {total, buttons} =this.props
       if(!total || !buttons ){
-        this.initArr(nextProps.total, nextProps.buttons)
+        return this.initArr(nextProps.total, nextProps.buttons)
+      }
+      //total变化时处理
+      if(total < buttons && nextProps.total!== total){
+         this.initArr(nextProps.total, nextProps.buttons)
+         this.setState({active:1})
+         this.props.changePage(1)
       }
     }
     move(step){

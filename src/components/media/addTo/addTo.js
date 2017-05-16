@@ -38,6 +38,7 @@ class AddTo extends Component{
   }
   hidePanle(){
     this.props.hidePanle()
+    this.resetComponent()
   }
   handleChange(e){
     this.setState({userInput:e.target.value, selectValue: e.target.value})
@@ -48,6 +49,13 @@ class AddTo extends Component{
   handleClick(id, target_id){
     this.props.addTo(id, target_id)
     this.props.hidePanle()
+    this.resetComponent()
+  }
+  resetComponent(){
+    this.state={
+      selectValue: '-1',
+      userInput: ''
+    }
   }
 }
 

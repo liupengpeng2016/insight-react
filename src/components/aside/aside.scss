@@ -10,6 +10,21 @@
   font-size:px(16);
   line-height:px(60);
   text-align: center;
+  .user-img{
+    text-align: center;
+    background: white;
+    width:px(100);
+    height:px(100);
+    border-radius:50%;
+    margin:0 auto;
+    line-height: px(100);
+    img{
+      width:80%;
+      height:80%;
+      display:inline-block;
+      vertical-align: middle;
+    }
+  }
   li{
     text-align:left;
     margin:px(20) 0;

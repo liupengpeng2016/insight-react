@@ -5,6 +5,7 @@ import media from '../../images/media.png'
 import habit from '../../images/habit.png'
 import voice from '../../images/voice.png'
 import toy from '../../images/toy.png'
+import putao from '../../images/putao.png'
 import {Link} from 'react-router'
 class Aside extends Component{
   render(){
@@ -17,7 +18,7 @@ class Aside extends Component{
     return (
       <div className='aside'>
         <p className='user-img'>
-          <span>userName</span>
+          <img src={putao} alt=''/>
         </p>
         <ul className='tab'>
           <li><Link to='/home' activeStyle={activeCSS}><img src={home} alt=''/>首页</Link></li>

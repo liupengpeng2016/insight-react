@@ -180,10 +180,10 @@ class EditorMusic extends Component{
       tags,
       fileUrl: icon,
       file: 'ignore',
-      duration: Number(duration)/1000,
+      duration: parseInt(Number(duration)/1000, 10),
       status_show: status? true : false,
       status_hide: !status? true: false,
-      category:'1'
+      category:this.props.location.query.type||1
     })
   }
   changeName(e){

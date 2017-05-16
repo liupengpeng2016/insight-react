@@ -364,15 +364,27 @@ class VoiceManage extends Component{
   }
   onAll(){
     const {dispatch} = this.props
-    dispatch(toggleVoiceStatus({group_ids: this.filterVoice_checkbox(this.state.voice_checkbox), status: 1},this.getVoiceList.bind(this)))
+    const group_ids= this.filterVoice_checkbox(this.state.voice_checkbox)
+    if(!group_ids.length){
+      return dispatch(setVisibility({name:'FETCH_NOTICE', show: true, msg:'请选择一个或多个内容！'}))
+    }
+    dispatch(toggleVoiceStatus({group_ids, status: 1},this.getVoiceList.bind(this)))
   }
   offAll(){
     const {dispatch} = this.props
-    dispatch(toggleVoiceStatus({group_ids: this.filterVoice_checkbox(this.state.voice_checkbox), status: 0},this.getVoiceList.bind(this)))
+    const group_ids= this.filterVoice_checkbox(this.state.voice_checkbox)
+    if(!group_ids.length){
+      return dispatch(setVisibility({name:'FETCH_NOTICE', show: true, msg:'请选择一个或多个内容！'}))
+    }
+
+    dispatch(toggleVoiceStatus({group_ids, status: 0},this.getVoiceList.bind(this)))
   }
   delAll(){
     const {dispatch} = this.props
     const group_ids= this.filterVoice_checkbox(this.state.voice_checkbox)
+    if(!group_ids.length){
+      return dispatch(setVisibility({name:'FETCH_NOTICE', show: true, msg:'请选择一个或多个内容！'}))
+    }
     dispatch(setVisibility2({
       secondConfirm:{
         show: true,
