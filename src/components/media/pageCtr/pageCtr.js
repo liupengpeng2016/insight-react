@@ -81,8 +81,7 @@ class PageCtr extends Component{
       //total变化时处理
       if(total < buttons && nextProps.total!== total){
          this.initArr(nextProps.total, nextProps.buttons)
-         this.setState({active:1})
-         this.props.changePage(1)
+        //  this.props.changePage(this.state.active)
       }
     }
     move(step){

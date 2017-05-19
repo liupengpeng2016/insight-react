@@ -176,7 +176,7 @@ class ToyPlanItem extends Component{
     this.setState({checkbox})
   }
   handleDel(id){
-    this.props.dispatch(delToyAction({ids: [id]},this.props.dispatch(getToyPlan())))
+    this.props.dispatch(delToyAction({ids: [id]},()=> this.props.dispatch(getToyPlan())))
   }
   handleDelAll(){
     const {checkbox} = this.state

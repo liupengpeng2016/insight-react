@@ -6,7 +6,8 @@
     line-height: 0.03833rem;
     float: left;
     text-align: center;
-    margin: 0 0.01rem; }
+    margin: 0 0.01rem;
+    cursor: pointer; }
   .habit-sub-tabs > li:last-child {
     width: 0.08667rem;
     line-height: 0.025rem;

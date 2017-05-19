@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import './tingting.css'
 import {connect} from 'react-redux'
 import {getSearchMusicList,
-  addToOwnMusicList, delMusicItem,
+  addToOwnMusicList, delMusicItem, saveSearchMusicList,
   getLinkAlbumList, linkToAlbum} from '../../../redux/actions.js'
 import PageCtr from '../pageCtr/pageCtr.js'
 import AddTo from '../addTo/addTo.js'
@@ -132,13 +132,21 @@ class Tingting extends Component{
         <PageCtr
           buttons='10'
           total={(searchMusicList||[]).pages}
-          changePage={ page=> this.search({page})}
+          changePage={
+            page=> {
+              this.search({page})
+              this.setState({page})
+            }
+          }
           />
       </div>
     )
   }
   handleSearch(){
     this.search()
+  }
+  componentWillUnmount(){
+    this.props.dispatch(saveSearchMusicList(undefined))
   }
   search(newParams= null){
     const {type, category, userInput, page} = this.state

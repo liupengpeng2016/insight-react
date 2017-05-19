@@ -108,7 +108,7 @@ function habitData(state={
     case SAVE_HABIT_PLAN_EVENT:
     const habitPlanEvent= action.data
     habitPlanEvent.sort(function(a, b){
-      return a.sort-b.sort
+      return b.sort- a.sort
     })
     return Object.assign({}, state, {habitPlanEvent})
     default: return state
