@@ -5,7 +5,7 @@ import {getAlbumOfTopic} from '../../../redux/actions.js'
 import { connect } from 'react-redux'
 import PageCtr from '../pageCtr/pageCtr.js'
 import {
-  getLinkTopicList, delAlbumItem,
+  getLinkTopicList, delAlbumItem, setVisibility,
   toggleAlbumStatus, linkToTopic
 } from '../../../redux/actions.js'
 class AlbumOfTopic extends Component{
@@ -92,6 +92,7 @@ class AlbumOfTopic extends Component{
             <li onClick={this.onAll.bind(this)}>批量上架</li>
             <li onClick={this.delAll.bind(this)}>批量删除</li>
             <li onClick={this.chooseAll.bind(this)}>全选</li>
+            <li onClick={()=> this.setState({buttonMode:1})}>退出</li>
           </ul>
           <p onClick={()=> history.back()} style={{cursor:'pointer'}}>返回上级</p>
           <h1
@@ -171,13 +172,25 @@ class AlbumOfTopic extends Component{
     return ids
   }
   delAll(){
-    this.props.dispatch(delAlbumItem({ids: this.filterIds(this.state.checkbox)},this.getAlbumOfTopic.bind(this)))
+    const ids= this.filterIds(this.state.checkbox)
+    if(!ids.length){
+      return this.props.dispatch(setVisibility({name:'FETCH_NOTICE', show: true, msg:'请选择一个或多个内容！'}))
+    }
+    this.props.dispatch(delAlbumItem({ids},this.getAlbumOfTopic.bind(this)))
   }
   onAll(){
-    this.props.dispatch(toggleAlbumStatus({ids: this.filterIds(this.state.checkbox), status: 1},this.getAlbumOfTopic.bind(this)))
+    const ids= this.filterIds(this.state.checkbox)
+    if(!ids.length){
+      return this.props.dispatch(setVisibility({name:'FETCH_NOTICE', show: true, msg:'请选择一个或多个内容！'}))
+    }
+    this.props.dispatch(toggleAlbumStatus({ids, status: 1},this.getAlbumOfTopic.bind(this)))
   }
   offAll(){
-    this.props.dispatch(toggleAlbumStatus({ids: this.filterIds(this.state.checkbox), status: 0},this.getAlbumOfTopic.bind(this)))
+    const ids= this.filterIds(this.state.checkbox)
+    if(!ids.length){
+      return this.props.dispatch(setVisibility({name:'FETCH_NOTICE', show: true, msg:'请选择一个或多个内容！'}))
+    }
+    this.props.dispatch(toggleAlbumStatus({ids, status: 0},this.getAlbumOfTopic.bind(this)))
   }
   chooseAll(){
     const checkbox= Object.assign({},this.state.checkbox)

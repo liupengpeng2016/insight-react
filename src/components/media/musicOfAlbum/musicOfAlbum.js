@@ -5,7 +5,8 @@ import {Link} from 'react-router'
 import AddTo from '../addTo/addTo.js'
 import './musicOfAlbum.css'
 import {
-  getMusicOfAlbum, delMusicItem, toggleMusicStatus, getLinkAlbumList, linkToAlbum
+  getMusicOfAlbum, delMusicItem, toggleMusicStatus,
+  getLinkAlbumList, linkToAlbum, setVisibility
 } from '../../../redux/actions.js'
 import {formTime} from '../../../plugs/plugs.js'
 class Album extends Component{
@@ -90,6 +91,7 @@ class Album extends Component{
             <li onClick={this.onAll.bind(this)}>批量上架</li>
             <li onClick={this.delAll.bind(this)}>批量删除</li>
             <li onClick={this.chooseAll.bind(this)}>全选</li>
+            <li onClick={()=> this.setState({buttonMode:1})}>退出</li>
           </ul>
           <p onClick={()=> history.back()} style={{cursor:'pointer'}}>返回上级</p>
           <h1
@@ -160,13 +162,25 @@ class Album extends Component{
     return ids
   }
   delAll(){
-    this.props.dispatch(delMusicItem({ids: this.filterIds(this.state.checkbox)},this.getMusicOfAlbum.bind(this)))
+    const ids= this.filterIds(this.state.checkbox)
+    if(!ids.length){
+      return this.props.dispatch(setVisibility({name:'FETCH_NOTICE', show: true, msg:'请选择一个或多个内容！'}))
+    }
+    this.props.dispatch(delMusicItem({ids},this.getMusicOfAlbum.bind(this)))
   }
   onAll(){
-    this.props.dispatch(toggleMusicStatus({ids: this.filterIds(this.state.checkbox), status: 1},this.getMusicOfAlbum.bind(this)))
+    const ids= this.filterIds(this.state.checkbox)
+    if(!ids.length){
+      return this.props.dispatch(setVisibility({name:'FETCH_NOTICE', show: true, msg:'请选择一个或多个内容！'}))
+    }
+    this.props.dispatch(toggleMusicStatus({ids, status: 1},this.getMusicOfAlbum.bind(this)))
   }
   offAll(){
-    this.props.dispatch(toggleMusicStatus({ids: this.filterIds(this.state.checkbox), status: 0},this.getMusicOfAlbum.bind(this)))
+    const ids= this.filterIds(this.state.checkbox)
+    if(!ids.length){
+      return this.props.dispatch(setVisibility({name:'FETCH_NOTICE', show: true, msg:'请选择一个或多个内容！'}))
+    }
+    this.props.dispatch(toggleMusicStatus({ids, status: 0},this.getMusicOfAlbum.bind(this)))
   }
   chooseAll(){
     const checkbox= Object.assign({},this.state.checkbox)

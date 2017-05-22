@@ -19,9 +19,3 @@ function setSize(){
 setSize()
 window.onresize= setSize
 render(<Provider store={store}>{router}</Provider>,document.querySelector('#root'))
-var a= 6;
-if(a%2== 0){
-  alert(a+ '是一个偶数')
-}else{
-  alert(a+ '是一个奇数')
-}
