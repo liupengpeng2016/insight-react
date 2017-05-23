@@ -44,12 +44,16 @@
     }
     &>ul{
       &>li:first-child{
-        color:#5a5a5a;
         font-size: px(32);
         line-height: px(100);
         padding-left: px(70);
+        cursor:pointer;
         border-top:px(4) solid #ececec;
         position:relative;
+      }
+      &>li:first-child:hover{
+        color:white;
+        background: #5cc1df;
       }
       &>li:last-child{
         font-size: px(27);
@@ -65,6 +69,7 @@
   }
 }
 .active-scene{
+  color:#5a5a5a;
   background: #f0f0f0;
 }
 .active-scene:after{
@@ -79,6 +84,9 @@
   top:0;
   bottom:0;
   margin: auto 0;
+}
+.unactive-scene{
+  color:#5cc1df;
 }
 .unactive-scene:after{
   content:'';
