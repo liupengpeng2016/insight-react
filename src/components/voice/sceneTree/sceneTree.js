@@ -17,14 +17,16 @@ class SceneTree extends Component{
           <h1>场景树<span
             onClick={this.setVisibility.bind(this)}
             >×</span></h1>
-          <ul>
           {
             allScene.map((val, i)=>{
               return (
                 <ul key={i}>
-                  <li><i></i>
-                    <span onClick={this.toggleSecondScene}
-                    >{val.f_scene_name}({val.s_scene_list.length})</span>
+                  <li onClick={this.toggleSecondScene}
+                    className='active-scene'
+                    >
+                      {val.f_scene_name}
+                  </li>
+                  <li>
                     <ul>
                       {val.s_scene_list.map((val, i)=>{
                         return <li key={i}><i></i>{val}</li>
@@ -35,7 +37,6 @@ class SceneTree extends Component{
               )
             })
           }
-          </ul>
         </div>
       </div>
     )
@@ -49,8 +50,10 @@ class SceneTree extends Component{
     document.querySelector('.scene-data').scrollTop= 0
   }
   toggleSecondScene(e){
-    const className= e.target.nextSibling.className
-    return className? e.target.nextSibling.className= '': e.target.nextSibling.className= 'hide'
+    const target_f_scene= e.target
+    const target_s_scene= e.target.nextSibling
+    target_f_scene.className === 'unactive-scene' ? target_f_scene.className= 'active-scene' : target_f_scene.className= 'unactive-scene'
+    target_s_scene.className? target_s_scene.className= '': target_s_scene.className= 'hide'
   }
 }
 function mapStateToProps({voiceData, visibility}){

@@ -1,3 +1,6 @@
+@function px($size){
+  @return $size/1200*1rem;
+}
 .scene-tree{
   position:fixed;
   background: rgba(0,0,0,0.6);
@@ -7,57 +10,86 @@
   left:0;
   .scene-data{
     &>h1{
-      line-height: 40px;
+      line-height: px(160);
       text-align: center;
-      font-size: px(20);
+      font-size: px(32);
       background: white;
+      color:#626262;
+      z-index:1;
       span{
+        color:#777;
         position: absolute;
-        right:10px;;
+        right:px(30);
         top:0;
-        font-size: px(30);
-        line-height: 30px;
+        font-size: px(50);
+        line-height: px(140);
         cursor:pointer;
       }
       position:fixed;
       text-align: center;
-      width:480px;
+      width:px(480);
     }
     position:fixed;
-    width:480px;
+    width:px(480);
     background: white;
-    top:60px;
-    bottom:60px;
+    top:px(60);
+    bottom:px(60);
     left:0;
     right:0;
     margin:0 auto;
-    border-radius:10px;
+    border-radius:px(10);
     overflow: scroll;
+    &>ul:first-of-type{
+      margin-top: px(160);
+    }
     &>ul{
-      margin-left:60px;
-      margin-top:40px;
-      line-height: 22px;
-    }
-    li>ul{
-      margin:{
-        left:40px;
+      &>li:first-child{
+        color:#5a5a5a;
+        font-size: px(32);
+        line-height: px(100);
+        padding-left: px(70);
+        border-top:px(4) solid #ececec;
+        position:relative;
       }
-    }
-    //borer
-    ul{
-      background: url(./32px.png) repeat-y -302px center;
-    }
-    li{
-      i{
-        display: inline-block;
-        width:22px;
-        height:22px;
-        background: url(./32px.png) no-repeat -80px top;
-      }
-      span{
-        cursor:pointer;
+      &>li:last-child{
+        font-size: px(27);
+        line-height: px(80);
+        color:#c8c8c8;
+        background: #f5f5f5;
+        li{
+          padding-left: px(70);
+          border-bottom:px(2) solid #ebebeb;
+        }
       }
     }
   }
-
+}
+.active-scene{
+  background: #f0f0f0;
+}
+.active-scene:after{
+  content:'';
+  display:block;
+  width:0;
+  height:0;
+  border:px(8) solid transparent;
+  border-top-color:#7b7b7b;
+  position:absolute;
+  right:px(40);
+  top:0;
+  bottom:0;
+  margin: auto 0;
+}
+.unactive-scene:after{
+  content:'';
+  display:block;
+  width:0;
+  height:0;
+  border:px(8) solid transparent;
+  border-left-color:#d8d8d8;
+  position:absolute;
+  right:px(40);
+  top:0;
+  bottom:0;
+  margin: auto 0;
 }
