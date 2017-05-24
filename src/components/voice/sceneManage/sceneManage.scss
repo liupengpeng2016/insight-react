@@ -2,6 +2,8 @@
   @return $a/1200*1rem;
 }
 .scene-manage{
+  min-height:px(100);
+
   &>h1{
     line-height:px(44);
     margin: 0 px(16);
