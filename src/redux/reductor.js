@@ -8,7 +8,8 @@ import {
   SAVE_VOICE_LIST, SAVE_CORPUS_LIST,SAVE_FIRST_SCENE_LIST,
   SAVE_SECOND_SCENE_LIST,SCENE_TREE,SAVE_MUSIC_OF_ALBUM,
   SAVE_ALL_FIRST_SCENE_LIST, SAVE_ALL_SECOND_SCENE_LIST,
-  SAVE_ALBUM_OF_TOPIC, SAVE_ALL_SCENE, SET_VISIBILITY
+  SAVE_ALBUM_OF_TOPIC, SAVE_ALL_SCENE, SET_VISIBILITY,
+  SAVE_ALL_RECORD, SAVE_AUTHOR_LIST
 } from './actionTypes.js'
 /********** visibility *********/
 function visibility(state={
@@ -128,17 +129,21 @@ function toyData(state={
 function voiceData(state={
   voiceList: {},
   corpusList: [],
+  authorList: [],
   firstSceneList: [],
   secondSceneList: [],
   allFirstSceneList: [],
   allSecondSceneList: [],
-  allScene:[]
+  allScene:[],
+  allRecord:[]
 },action){
   switch(action.type){
     case SAVE_VOICE_LIST:
     return Object.assign({}, state, {voiceList: action.data})
     case SAVE_CORPUS_LIST:
     return Object.assign({}, state, {corpusList: action.data})
+    case SAVE_AUTHOR_LIST:
+    return Object.assign({}, state, {authorList: action.data})
     case SAVE_FIRST_SCENE_LIST:
     return Object.assign({}, state, {firstSceneList: action.data})
     case SAVE_SECOND_SCENE_LIST:
@@ -149,6 +154,8 @@ function voiceData(state={
     return Object.assign({}, state, {allSecondSceneList: action.data})
     case SAVE_ALL_SCENE:
     return Object.assign({}, state, {allScene: action.data})
+    case SAVE_ALL_RECORD:
+    return Object.assign({}, state, {allRecord: action.data})
     default : return state
   }
 }

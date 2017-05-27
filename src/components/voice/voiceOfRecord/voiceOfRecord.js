@@ -1,159 +1,40 @@
 import React, {Component} from 'react'
-import './voiceManage.css'
 import EditorVoice from '../editorVoice/editorVoice.js'
-import AddVoice from '../addVoice/addVoice.js'
 import {
-  getVoiceList, editorVoiceItem,
+  editorVoiceItem, getRecordList,
   delVoiceItem, delVoiceAnswer,
   delVoiceQuestion, toggleVoiceStatus,
-  getCorpusList, addVoiceItem, getAllScene,
-  setVisibility, getAllFirstSceneList,
-  getAllSecondSceneList, setVisibility2,
-  outReport, getAuthorList
+  setVisibility,setVisibility2,
+  getAllScene
 } from '../../../redux/actions.js'
 import {connect} from 'react-redux'
 import PageCtr from '../../media/pageCtr/pageCtr.js'
-class VoiceManage extends Component{
+class VoiceOfRecord extends Component{
   constructor(){
     super()
     this.state={
       toggleEditorVoice: false,
       toggleAddVoice: false,
-      questionNum_add: 2,
-      questionNum_editor: 2,
       page:1,
       buttonMode:1,
       editorData:undefined,
-      checkbox:'',
-      is_scene_corpus: 0,
-      firstScene:'',
-      secondScene:'',
-      voice_checkbox:'',
-      searchWords:'',
-      age:'',
-      author:'',
-      weight:''
+      checkbox:''
     }
-    this.getVoiceList= this.getVoiceList.bind(this)
     this.spreadDetail= this.spreadDetail.bind(this)
   }
   render(){
-    const {voiceList, corpusList, authorList, allFirstSceneList, allSecondSceneList} = this.props
+    const {recordList}= this.props
     return (
       <div className='voice-manage'>
         <EditorVoice
           toggleEditorVoice={this.state.toggleEditorVoice}
           hideEditorVoice={this.hideEditorVoice.bind(this)}
           editorSubmit={this.editorSubmit.bind(this)}
-          editorData={(voiceList.list||[])[this.state.editorData]||''}
+          editorData={(recordList.list||[])[this.state.editorData]||''}
           delVoiceAnswer={this.delVoiceAnswer.bind(this)}
           delVoiceQuestion={this.delVoiceQuestion.bind(this)}
-          refresh={this.getVoiceList.bind(this)}
+          refresh={this.getRecordList.bind(this)}
           ></EditorVoice>
-        <AddVoice
-          checkbox={this.state.checkbox}
-          toggleAddVoice={this.state.toggleAddVoice}
-          hideAddVoice={this.hideAddVoice.bind(this)}
-          is_scene_corpus={this.state.is_scene_corpus}
-          corpusList={corpusList}
-          addSubmit={this.addSubmit.bind(this)}
-          ></AddVoice>
-        <div className='voice-manage-search'>
-          <h1>语料列表</h1>
-          <ul>
-            {
-              !corpusList.length? '': corpusList.map((val, i)=> {
-                return (
-                  <li key={i}>
-                    <input type='checkbox' id={`voiceManage${i}`}
-                      onChange={this.handleCheckbox.bind(this, i)}
-                      checked={this.state.checkbox? this.state.checkbox[i].checked: true}
-                    />
-                    <label htmlFor={`voiceManage${i}`}>{val.name}</label>
-                  </li>
-                )
-              })
-            }
-            <li>
-              <input type='text' placeholder='输入想要搜索的关键词'
-                onChange={this.handleSearchWords.bind(this)}
-              />
-              <span
-                onClick={this.handleSearch.bind(this)}
-              >关键词</span>
-            </li>
-          </ul>
-        </div>
-        <div className='voice-manage-scope'>
-          <span>场景</span>
-          <select style={{marginRight:0,borderRight:'none'}}
-            onChange={this.handleFirstScene.bind(this)}
-            value={this.state.firstScene}
-          >
-            <option>请选择一级场景</option>
-            {
-              allFirstSceneList.map((val, i)=> {
-                return (
-                  <option key={i} value={val.f_scene_id}>{val.name}</option>
-                )
-              })
-            }
-          </select>
-          <select
-            onChange={this.handleSecondScene.bind(this)}
-            value={this.state.secondScene}
-          >
-            <option>请选择二级场景</option>
-            {
-              allSecondSceneList.map((val, i)=> {
-                return (
-                  <option key={i} value={val.s_scene_id}>{val.name}</option>
-                )
-              })
-            }
-          </select>
-          <span>权重</span>
-          <select
-            onChange={this.handleWeight.bind(this)}
-          >
-            <option value=''>全部</option>
-            <option value='1'>1</option>
-            <option value='2'>2</option>
-            <option value='3'>3</option>
-            <option value='4'>4</option>
-            <option value='5'>5</option>
-            <option value='6'>6</option>
-            <option value='7'>7</option>
-            <option value='8'>8</option>
-            <option value='9'>9</option>
-            <option value='10'>10</option>
-          </select>
-          <span>作者</span>
-          <select
-            onChange={this.handleAuthor.bind(this)}
-            value={this.state.author}
-          >
-            <option value=''>全部</option>
-            {
-              authorList.map((val, i)=> {
-                return (
-                  <option value={val} key={i}>{val}</option>
-                )
-              })
-            }
-          </select>
-          <span>年龄段</span>
-          <select
-            onChange={this.handleAge.bind(this)}
-          >
-            <option value=''>全部</option>
-            <option value='1'>入园前</option>
-            <option value='2'>幼小衔接</option>
-            <option value='4'>小学</option>
-            <option value='8'>初中</option>
-            <option value='16'>成人</option>
-          </select>
-        </div>
         <table className='voice-manage-list'>
           <thead>
             <tr>
@@ -175,7 +56,7 @@ class VoiceManage extends Component{
             </tr>
           </thead>
             {
-              (voiceList.list||[]).map((val,i)=>{
+              (recordList.list||[]).map((val,i)=>{
                 return (
                   <tbody  key={i}
                     style={val.status? null: {background:'#dbdbdb',color:'#c2c2c2'}}
@@ -248,7 +129,7 @@ class VoiceManage extends Component{
         <ul className='voice-manage-buttons'
           style={this.state.buttonMode? null : {display:'none'}}
           >
-          <li onClick={this.outReport.bind(this)}>导出语料</li>
+          <li>导出语料</li>
           <li
             onClick={()=> this.setState({buttonMode: 0})}
             >批量处理</li>
@@ -273,11 +154,10 @@ class VoiceManage extends Component{
             onClick={this.showSceneTree.bind(this)}
             >查看场景树 ></span>
         </div>
-        <PageCtr total={voiceList.pages} buttons='10' changePage={this.changePage.bind(this)}/>
+        <PageCtr total={recordList.pages} buttons='10' changePage={this.changePage.bind(this)}/>
       </div>
     )
   }
-
   handleCheckbox(i, e){
     const checkbox= [...this.state.checkbox]
     checkbox[i].checked= e.target.checked
@@ -289,49 +169,15 @@ class VoiceManage extends Component{
         corpus_lib_ids.push(i.corpus_lib_id)
       }
     }
-    this.getVoiceList({corpus_lib_ids, page: 1})
-  }
-  handleSearchWords(e){
-    this.setState({searchWords: e.target.value})
-  }
-  handleAuthor(e){
-    const author= e.target.value
-    this.setState({author})
-    this.getVoiceList({author})
-  }
-  handleWeight(e){
-    const weight= e.target.value
-    this.setState({weight})
-    this.getVoiceList({weight})
-  }
-  handleAge(e){
-    const age= e.target.value
-    this.setState({age})
-    this.getVoiceList({age})
-  }
-  handleFirstScene(e){
-    this.setState({firstScene: e.target.value, secondScene:''})
-    this.props.dispatch(getAllSecondSceneList({f_scene_id:e.target.value}))
-  }
-  handleSecondScene(e){
-    var secondScene,ssid;
-    secondScene= ssid = e.target.value
-    this.setState({secondScene})
-    this.getVoiceList({ssid})
-  }
-  handleSearch(){
-    this.getVoiceList()
+    this.getRecordList({corpus_lib_ids, page: 1})
   }
   hideEditorVoice(){
     document.querySelector('.editor-voice-info').scrollTop= 0
     this.setState({toggleEditorVoice: false})
   }
-  hideAddVoice(){
-    this.setState({toggleAddVoice: false})
-  }
   changePage(page){
     this.setState({page})
-    this.getVoiceList({page})
+    this.getRecordList({page})
   }
   handleEditor(i){
     this.setState({
@@ -352,11 +198,11 @@ class VoiceManage extends Component{
   toggleVoiceStatus(group_ids, status){
     const {dispatch} = this.props
     status= status ? 0 : 1
-    dispatch(toggleVoiceStatus({group_ids, status},this.getVoiceList.bind(this)))
+    dispatch(toggleVoiceStatus({group_ids, status},this.getRecordList.bind(this)))
   }
   delVoiceItem(group_ids){
     const {dispatch} = this.props
-    dispatch(delVoiceItem({group_ids},this.getVoiceList.bind(this)))
+    dispatch(delVoiceItem({group_ids},this.getRecordList.bind(this)))
   }
   handelDelVoice(group_ids){
     const {dispatch} = this.props
@@ -369,20 +215,17 @@ class VoiceManage extends Component{
     }))
   }
   delVoiceAnswer(answer_id){
-    this.props.dispatch(delVoiceAnswer({answer_id},this.getVoiceList.bind(this)))
+    this.props.dispatch(delVoiceAnswer({answer_id},this.getRecordList.bind(this)))
 
   }
   delVoiceQuestion(question_id){
-    this.props.dispatch(delVoiceQuestion({question_id},this.getVoiceList.bind(this)))
+    this.props.dispatch(delVoiceQuestion({question_id},this.getRecordList.bind(this)))
 
   }
   handleVoice_checkbox(i, e){
     const voice_checkbox= this.state.voice_checkbox
     voice_checkbox[i].checked= e.target.checked
     this.setState({voice_checkbox})
-  }
-  addSubmit(params){
-    this.props.dispatch(addVoiceItem(params,this.getVoiceList.bind(this)))
   }
 //批量按钮
   chooseAll(){
@@ -418,7 +261,7 @@ class VoiceManage extends Component{
     if(!group_ids.length){
       return dispatch(setVisibility({name:'FETCH_NOTICE', show: true, msg:'请选择一个或多个内容！'}))
     }
-    dispatch(toggleVoiceStatus({group_ids, status: 1},this.getVoiceList.bind(this)))
+    dispatch(toggleVoiceStatus({group_ids, status: 1},this.getRecordList.bind(this)))
   }
   offAll(){
     const {dispatch} = this.props
@@ -427,7 +270,7 @@ class VoiceManage extends Component{
       return dispatch(setVisibility({name:'FETCH_NOTICE', show: true, msg:'请选择一个或多个内容！'}))
     }
 
-    dispatch(toggleVoiceStatus({group_ids, status: 0},this.getVoiceList.bind(this)))
+    dispatch(toggleVoiceStatus({group_ids, status: 0},this.getRecordList.bind(this)))
   }
   delAll(){
     const {dispatch} = this.props
@@ -441,53 +284,30 @@ class VoiceManage extends Component{
         msg:'确认要删除吗？',
         callback:this.delVoiceItem.bind(this, group_ids)
        }
-    },this.getVoiceList.bind(this)))
+    },this.getRecordList.bind(this)))
   }
 //初始化数据
   componentDidMount(){
-    const {dispatch} = this.props
-    dispatch(getCorpusList())
-    dispatch(getAuthorList())
-    dispatch(getAllFirstSceneList())
+    this.getRecordList()
   }
-  getVoiceList(params= null){
+  getRecordList(params= null){
     const {page}= this.state
     const {dispatch}= this.props
     const corpus_lib_ids= this.filterCheckbox(this.state.checkbox)
-    const {searchWords: keywords, author, weight, age, secondScene: ssid }= this.state
-
-    params= Object.assign({page, corpus_lib_ids, keywords, ssid, author, weight, age}, params)
-    dispatch(getVoiceList(params))
+    params= Object.assign({page, corpus_lib_ids}, params)
+    dispatch(getRecordList(params))
+  }
+  setCheckbox(arr){
+    const checkbox= []
+    for(let i of arr){
+      checkbox.push({id:i.id, checked: false})
+    }
+    return checkbox
   }
   componentWillReceiveProps(nextProps){
-    const {voiceList}= nextProps
-    if(voiceList.list){
-      const voice_checkbox= []
-      for(let i of voiceList.list){
-        voice_checkbox.push({checked: false, group_id: i.group_id})
-      }
-      this.setState({voice_checkbox})
-    }
-    const {corpusList}= nextProps
-    if(!this.state.checkbox&& corpusList.length!== 0){
-      let checkbox= []
-      for(let i= 0; i<corpusList.length; i++){
-        checkbox.push({checked:true, corpus_lib_id:corpusList[i].corpus_id})
-      }
-
-      const localCheckbox= JSON.parse(localStorage.getItem('voiceCheck'))
-      localStorage.removeItem('voiceCheck')
-      if(localCheckbox){
-        for(let i of localCheckbox){
-          for(let k of checkbox){
-            if(i.corpus_lib_id=== k.corpus_lib_id){
-                k.checked= i.checked
-            }
-          }
-        }
-      }
-      this.getVoiceList({corpus_lib_ids: this.filterCheckbox(checkbox)})
-      localStorage.setItem('voiceCheck', JSON.stringify(checkbox))
+    const {recordList}= nextProps
+    if(recordList.list){
+      const checkbox= this.setCheckbox(nextProps.recordList.list)
       this.setState({checkbox})
     }
   }
@@ -498,10 +318,7 @@ class VoiceManage extends Component{
   }
   editorSubmit(params){
     const {dispatch} = this.props
-    dispatch(editorVoiceItem(params, this.getVoiceList.bind(this)))
-  }
-  outReport(){
-    this.props.dispatch(outReport())
+    dispatch(editorVoiceItem(params, this.getRecordList.bind(this)))
   }
   getAgeData(age){
       let str= ''
@@ -525,11 +342,6 @@ class VoiceManage extends Component{
 }
 function mapStateToProps({voiceData}){
   return {
-    voiceList: voiceData.voiceList,
-    corpusList: voiceData.corpusList,
-    authorList: voiceData.authorList,
-    allFirstSceneList: voiceData.allFirstSceneList,
-    allSecondSceneList: voiceData.allSecondSceneList
   }
 }
-export default connect(mapStateToProps)(VoiceManage)
+export default connect(mapStateToProps)(VoiceOfRecord)

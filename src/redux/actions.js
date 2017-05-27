@@ -9,7 +9,8 @@ import {
   SAVE_VOICE_LIST, SAVE_CORPUS_LIST,
   SAVE_FIRST_SCENE_LIST, SAVE_SECOND_SCENE_LIST,
   SAVE_ALL_FIRST_SCENE_LIST, SAVE_ALL_SECOND_SCENE_LIST,
-  SAVE_ALBUM_OF_TOPIC, SAVE_ALL_SCENE, SET_VISIBILITY
+  SAVE_ALBUM_OF_TOPIC, SAVE_ALL_SCENE, SET_VISIBILITY,
+  SAVE_ALL_RECORD, SAVE_AUTHOR_LIST
 } from './actionTypes.js'
 import {baseUrl} from '../config/config.js'
 import fetch from 'isomorphic-fetch'
@@ -251,6 +252,8 @@ export const saveFirstSceneList = data => ({type: SAVE_FIRST_SCENE_LIST, data})
 export const saveSecondSceneList = data => ({type: SAVE_SECOND_SCENE_LIST, data})
 export const saveAllFirstSceneList = data => ({type: SAVE_ALL_FIRST_SCENE_LIST, data})
 export const saveAllSecondSceneList = data => ({type: SAVE_ALL_SECOND_SCENE_LIST, data})
+export const saveAllRecord = data => ({type: SAVE_ALL_RECORD, data})
+export const saveAuthorList= data => ({type: SAVE_AUTHOR_LIST, data})
 //获取语料库列表
 export const getCorpusList= (params, callback) => dispatch =>
  fetchData('/corpus/corpus/getCorpusLibraries', params, dispatch, saveCorpusList, callback)
@@ -258,9 +261,18 @@ export const getCorpusList= (params, callback) => dispatch =>
 export const getVoiceList= (params, callback) => dispatch =>{
   return fetchData('/corpus/corpus/getCorpusList', params, dispatch, saveVoiceList, callback)
 }
+//获取作者列表
+export const getAuthorList= (params, callback) => dispatch =>{
+  return fetchData('/corpus/corpus/getAuthors', params, dispatch, saveAuthorList, callback)
+}
 //编辑语料
 export const editorVoiceItem= (params, callback) => dispatch =>
  fetchData('/corpus/corpus/editCorpus', params, dispatch, null, callback)
+//导出语料
+export const outReport= (params, callback) => dispatch =>
+ fetchData('/corpus/corpus/getReports', params, dispatch, function(data){
+   location.href= 'data'
+ }, callback)
 //删除语料
 export const delVoiceItem= (params, callback) => dispatch =>
  fetchData('/corpus/corpus/delCorpus', params, dispatch, null, callback)
@@ -320,3 +332,6 @@ export const saveAllScene= data => ({type: SAVE_ALL_SCENE, data})
 //获取场景树
 export const getAllScene= (params, callback) => dispatch =>
   fetchData('/corpus/scene/allScene', params, dispatch, saveAllScene, callback)
+//获取记录
+export const getAllRecord= (params, callback) => dispatch =>
+  fetchData('/corpus/corpus/getRecordsCount', params, dispatch, saveAllRecord, callback)

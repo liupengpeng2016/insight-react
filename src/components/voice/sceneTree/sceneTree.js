@@ -24,12 +24,12 @@ class SceneTree extends Component{
                   <li onClick={this.toggleSecondScene}
                     className='active-scene'
                     >
-                      {val.f_scene_name}
+                      {val.name+ ' '+ val.ename}
                   </li>
                   <li>
                     <ul>
-                      {val.s_scene_list.map((val, i)=>{
-                        return <li key={i}><i></i>{val}</li>
+                      {val.sscn.map((val, i)=>{
+                        return <li key={i}>{val.name+ ' '+ val.ename+ '('+val['group-count']+')'}</li>
                       })}
                     </ul>
                   </li>

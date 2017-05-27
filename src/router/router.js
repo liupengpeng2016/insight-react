@@ -35,6 +35,8 @@ import Voice from '../components/voice/root/voice.js'
 import VoiceSystem from '../components/voice/voiceSystem/voiceSystem.js'
 import VoiceManage from '../components/voice/voiceManage/voiceManage.js'
 import Record from '../components/voice/record/record.js'
+import RecordList from '../components/voice/recordList/recordList.js'
+import VoiceOfRecord from '../components/voice/voiceOfRecord/voiceOfRecord.js'
 import SceneManage from '../components/voice/sceneManage/sceneManage.js'
 import SecondScene from '../components/voice/secondScene/secondScene.js'
 //toy
@@ -92,7 +94,11 @@ const router = (
           <IndexRedirect to='voiceManage'/>
           <Route path='voiceManage' component={VoiceManage}></Route>
           <Route path='sceneManage' component={SceneManage}></Route>
-          <Route path='record' component={Record}></Route>
+          <Route path='record' component={Record}>
+            <IndexRedirect to='recordList'/>
+            <Route path='recordList' component={RecordList}/>
+            <Route path='voiceOfRecord' component={VoiceOfRecord}/>
+          </Route>
         </Route>
         <Route path='secondScene' component={SecondScene}></Route>
       </Route>

@@ -44,9 +44,9 @@ class Album extends Component{
               value={this.state.category}
               >
               <option value='0'>全部</option>
-              <option value='1'>儿童</option>
-              <option value='2'>音乐</option>
-              <option value='3'>教育</option>
+              <option value='1'>故事</option>
+              <option value='2'>儿歌</option>
+              <option value='3'>音乐</option>
             </select>
           </li>
         </ul>
@@ -68,7 +68,7 @@ class Album extends Component{
                 return (
                   <tr key={i}>
                     <td>{val.id}</td>
-                    <td>{val.category === 1? '儿童':(val.category ===2 ? '音乐': '教育')}</td>
+                    <td>{val.category === 1? '故事':(val.category ===2 ? '儿歌': '音乐')}</td>
                     <td>
                       <Link to={{pathname:'/media/mediaList/album/musicOfAlbum', state:{id: val.id, name: val.name}}} style={{color:'#5cc1df'}}>{val.name}</Link>
                     </td>
