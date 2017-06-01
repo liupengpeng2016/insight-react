@@ -328,16 +328,14 @@ class AddVoice extends Component{
   }
   //初始化数据
   componentWillReceiveProps(nextProps){
-    if(!this.state.checkbox){
-      let checkbox= JSON.stringify(nextProps.checkbox)
-      checkbox= JSON.parse(checkbox)
-      const checkbox_valid=[]
-      for( let i= 0; i<nextProps.corpusList.length; i++){
-        checkbox_valid.push({change: false, notice:''})
-      }
-      this.valid.checkbox= checkbox_valid
-      this.setState({checkbox})
+    let checkbox= JSON.stringify(nextProps.checkbox)
+    checkbox= JSON.parse(checkbox)
+    const checkbox_valid=[]
+    for( let i= 0; i<nextProps.corpusList.length; i++){
+      checkbox_valid.push({change: false, notice:''})
     }
+    this.valid.checkbox= checkbox_valid
+    this.setState({checkbox})
   }
   resetComponent(){
     this.setState({

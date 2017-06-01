@@ -4,6 +4,7 @@
 /*reset public-css start*/
 html{
   font-size:1200px;
+  font-family: 'PingFangSC-Regular';
 }
 body, ol, ul, h1, h2, h3, h4, h5, h6, p, th, td, dl, dd, form, fieldset, legend, input, textarea, select {
   margin: 0;
@@ -30,6 +31,9 @@ li {
 img {
   border: 0;
   display: block; }
+input{
+  font-size: 0.01167rem;
+}
 
 input:focus{
   outline:none;
@@ -42,6 +46,7 @@ select {
   -webkit-appearance:none;
   padding:0 px(16);
   border-radius:0;
+  font-size: 0.01167rem;
   background: url("http://ourjs.github.io/static/2015/arrow.png") no-repeat scroll right center transparent;
 }
 /*reset public-css over*/

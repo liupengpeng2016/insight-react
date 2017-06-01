@@ -75,7 +75,7 @@ class VoiceManage extends Component{
               })
             }
             <li>
-              <input type='text' placeholder='输入想要搜索的关键词'
+              <input type='text' placeholder='输入想要搜索的关键词，多个之间用空格隔开'
                 onChange={this.handleSearchWords.bind(this)}
               />
               <span

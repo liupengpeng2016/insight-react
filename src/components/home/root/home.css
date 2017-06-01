@@ -123,7 +123,8 @@
     .home .user-situation .home-search-scope select {
       height: 0.025rem;
       margin-right: 0.015rem;
-      border-color: #f0f0f0; }
+      border-color: #f0f0f0;
+      vertical-align: middle; }
   .home .user-situation .home-user-list {
     margin: 0 auto;
     border: 1px solid #f0f0f0;

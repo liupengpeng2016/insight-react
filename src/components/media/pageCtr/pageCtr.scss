@@ -18,14 +18,11 @@
     text-align: center;
     line-height: px(32);
     margin:0 px(4);
-    padding:0 px(10);
-    /* width:px(32); */
+    width:px(32);
     float:left;
   }
-/*   li:first-child{
-  width:px(80);
+  .auto-width{
+    width:auto;
+    padding:0 px(12);
+  }
 }
-li:last-child{
-  width:px(80);
-}
- */}

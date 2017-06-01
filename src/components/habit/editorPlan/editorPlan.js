@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {editorHabitPlan, delHabitPlan} from '../../../redux/actions.js'
+import {editorHabitPlan, delHabitPlan, setVisibility} from '../../../redux/actions.js'
 import {connect} from 'react-redux'
 import {Link} from 'react-router'
 import {valid, validFile} from '../../../plugs/plugs.js'
@@ -114,7 +114,8 @@ class EditorPlan extends Component{
           <li className='two-buttons'>
             <p
                onClick={()=>this.props.dispatch(delHabitPlan({default_plan_ids:this.props.location.state.id}))}
-              >删除</p>
+            >删除
+            </p>
             <p
                onClick={this.handleSubmit.bind(this)}
               >提交</p>
@@ -179,6 +180,9 @@ class EditorPlan extends Component{
     this.setState({file: e.target.files[0]})
   }
   dispatchEditor(icon){
+    if(icon === 'error'){
+      return this.props.dispatch(setVisibility({name:'FETCH_NOTICE', show: true, msg:'文件上传失败！'}))
+    }
     const {name,desc,sort,time_interval, statusShow} = this.state
     const params= {
       name,

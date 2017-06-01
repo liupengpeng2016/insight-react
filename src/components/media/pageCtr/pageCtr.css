@@ -1,14 +1,7 @@
 .pageCtr {
   text-align: center;
   margin: 0.01667rem 0;
-  color: #c7c7c7;
-  /*   li:first-child{
-  width:px(80);
-}
-li:last-child{
-  width:px(80);
-}
- */ }
+  color: #c7c7c7; }
   .pageCtr ul {
     display: inline-block;
     overflow: hidden; }
@@ -19,6 +12,8 @@ li:last-child{
     text-align: center;
     line-height: 0.02667rem;
     margin: 0 0.00333rem;
-    padding: 0 0.00833rem;
-    /* width:px(32); */
+    width: 0.02667rem;
     float: left; }
+  .pageCtr .auto-width {
+    width: auto;
+    padding: 0 0.01rem; }

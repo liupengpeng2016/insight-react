@@ -67,9 +67,9 @@ class OtherPlatform extends Component{
               onChange={this.handleCategory.bind(this)}
               value={this.state.category}
             >
-              <option value='1'>儿童</option>
-              <option value='2'>音乐</option>
-              <option value='3'>教育</option>
+              <option value='1'>故事</option>
+              <option value='2'>儿歌</option>
+              <option value='3'>音乐</option>
             </select>
           </li>
           <li>

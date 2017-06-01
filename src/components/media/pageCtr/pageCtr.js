@@ -15,11 +15,13 @@ class PageCtr extends Component{
         >
         <ul>
           <li
+            className='auto-width'
             style={this.state.active<= 1? {display:'none'}: null}
             onClick={this.handleClick.bind(this, 1)}
           >首页
           </li>
           <li
+            className='auto-width'
             style={this.state.active<= 1? {display:'none'}: null}
             onClick={
               ()=>{
@@ -39,6 +41,7 @@ class PageCtr extends Component{
               })
           }
         <li
+          className='auto-width'
           style={this.state.active>= this.props.total? {display:'none'}: null}
           onClick={
             ()=>{
@@ -47,6 +50,7 @@ class PageCtr extends Component{
           }
         >下一页 &gt;</li>
         <li
+          className='auto-width'
           style={this.state.active>= this.props.total? {display:'none'}: null}
           onClick={this.handleClick.bind(this, this.props.total)}
         >末页

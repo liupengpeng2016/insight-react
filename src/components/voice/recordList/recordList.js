@@ -20,10 +20,9 @@ class VoiceList extends Component{
         <table className='scene-manage-list'>
           <thead>
             <tr>
-              <td>编号</td>
+              <td>时间</td>
               <td>作者</td>
               <td>修改记录</td>
-              <td>时间</td>
               <td>操作</td>
             </tr>
           </thead>
